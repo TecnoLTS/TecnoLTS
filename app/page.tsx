@@ -207,93 +207,194 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section - Dark */}
-      <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
-
-        <div className="max-w-7xl mx-auto relative z-10">
+      {/* Services Section - Light */}
+      <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50 dark:from-slate-900 dark:to-slate-800">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 dark:bg-blue-500/20 border border-blue-500/20 dark:border-blue-400/30 rounded-full text-blue-600 dark:text-cyan-400 text-sm font-medium mb-6">
+              <Sparkles className="w-4 h-4" />
+              CORE EXPERTISE
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
               {t.services.title}
             </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               {t.services.subtitle}
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Software Development */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:bg-white/10 transition-all duration-300 group">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shrink-0">
-                <Code className="w-8 h-8 text-white flex-shrink-0" />
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-[#0f172a] dark:hover:bg-[#0f172a] hover:text-white hover:border-[#0f172a] transition-all duration-300 group overflow-hidden">
+              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-6 transition-all duration-300">
+                <Code className="w-6 h-6 text-white group-hover:animate-bounce-once" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">{t.services.software.title}</h3>
-              <p className="text-gray-400 mb-6 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-yellow-400 dark:text-white dark:group-hover:text-yellow-400">{t.services.software.title}</h3>
+              <p className="text-gray-600 group-hover:text-green-400 dark:text-gray-400 dark:group-hover:text-green-400 mb-6 text-sm">
                 {t.services.software.description}
               </p>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-2 text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-cyan-400 flex-shrink-0" />
+              <ul className="space-y-2">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.software.items[0]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-cyan-400 flex-shrink-0" />
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.software.items[1]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-cyan-400 flex-shrink-0" />
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.software.items[2]}</span>
                 </li>
               </ul>
             </div>
 
             {/* Network Solutions */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:bg-white/10 transition-all duration-300 group">
-              <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shrink-0">
-                <Network className="w-8 h-8 text-white flex-shrink-0" />
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-[#0f172a] dark:hover:bg-[#0f172a] hover:text-white hover:border-[#0f172a] transition-all duration-300 group overflow-hidden">
+              <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-6 transition-all duration-300">
+                <Network className="w-6 h-6 text-white group-hover:animate-bounce-once" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">{t.services.network.title}</h3>
-              <p className="text-gray-400 mb-6 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-yellow-400 dark:text-white dark:group-hover:text-yellow-400">{t.services.network.title}</h3>
+              <p className="text-gray-600 group-hover:text-green-400 dark:text-gray-400 dark:group-hover:text-green-400 mb-6 text-sm">
                 {t.services.network.description}
               </p>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-2 text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-teal-400 flex-shrink-0" />
+              <ul className="space-y-2">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.network.items[0]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-teal-400 flex-shrink-0" />
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.network.items[1]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-teal-400 flex-shrink-0" />
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.network.items[2]}</span>
                 </li>
               </ul>
             </div>
 
             {/* ISO 27001 */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:bg-white/10 transition-all duration-300 group">
-              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shrink-0">
-                <Shield className="w-8 h-8 text-white flex-shrink-0" />
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-[#0f172a] dark:hover:bg-[#0f172a] hover:text-white hover:border-[#0f172a] transition-all duration-300 group overflow-hidden">
+              <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-6 transition-all duration-300">
+                <Lock className="w-6 h-6 text-white group-hover:animate-bounce-once" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">{t.services.iso.title}</h3>
-              <p className="text-gray-400 mb-6 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-yellow-400 dark:text-white dark:group-hover:text-yellow-400">{t.services.iso.title}</h3>
+              <p className="text-gray-600 group-hover:text-green-400 dark:text-gray-400 dark:group-hover:text-green-400 mb-6 text-sm">
                 {t.services.iso.description}
               </p>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-2 text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+              <ul className="space-y-2">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.iso.items[0]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.iso.items[1]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-300">
-                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.iso.items[2]}</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Cyber Security */}
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-[#0f172a] dark:hover:bg-[#0f172a] hover:text-white hover:border-[#0f172a] transition-all duration-300 group overflow-hidden">
+              <div className="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center mb-6 transition-all duration-300">
+                <Shield className="w-6 h-6 text-white group-hover:animate-bounce-once" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-yellow-400 dark:text-white dark:group-hover:text-yellow-400">{t.services.cybersecurity.title}</h3>
+              <p className="text-gray-600 group-hover:text-green-400 dark:text-gray-400 dark:group-hover:text-green-400 mb-6 text-sm">
+                {t.services.cybersecurity.description}
+              </p>
+              <ul className="space-y-2">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.cybersecurity.items[0]}</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.cybersecurity.items[1]}</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.cybersecurity.items[2]}</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Backup Management */}
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-[#0f172a] dark:hover:bg-[#0f172a] hover:text-white hover:border-[#0f172a] transition-all duration-300 group overflow-hidden">
+              <div className="w-12 h-12 bg-cyan-500 rounded-lg flex items-center justify-center mb-6 transition-all duration-300">
+                <Layers className="w-6 h-6 text-white group-hover:animate-bounce-once" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-yellow-400 dark:text-white dark:group-hover:text-yellow-400">{t.services.backups.title}</h3>
+              <p className="text-gray-600 group-hover:text-green-400 dark:text-gray-400 dark:group-hover:text-green-400 mb-6 text-sm">
+                {t.services.backups.description}
+              </p>
+              <ul className="space-y-2">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.backups.items[0]}</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.backups.items[1]}</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.backups.items[2]}</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Software Licensing */}
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-[#0f172a] dark:hover:bg-[#0f172a] hover:text-white hover:border-[#0f172a] transition-all duration-300 group overflow-hidden">
+              <div className="w-12 h-12 bg-amber-500 rounded-lg flex items-center justify-center mb-6 transition-all duration-300">
+                <TrendingUp className="w-6 h-6 text-white group-hover:animate-bounce-once" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-yellow-400 dark:text-white dark:group-hover:text-yellow-400">{t.services.licensing.title}</h3>
+              <p className="text-gray-600 group-hover:text-green-400 dark:text-gray-400 dark:group-hover:text-green-400 mb-6 text-sm">
+                {t.services.licensing.description}
+              </p>
+              <ul className="space-y-2">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.licensing.items[0]}</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.licensing.items[1]}</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.licensing.items[2]}</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Disaster Recovery */}
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-[#0f172a] dark:hover:bg-[#0f172a] hover:text-white hover:border-[#0f172a] transition-all duration-300 group overflow-hidden">
+              <div className="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-6 transition-all duration-300">
+                <Zap className="w-6 h-6 text-white group-hover:animate-bounce-once" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-yellow-400 dark:text-white dark:group-hover:text-yellow-400">{t.services.disasterRecovery.title}</h3>
+              <p className="text-gray-600 group-hover:text-green-400 dark:text-gray-400 dark:group-hover:text-green-400 mb-6 text-sm">
+                {t.services.disasterRecovery.description}
+              </p>
+              <ul className="space-y-2">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.disasterRecovery.items[0]}</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.disasterRecovery.items[1]}</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.disasterRecovery.items[2]}</span>
                 </li>
               </ul>
             </div>
@@ -302,54 +403,62 @@ export default function Home() {
       </section>
 
       {/* Features Section - Light */}
-      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900">
+      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-slate-800">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-20">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
               {t.features.title}
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               {t.features.subtitle}
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/30 dark:to-cyan-900/30 rounded-2xl flex items-center justify-center mx-auto mb-6 transition-transform shrink-0">
-                <Zap className="w-10 h-10 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+            <div className="bg-white dark:bg-slate-700/50 rounded-2xl p-8 border border-gray-100 dark:border-slate-600 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-16 h-16 flex items-center justify-center mb-6">
+                <div className="w-16 h-16 rounded-xl border-2 border-blue-400 flex items-center justify-center">
+                  <Zap className="w-8 h-8 text-blue-500 stroke-[1.5]" />
+                </div>
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{t.features.fastDelivery.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                 {t.features.fastDelivery.description}
               </p>
             </div>
 
-            <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-cyan-100 to-teal-100 dark:from-cyan-900/30 dark:to-teal-900/30 rounded-2xl flex items-center justify-center mx-auto mb-6 transition-transform shrink-0">
-                <Lock className="w-10 h-10 text-cyan-600 dark:text-cyan-400 flex-shrink-0" />
+            <div className="bg-white dark:bg-slate-700/50 rounded-2xl p-8 border border-gray-100 dark:border-slate-600 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-16 h-16 flex items-center justify-center mb-6">
+                <div className="w-16 h-16 rounded-xl border-2 border-cyan-400 flex items-center justify-center">
+                  <Lock className="w-8 h-8 text-cyan-500 stroke-[1.5]" />
+                </div>
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{t.features.secure.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                 {t.features.secure.description}
               </p>
             </div>
 
-            <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-900/30 dark:to-green-900/30 rounded-2xl flex items-center justify-center mx-auto mb-6 transition-transform shrink-0">
-                <Users className="w-10 h-10 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+            <div className="bg-white dark:bg-slate-700/50 rounded-2xl p-8 border border-gray-100 dark:border-slate-600 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-16 h-16 flex items-center justify-center mb-6">
+                <div className="w-16 h-16 rounded-xl border-2 border-emerald-400 flex items-center justify-center">
+                  <Users className="w-8 h-8 text-emerald-500 stroke-[1.5]" />
+                </div>
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{t.features.expert.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                 {t.features.expert.description}
               </p>
             </div>
 
-            <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-orange-100 to-pink-100 dark:from-orange-900/30 dark:to-pink-900/30 rounded-2xl flex items-center justify-center mx-auto mb-6 transition-transform shrink-0">
-                <Award className="w-10 h-10 text-orange-600 dark:text-orange-400 flex-shrink-0" />
+            <div className="bg-white dark:bg-slate-700/50 rounded-2xl p-8 border border-gray-100 dark:border-slate-600 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-16 h-16 flex items-center justify-center mb-6">
+                <div className="w-16 h-16 rounded-xl border-2 border-orange-400 flex items-center justify-center">
+                  <Award className="w-8 h-8 text-orange-500 stroke-[1.5]" />
+                </div>
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{t.features.proven.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                 {t.features.proven.description}
               </p>
             </div>

@@ -1,48 +1,30 @@
 FROM node:20-alpine
 
-# Install dependencies only when needed
-FROM node:20-alpine AS deps
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
-
-# Copy package files
-COPY package.json package-lock.json* ./
 
 # Install dependencies
-RUN npm ci
+RUN apk add --no-cache libc6-compat
 
-# Rebuild the source code only when needed
-FROM node:20-alpine AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+# Control de ambiente (development | production)
+ARG APP_ENV=production
+ENV APP_ENV=${APP_ENV}
+ENV NODE_ENV=${APP_ENV}
+
+# Instala dependencias
+COPY package*.json ./
+RUN NODE_ENV=development npm install --include=dev
+
+# Copia el código de la app
 COPY . .
 
-# Disable telemetry during build
-ENV NEXT_TELEMETRY_DISABLED=1
-
-# Build the application
-RUN npm run build
-
-# Production image, copy all the files and run next
-FROM node:20-alpine AS runner
-WORKDIR /app
-
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
-
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-# Copy necessary files
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-
-USER nextjs
+# Build de producción de Next (omitido en dev)
+RUN if [ "$APP_ENV" = "production" ]; then \
+      npm run build && \
+      npm prune --production; \
+    else \
+      echo "Skip build in development"; \
+    fi
 
 EXPOSE 3000
 
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
-
-CMD ["node", "server.js"]
+CMD ["sh", "-c", "if [ \"$APP_ENV\" = \"development\" ]; then npm run dev -- --hostname 0.0.0.0 --port 3000; else npm run start -- --hostname 0.0.0.0 --port 3000; fi"]

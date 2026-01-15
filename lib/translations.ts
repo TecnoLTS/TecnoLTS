@@ -42,6 +42,42 @@ export const translations = {
           "Implementation Support",
           "Certification Prep"
         ]
+      },
+      cybersecurity: {
+        title: "Cyber Security",
+        description: "Advanced threat protection and security infrastructure to safeguard your digital assets.",
+        items: [
+          "Threat Detection",
+          "Vulnerability Scanning",
+          "Incident Response"
+        ]
+      },
+      backups: {
+        title: "Backup Management",
+        description: "Reliable backup solutions with automated recovery strategies for business continuity.",
+        items: [
+          "Automated Backups",
+          "Disaster Recovery",
+          "Data Redundancy"
+        ]
+      },
+      licensing: {
+        title: "Software Licensing",
+        description: "Expert guidance on software licensing compliance and optimization for your organization.",
+        items: [
+          "License Audit",
+          "Compliance Management",
+          "Cost Optimization"
+        ]
+      },
+      disasterRecovery: {
+        title: "Disaster Recovery",
+        description: "Comprehensive planning and implementation of disaster recovery strategies.",
+        items: [
+          "Business Continuity",
+          "Recovery Planning",
+          "24/7 Support"
+        ]
       }
     },
     features: {
@@ -125,6 +161,42 @@ export const translations = {
           "Análisis de Brechas",
           "Soporte de Implementación",
           "Preparación para Certificación"
+        ]
+      },
+      cybersecurity: {
+        title: "Ciber Seguridad",
+        description: "Protección avanzada contra amenazas e infraestructura de seguridad para salvaguardar tus activos digitales.",
+        items: [
+          "Detección de Amenazas",
+          "Escaneo de Vulnerabilidades",
+          "Respuesta a Incidentes"
+        ]
+      },
+      backups: {
+        title: "Gestión de Backups",
+        description: "Soluciones confiables de respaldo con estrategias automáticas de recuperación para continuidad empresarial.",
+        items: [
+          "Backups Automatizados",
+          "Recuperación ante Desastres",
+          "Redundancia de Datos"
+        ]
+      },
+      licensing: {
+        title: "Licenciamientos",
+        description: "Asesoramiento experto en cumplimiento de licencias de software y optimización para tu organización.",
+        items: [
+          "Auditoría de Licencias",
+          "Gestión de Cumplimiento",
+          "Optimización de Costos"
+        ]
+      },
+      disasterRecovery: {
+        title: "Recuperación de Desastres",
+        description: "Planificación e implementación integral de estrategias de recuperación ante desastres.",
+        items: [
+          "Continuidad Empresarial",
+          "Planificación de Recuperación",
+          "Soporte 24/7"
         ]
       }
     },
