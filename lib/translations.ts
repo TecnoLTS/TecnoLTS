@@ -80,6 +80,24 @@ export const translations = {
         ]
       }
     },
+    heroGrid: {
+      badge: "GET TO KNOW US",
+      title: "Empowering Businesses",
+      titleHighlight: "Success",
+      titleLine2: "with Innovation, Expertise,",
+      titleLine3: "and for",
+      learnMore: "Learn More",
+      experiences: {
+        label: "Experiences",
+        value: "13+",
+        text: "Decades of Experience, Endless Innovation"
+      },
+      testimonial: {
+        text: "We believe in building lasting relationships with our clients through trust, innovation, and exceptional service.",
+        author: "Esther Howard",
+        role: "Co.Founder"
+      }
+    },
     features: {
       title: "Why Choose TecnoLTS?",
       subtitle: "Industry-leading expertise backed by proven results",
@@ -198,6 +216,24 @@ export const translations = {
           "Planificación de Recuperación",
           "Soporte 24/7"
         ]
+      }
+    },
+    heroGrid: {
+      badge: "CONÓCENOS",
+      title: "Potenciando Negocios",
+      titleHighlight: "Éxito",
+      titleLine2: "con Innovación, Experiencia,",
+      titleLine3: "y para el",
+      learnMore: "Conocer Más",
+      experiences: {
+        label: "Experiencia",
+        value: "13+",
+        text: "Décadas de Experiencia, Innovación Infinita"
+      },
+      testimonial: {
+        text: "Creemos en construir relaciones duraderas con nuestros clientes a través de la confianza, innovación y servicio excepcional.",
+        author: "Esther Howard",
+        role: "Co.Fundadora"
       }
     },
     features: {

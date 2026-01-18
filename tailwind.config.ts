@@ -89,11 +89,23 @@ const config: Config = {
             transform: 'translateY(0)',
           },
         },
+        'scale-grow': {
+          '0%': {
+            transform: 'scale(0)',
+          },
+          '50%': {
+            transform: 'scale(1.15)',
+          },
+          '100%': {
+            transform: 'scale(1)',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'bounce-once': 'bounce-once 0.6s ease-in-out',
+        'scale-grow': 'scale-grow 0.6s ease-out',
       },
     },
   },

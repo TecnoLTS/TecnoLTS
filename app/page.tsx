@@ -225,24 +225,24 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Software Development */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-[#0f172a] dark:hover:bg-[#0f172a] hover:text-white hover:border-[#0f172a] transition-all duration-300 group overflow-hidden">
-              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-6 transition-all duration-300">
-                <Code className="w-6 h-6 text-white group-hover:animate-bounce-once" />
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
+              <div className="mb-6">
+                <Code className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-yellow-400 dark:text-white dark:group-hover:text-yellow-400">{t.services.software.title}</h3>
-              <p className="text-gray-600 group-hover:text-green-400 dark:text-gray-400 dark:group-hover:text-green-400 mb-6 text-sm">
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.software.title}</h3>
+              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
                 {t.services.software.description}
               </p>
               <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.software.items[0]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.software.items[1]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.software.items[2]}</span>
                 </li>
@@ -250,24 +250,24 @@ export default function Home() {
             </div>
 
             {/* Network Solutions */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-[#0f172a] dark:hover:bg-[#0f172a] hover:text-white hover:border-[#0f172a] transition-all duration-300 group overflow-hidden">
-              <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-6 transition-all duration-300">
-                <Network className="w-6 h-6 text-white group-hover:animate-bounce-once" />
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
+              <div className="mb-6">
+                <Network className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-yellow-400 dark:text-white dark:group-hover:text-yellow-400">{t.services.network.title}</h3>
-              <p className="text-gray-600 group-hover:text-green-400 dark:text-gray-400 dark:group-hover:text-green-400 mb-6 text-sm">
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.network.title}</h3>
+              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
                 {t.services.network.description}
               </p>
               <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.network.items[0]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.network.items[1]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.network.items[2]}</span>
                 </li>
@@ -275,24 +275,24 @@ export default function Home() {
             </div>
 
             {/* ISO 27001 */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-[#0f172a] dark:hover:bg-[#0f172a] hover:text-white hover:border-[#0f172a] transition-all duration-300 group overflow-hidden">
-              <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-6 transition-all duration-300">
-                <Lock className="w-6 h-6 text-white group-hover:animate-bounce-once" />
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
+              <div className="mb-6">
+                <Lock className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-yellow-400 dark:text-white dark:group-hover:text-yellow-400">{t.services.iso.title}</h3>
-              <p className="text-gray-600 group-hover:text-green-400 dark:text-gray-400 dark:group-hover:text-green-400 mb-6 text-sm">
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.iso.title}</h3>
+              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
                 {t.services.iso.description}
               </p>
               <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.iso.items[0]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.iso.items[1]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.iso.items[2]}</span>
                 </li>
@@ -300,24 +300,24 @@ export default function Home() {
             </div>
 
             {/* Cyber Security */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-[#0f172a] dark:hover:bg-[#0f172a] hover:text-white hover:border-[#0f172a] transition-all duration-300 group overflow-hidden">
-              <div className="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center mb-6 transition-all duration-300">
-                <Shield className="w-6 h-6 text-white group-hover:animate-bounce-once" />
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
+              <div className="mb-6">
+                <Shield className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-yellow-400 dark:text-white dark:group-hover:text-yellow-400">{t.services.cybersecurity.title}</h3>
-              <p className="text-gray-600 group-hover:text-green-400 dark:text-gray-400 dark:group-hover:text-green-400 mb-6 text-sm">
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.cybersecurity.title}</h3>
+              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
                 {t.services.cybersecurity.description}
               </p>
               <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.cybersecurity.items[0]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.cybersecurity.items[1]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.cybersecurity.items[2]}</span>
                 </li>
@@ -325,24 +325,24 @@ export default function Home() {
             </div>
 
             {/* Backup Management */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-[#0f172a] dark:hover:bg-[#0f172a] hover:text-white hover:border-[#0f172a] transition-all duration-300 group overflow-hidden">
-              <div className="w-12 h-12 bg-cyan-500 rounded-lg flex items-center justify-center mb-6 transition-all duration-300">
-                <Layers className="w-6 h-6 text-white group-hover:animate-bounce-once" />
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
+              <div className="mb-6">
+                <Layers className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-yellow-400 dark:text-white dark:group-hover:text-yellow-400">{t.services.backups.title}</h3>
-              <p className="text-gray-600 group-hover:text-green-400 dark:text-gray-400 dark:group-hover:text-green-400 mb-6 text-sm">
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.backups.title}</h3>
+              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
                 {t.services.backups.description}
               </p>
               <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.backups.items[0]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.backups.items[1]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.backups.items[2]}</span>
                 </li>
@@ -350,24 +350,24 @@ export default function Home() {
             </div>
 
             {/* Software Licensing */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-[#0f172a] dark:hover:bg-[#0f172a] hover:text-white hover:border-[#0f172a] transition-all duration-300 group overflow-hidden">
-              <div className="w-12 h-12 bg-amber-500 rounded-lg flex items-center justify-center mb-6 transition-all duration-300">
-                <TrendingUp className="w-6 h-6 text-white group-hover:animate-bounce-once" />
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
+              <div className="mb-6">
+                <TrendingUp className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-yellow-400 dark:text-white dark:group-hover:text-yellow-400">{t.services.licensing.title}</h3>
-              <p className="text-gray-600 group-hover:text-green-400 dark:text-gray-400 dark:group-hover:text-green-400 mb-6 text-sm">
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.licensing.title}</h3>
+              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
                 {t.services.licensing.description}
               </p>
               <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.licensing.items[0]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.licensing.items[1]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.licensing.items[2]}</span>
                 </li>
@@ -375,24 +375,24 @@ export default function Home() {
             </div>
 
             {/* Disaster Recovery */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-[#0f172a] dark:hover:bg-[#0f172a] hover:text-white hover:border-[#0f172a] transition-all duration-300 group overflow-hidden">
-              <div className="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-6 transition-all duration-300">
-                <Zap className="w-6 h-6 text-white group-hover:animate-bounce-once" />
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
+              <div className="mb-6">
+                <Zap className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-yellow-400 dark:text-white dark:group-hover:text-yellow-400">{t.services.disasterRecovery.title}</h3>
-              <p className="text-gray-600 group-hover:text-green-400 dark:text-gray-400 dark:group-hover:text-green-400 mb-6 text-sm">
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.disasterRecovery.title}</h3>
+              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
                 {t.services.disasterRecovery.description}
               </p>
               <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.disasterRecovery.items[0]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.disasterRecovery.items[1]}</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-white dark:text-gray-300 dark:group-hover:text-white text-sm">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                   <span>{t.services.disasterRecovery.items[2]}</span>
                 </li>
@@ -402,65 +402,126 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section - Light */}
-      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-slate-800">
+      {/* Hero Grid Section - Rediseñado con estructura container/row */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        {/* Container */}
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
-              {t.features.title}
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              {t.features.subtitle}
-            </p>
-          </div>
+          {/* Row */}
+          <div className="flex flex-wrap -mx-4">
+            {/* Columna izquierda: col-xl-6 col-lg-6 order-lg-1 order-2 */}
+            <div className="w-full lg:w-1/2 xl:w-1/2 px-4 order-2 lg:order-1">
+              <div className="relative">
+                {/* Imagen */}
+                <div className="rounded-3xl overflow-hidden ">
+                  <img
+                    src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800&h=1200"
+                    alt="Business Professional"
+                    className="w-full h-full object-cover min-h-[600px] lg:min-h-[750px]"
+                  />
+                </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white dark:bg-slate-700/50 rounded-2xl p-8 border border-gray-100 dark:border-slate-600 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 flex items-center justify-center mb-6">
-                <div className="w-16 h-16 rounded-xl border-2 border-blue-400 flex items-center justify-center">
-                  <Zap className="w-8 h-8 text-blue-500 stroke-[1.5]" />
+                {/* Box-area con pseudo-elementos decorativos */}
+                <div className="box-area absolute bottom-0 left-0 w-full max-w-[241px] bg-gray-100 rounded-tr-[12px] pt-[15px] pr-[15px] pb-0 pl-0">
+                  {/* Pseudo-elemento :before (esquina superior izquierda) */}
+                  <div className="absolute left-0 w-[13px] h-[13px] -top-[13px] box-area-corner-before" />
+                  
+                  {/* Pseudo-elemento :after (esquina inferior derecha) */}
+                  <div className="absolute right-[-13px] bottom-0 w-[13px] h-[13px] box-area-corner-after" />
+                  
+                  {/* Contenido interior - caja blanca */}
+                  <div className="bg-white rounded-tl-[12px] rounded-tr-[12px] rounded-br-[12px] rounded-bl-[12px]  p-6 shadow-lg min-h-[226px] flex flex-col justify-between">
+                    <div>
+                      <span className="text-cyan-600 font-semibold text-sm mb-3 block">{t.heroGrid.experiences.label}</span>
+                      <div className="text-6xl font-bold text-gray-900 mb-2 leading-none">{t.heroGrid.experiences.value}</div>
+                    </div>
+                    <h6 className="text-gray-600 text-sm font-normal leading-tight">
+                      {t.heroGrid.experiences.text}
+                    </h6>
+                  </div>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{t.features.fastDelivery.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-                {t.features.fastDelivery.description}
-              </p>
             </div>
 
-            <div className="bg-white dark:bg-slate-700/50 rounded-2xl p-8 border border-gray-100 dark:border-slate-600 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 flex items-center justify-center mb-6">
-                <div className="w-16 h-16 rounded-xl border-2 border-cyan-400 flex items-center justify-center">
-                  <Lock className="w-8 h-8 text-cyan-500 stroke-[1.5]" />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{t.features.secure.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-                {t.features.secure.description}
-              </p>
-            </div>
+            {/* Columna derecha: col-xl-6 col-lg-6 order-lg-2 order-1 */}
+            <div className="w-full lg:w-1/2 xl:w-1/2 px-4 order-1 lg:order-2 mb-8 lg:mb-0">
+              <div className="flex flex-col gap-8 h-full">
+                {/* Sección superior: Texto principal */}
+                <div className="flex flex-col justify-center">
+                  <div className="mb-6">
+                    <span className="inline-flex items-center px-3 py-1.5 bg-cyan-100 text-cyan-700 text-xs font-bold rounded-md uppercase tracking-wide">
+                      <svg className="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="18" height="18" rx="4" />
+                      </svg>
+                      {t.heroGrid.badge}
+                    </span>
+                  </div>
 
-            <div className="bg-white dark:bg-slate-700/50 rounded-2xl p-8 border border-gray-100 dark:border-slate-600 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 flex items-center justify-center mb-6">
-                <div className="w-16 h-16 rounded-xl border-2 border-emerald-400 flex items-center justify-center">
-                  <Users className="w-8 h-8 text-emerald-500 stroke-[1.5]" />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{t.features.expert.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-                {t.features.expert.description}
-              </p>
-            </div>
+                  <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-8 text-gray-900 leading-tight">
+                    {t.heroGrid.title}<br />
+                    {t.heroGrid.titleLine2}<br />
+                    {t.heroGrid.titleLine3} <span className="text-cyan-600">{t.heroGrid.titleHighlight}.</span>
+                  </h2>
 
-            <div className="bg-white dark:bg-slate-700/50 rounded-2xl p-8 border border-gray-100 dark:border-slate-600 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 flex items-center justify-center mb-6">
-                <div className="w-16 h-16 rounded-xl border-2 border-orange-400 flex items-center justify-center">
-                  <Award className="w-8 h-8 text-orange-500 stroke-[1.5]" />
+                  <a
+                    href="#about"
+                    className="inline-flex items-center gap-2 text-gray-900 font-semibold group w-fit"
+                  >
+                    <span className="text-lg">{t.heroGrid.learnMore}</span>
+                    <span className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center group-hover:bg-cyan-600 transition-colors">
+                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+
+                {/* Sección inferior: Testimonio y Video lado a lado */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* Testimonio */}
+                  <div className="bg-teal-600 rounded-3xl p-8 flex flex-col justify-between shadow-xl text-white relative overflow-hidden min-h-[280px]">
+                    <div>
+                      <div className="flex items-center gap-0.5 mb-4">
+                        {[...Array(5)].map((_, i) => (
+                          <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                          </svg>
+                        ))}
+                      </div>
+                      <p className="text-base mb-6 leading-relaxed">
+                        {t.heroGrid.testimonial.text}
+                      </p>
+                    </div>
+
+                    <div className="flex items-end justify-between relative z-10">
+                      <div>
+                        <h6 className="font-bold text-lg mb-0.5">{t.heroGrid.testimonial.author}</h6>
+                        <span className="text-teal-100 text-sm">{t.heroGrid.testimonial.role}</span>
+                      </div>
+                      <svg className="w-12 h-12 text-white/20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Video */}
+                  <div className="bg-gray-900 rounded-3xl overflow-hidden shadow-xl relative min-h-[280px]">
+                    <img
+                      src="https://images.pexels.com/photos/3184611/pexels-photo-3184611.jpeg?auto=compress&cs=tinysrgb&w=600"
+                      alt="Video Thumbnail"
+                      className="w-full h-full object-cover"
+                    />
+
+                    {/* Play button */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                      <button className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
+                        <svg className="w-8 h-8 text-gray-900 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                          <polygon points="8,5 19,12 8,19" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{t.features.proven.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-                {t.features.proven.description}
-              </p>
             </div>
           </div>
         </div>
@@ -469,7 +530,7 @@ export default function Home() {
       {/* CTA Section */}
       <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-600" />
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgMi4yMS0xLjc5IDQtNCA0cy00LTEuNzktNC00IDEuNzktNCA0LTQgNCAxLjc5IDQgNHptMCAxMmMwIDIuMjEtMS43OSA0LTQgNHMtNC0xLjc5LTQtNCAxLjc5LTQgNC00IDQgMS43OSA0IDR6bTAgMTJjMCAyLjIxLTEuNzkgNC00IDRzLTQtMS43OS00LTQgMS43OS00IDQtNCA0IDEuNzkgNCA0eiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgMi4yMS0xLjc5IDQtNCA0cy00LTEuNzktNC00IDEuNzktNC00IDQgNCAxLjc5IDQgNHptMCAxMmMwIDIuMjEtMS43OSA0LTQgNHMtNC0xLjc5LTQtNCAxLjc5LTQgNC00IDQgMS43OSA0IDR6bTAgMTJjMCAyLjIxLTEuNzkgNC00IDRzLTQtMS43OS00LTQgMS43OS00IDQtNCA0IDEuNzkgNCA0eiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
 
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white text-sm font-medium mb-6">
@@ -587,7 +648,7 @@ export default function Home() {
               <ul className="space-y-3">
                 <li className="text-gray-400 flex items-start gap-2">
                   <span className="text-cyan-400 mt-1">✉</span>
-                  <span>info@techcorp.com</span>
+                  <span>info@tecnotls.com</span>
                 </li>
                 <li className="text-gray-400 flex items-start gap-2">
                   <span className="text-cyan-400 mt-1">☎</span>
@@ -600,7 +661,7 @@ export default function Home() {
           {/* Bottom Bar */}
           <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
-              &copy; 2024 TecnoLTS. {t.footer.rights}
+              &copy; 2026 TecnoLTS. {t.footer.rights}
             </p>
             <div className="flex gap-6 text-sm">
               <a href="#" className="text-gray-400 hover:text-cyan-400 transition-colors">{t.footer.privacy}</a>
