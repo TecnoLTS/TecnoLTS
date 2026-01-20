@@ -78,6 +78,15 @@ export const translations = {
           "Recovery Planning",
           "24/7 Support"
         ]
+      },
+      dataCenter: {
+        title: "Data Center Design & Organization",
+        description: "We design the physical layout of your Data Center, defining hardware location and cable organization to achieve an organized, efficient, and scalable infrastructure.",
+        items: [
+          "Physical Infrastructure Design",
+          "Cable Management & Organization",
+          "Scalable Architecture"
+        ]
       }
     },
     heroGrid: {
@@ -215,6 +224,15 @@ export const translations = {
           "Continuidad Empresarial",
           "Planificación de Recuperación",
           "Soporte 24/7"
+        ]
+      },
+      dataCenter: {
+        title: "Diseño y Organización de Data Center",
+        description: "Diseñamos la disposición física de tu Data Center, definiendo la ubicacion del hardware y tambien organización de cableado para lograr una infraestructura ordenada, eficiente y escalable.",
+        items: [
+          "Diseño de Infraestructura Física",
+          "Gestión y Organización de Cableado",
+          "Arquitectura Escalable"
         ]
       }
     },

@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, Code, Shield, Network, CheckCircle, Zap, Lock, Layers, Users, TrendingUp, Award, Sparkles } from 'lucide-react';
+import { ArrowRight, Code, Shield, Network, CheckCircle, Zap, Lock, Layers, Users, TrendingUp, Award, Sparkles, Server } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
@@ -398,16 +398,41 @@ export default function Home() {
                 </li>
               </ul>
             </div>
+
+            {/* Data Center Design & Organization */}
+            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
+              <div className="mb-6">
+                <Server className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.dataCenter.title}</h3>
+              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
+                {t.services.dataCenter.description}
+              </p>
+              <ul className="space-y-2">
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.dataCenter.items[0]}</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.dataCenter.items[1]}</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span>{t.services.dataCenter.items[2]}</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Hero Grid Section - Rediseñado con estructura container/row */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900">
         {/* Container */}
         <div className="max-w-7xl mx-auto">
           {/* Row */}
-          <div className="flex flex-wrap -mx-4">
+          <div className="flex flex-wrap -mx-4 lg:items-end">
             {/* Columna izquierda: col-xl-6 col-lg-6 order-lg-1 order-2 */}
             <div className="w-full lg:w-1/2 xl:w-1/2 px-4 order-2 lg:order-1">
               <div className="relative">
@@ -421,7 +446,7 @@ export default function Home() {
                 </div>
 
                 {/* Box-area con pseudo-elementos decorativos */}
-                <div className="box-area absolute bottom-0 left-0 w-full max-w-[241px] bg-gray-100 rounded-tr-[12px] pt-[15px] pr-[15px] pb-0 pl-0">
+                <div className="box-area absolute bottom-0 left-0 w-full max-w-[241px] bg-white dark:bg-slate-900 rounded-tr-[12px] pt-[15px] pr-[15px] pb-0 pl-0">
                   {/* Pseudo-elemento :before (esquina superior izquierda) */}
                   <div className="absolute left-0 w-[13px] h-[13px] -top-[13px] box-area-corner-before" />
                   
@@ -429,12 +454,12 @@ export default function Home() {
                   <div className="absolute right-[-13px] bottom-0 w-[13px] h-[13px] box-area-corner-after" />
                   
                   {/* Contenido interior - caja blanca */}
-                  <div className="bg-white rounded-tl-[12px] rounded-tr-[12px] rounded-br-[12px] rounded-bl-[12px]  p-6 shadow-lg min-h-[226px] flex flex-col justify-between">
+                  <div className="bg-white dark:bg-slate-800 rounded-tl-[12px] rounded-tr-[12px] rounded-br-[12px] rounded-bl-[12px]  p-6 shadow-lg min-h-[226px] flex flex-col justify-between">
                     <div>
-                      <span className="text-cyan-600 font-semibold text-sm mb-3 block">{t.heroGrid.experiences.label}</span>
-                      <div className="text-6xl font-bold text-gray-900 mb-2 leading-none">{t.heroGrid.experiences.value}</div>
+                      <span className="text-cyan-600 dark:text-cyan-400 font-semibold text-sm mb-3 block">{t.heroGrid.experiences.label}</span>
+                      <div className="text-6xl font-bold text-gray-900 dark:text-white mb-2 leading-none">{t.heroGrid.experiences.value}</div>
                     </div>
-                    <h6 className="text-gray-600 text-sm font-normal leading-tight">
+                    <h6 className="text-gray-600 dark:text-gray-300 text-sm font-normal leading-tight">
                       {t.heroGrid.experiences.text}
                     </h6>
                   </div>
@@ -444,7 +469,7 @@ export default function Home() {
 
             {/* Columna derecha: col-xl-6 col-lg-6 order-lg-2 order-1 */}
             <div className="w-full lg:w-1/2 xl:w-1/2 px-4 order-1 lg:order-2 mb-8 lg:mb-0">
-              <div className="flex flex-col gap-8 h-full">
+              <div className="flex flex-col gap-8">
                 {/* Sección superior: Texto principal */}
                 <div className="flex flex-col justify-center">
                   <div className="mb-6">
@@ -456,15 +481,15 @@ export default function Home() {
                     </span>
                   </div>
 
-                  <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-8 text-gray-900 leading-tight">
+                  <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-8 text-gray-900 dark:text-white leading-tight">
                     {t.heroGrid.title}<br />
                     {t.heroGrid.titleLine2}<br />
-                    {t.heroGrid.titleLine3} <span className="text-cyan-600">{t.heroGrid.titleHighlight}.</span>
+                    {t.heroGrid.titleLine3} <span className="text-cyan-600 dark:text-cyan-400">{t.heroGrid.titleHighlight}.</span>
                   </h2>
 
                   <a
                     href="#about"
-                    className="inline-flex items-center gap-2 text-gray-900 font-semibold group w-fit"
+                    className="inline-flex items-center gap-2 text-gray-900 dark:text-white font-semibold group w-fit"
                   >
                     <span className="text-lg">{t.heroGrid.learnMore}</span>
                     <span className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center group-hover:bg-cyan-600 transition-colors">
@@ -478,24 +503,24 @@ export default function Home() {
                 {/* Sección inferior: Testimonio y Video lado a lado */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {/* Testimonio */}
-                  <div className="bg-teal-600 rounded-3xl p-8 flex flex-col justify-between shadow-xl text-white relative overflow-hidden min-h-[280px]">
+                  <div className="bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-500 dark:from-blue-700 dark:via-cyan-700 dark:to-teal-600 rounded-3xl p-8 flex flex-col justify-between shadow-xl text-white relative overflow-hidden min-h-[280px]">
                     <div>
                       <div className="flex items-center gap-0.5 mb-4">
                         {[...Array(5)].map((_, i) => (
-                          <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                          <svg key={i} className="w-5 h-5 fill-current text-yellow-300" viewBox="0 0 24 24">
                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                           </svg>
                         ))}
                       </div>
-                      <p className="text-base mb-6 leading-relaxed">
+                      <p className="text-base mb-6 leading-relaxed text-white">
                         {t.heroGrid.testimonial.text}
                       </p>
                     </div>
 
                     <div className="flex items-end justify-between relative z-10">
                       <div>
-                        <h6 className="font-bold text-lg mb-0.5">{t.heroGrid.testimonial.author}</h6>
-                        <span className="text-teal-100 text-sm">{t.heroGrid.testimonial.role}</span>
+                        <h6 className="font-bold text-lg mb-0.5 text-white">{t.heroGrid.testimonial.author}</h6>
+                        <span className="text-blue-100 text-sm">{t.heroGrid.testimonial.role}</span>
                       </div>
                       <svg className="w-12 h-12 text-white/20" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
@@ -571,6 +596,147 @@ export default function Home() {
               <div className="text-3xl font-bold text-white mb-1">24/7</div>
               <div className="text-blue-100 text-sm">Support Available</div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Form Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50 dark:from-slate-900 dark:to-slate-800">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 dark:bg-cyan-500/20 border border-cyan-500/20 dark:border-cyan-400/30 rounded-full text-cyan-600 dark:text-cyan-400 text-sm font-medium mb-6">
+              <Sparkles className="w-4 h-4" />
+              Contáctanos
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
+              ¿Listo para empezar?
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Déjanos tus datos y nos pondremos en contacto contigo lo antes posible para discutir tu proyecto.
+            </p>
+          </div>
+
+          {/* Form */}
+          <div className="bg-white dark:bg-slate-800/50 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-slate-700">
+            <form className="space-y-6">
+              {/* Name and Email Row */}
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Name */}
+                <div>
+                  <label htmlFor="name" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                    Nombre completo *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                    placeholder="Juan Pérez"
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label htmlFor="email" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                    placeholder="juan@empresa.com"
+                  />
+                </div>
+              </div>
+
+              {/* Phone and Service Row */}
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Phone */}
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                    Teléfono
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                    placeholder="+1 (555) 123-4567"
+                  />
+                </div>
+
+                {/* Service */}
+                <div>
+                  <label htmlFor="service" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                    Servicio de interés *
+                  </label>
+                  <select
+                    id="service"
+                    name="service"
+                    required
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all text-gray-900 dark:text-white"
+                  >
+                    <option value="">Selecciona un servicio</option>
+                    <option value="software">Desarrollo de Software</option>
+                    <option value="network">Soluciones de Red</option>
+                    <option value="iso">Certificación ISO 27001</option>
+                    <option value="cybersecurity">Ciberseguridad</option>
+                    <option value="backups">Gestión de Respaldos</option>
+                    <option value="licensing">Licenciamiento de Software</option>
+                    <option value="disaster">Recuperación ante Desastres</option>
+                    <option value="datacenter">Diseño de Data Center</option>
+                    <option value="other">Otro</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Message */}
+              <div>
+                <label htmlFor="message" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                  Cuéntanos sobre tu proyecto *
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows={5}
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all resize-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                  placeholder="Describe brevemente tu proyecto, necesidades y objetivos..."
+                ></textarea>
+              </div>
+
+              {/* Privacy Notice */}
+              <div className="flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  id="privacy"
+                  name="privacy"
+                  required
+                  className="mt-1 w-4 h-4 text-cyan-600 bg-gray-50 dark:bg-slate-900 border-gray-300 dark:border-slate-600 rounded focus:ring-2 focus:ring-cyan-500"
+                />
+                <label htmlFor="privacy" className="text-sm text-gray-600 dark:text-gray-400">
+                  Acepto la política de privacidad y el tratamiento de mis datos personales *
+                </label>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold py-4 px-8 rounded-lg shadow-lg shadow-blue-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/40 flex items-center justify-center gap-2"
+              >
+                Enviar mensaje
+                <ArrowRight className="w-5 h-5" />
+              </button>
+
+              {/* Info text */}
+              <p className="text-center text-sm text-gray-500 dark:text-gray-400">
+                Te responderemos en menos de 24 horas hábiles
+              </p>
+            </form>
           </div>
         </div>
       </section>
