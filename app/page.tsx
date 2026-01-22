@@ -1,10 +1,11 @@
 "use client"
 
-import { ArrowRight, Code, Shield, Network, CheckCircle, Zap, Lock, Layers, Users, TrendingUp, Award, Sparkles, Server } from 'lucide-react';
+import { ArrowRight, Code, Shield, Network, CheckCircle, Zap, Lock, Layers, Users, TrendingUp, Award, Sparkles, Server, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
 import { useLanguage } from '@/components/language-provider';
+import ContactForm from "@/components/contact-form";
 
 export default function Home() {
   const { t } = useLanguage();
@@ -55,9 +56,11 @@ export default function Home() {
                 {t.hero.description}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-lg shadow-xl shadow-blue-500/30">
-                  {t.hero.ctaPrimary}
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-lg shadow-xl shadow-blue-500/30">
+                  <a href="#contact">
+                    {t.hero.ctaPrimary}
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </a>
                 </Button>
                 <Button size="lg" variant="outline" className="text-lg border-2 hover:bg-gray-50 dark:hover:bg-slate-800 dark:border-slate-600 dark:text-gray-200">
                   {t.hero.ctaSecondary}
@@ -553,7 +556,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-600" />
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgMi4yMS0xLjc5IDQtNCA0cy00LTEuNzktNC00IDEuNzktNC00IDQgNCAxLjc5IDQgNHptMCAxMmMwIDIuMjEtMS43OSA0LTQgNHMtNC0xLjc5LTQtNCAxLjc5LTQgNC00IDQgMS43OSA0IDR6bTAgMTJjMCAyLjIxLTEuNzkgNC00IDRzLTQtMS43OS00LTQgMS43OS00IDQtNCA0IDEuNzkgNCA0eiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
 
@@ -601,145 +604,22 @@ export default function Home() {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50 dark:from-slate-900 dark:to-slate-800">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 dark:bg-cyan-500/20 border border-cyan-500/20 dark:border-cyan-400/30 rounded-full text-cyan-600 dark:text-cyan-400 text-sm font-medium mb-6">
-              <Sparkles className="w-4 h-4" />
-              Contáctanos
-            </div>
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
-              ¿Listo para empezar?
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Déjanos tus datos y nos pondremos en contacto contigo lo antes posible para discutir tu proyecto.
-            </p>
-          </div>
+ 
+        <ContactForm />
 
-          {/* Form */}
-          <div className="bg-white dark:bg-slate-800/50 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-slate-700">
-            <form className="space-y-6">
-              {/* Name and Email Row */}
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Name */}
-                <div>
-                  <label htmlFor="name" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                    Nombre completo *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-                    placeholder="Juan Pérez"
-                  />
-                </div>
-
-                {/* Email */}
-                <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-                    placeholder="juan@empresa.com"
-                  />
-                </div>
-              </div>
-
-              {/* Phone and Service Row */}
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Phone */}
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                    Teléfono
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-                    placeholder="+1 (555) 123-4567"
-                  />
-                </div>
-
-                {/* Service */}
-                <div>
-                  <label htmlFor="service" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                    Servicio de interés *
-                  </label>
-                  <select
-                    id="service"
-                    name="service"
-                    required
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all text-gray-900 dark:text-white"
-                  >
-                    <option value="">Selecciona un servicio</option>
-                    <option value="software">Desarrollo de Software</option>
-                    <option value="network">Soluciones de Red</option>
-                    <option value="iso">Certificación ISO 27001</option>
-                    <option value="cybersecurity">Ciberseguridad</option>
-                    <option value="backups">Gestión de Respaldos</option>
-                    <option value="licensing">Licenciamiento de Software</option>
-                    <option value="disaster">Recuperación ante Desastres</option>
-                    <option value="datacenter">Diseño de Data Center</option>
-                    <option value="other">Otro</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Message */}
-              <div>
-                <label htmlFor="message" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                  Cuéntanos sobre tu proyecto *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={5}
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all resize-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-                  placeholder="Describe brevemente tu proyecto, necesidades y objetivos..."
-                ></textarea>
-              </div>
-
-              {/* Privacy Notice */}
-              <div className="flex items-start gap-3">
-                <input
-                  type="checkbox"
-                  id="privacy"
-                  name="privacy"
-                  required
-                  className="mt-1 w-4 h-4 text-cyan-600 bg-gray-50 dark:bg-slate-900 border-gray-300 dark:border-slate-600 rounded focus:ring-2 focus:ring-cyan-500"
-                />
-                <label htmlFor="privacy" className="text-sm text-gray-600 dark:text-gray-400">
-                  Acepto la política de privacidad y el tratamiento de mis datos personales *
-                </label>
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold py-4 px-8 rounded-lg shadow-lg shadow-blue-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/40 flex items-center justify-center gap-2"
-              >
-                Enviar mensaje
-                <ArrowRight className="w-5 h-5" />
-              </button>
-
-              {/* Info text */}
-              <p className="text-center text-sm text-gray-500 dark:text-gray-400">
-                Te responderemos en menos de 24 horas hábiles
-              </p>
-            </form>
-          </div>
-        </div>
-      </section>
+      {/* WhatsApp Floating Button */}
+      <a
+        href="https://wa.me/15551234567?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20más%20información%20sobre%20sus%20servicios"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 z-50 flex items-center justify-center group"
+        aria-label="Contactar por WhatsApp"
+      >
+        <MessageCircle className="w-6 h-6" />
+        <span className="absolute right-full mr-3 bg-gray-900 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          Chatea con nosotros
+        </span>
+      </a>
 
       {/* Footer */}
       <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
