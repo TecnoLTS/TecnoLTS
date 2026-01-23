@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, Code, Shield, Network, CheckCircle, Zap, Lock, Layers, Users, TrendingUp, Award, Sparkles, Server, MessageCircle } from 'lucide-react';
+import { ArrowRight, Code, Shield, Network, CheckCircle, Zap, Lock, Layers, Users, TrendingUp, Award, Sparkles, Server, MessageCircle, ChevronDown, HardDrive, FileCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
@@ -22,7 +22,66 @@ export default function Home() {
               </div>
             </div>
             <div className="hidden md:flex items-center gap-4">
-              <a href="#services" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">{t.nav.services}</a>
+              <div className="relative group">
+                <button className="flex items-center gap-1 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium py-2">
+                  {t.nav.services}
+                  <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
+                </button>
+                <div className="absolute top-full left-0 mt-2 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                  <div className="bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-gray-200 dark:border-slate-700 overflow-hidden backdrop-blur-lg">
+                    <div className="p-2 space-y-1">
+                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                        <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center group-hover/item:bg-blue-500 transition-colors">
+                          <Code className="w-4 h-4 text-blue-600 dark:text-blue-400 group-hover/item:text-white" />
+                        </div>
+                        <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.software.title}</span>
+                      </a>
+                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                        <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/50 flex items-center justify-center group-hover/item:bg-cyan-500 transition-colors">
+                          <Network className="w-4 h-4 text-cyan-600 dark:text-cyan-400 group-hover/item:text-white" />
+                        </div>
+                        <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.network.title}</span>
+                      </a>
+                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                        <div className="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center group-hover/item:bg-purple-500 transition-colors">
+                          <Lock className="w-4 h-4 text-purple-600 dark:text-purple-400 group-hover/item:text-white" />
+                        </div>
+                        <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.iso.title}</span>
+                      </a>
+                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                        <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center group-hover/item:bg-emerald-500 transition-colors">
+                          <Shield className="w-4 h-4 text-emerald-600 dark:text-emerald-400 group-hover/item:text-white" />
+                        </div>
+                        <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.cybersecurity.title}</span>
+                      </a>
+                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                        <div className="w-8 h-8 rounded-lg bg-orange-100 dark:bg-orange-900/50 flex items-center justify-center group-hover/item:bg-orange-500 transition-colors">
+                          <Layers className="w-4 h-4 text-orange-600 dark:text-orange-400 group-hover/item:text-white" />
+                        </div>
+                        <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.backups.title}</span>
+                      </a>
+                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                        <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center group-hover/item:bg-indigo-500 transition-colors">
+                          <FileCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400 group-hover/item:text-white" />
+                        </div>
+                        <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.licensing.title}</span>
+                      </a>
+                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                        <div className="w-8 h-8 rounded-lg bg-rose-100 dark:bg-rose-900/50 flex items-center justify-center group-hover/item:bg-rose-500 transition-colors">
+                          <Zap className="w-4 h-4 text-rose-600 dark:text-rose-400 group-hover/item:text-white" />
+                        </div>
+                        <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.disasterRecovery.title}</span>
+                      </a>
+                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                        <div className="w-8 h-8 rounded-lg bg-teal-100 dark:bg-teal-900/50 flex items-center justify-center group-hover/item:bg-teal-500 transition-colors">
+                          <HardDrive className="w-4 h-4 text-teal-600 dark:text-teal-400 group-hover/item:text-white" />
+                        </div>
+                        <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.dataCenter.title}</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <a href="#about" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">{t.nav.about}</a>
               <a href="#contact" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">{t.nav.contact}</a>
               <div className="flex items-center gap-2 ml-2">
