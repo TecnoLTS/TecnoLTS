@@ -163,3 +163,5 @@ This project is proprietary and confidential.
 ## Support
 
 For support, email support@techcorp.com or contact your development team.
+
+docker compose --profile development up -d
