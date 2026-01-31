@@ -6,13 +6,63 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
 import { useLanguage } from '@/components/language-provider';
 import ContactForm from "@/components/contact-form";
+import { useEffect, useRef } from 'react';
 
 export default function Home() {
   const { t } = useLanguage();
+  
+  useEffect(() => {
+    // Scroll reveal animation
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Magnetic effect for buttons and cards
+    const magneticElements = document.querySelectorAll('.magnetic');
+    
+    magneticElements.forEach(element => {
+      element.addEventListener('mousemove', (e: any) => {
+        const rect = element.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        (element as HTMLElement).style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+      });
+
+      element.addEventListener('mouseleave', () => {
+        (element as HTMLElement).style.transform = 'translate(0, 0)';
+      });
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative overflow-hidden">
+      {/* Floating Particles Background */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="particle particle-1"></div>
+        <div className="particle particle-2"></div>
+        <div className="particle particle-3"></div>
+        <div className="particle particle-4"></div>
+        <div className="particle particle-5"></div>
+      </div>
+
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-slate-700/50 z-50">
+      <nav className="fixed top-0 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-slate-700/50 z-50 animate-slide-in-left">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
@@ -88,7 +138,7 @@ export default function Home() {
                 <ThemeToggle />
                 <LanguageToggle />
               </div>
-              <Button className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg shadow-blue-500/30">
+              <Button className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg shadow-blue-500/30 magnetic hover-lift glow-border">
                 {t.nav.getStarted}
               </Button>
             </div>
@@ -97,16 +147,16 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
-            <div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20 border border-blue-500/20 dark:border-blue-400/30 rounded-full text-blue-600 dark:text-cyan-400 text-sm font-medium mb-6">
-                <Sparkles className="w-4 h-4" />
+            <div className="scroll-reveal">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20 border border-blue-500/20 dark:border-blue-400/30 rounded-full text-blue-600 dark:text-cyan-400 text-sm font-medium mb-6 animate-bounce-in">
+                <Sparkles className="w-4 h-4 animate-rotate-bounce" />
                 Enterprise IT Solutions
               </div>
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-text-reveal">
                 <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-cyan-700 dark:from-white dark:via-cyan-300 dark:to-blue-400 bg-clip-text text-transparent">
                   {t.hero.title}
                 </span>
@@ -115,13 +165,13 @@ export default function Home() {
                 {t.hero.description}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-lg shadow-xl shadow-blue-500/30">
+                <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-lg shadow-xl shadow-blue-500/30 magnetic hover-lift animate-pulse-glow">
                   <a href="#contact">
                     {t.hero.ctaPrimary}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </a>
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg border-2 hover:bg-gray-50 dark:hover:bg-slate-800 dark:border-slate-600 dark:text-gray-200">
+                <Button size="lg" variant="outline" className="text-lg border-2 hover:bg-gray-50 dark:hover:bg-slate-800 dark:border-slate-600 dark:text-gray-200 magnetic hover-lift">
                   {t.hero.ctaSecondary}
                 </Button>
               </div>
@@ -269,221 +319,492 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section - Light */}
-      <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50 dark:from-slate-900 dark:to-slate-800">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 dark:bg-blue-500/20 border border-blue-500/20 dark:border-blue-400/30 rounded-full text-blue-600 dark:text-cyan-400 text-sm font-medium mb-6">
-              <Sparkles className="w-4 h-4" />
-              CORE EXPERTISE
-            </div>
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
-              {t.services.title}
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              {t.services.subtitle}
-            </p>
+      {/* Services Section - Dedicated Areas */}
+      <section id="services" className="bg-white dark:bg-slate-900">
+        
+        {/* Cybersecurity & Defense */}
+        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
+          {/* Animated background gradient */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/30 rounded-full blur-3xl animate-float"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float-slow"></div>
           </div>
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="flex flex-col lg:flex-row items-center gap-12">
+              {/* Content */}
+              <div className="flex-1 scroll-reveal">
+                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal">
+                  Elite Cybersecurity<br />& Defense
+                </h2>
+                
+                <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
+                  {t.services.cybersecurity.description || "In an era of sophisticated threats, we provide an impenetrable shield for your enterprise. Our approach combines proactive threat hunting with autonomous defensive architectures."}
+                </p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Software Development */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
-              <div className="mb-6">
-                <Code className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
+                <div className="mb-6">
+                  <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    CORE CAPABILITIES
+                  </span>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.cybersecurity.items[0] || "Zero-Trust Architecture"}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.cybersecurity.items[1] || "AI-Driven Threat Detection"}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.cybersecurity.items[2] || "Advanced Pen-Testing"}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      Incident Response 24/7
+                    </span>
+                  </li>
+                </ul>
+
+                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg group/btn transition-all duration-300 magnetic hover-lift glow-border">
+                  <span className="flex items-center gap-2">
+                    Consult Security Experts
+                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  </span>
+                </Button>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.software.title}</h3>
-              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
-                {t.services.software.description}
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.software.items[0]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.software.items[1]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.software.items[2]}</span>
-                </li>
-              </ul>
+
+              {/* Icon/Visual */}
+              <div className="flex-shrink-0 scroll-reveal">
+                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
+                  <Shield className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
 
-            {/* Network Solutions */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
-              <div className="mb-6">
-                <Network className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
+        {/* Software Development */}
+        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float-slow"></div>
+          </div>
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
+              <div className="flex-1 scroll-reveal">
+                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal">
+                  {t.services.software.title}
+                </h2>
+                
+                <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
+                  {t.services.software.description}
+                </p>
+
+                <div className="mb-6">
+                  <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    CORE CAPABILITIES
+                  </span>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.software.items[0]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.software.items[1]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.software.items[2]}
+                    </span>
+                  </li>
+                </ul>
+
+                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg group/btn transition-all duration-300 magnetic hover-lift">
+                  <span className="flex items-center gap-2">
+                    Consult Development Experts
+                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  </span>
+                </Button>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.network.title}</h3>
-              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
-                {t.services.network.description}
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.network.items[0]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.network.items[1]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.network.items[2]}</span>
-                </li>
-              </ul>
+
+              <div className="flex-shrink-0 scroll-reveal">
+                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-blue-500 to-blue-700 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
+                  <Code className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
 
-            {/* ISO 27001 */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
-              <div className="mb-6">
-                <Lock className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
+        {/* Network Solutions */}
+        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-cyan-50 to-teal-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-cyan-500/30 rounded-full blur-3xl animate-float"></div>
+          </div>
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="flex flex-col lg:flex-row items-center gap-12">
+              <div className="flex-1 scroll-reveal">
+                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal">
+                  {t.services.network.title}
+                </h2>
+                
+                <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
+                  {t.services.network.description}
+                </p>
+
+                <div className="mb-6">
+                  <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    CORE CAPABILITIES
+                  </span>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-cyan-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.network.items[0]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-cyan-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.network.items[1]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-cyan-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.network.items[2]}
+                    </span>
+                  </li>
+                </ul>
+
+                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg group/btn transition-all duration-300 magnetic hover-lift">
+                  <span className="flex items-center gap-2">
+                    Consult Network Experts
+                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  </span>
+                </Button>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.iso.title}</h3>
-              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
-                {t.services.iso.description}
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.iso.items[0]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.iso.items[1]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.iso.items[2]}</span>
-                </li>
-              </ul>
+
+              <div className="flex-shrink-0 scroll-reveal">
+                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-cyan-500 to-teal-600 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
+                  <Network className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
 
-            {/* Cyber Security */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
-              <div className="mb-6">
-                <Shield className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
+        {/* ISO 27001 */}
+        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-float-slow"></div>
+          </div>
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
+              <div className="flex-1 scroll-reveal">
+                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal">
+                  {t.services.iso.title}
+                </h2>
+                
+                <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
+                  {t.services.iso.description}
+                </p>
+
+                <div className="mb-6">
+                  <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    CORE CAPABILITIES
+                  </span>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-purple-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.iso.items[0]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-purple-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.iso.items[1]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-purple-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.iso.items[2]}
+                    </span>
+                  </li>
+                </ul>
+
+                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg group/btn transition-all duration-300 magnetic hover-lift">
+                  <span className="flex items-center gap-2">
+                    Consult ISO Experts
+                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  </span>
+                </Button>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.cybersecurity.title}</h3>
-              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
-                {t.services.cybersecurity.description}
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.cybersecurity.items[0]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.cybersecurity.items[1]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.cybersecurity.items[2]}</span>
-                </li>
-              </ul>
+
+              <div className="flex-shrink-0 scroll-reveal">
+                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-purple-500 to-purple-700 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
+                  <Lock className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
 
-            {/* Backup Management */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
-              <div className="mb-6">
-                <Layers className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
+        {/* Backup Management */}
+        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-slate-900 dark:to-slate-800">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-col lg:flex-row items-center gap-12">
+              <div className="flex-1">
+                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight">
+                  {t.services.backups.title}
+                </h2>
+                
+                <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
+                  {t.services.backups.description}
+                </p>
+
+                <div className="mb-6">
+                  <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    CORE CAPABILITIES
+                  </span>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.backups.items[0]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.backups.items[1]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.backups.items[2]}
+                    </span>
+                  </li>
+                </ul>
+
+                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg group/btn transition-all duration-300 magnetic hover-lift">
+                  <span className="flex items-center gap-2">
+                    Consult Backup Experts
+                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  </span>
+                </Button>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.backups.title}</h3>
-              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
-                {t.services.backups.description}
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.backups.items[0]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.backups.items[1]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.backups.items[2]}</span>
-                </li>
-              </ul>
+
+              <div className="flex-shrink-0 scroll-reveal">
+                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
+                  <Layers className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
 
-            {/* Software Licensing */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
-              <div className="mb-6">
-                <TrendingUp className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
+        {/* Software Licensing */}
+        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-indigo-500/30 rounded-full blur-3xl animate-float"></div>
+          </div>
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
+              <div className="flex-1 scroll-reveal">
+                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal">
+                  {t.services.licensing.title}
+                </h2>
+                
+                <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
+                  {t.services.licensing.description}
+                </p>
+
+                <div className="mb-6">
+                  <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    CORE CAPABILITIES
+                  </span>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-indigo-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.licensing.items[0]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-indigo-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.licensing.items[1]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-indigo-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.licensing.items[2]}
+                    </span>
+                  </li>
+                </ul>
+
+                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg group/btn transition-all duration-300 magnetic hover-lift">
+                  <span className="flex items-center gap-2">
+                    Consult Licensing Experts
+                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  </span>
+                </Button>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.licensing.title}</h3>
-              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
-                {t.services.licensing.description}
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.licensing.items[0]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.licensing.items[1]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.licensing.items[2]}</span>
-                </li>
-              </ul>
+
+              <div className="flex-shrink-0 scroll-reveal">
+                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
+                  <FileCheck className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
 
-            {/* Disaster Recovery */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
-              <div className="mb-6">
-                <Zap className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
+        {/* Disaster Recovery */}
+        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-rose-50 to-orange-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-rose-500/30 rounded-full blur-3xl animate-float-slow"></div>
+          </div>
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="flex flex-col lg:flex-row items-center gap-12">
+              <div className="flex-1 scroll-reveal">
+                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal">
+                  {t.services.disasterRecovery.title}
+                </h2>
+                
+                <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
+                  {t.services.disasterRecovery.description}
+                </p>
+
+                <div className="mb-6">
+                  <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    CORE CAPABILITIES
+                  </span>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-rose-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.disasterRecovery.items[0]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-rose-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.disasterRecovery.items[1]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-rose-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.disasterRecovery.items[2]}
+                    </span>
+                  </li>
+                </ul>
+
+                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg group/btn transition-all duration-300 magnetic hover-lift">
+                  <span className="flex items-center gap-2">
+                    Consult Recovery Experts
+                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  </span>
+                </Button>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.disasterRecovery.title}</h3>
-              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
-                {t.services.disasterRecovery.description}
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.disasterRecovery.items[0]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.disasterRecovery.items[1]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.disasterRecovery.items[2]}</span>
-                </li>
-              </ul>
+
+              <div className="flex-shrink-0 scroll-reveal">
+                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-rose-500 to-orange-600 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
+                  <Zap className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
 
-            {/* Data Center Design & Organization */}
-            <div className="relative bg-white dark:bg-slate-800/50 rounded-xl p-8 border border-gray-200 dark:border-slate-700 hover:bg-gradient-to-br hover:from-slate-100 hover:via-blue-100 hover:to-cyan-100 dark:hover:from-slate-800 dark:hover:via-slate-700 dark:hover:to-slate-700 hover:text-black hover:border-cyan-400 transition-all duration-300 group overflow-hidden">
-              <div className="mb-6">
-                <Server className="w-10 h-10 text-blue-500 stroke-[1.5] group-hover:animate-scale-grow" strokeWidth={1.5} />
+        {/* Data Center Design & Organization */}
+        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-1/2 right-1/3 w-96 h-96 bg-teal-500/30 rounded-full blur-3xl animate-float"></div>
+          </div>
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
+              <div className="flex-1 scroll-reveal">
+                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal">
+                  {t.services.dataCenter.title}
+                </h2>
+                
+                <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
+                  {t.services.dataCenter.description}
+                </p>
+
+                <div className="mb-6">
+                  <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    CORE CAPABILITIES
+                  </span>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-teal-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.dataCenter.items[0]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-teal-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.dataCenter.items[1]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-teal-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.dataCenter.items[2]}
+                    </span>
+                  </li>
+                </ul>
+
+                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg group/btn transition-all duration-300 magnetic hover-lift">
+                  <span className="flex items-center gap-2">
+                    Consult Data Center Experts
+                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  </span>
+                </Button>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-black dark:text-white dark:group-hover:text-black">{t.services.dataCenter.title}</h3>
-              <p className="text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black mb-6 text-sm">
-                {t.services.dataCenter.description}
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.dataCenter.items[0]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.dataCenter.items[1]}</span>
-                </li>
-                <li className="flex items-center gap-2 text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-black text-sm">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                  <span>{t.services.dataCenter.items[2]}</span>
-                </li>
-              </ul>
+
+              <div className="flex-shrink-0 scroll-reveal">
+                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
+                  <Server className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -667,18 +988,27 @@ export default function Home() {
         <ContactForm />
 
       {/* WhatsApp Floating Button */}
-      <a
-        href="https://wa.me/593992910848?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20más%20información%20sobre%20sus%20servicios"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 z-50 flex items-center justify-center group"
-        aria-label="Contactar por WhatsApp"
-      >
-        <MessageCircle className="w-6 h-6" />
-        <span className="absolute right-full mr-3 bg-gray-900 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-          Chatea con nosotros
-        </span>
-      </a>
+      <div className="fixed bottom-6 right-6 z-50">
+        <a
+          href="https://wa.me/593992910848?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20más%20información%20sobre%20sus%20servicios"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative bg-gradient-to-br from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white p-5 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center group"
+          aria-label="Contactar por WhatsApp"
+        >
+          <div className="absolute inset-0 rounded-full bg-green-400/40 animate-ping"></div>
+          <svg 
+            className="w-8 h-8 relative z-10" 
+            fill="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+          <span className="absolute right-full mr-4 bg-gradient-to-r from-gray-900 to-gray-800 text-white px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-gray-700">
+            💬 ¡Chatea con nosotros!
+          </span>
+        </a>
+      </div>
 
       {/* Footer */}
       <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
