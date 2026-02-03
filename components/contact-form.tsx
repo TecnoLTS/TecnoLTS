@@ -54,12 +54,6 @@ export default function ContactForm() {
       newErrors.service = "Selecciona un servicio";
     }
 
-    if (!formData.message.trim()) {
-      newErrors.message = "El mensaje es requerido";
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = "El mensaje debe tener al menos 10 caracteres";
-    }
-
     if (!formData.privacy) {
       newErrors.privacy = "Debes aceptar la política de privacidad";
     }
@@ -79,18 +73,26 @@ export default function ContactForm() {
     setIsSubmitting(true);
 
     try {
-      // Simulación de envío (puedes reemplazar con una API route de Next.js)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Log de los datos del formulario (en producción, enviar a una API)
-      console.log("Datos del formulario:", {
-        name: formData.name.trim(),
-        email: formData.email.trim().toLowerCase(),
-        phone: formData.phone.trim() || null,
-        service: formData.service,
-        message: formData.message.trim(),
-        privacy_accepted: formData.privacy,
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim().toLowerCase(),
+          phone: formData.phone.trim() || null,
+          service: formData.service,
+          message: formData.message.trim() || null,
+          privacy_accepted: formData.privacy,
+        }),
       });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Error al enviar el mensaje');
+      }
 
       setIsSuccess(true);
       toast.success("¡Mensaje enviado con éxito! Te contactaremos pronto.");
@@ -107,7 +109,7 @@ export default function ContactForm() {
       setTimeout(() => setIsSuccess(false), 5000);
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error("Hubo un error al enviar el mensaje. Inténtalo de nuevo.");
+      toast.error(error instanceof Error ? error.message : "Hubo un error al enviar el mensaje. Inténtalo de nuevo.");
     } finally {
       setIsSubmitting(false);
     }
@@ -277,7 +279,7 @@ export default function ContactForm() {
 
             <div>
               <label htmlFor="message" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                Cuéntanos sobre tu proyecto *
+                Cuéntanos sobre tu proyecto
               </label>
               <div className="relative">
                 <div className="absolute top-3 left-3 pointer-events-none">

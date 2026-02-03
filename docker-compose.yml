@@ -15,10 +15,13 @@ services:
       NODE_ENV: ${APP_ENV:-production}
       APP_ENV: ${APP_ENV:-production}
       PORT: ${PORT:-3000}
+      GMAIL_USER: ${GMAIL_USER}
+      GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
+      EMAIL_TO: ${EMAIL_TO}
     working_dir: /app
     command: npm run start -- --hostname 0.0.0.0 --port ${PORT:-3000}
     ports:
-      - "${PORT:-3001}:${PORT:-3000}"
+      - "${PORT:-3008}:${PORT:-3000}"
     networks:
       edge:
         aliases:
@@ -38,13 +41,16 @@ services:
       NODE_ENV: ${APP_ENV:-development}
       APP_ENV: ${APP_ENV:-development}
       PORT: ${PORT:-3000}
+      GMAIL_USER: ${GMAIL_USER}
+      GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
+      EMAIL_TO: ${EMAIL_TO}
     working_dir: /app
     command: npm run dev -- --hostname 0.0.0.0 --port ${PORT:-3000}
     volumes:
       - .:/app
       - /app/node_modules
     ports:
-      - "${PORT:-3001}:${PORT:-3000}"
+      - "${PORT:-3008}:${PORT:-3000}"
     networks:
       edge:
         aliases:

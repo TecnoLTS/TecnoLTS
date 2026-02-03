@@ -322,6 +322,66 @@ export default function Home() {
       {/* Services Section - Dedicated Areas */}
       <section id="services" className="bg-white dark:bg-slate-900">
         
+        {/* Software Development */}
+        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float-slow"></div>
+          </div>
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
+              <div className="flex-1 scroll-reveal">
+                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal">
+                  {t.services.software.title}
+                </h2>
+                
+                <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
+                  {t.services.software.description}
+                </p>
+
+                <div className="mb-6">
+                  <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    CORE CAPABILITIES
+                  </span>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.software.items[0]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.software.items[1]}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {t.services.software.items[2]}
+                    </span>
+                  </li>
+                </ul>
+
+                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg group/btn transition-all duration-300 magnetic hover-lift">
+                  <span className="flex items-center gap-2">
+                    Consult Development Experts
+                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  </span>
+                </Button>
+              </div>
+
+              <div className="flex-shrink-0 scroll-reveal">
+                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-blue-500 to-blue-700 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
+                  <Code className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Cybersecurity & Defense */}
         <div className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
           {/* Animated background gradient */}
@@ -334,7 +394,7 @@ export default function Home() {
               {/* Content */}
               <div className="flex-1 scroll-reveal">
                 <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal">
-                  Elite Cybersecurity<br />& Defense
+                  Cybe<br />seguridad
                 </h2>
                 
                 <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
@@ -392,66 +452,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Software Development */}
-        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float-slow"></div>
-          </div>
-          <div className="max-w-6xl mx-auto relative z-10">
-            <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
-              <div className="flex-1 scroll-reveal">
-                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal">
-                  {t.services.software.title}
-                </h2>
-                
-                <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
-                  {t.services.software.description}
-                </p>
-
-                <div className="mb-6">
-                  <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    CORE CAPABILITIES
-                  </span>
-                </div>
-
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
-                    <span className="text-gray-700 dark:text-gray-300 font-medium">
-                      {t.services.software.items[0]}
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
-                    <span className="text-gray-700 dark:text-gray-300 font-medium">
-                      {t.services.software.items[1]}
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
-                    <span className="text-gray-700 dark:text-gray-300 font-medium">
-                      {t.services.software.items[2]}
-                    </span>
-                  </li>
-                </ul>
-
-                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg group/btn transition-all duration-300 magnetic hover-lift">
-                  <span className="flex items-center gap-2">
-                    Consult Development Experts
-                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
-                  </span>
-                </Button>
-              </div>
-
-              <div className="flex-shrink-0 scroll-reveal">
-                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-blue-500 to-blue-700 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
-                  <Code className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Network Solutions */}
         <div className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-cyan-50 to-teal-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
           <div className="absolute inset-0 opacity-20">
@@ -476,19 +476,19 @@ export default function Home() {
 
                 <ul className="space-y-4 mb-8">
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-cyan-500 flex-shrink-0 mt-1" />
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
                     <span className="text-gray-700 dark:text-gray-300 font-medium">
                       {t.services.network.items[0]}
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-cyan-500 flex-shrink-0 mt-1" />
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
                     <span className="text-gray-700 dark:text-gray-300 font-medium">
                       {t.services.network.items[1]}
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-cyan-500 flex-shrink-0 mt-1" />
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
                     <span className="text-gray-700 dark:text-gray-300 font-medium">
                       {t.services.network.items[2]}
                     </span>
@@ -536,19 +536,19 @@ export default function Home() {
 
                 <ul className="space-y-4 mb-8">
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-purple-500 flex-shrink-0 mt-1" />
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
                     <span className="text-gray-700 dark:text-gray-300 font-medium">
                       {t.services.iso.items[0]}
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-purple-500 flex-shrink-0 mt-1" />
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
                     <span className="text-gray-700 dark:text-gray-300 font-medium">
                       {t.services.iso.items[1]}
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-purple-500 flex-shrink-0 mt-1" />
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
                     <span className="text-gray-700 dark:text-gray-300 font-medium">
                       {t.services.iso.items[2]}
                     </span>
@@ -653,19 +653,19 @@ export default function Home() {
 
                 <ul className="space-y-4 mb-8">
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-indigo-500 flex-shrink-0 mt-1" />
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
                     <span className="text-gray-700 dark:text-gray-300 font-medium">
                       {t.services.licensing.items[0]}
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-indigo-500 flex-shrink-0 mt-1" />
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
                     <span className="text-gray-700 dark:text-gray-300 font-medium">
                       {t.services.licensing.items[1]}
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-indigo-500 flex-shrink-0 mt-1" />
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
                     <span className="text-gray-700 dark:text-gray-300 font-medium">
                       {t.services.licensing.items[2]}
                     </span>
@@ -713,19 +713,19 @@ export default function Home() {
 
                 <ul className="space-y-4 mb-8">
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-rose-500 flex-shrink-0 mt-1" />
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
                     <span className="text-gray-700 dark:text-gray-300 font-medium">
                       {t.services.disasterRecovery.items[0]}
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-rose-500 flex-shrink-0 mt-1" />
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
                     <span className="text-gray-700 dark:text-gray-300 font-medium">
                       {t.services.disasterRecovery.items[1]}
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-rose-500 flex-shrink-0 mt-1" />
+                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
                     <span className="text-gray-700 dark:text-gray-300 font-medium">
                       {t.services.disasterRecovery.items[2]}
                     </span>
