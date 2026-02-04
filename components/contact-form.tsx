@@ -158,19 +158,13 @@ export default function ContactForm() {
   }
 
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50 dark:from-slate-900 dark:to-slate-800">
+    <section id="contact" className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50 dark:from-slate-900 dark:to-slate-800">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 dark:bg-cyan-500/20 border border-cyan-500/20 dark:border-cyan-400/30 rounded-full text-cyan-600 dark:text-cyan-400 text-sm font-medium mb-6">
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 dark:bg-cyan-500/20 border border-cyan-500/20 dark:border-cyan-400/30 rounded-full text-cyan-600 dark:text-cyan-400 text-sm font-medium">
             <Sparkles className="w-4 h-4" />
             Contáctanos
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
-            ¿Listo para empezar?
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Déjanos tus datos y nos pondremos en contacto contigo lo antes posible para discutir tu proyecto.
-          </p>
         </div>
 
         <div className="bg-white dark:bg-slate-800/50 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-slate-700">
