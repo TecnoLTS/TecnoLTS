@@ -156,7 +156,7 @@ export const translations = {
     },
     hero: {
       title: "Soluciones IT Empresariales para Negocios Modernos",
-      description: "Transforma tu negocio con soluciones tecnológicas de vanguardia. Desde desarrollo de software personalizado hasta auditorías de seguridad integrales, brindamos excelencia en cada nivel.",
+      description: "Transforma tu negocio, deja atrás los procesos lentos, sistemas rígidos y riesgos de seguridad. Nuestros servicios profesionales brindan soluciones a medida que liberan tu operación y te preparan para la nueva era tecnologica.",
       ctaPrimary: "Iniciar Tu Proyecto",
       ctaSecondary: "Ver Servicios"
     },
@@ -191,7 +191,7 @@ export const translations = {
         ]
       },
       cybersecurity: {
-        title: "Ciber Seguridad",
+        title: "Seguridad de la información",
         description: "Protección avanzada contra amenazas e infraestructura de seguridad para salvaguardar tus activos digitales.",
         items: [
           "Detección de Amenazas",

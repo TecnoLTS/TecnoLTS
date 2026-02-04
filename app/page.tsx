@@ -1,15 +1,16 @@
 "use client"
 
-import { ArrowRight, Code, Shield, Network, CheckCircle, Zap, Lock, Layers, Users, TrendingUp, Award, Sparkles, Server, MessageCircle, ChevronDown, HardDrive, FileCheck } from 'lucide-react';
+import { ArrowRight, Code, Shield, Network, CheckCircle, Zap, Lock, Layers, Users, TrendingUp, Award, Sparkles, Server, MessageCircle, ChevronDown, HardDrive, FileCheck, ArrowUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
 import { useLanguage } from '@/components/language-provider';
 import ContactForm from "@/components/contact-form";
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Home() {
   const { t } = useLanguage();
+  const [showScrollTop, setShowScrollTop] = useState(false);
   
   useEffect(() => {
     // Scroll reveal animation
@@ -47,7 +48,18 @@ export default function Home() {
       });
     });
 
-    return () => observer.disconnect();
+    // Scroll to top button visibility
+    const handleScroll = () => {
+      const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      setShowScrollTop(scrollPercentage > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
@@ -80,49 +92,49 @@ export default function Home() {
                 <div className="absolute top-full left-0 mt-2 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                   <div className="bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-gray-200 dark:border-slate-700 overflow-hidden backdrop-blur-lg">
                     <div className="p-2 space-y-1">
-                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                      <a href="#software" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
                         <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center group-hover/item:bg-blue-500 transition-colors">
                           <Code className="w-4 h-4 text-blue-600 dark:text-blue-400 group-hover/item:text-white" />
                         </div>
                         <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.software.title}</span>
                       </a>
-                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                      <a href="#network" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
                         <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/50 flex items-center justify-center group-hover/item:bg-cyan-500 transition-colors">
                           <Network className="w-4 h-4 text-cyan-600 dark:text-cyan-400 group-hover/item:text-white" />
                         </div>
                         <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.network.title}</span>
                       </a>
-                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                      <a href="#iso" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
                         <div className="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center group-hover/item:bg-purple-500 transition-colors">
                           <Lock className="w-4 h-4 text-purple-600 dark:text-purple-400 group-hover/item:text-white" />
                         </div>
                         <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.iso.title}</span>
                       </a>
-                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                      <a href="#cybersecurity" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
                         <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center group-hover/item:bg-emerald-500 transition-colors">
                           <Shield className="w-4 h-4 text-emerald-600 dark:text-emerald-400 group-hover/item:text-white" />
                         </div>
                         <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.cybersecurity.title}</span>
                       </a>
-                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                      <a href="#backups" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
                         <div className="w-8 h-8 rounded-lg bg-orange-100 dark:bg-orange-900/50 flex items-center justify-center group-hover/item:bg-orange-500 transition-colors">
                           <Layers className="w-4 h-4 text-orange-600 dark:text-orange-400 group-hover/item:text-white" />
                         </div>
                         <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.backups.title}</span>
                       </a>
-                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                      <a href="#licensing" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
                         <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center group-hover/item:bg-indigo-500 transition-colors">
                           <FileCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400 group-hover/item:text-white" />
                         </div>
                         <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.licensing.title}</span>
                       </a>
-                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                      <a href="#disaster-recovery" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
                         <div className="w-8 h-8 rounded-lg bg-rose-100 dark:bg-rose-900/50 flex items-center justify-center group-hover/item:bg-rose-500 transition-colors">
                           <Zap className="w-4 h-4 text-rose-600 dark:text-rose-400 group-hover/item:text-white" />
                         </div>
                         <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t.services.disasterRecovery.title}</span>
                       </a>
-                      <a href="#services" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
+                      <a href="#datacenter" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item">
                         <div className="w-8 h-8 rounded-lg bg-teal-100 dark:bg-teal-900/50 flex items-center justify-center group-hover/item:bg-teal-500 transition-colors">
                           <HardDrive className="w-4 h-4 text-teal-600 dark:text-teal-400 group-hover/item:text-white" />
                         </div>
@@ -138,8 +150,10 @@ export default function Home() {
                 <ThemeToggle />
                 <LanguageToggle />
               </div>
-              <Button className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg shadow-blue-500/30 magnetic hover-lift glow-border">
-                {t.nav.getStarted}
+              <Button asChild className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg shadow-blue-500/30 magnetic hover-lift glow-border">
+                <a href="#contact">
+                  {t.nav.getStarted}
+                </a>
               </Button>
             </div>
           </div>
@@ -323,12 +337,12 @@ export default function Home() {
       <section id="services" className="bg-white dark:bg-slate-900">
         
         {/* Software Development */}
-        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
+        <div id="software" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
           <div className="absolute inset-0 opacity-20">
             <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float-slow"></div>
           </div>
           <div className="max-w-6xl mx-auto relative z-10">
-            <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
+            <div className="flex flex-col lg:flex-row items-center gap-12">
               <div className="flex-1 scroll-reveal">
                 <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal">
                   {t.services.software.title}
@@ -383,18 +397,18 @@ export default function Home() {
         </div>
 
         {/* Cybersecurity & Defense */}
-        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
+        <div id="cybersecurity" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
           {/* Animated background gradient */}
           <div className="absolute inset-0 opacity-30">
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/30 rounded-full blur-3xl animate-float"></div>
             <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float-slow"></div>
           </div>
           <div className="max-w-6xl mx-auto relative z-10">
-            <div className="flex flex-col lg:flex-row items-center gap-12">
+            <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
               {/* Content */}
               <div className="flex-1 scroll-reveal">
                 <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal">
-                  Cybe<br />seguridad
+                  {t.services.cybersecurity.title}
                 </h2>
                 
                 <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
@@ -453,7 +467,7 @@ export default function Home() {
         </div>
 
         {/* Network Solutions */}
-        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-cyan-50 to-teal-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
+        <div id="network" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-cyan-50 to-teal-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
           <div className="absolute inset-0 opacity-20">
             <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-cyan-500/30 rounded-full blur-3xl animate-float"></div>
           </div>
@@ -513,7 +527,7 @@ export default function Home() {
         </div>
 
         {/* ISO 27001 */}
-        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
+        <div id="iso" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
           <div className="absolute inset-0 opacity-20">
             <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-float-slow"></div>
           </div>
@@ -573,7 +587,7 @@ export default function Home() {
         </div>
 
         {/* Backup Management */}
-        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-slate-900 dark:to-slate-800">
+        <div id="backups" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-slate-900 dark:to-slate-800">
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col lg:flex-row items-center gap-12">
               <div className="flex-1">
@@ -630,7 +644,7 @@ export default function Home() {
         </div>
 
         {/* Software Licensing */}
-        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
+        <div id="licensing" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
           <div className="absolute inset-0 opacity-20">
             <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-indigo-500/30 rounded-full blur-3xl animate-float"></div>
           </div>
@@ -690,7 +704,7 @@ export default function Home() {
         </div>
 
         {/* Disaster Recovery */}
-        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-rose-50 to-orange-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
+        <div id="disaster-recovery" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-rose-50 to-orange-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
           <div className="absolute inset-0 opacity-20">
             <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-rose-500/30 rounded-full blur-3xl animate-float-slow"></div>
           </div>
@@ -750,7 +764,7 @@ export default function Home() {
         </div>
 
         {/* Data Center Design & Organization */}
-        <div className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
+        <div id="datacenter" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
           <div className="absolute inset-0 opacity-20">
             <div className="absolute top-1/2 right-1/3 w-96 h-96 bg-teal-500/30 rounded-full blur-3xl animate-float"></div>
           </div>
@@ -984,8 +998,9 @@ export default function Home() {
       </section>
 
       {/* Contact Form Section */}
- 
+      <section id="contact">
         <ContactForm />
+      </section>
 
       {/* WhatsApp Floating Button */}
       <div className="fixed bottom-6 right-6 z-50">
@@ -1008,6 +1023,24 @@ export default function Home() {
             💬 ¡Chatea con nosotros!
           </span>
         </a>
+      </div>
+
+      {/* Scroll to Top Button */}
+      <div 
+        className={`fixed bottom-6 left-6 z-50 transition-all duration-300 ${
+          showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+        }`}
+      >
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="relative bg-gradient-to-br from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white p-5 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center group"
+          aria-label="Volver al inicio"
+        >
+          <ArrowUp className="w-6 h-6 relative z-10" />
+          <span className="absolute left-full ml-4 bg-gradient-to-r from-gray-900 to-gray-800 text-white px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-gray-700">
+            ⬆️ Ir al inicio
+          </span>
+        </button>
       </div>
 
       {/* Footer */}

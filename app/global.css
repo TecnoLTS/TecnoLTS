@@ -246,15 +246,15 @@
   }
 
   .animate-float {
-    animation: float 6s ease-in-out infinite;
+    animation: float 6s ease-in-out;
   }
 
   .animate-float-slow {
-    animation: float-slow 8s ease-in-out infinite;
+    animation: float-slow 8s ease-in-out;
   }
 
   .animate-pulse-glow {
-    animation: pulse-glow 3s ease-in-out infinite;
+    animation: pulse-glow 3s ease-in-out;
   }
 
   .animate-slide-in-left {
@@ -270,7 +270,7 @@
   }
 
   .animate-rotate-bounce {
-    animation: rotate-bounce 2s ease-in-out infinite;
+    animation: rotate-bounce 2s ease-in-out;
   }
 
   .animate-shimmer {
@@ -284,7 +284,7 @@
   }
 
   .animate-morph {
-    animation: morph 8s ease-in-out infinite;
+    animation: morph 8s ease-in-out;
   }
 
   .animate-text-reveal {
