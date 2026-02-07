@@ -7,6 +7,7 @@ import { LanguageToggle } from '@/components/language-toggle';
 import { useLanguage } from '@/components/language-provider';
 import ContactForm from "@/components/contact-form";
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 
 export default function Home() {
   const { t } = useLanguage();
@@ -150,7 +151,7 @@ export default function Home() {
                 <ThemeToggle />
                 <LanguageToggle />
               </div>
-              <Button asChild className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg shadow-blue-500/30 magnetic hover-lift glow-border">
+              <Button asChild className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 shadow-lg transition-all duration-300 magnetic hover-lift">
                 <a href="#contact">
                   {t.nav.getStarted}
                 </a>
@@ -185,24 +186,21 @@ export default function Home() {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </a>
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg border-2 hover:bg-gray-50 dark:hover:bg-slate-800 dark:border-slate-600 dark:text-gray-200 magnetic hover-lift">
-                  {t.hero.ctaSecondary}
-                </Button>
               </div>
 
               {/* Stats */}
               <div className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-gray-200 dark:border-slate-700">
                 <div>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-1">500+</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Projects</div>
+                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-1">{t.hero.stats.experience.value}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">{t.hero.stats.experience.label}</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-1">98%</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Satisfaction</div>
+                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-1">{t.hero.stats.quality.value}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">{t.hero.stats.quality.label}</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-1">10+</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Years</div>
+                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-1">{t.hero.stats.technologies.value}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">{t.hero.stats.technologies.label}</div>
                 </div>
               </div>
             </div>
@@ -448,7 +446,7 @@ export default function Home() {
                   </li>
                 </ul>
 
-                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg group/btn transition-all duration-300 magnetic hover-lift glow-border">
+                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg group/btn transition-all duration-300 magnetic hover-lift">
                   <span className="flex items-center gap-2">
                     Consult Security Experts
                     <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
@@ -883,18 +881,6 @@ export default function Home() {
                     {t.heroGrid.titleLine2}<br />
                     {t.heroGrid.titleLine3} <span className="text-cyan-600 dark:text-cyan-400">{t.heroGrid.titleHighlight}.</span>
                   </h2>
-
-                  <a
-                    href="#about"
-                    className="inline-flex items-center gap-2 text-gray-900 dark:text-white font-semibold group w-fit"
-                  >
-                    <span className="text-lg">{t.heroGrid.learnMore}</span>
-                    <span className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center group-hover:bg-cyan-600 transition-colors">
-                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
-                    </span>
-                  </a>
                 </div>
 
                 {/* Sección inferior: Testimonio y Video lado a lado */}
@@ -957,7 +943,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white text-sm font-medium mb-6">
             <Sparkles className="w-4 h-4" />
-            Let's Build Something Amazing
+            {t.cta.badge}
           </div>
           <h2 className="text-4xl sm:text-6xl font-bold text-white mb-6">
             {t.cta.title}
@@ -965,33 +951,83 @@ export default function Home() {
           <p className="text-xl text-blue-50 mb-10 max-w-2xl mx-auto">
             {t.cta.description}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 text-lg shadow-xl">
-              {t.cta.button}
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button size="lg" variant="outline" className="text-lg border-2 border-white text-white hover:bg-white/10 backdrop-blur-sm">
-              View Portfolio
-            </Button>
+          <div className="flex justify-center mb-12">
+            <a href="#contact">
+              <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 text-lg shadow-xl">
+                {t.cta.button}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </a>
           </div>
 
-          {/* Trust Indicators */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 border-t border-white/20">
-            <div>
-              <div className="text-3xl font-bold text-white mb-1">500+</div>
-              <div className="text-blue-100 text-sm">Projects Completed</div>
+          {/* Value Propositions - Enfoque en proyectos recientes */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-12 border-t border-white/20">
+            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:bg-white/10 transition-all">
+              <div className="text-2xl font-bold text-white mb-2">{t.cta.stats.projects.value}</div>
+              <div className="text-blue-100 text-sm">{t.cta.stats.projects.label}</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold text-white mb-1">98%</div>
-              <div className="text-blue-100 text-sm">Client Satisfaction</div>
+            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:bg-white/10 transition-all">
+              <div className="text-2xl font-bold text-white mb-2">{t.cta.stats.solutions.value}</div>
+              <div className="text-blue-100 text-sm">{t.cta.stats.solutions.label}</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold text-white mb-1">50+</div>
-              <div className="text-blue-100 text-sm">Team Members</div>
+            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:bg-white/10 transition-all">
+              <div className="text-2xl font-bold text-white mb-2">{t.cta.stats.support.value}</div>
+              <div className="text-blue-100 text-sm">{t.cta.stats.support.label}</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold text-white mb-1">24/7</div>
-              <div className="text-blue-100 text-sm">Support Available</div>
+            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:bg-white/10 transition-all">
+              <div className="text-2xl font-bold text-white mb-2">{t.cta.stats.quality.value}</div>
+              <div className="text-blue-100 text-sm">{t.cta.stats.quality.label}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trusted By Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-white dark:bg-slate-800 rounded-3xl py-12 px-8 shadow-2xl">
+            <p className="text-gray-500 dark:text-gray-400 text-xs font-medium mb-12 tracking-[0.2em] uppercase text-center">
+              {t.cta.trustedBy}
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl mx-auto">
+              {/* Logo Paramascotas */}
+              <a 
+                href="https://www.paramascotasecc.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group relative block transition-all duration-300 hover:scale-110"
+              >
+                <div className="relative h-24 flex items-center justify-center">
+                  <Image 
+                    src="/logos/paramascotas.png" 
+                    alt="Paramascotas" 
+                    width={1000} 
+                    height={500} 
+                    quality={100}
+                    priority
+                    className="object-contain max-w-full max-h-full transition-all duration-300"
+                  />
+                </div>
+              </a>
+              {/* Logo Autorespuestos Core */}
+              <a 
+                href="https://www.autorespuestoscore.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group relative block transition-all duration-300 hover:scale-110"
+              >
+                <div className="relative h-24 flex items-center justify-center">
+                  <Image 
+                    src="/logos/autorespuestoscore.png" 
+                    alt="Autorespuestos Core" 
+                    width={600} 
+                    height={200} 
+                    quality={100}
+                    priority
+                    className="object-contain max-w-full max-h-full transition-all duration-300"
+                  />
+                </div>
+              </a>
             </div>
           </div>
         </div>
@@ -1000,16 +1036,16 @@ export default function Home() {
       {/* Contact Form Section */}
       <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-5 gap-8 items-start">
+          <div className="grid lg:grid-cols-5 gap-8 items-stretch">
             {/* Left Column - Contact Info + Map */}
-            <div className="lg:col-span-2 space-y-6">
+            <div className="lg:col-span-2 flex flex-col gap-6">
               {/* Contact Info */}
               <div>
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
-                  {t.nav.contact}
+                  {t.contact.title}
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 mb-6">
-                  Estamos listos para ayudarte a transformar tu negocio. Contáctanos y comencemos juntos.
+                  {t.contact.subtitle} {t.contact.subtitleLine2}
                 </p>
 
                 <div className="space-y-3 mb-6">
@@ -1018,8 +1054,8 @@ export default function Home() {
                       <MapPin className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Ubicación</h3>
-                      <p className="text-gray-600 dark:text-gray-400">Quito, Ecuador</p>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">{t.contact.info.location}</h3>
+                      <p className="text-gray-600 dark:text-gray-400">{t.contact.info.locationValue}</p>
                     </div>
                   </div>
 
@@ -1028,7 +1064,7 @@ export default function Home() {
                       <Phone className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Teléfono</h3>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">{t.contact.info.phone}</h3>
                       <p className="text-gray-600 dark:text-gray-400">+593 99 291 0848</p>
                     </div>
                   </div>
@@ -1038,7 +1074,7 @@ export default function Home() {
                       <Mail className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Email</h3>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">{t.contact.info.email}</h3>
                       <p className="text-gray-600 dark:text-gray-400">info@tecnolts.com</p>
                     </div>
                   </div>
@@ -1048,15 +1084,15 @@ export default function Home() {
                       <Clock className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Horario</h3>
-                      <p className="text-gray-600 dark:text-gray-400">Lun - Vie: 9:00 AM - 6:00 PM</p>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">{t.contact.info.schedule}</h3>
+                      <p className="text-gray-600 dark:text-gray-400">{t.contact.info.scheduleValue}</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Map */}
-              <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-slate-700 h-56">
+              <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-slate-700 flex-1 min-h-[320px]">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255168.17123728427!2d-78.52495258749998!3d-0.1806532!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d59a4002427c9f%3A0x44b991e158ef5572!2sQuito%2C%20Ecuador!5e0!3m2!1ses!2sec!4v1234567890"
                   width="100%"
@@ -1078,8 +1114,26 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Scroll to Top Button */}
+      <div 
+        className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${
+          showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+        }`}
+      >
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="relative bg-gradient-to-br from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center group"
+          aria-label="Volver al inicio"
+        >
+          <ArrowUp className="w-5 h-5 relative z-10" />
+          <span className="absolute right-full mr-4 bg-gradient-to-r from-gray-900 to-gray-800 text-white px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-gray-700">
+            ⬆️ Ir al inicio
+          </span>
+        </button>
+      </div>
+
       {/* WhatsApp Floating Button */}
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-28 right-6 z-50">
         <a
           href="https://wa.me/593992910848?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20más%20información%20sobre%20sus%20servicios"
           target="_blank"
@@ -1101,38 +1155,20 @@ export default function Home() {
         </a>
       </div>
 
-      {/* Scroll to Top Button */}
-      <div 
-        className={`fixed bottom-6 left-6 z-50 transition-all duration-300 ${
-          showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
-        }`}
-      >
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="relative bg-gradient-to-br from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white p-5 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center group"
-          aria-label="Volver al inicio"
-        >
-          <ArrowUp className="w-6 h-6 relative z-10" />
-          <span className="absolute left-full ml-4 bg-gradient-to-r from-gray-900 to-gray-800 text-white px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-gray-700">
-            ⬆️ Ir al inicio
-          </span>
-        </button>
-      </div>
-
       {/* Footer */}
       <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
 
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
             {/* Brand */}
-            <div className="lg:col-span-2">
+            <div>
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 rounded-xl" />
                 <span className="text-2xl font-bold text-white">TecnoLTS</span>
               </div>
-              <p className="text-gray-400 mb-6 leading-relaxed">
+              <p className="text-gray-400 mb-6 leading-relaxed text-sm">
                 {t.footer.description}
               </p>
               <div className="flex gap-3">
@@ -1151,18 +1187,38 @@ export default function Home() {
             {/* Services */}
             <div>
               <h3 className="font-semibold text-white mb-4">{t.footer.services}</h3>
-              <ul className="space-y-3">
-                <li><a href="#services" className="hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              <ul className="space-y-2.5">
+                <li><a href="#software" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                   <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  {t.services.software.title}
+                  <span className="group-hover:translate-x-1 transition-transform">{t.services.software.title}</span>
                 </a></li>
-                <li><a href="#services" className="hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+                <li><a href="#network" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                   <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  {t.services.network.title}
+                  <span className="group-hover:translate-x-1 transition-transform">{t.services.network.title}</span>
                 </a></li>
-                <li><a href="#services" className="hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+                <li><a href="#cybersecurity" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                   <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  {t.services.iso.title}
+                  <span className="group-hover:translate-x-1 transition-transform">{t.services.cybersecurity.title}</span>
+                </a></li>
+                <li><a href="#iso" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+                  <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <span className="group-hover:translate-x-1 transition-transform">{t.services.iso.title}</span>
+                </a></li>
+                <li><a href="#backups" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+                  <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <span className="group-hover:translate-x-1 transition-transform">{t.services.backups.title}</span>
+                </a></li>
+                <li><a href="#licensing" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+                  <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <span className="group-hover:translate-x-1 transition-transform">{t.services.licensing.title}</span>
+                </a></li>
+                <li><a href="#disaster-recovery" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+                  <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <span className="group-hover:translate-x-1 transition-transform">{t.services.disasterRecovery.title}</span>
+                </a></li>
+                <li><a href="#datacenter" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+                  <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <span className="group-hover:translate-x-1 transition-transform">{t.services.dataCenter.title}</span>
                 </a></li>
               </ul>
             </div>
@@ -1170,18 +1226,26 @@ export default function Home() {
             {/* Company */}
             <div>
               <h3 className="font-semibold text-white mb-4">{t.footer.company}</h3>
-              <ul className="space-y-3">
-                <li><a href="#about" className="hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              <ul className="space-y-2.5">
+                <li><a href="#about" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                   <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  {t.footer.about}
+                  <span className="group-hover:translate-x-1 transition-transform">{t.footer.about}</span>
                 </a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+                <li><a href="#" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                   <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  {t.footer.careers}
+                  <span className="group-hover:translate-x-1 transition-transform">{t.footer.careers}</span>
                 </a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+                <li><a href="#" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                   <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  {t.footer.blog}
+                  <span className="group-hover:translate-x-1 transition-transform">{t.footer.blog}</span>
+                </a></li>
+                <li><a href="#" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+                  <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <span className="group-hover:translate-x-1 transition-transform">{t.footer.privacy}</span>
+                </a></li>
+                <li><a href="#" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+                  <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <span className="group-hover:translate-x-1 transition-transform">{t.footer.terms}</span>
                 </a></li>
               </ul>
             </div>
@@ -1189,28 +1253,37 @@ export default function Home() {
             {/* Contact */}
             <div>
               <h3 className="font-semibold text-white mb-4">{t.footer.contact}</h3>
-              <ul className="space-y-3">
-                <li className="text-gray-400 flex items-start gap-2">
-                  <span className="text-cyan-400 mt-1">✉</span>
-                  <span>info@tecnotls.com</span>
+              <ul className="space-y-4">
+                <li className="text-gray-400 flex items-start gap-3 text-sm">
+                  <span className="text-cyan-400 mt-0.5 text-base">✉</span>
+                  <div>
+                    <p className="text-white font-medium mb-1">Email</p>
+                    <a href="mailto:info@tecnotls.com" className="hover:text-cyan-400 transition-colors">info@tecnotls.com</a>
+                  </div>
                 </li>
-                <li className="text-gray-400 flex items-start gap-2">
-                  <span className="text-cyan-400 mt-1">☎</span>
-                  <span>+1 (555) 123-4567</span>
+                <li className="text-gray-400 flex items-start gap-3 text-sm">
+                  <span className="text-cyan-400 mt-0.5 text-base">☎</span>
+                  <div>
+                    <p className="text-white font-medium mb-1">Teléfono</p>
+                    <a href="tel:+15551234567" className="hover:text-cyan-400 transition-colors">+1 (555) 123-4567</a>
+                  </div>
+                </li>
+                <li className="text-gray-400 flex items-start gap-3 text-sm">
+                  <span className="text-cyan-400 mt-0.5 text-base">📍</span>
+                  <div>
+                    <p className="text-white font-medium mb-1">Ubicación</p>
+                    <span>Quito, Ecuador</span>
+                  </div>
                 </li>
               </ul>
             </div>
           </div>
 
           {/* Bottom Bar */}
-          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-center items-center gap-4">
             <p className="text-gray-400 text-sm">
               &copy; 2026 TecnoLTS. {t.footer.rights}
             </p>
-            <div className="flex gap-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-cyan-400 transition-colors">{t.footer.privacy}</a>
-              <a href="#" className="text-gray-400 hover:text-cyan-400 transition-colors">{t.footer.terms}</a>
-            </div>
           </div>
         </div>
       </footer>

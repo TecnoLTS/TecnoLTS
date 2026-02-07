@@ -11,7 +11,21 @@ export const translations = {
       title: "Enterprise IT Solutions for the Modern Business",
       description: "Transform your business with cutting-edge technology solutions. From custom software development to comprehensive security audits, we deliver excellence at every level.",
       ctaPrimary: "Start Your Project",
-      ctaSecondary: "View Services"
+      ctaSecondary: "View Services",
+      stats: {
+        experience: {
+          value: "20+",
+          label: "Years Experience"
+        },
+        quality: {
+          value: "100%",
+          label: "Code Quality"
+        },
+        technologies: {
+          value: "20+",
+          label: "Technologies"
+        }
+      }
     },
     services: {
       title: "Our Core Services",
@@ -98,7 +112,7 @@ export const translations = {
       learnMore: "Learn More",
       experiences: {
         label: "Experiences",
-        value: "13+",
+        value: "20+",
         text: "Decades of Experience, Endless Innovation"
       },
       testimonial: {
@@ -128,9 +142,80 @@ export const translations = {
       }
     },
     cta: {
+      badge: "Let's Build Something Amazing",
       title: "Ready to Transform Your Business?",
       description: "Let's discuss how our IT solutions can help you achieve your goals. Schedule a free consultation with our experts today.",
-      button: "Schedule Consultation"
+      button: "Schedule Consultation",
+      buttonSecondary: "View Our Work",
+      stats: {
+        projects: {
+          value: "Next-Gen Technology",
+          label: "Latest Tools & Solutions"
+        },
+        solutions: {
+          value: "Custom Solutions",
+          label: "Tailored to Your Needs"
+        },
+        support: {
+          value: "Ongoing Support",
+          label: "For Your Success"
+        },
+        quality: {
+          value: "Quality Guaranteed",
+          label: "In Every Delivery"
+        }
+      },
+      trustedBy: "Trusted by Leading Organizations"
+    },
+    contact: {
+      badge: "Contact Us",
+      title: "Contact",
+      subtitle: "We're ready to help you transform your business.",
+      subtitleLine2: "Contact us and let's get started together.",
+      form: {
+        name: "Full Name",
+        nameRequired: "Name is required",
+        nameMinLength: "Name must be at least 2 characters",
+        namePlaceholder: "John Doe",
+        email: "Email",
+        emailRequired: "Email is required",
+        emailInvalid: "Invalid email",
+        emailPlaceholder: "john@company.com",
+        phone: "Phone",
+        phonePlaceholder: "+1 (555) 123-4567",
+        service: "Service of Interest",
+        serviceRequired: "Select a service",
+        serviceSelect: "Select a service",
+        serviceSoftware: "Software Development",
+        serviceNetwork: "Network Solutions",
+        serviceIso: "ISO 27001 Certification",
+        serviceCybersecurity: "Cybersecurity",
+        serviceBackups: "Backup Management",
+        serviceLicensing: "Software Licensing",
+        serviceDisaster: "Disaster Recovery",
+        serviceDatacenter: "Data Center Design",
+        serviceOther: "Other",
+        message: "Tell us about your project",
+        messagePlaceholder: "Briefly describe your project, needs and objectives...",
+        privacy: "I accept the privacy policy and the correct and secure handling of my personal data",
+        privacyRequired: "You must accept the privacy policy",
+        submit: "Send message",
+        submitting: "Sending...",
+        responseTime: "We will respond in less than 24 business hours",
+        errorMessage: "Please correct the errors in the form",
+        errorSending: "There was an error sending the message. Please try again.",
+        successTitle: "Message sent successfully!",
+        successMessage: "Thank you for contacting us. We will get in touch with you in less than 24 business hours.",
+        successButton: "Send another message"
+      },
+      info: {
+        location: "Location",
+        locationValue: "Quito, Ecuador",
+        phone: "Phone",
+        email: "Email",
+        schedule: "Schedule",
+        scheduleValue: "Mon - Fri: 9:00 AM - 6:00 PM"
+      }
     },
     footer: {
       description: "Leading provider of enterprise IT solutions. We deliver innovation, security, and reliability in every project.",
@@ -158,7 +243,21 @@ export const translations = {
       title: "Soluciones IT Empresariales para Negocios Modernos",
       description: "Transforma tu negocio, deja atrás los procesos lentos, sistemas rígidos y riesgos de seguridad. Nuestros servicios profesionales brindan soluciones a medida que liberan tu operación y te preparan para la nueva era tecnologica.",
       ctaPrimary: "Iniciar Tu Proyecto",
-      ctaSecondary: "Ver Servicios"
+      ctaSecondary: "Ver Servicios",
+      stats: {
+        experience: {
+          value: "20+",
+          label: "Años de Experiencia"
+        },
+        quality: {
+          value: "100%",
+          label: "Calidad de Código"
+        },
+        technologies: {
+          value: "20+",
+          label: "Tecnologías"
+        }
+      }
     },
     services: {
       title: "Nuestros Servicios Principales",
@@ -245,7 +344,7 @@ export const translations = {
       learnMore: "Conocer Más",
       experiences: {
         label: "Experiencia",
-        value: "13+",
+        value: "20+",
         text: "Décadas de Experiencia, Innovación Infinita"
       },
       testimonial: {
@@ -275,9 +374,80 @@ export const translations = {
       }
     },
     cta: {
+      badge: "Construyamos Algo Increíble",
       title: "¿Listo para Transformar Tu Negocio?",
       description: "Hablemos sobre cómo nuestras soluciones IT pueden ayudarte a alcanzar tus objetivos. Agenda una consulta gratuita con nuestros expertos hoy.",
-      button: "Agendar Consulta"
+      button: "Agendar Consulta",
+      buttonSecondary: "Ver Nuestro Trabajo",
+      stats: {
+        projects: {
+          value: "Tecnología de Última Generación",
+          label: "Herramientas y Soluciones Avanzadas"
+        },
+        solutions: {
+          value: "Soluciones Personalizadas",
+          label: "A Tu Medida"
+        },
+        support: {
+          value: "Soporte Continuo",
+          label: "Para Tu Éxito"
+        },
+        quality: {
+          value: "Calidad Garantizada",
+          label: "En Cada Entrega"
+        }
+      },
+      trustedBy: "La Confianza de Organizaciones Líderes"
+    },
+    contact: {
+      badge: "Contáctanos",
+      title: "Contacto",
+      subtitle: "Estamos listos para ayudarte a transformar tu negocio.",
+      subtitleLine2: "Contáctanos y comencemos juntos.",
+      form: {
+        name: "Nombre completo",
+        nameRequired: "El nombre es requerido",
+        nameMinLength: "El nombre debe tener al menos 2 caracteres",
+        namePlaceholder: "Juan Pérez",
+        email: "Email",
+        emailRequired: "El email es requerido",
+        emailInvalid: "Email inválido",
+        emailPlaceholder: "juan@empresa.com",
+        phone: "Teléfono",
+        phonePlaceholder: "+1 (555) 123-4567",
+        service: "Servicio de interés",
+        serviceRequired: "Selecciona un servicio",
+        serviceSelect: "Selecciona un servicio",
+        serviceSoftware: "Desarrollo de Software",
+        serviceNetwork: "Soluciones de Red",
+        serviceIso: "Certificación ISO 27001",
+        serviceCybersecurity: "Ciberseguridad",
+        serviceBackups: "Gestión de Respaldos",
+        serviceLicensing: "Licenciamiento de Software",
+        serviceDisaster: "Recuperación ante Desastres",
+        serviceDatacenter: "Diseño de Data Center",
+        serviceOther: "Otro",
+        message: "Cuéntanos sobre tu proyecto",
+        messagePlaceholder: "Describe brevemente tu proyecto, necesidades y objetivos...",
+        privacy: "Acepto la política de privacidad y el tratamiento correcto y seguro de mis datos personales",
+        privacyRequired: "Debes aceptar la política de privacidad",
+        submit: "Enviar mensaje",
+        submitting: "Enviando...",
+        responseTime: "Te responderemos en menos de 24 horas hábiles",
+        errorMessage: "Por favor, corrige los errores en el formulario",
+        errorSending: "Hubo un error al enviar el mensaje. Inténtalo de nuevo.",
+        successTitle: "¡Mensaje enviado con éxito!",
+        successMessage: "Gracias por contactarnos. Nos pondremos en contacto contigo en menos de 24 horas hábiles.",
+        successButton: "Enviar otro mensaje"
+      },
+      info: {
+        location: "Ubicación",
+        locationValue: "Quito, Ecuador",
+        phone: "Teléfono",
+        email: "Email",
+        schedule: "Horario",
+        scheduleValue: "Lun - Vie: 9:00 AM - 6:00 PM"
+      }
     },
     footer: {
       description: "Proveedor líder de soluciones IT empresariales. Entregamos innovación, seguridad y confiabilidad en cada proyecto.",

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, Sparkles, User, Mail, Phone, Briefcase, MessageSquare, Loader2, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from "@/components/language-provider";
 
 interface FormData {
   name: string;
@@ -22,6 +23,7 @@ interface FormErrors {
 }
 
 export default function ContactForm() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -39,23 +41,23 @@ export default function ContactForm() {
     const newErrors: FormErrors = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = "El nombre es requerido";
+      newErrors.name = t.contact.form.nameRequired;
     } else if (formData.name.trim().length < 2) {
-      newErrors.name = "El nombre debe tener al menos 2 caracteres";
+      newErrors.name = t.contact.form.nameMinLength;
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = "El email es requerido";
+      newErrors.email = t.contact.form.emailRequired;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Email inválido";
+      newErrors.email = t.contact.form.emailInvalid;
     }
 
     if (!formData.service) {
-      newErrors.service = "Selecciona un servicio";
+      newErrors.service = t.contact.form.serviceRequired;
     }
 
     if (!formData.privacy) {
-      newErrors.privacy = "Debes aceptar la política de privacidad";
+      newErrors.privacy = t.contact.form.privacyRequired;
     }
 
     setErrors(newErrors);
@@ -66,7 +68,7 @@ export default function ContactForm() {
     e.preventDefault();
 
     if (!validateForm()) {
-      toast.error("Por favor, corrige los errores en el formulario");
+      toast.error(t.contact.form.errorMessage);
       return;
     }
 
@@ -95,7 +97,7 @@ export default function ContactForm() {
       }
 
       setIsSuccess(true);
-      toast.success("¡Mensaje enviado con éxito! Te contactaremos pronto.");
+      toast.success(t.contact.form.successTitle);
 
       setFormData({
         name: "",
@@ -109,7 +111,7 @@ export default function ContactForm() {
       setTimeout(() => setIsSuccess(false), 5000);
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error(error instanceof Error ? error.message : "Hubo un error al enviar el mensaje. Inténtalo de nuevo.");
+      toast.error(error instanceof Error ? error.message : t.contact.form.errorSending);
     } finally {
       setIsSubmitting(false);
     }
@@ -140,16 +142,16 @@ export default function ContactForm() {
               <CheckCircle2 className="w-8 h-8 text-green-600 dark:text-green-400" />
             </div>
             <h3 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
-              ¡Mensaje enviado con éxito!
+              {t.contact.form.successTitle}
             </h3>
             <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
-              Gracias por contactarnos. Nos pondremos en contacto contigo en menos de 24 horas hábiles.
+              {t.contact.form.successMessage}
             </p>
             <button
               onClick={() => setIsSuccess(false)}
               className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold py-3 px-6 rounded-lg transition-all"
             >
-              Enviar otro mensaje
+              {t.contact.form.successButton}
             </button>
           </div>
         </div>
@@ -163,7 +165,7 @@ export default function ContactForm() {
         <div className="text-center mb-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 dark:bg-cyan-500/20 border border-cyan-500/20 dark:border-cyan-400/30 rounded-full text-cyan-600 dark:text-cyan-400 text-sm font-medium">
             <Sparkles className="w-4 h-4" />
-            Contáctanos
+            {t.contact.badge}
           </div>
         </div>
 
@@ -172,7 +174,7 @@ export default function ContactForm() {
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                  Nombre completo *
+                  {t.contact.form.name} *
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -187,7 +189,7 @@ export default function ContactForm() {
                     className={`w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-slate-900 border ${
                       errors.name ? "border-red-500" : "border-gray-300 dark:border-slate-600"
                     } rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400`}
-                    placeholder="Juan Pérez"
+                    placeholder={t.contact.form.namePlaceholder}
                   />
                 </div>
                 {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
@@ -195,7 +197,7 @@ export default function ContactForm() {
 
               <div>
                 <label htmlFor="email" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                  Email *
+                  {t.contact.form.email} *
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -210,7 +212,7 @@ export default function ContactForm() {
                     className={`w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-slate-900 border ${
                       errors.email ? "border-red-500" : "border-gray-300 dark:border-slate-600"
                     } rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400`}
-                    placeholder="juan@empresa.com"
+                    placeholder={t.contact.form.emailPlaceholder}
                   />
                 </div>
                 {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
@@ -220,7 +222,7 @@ export default function ContactForm() {
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="phone" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                  Teléfono
+                  {t.contact.form.phone}
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -233,14 +235,14 @@ export default function ContactForm() {
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-                    placeholder="+1 (555) 123-4567"
+                    placeholder={t.contact.form.phonePlaceholder}
                   />
                 </div>
               </div>
 
               <div>
                 <label htmlFor="service" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                  Servicio de interés *
+                  {t.contact.form.service} *
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -255,16 +257,16 @@ export default function ContactForm() {
                       errors.service ? "border-red-500" : "border-gray-300 dark:border-slate-600"
                     } rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all text-gray-900 dark:text-white`}
                   >
-                    <option value="">Selecciona un servicio</option>
-                    <option value="software">Desarrollo de Software</option>
-                    <option value="network">Soluciones de Red</option>
-                    <option value="iso">Certificación ISO 27001</option>
-                    <option value="cybersecurity">Ciberseguridad</option>
-                    <option value="backups">Gestión de Respaldos</option>
-                    <option value="licensing">Licenciamiento de Software</option>
-                    <option value="disaster">Recuperación ante Desastres</option>
-                    <option value="datacenter">Diseño de Data Center</option>
-                    <option value="other">Otro</option>
+                    <option value="">{t.contact.form.serviceSelect}</option>
+                    <option value="software">{t.contact.form.serviceSoftware}</option>
+                    <option value="network">{t.contact.form.serviceNetwork}</option>
+                    <option value="iso">{t.contact.form.serviceIso}</option>
+                    <option value="cybersecurity">{t.contact.form.serviceCybersecurity}</option>
+                    <option value="backups">{t.contact.form.serviceBackups}</option>
+                    <option value="licensing">{t.contact.form.serviceLicensing}</option>
+                    <option value="disaster">{t.contact.form.serviceDisaster}</option>
+                    <option value="datacenter">{t.contact.form.serviceDatacenter}</option>
+                    <option value="other">{t.contact.form.serviceOther}</option>
                   </select>
                 </div>
                 {errors.service && <p className="mt-1 text-sm text-red-500">{errors.service}</p>}
@@ -273,7 +275,7 @@ export default function ContactForm() {
 
             <div>
               <label htmlFor="message" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                Cuéntanos sobre tu proyecto
+                {t.contact.form.message}
               </label>
               <div className="relative">
                 <div className="absolute top-3 left-3 pointer-events-none">
@@ -288,7 +290,7 @@ export default function ContactForm() {
                   className={`w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-slate-900 border ${
                     errors.message ? "border-red-500" : "border-gray-300 dark:border-slate-600"
                   } rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all resize-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400`}
-                  placeholder="Describe brevemente tu proyecto, necesidades y objetivos..."
+                  placeholder={t.contact.form.messagePlaceholder}
                 ></textarea>
               </div>
               {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
@@ -305,7 +307,7 @@ export default function ContactForm() {
                   className="mt-1 w-4 h-4 text-cyan-600 bg-gray-50 dark:bg-slate-900 border-gray-300 dark:border-slate-600 rounded focus:ring-2 focus:ring-cyan-500"
                 />
                 <label htmlFor="privacy" className="text-sm text-gray-600 dark:text-gray-400">
-                  Acepto la política de privacidad y el tratamiento de mis datos personales *
+                  {t.contact.form.privacy}
                 </label>
               </div>
               {errors.privacy && <p className="mt-1 text-sm text-red-500">{errors.privacy}</p>}
@@ -319,18 +321,18 @@ export default function ContactForm() {
               {isSubmitting ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Enviando...
+                  {t.contact.form.submitting}
                 </>
               ) : (
                 <>
-                  Enviar mensaje
+                  {t.contact.form.submit}
                   <ArrowRight className="w-5 h-5" />
                 </>
               )}
             </button>
 
             <p className="text-center text-sm text-gray-500 dark:text-gray-400">
-              Te responderemos en menos de 24 horas hábiles
+              {t.contact.form.responseTime}
             </p>
           </form>
         </div>
