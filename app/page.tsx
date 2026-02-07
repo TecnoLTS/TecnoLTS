@@ -834,7 +834,7 @@ export default function Home() {
                 {/* Imagen */}
                 <div className="rounded-3xl overflow-hidden ">
                   <img
-                    src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800&h=1200"
+                    src="/pexels-photo-3184292.jpeg"
                     alt="Business Professional"
                     className="w-full h-full object-cover min-h-[600px] lg:min-h-[750px]"
                   />
@@ -911,22 +911,13 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Video */}
                   <div className="bg-gray-900 rounded-3xl overflow-hidden shadow-xl relative min-h-[280px]">
                     <img
-                      src="https://images.pexels.com/photos/3184611/pexels-photo-3184611.jpeg?auto=compress&cs=tinysrgb&w=600"
-                      alt="Video Thumbnail"
+                      src="/pexels-photo-3184611.jpeg"
+                      alt="Thumbnail"
                       className="w-full h-full object-cover"
                     />
 
-                    {/* Play button */}
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                      <button className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
-                        <svg className="w-8 h-8 text-gray-900 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                          <polygon points="8,5 19,12 8,19" />
-                        </svg>
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
