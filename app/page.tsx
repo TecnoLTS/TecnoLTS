@@ -1,70 +1,34 @@
-"use client"
-
 import { ArrowRight, Code, Shield, Network, CheckCircle, Zap, Lock, Layers, Users, TrendingUp, Award, Sparkles, Server, MessageCircle, ChevronDown, HardDrive, FileCheck, ArrowUp, MapPin, Phone, Mail, Clock, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
-import { useLanguage } from '@/components/language-provider';
 import ContactForm from "@/components/contact-form";
-import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { translations, Language } from '@/lib/translations';
 
 export default function Home() {
-  const { t } = useLanguage();
-  const [showScrollTop, setShowScrollTop] = useState(false);
-  
-  useEffect(() => {
-    // Scroll reveal animation
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.scroll-reveal').forEach(el => {
-      observer.observe(el);
-    });
-
-    // Magnetic effect for buttons and cards
-    const magneticElements = document.querySelectorAll('.magnetic');
-    
-    magneticElements.forEach(element => {
-      element.addEventListener('mousemove', (e: any) => {
-        const rect = element.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        
-        (element as HTMLElement).style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
-      });
-
-      element.addEventListener('mouseleave', () => {
-        (element as HTMLElement).style.transform = 'translate(0, 0)';
-      });
-    });
-
-    // Scroll to top button visibility
-    const handleScroll = () => {
-      const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-      setShowScrollTop(scrollPercentage > 20);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const defaultLang = process.env.NEXT_PUBLIC_DEFAULT_LANG;
+  const language: Language = defaultLang === 'es' ? 'es' : 'en';
+  const t = translations[language];
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const orgName = 'TecnoLTS';
+  const orgSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: orgName,
+    url: siteUrl,
+    logo: `${siteUrl}/og-image.svg`,
+    description:
+      'Enterprise IT solutions including software development, network infrastructure, and ISO 27001 security audits.',
+    sameAs: [],
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative overflow-hidden">
+    <main id="top" className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+      />
       {/* Floating Particles Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="particle particle-1"></div>
@@ -1106,13 +1070,9 @@ export default function Home() {
       </section>
 
       {/* Scroll to Top Button */}
-      <div 
-        className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${
-          showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
-        }`}
-      >
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      <div className="fixed bottom-6 right-6 z-50 transition-all duration-300">
+        <a
+          href="#top"
           className="relative bg-gradient-to-br from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center group"
           aria-label="Volver al inicio"
         >
@@ -1120,7 +1080,7 @@ export default function Home() {
           <span className="absolute right-full mr-4 bg-gradient-to-r from-gray-900 to-gray-800 text-white px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-gray-700">
             ⬆️ Ir al inicio
           </span>
-        </button>
+        </a>
       </div>
 
       {/* WhatsApp Floating Button */}
@@ -1278,6 +1238,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }
