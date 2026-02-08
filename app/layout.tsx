@@ -6,7 +6,7 @@ import { LanguageProvider } from '@/components/language-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-const defaultLang = process.env.NEXT_PUBLIC_DEFAULT_LANG === 'es' ? 'es' : 'en';
+const defaultLang = 'es';
 
 export const metadata: Metadata = {
   title: 'TecnoLTS - Enterprise IT Solutions & Services',
@@ -14,6 +14,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   alternates: {
     canonical: '/',
+    languages: {
+      en: '/en',
+      es: '/es',
+    },
   },
   openGraph: {
     title: 'TecnoLTS - Enterprise IT Solutions & Services',

@@ -8,10 +8,13 @@ export const translations = {
       getStarted: "Get Started"
     },
     hero: {
+      badge: "Enterprise IT Solutions",
       title: "Enterprise IT Solutions for the Modern Business",
       description: "Transform your business with cutting-edge technology solutions. From custom software development to comprehensive security audits, we deliver excellence at every level.",
       ctaPrimary: "Start Your Project",
       ctaSecondary: "View Services",
+      uptimeBadge: "100% Uptime",
+      secureBadge: "Secure",
       stats: {
         experience: {
           value: "20+",
@@ -33,6 +36,7 @@ export const translations = {
       software: {
         title: "Software Development",
         description: "Custom applications built with cutting-edge technologies. Scalable, secure, and tailored to your needs.",
+        cta: "Consult Development Experts",
         items: [
           "Web & Mobile Apps",
           "Cloud-Native Architecture",
@@ -42,6 +46,7 @@ export const translations = {
       network: {
         title: "Network Solutions",
         description: "Enterprise infrastructure designed for reliability, performance, and security.",
+        cta: "Consult Network Experts",
         items: [
           "Network Design",
           "Security & Firewall",
@@ -51,6 +56,7 @@ export const translations = {
       iso: {
         title: "ISO 27001 Audits",
         description: "Comprehensive security audits and compliance services for certification.",
+        cta: "Consult ISO Experts",
         items: [
           "Gap Analysis",
           "Implementation Support",
@@ -60,6 +66,7 @@ export const translations = {
       cybersecurity: {
         title: "Cyber Security",
         description: "Advanced threat protection and security infrastructure to safeguard your digital assets.",
+        cta: "Consult Security Experts",
         items: [
           "Threat Detection",
           "Vulnerability Scanning",
@@ -69,6 +76,7 @@ export const translations = {
       backups: {
         title: "Backup Management",
         description: "Reliable backup solutions with automated recovery strategies for business continuity.",
+        cta: "Consult Backup Experts",
         items: [
           "Automated Backups",
           "Disaster Recovery",
@@ -78,6 +86,7 @@ export const translations = {
       licensing: {
         title: "Software Licensing",
         description: "Expert guidance on software licensing compliance and optimization for your organization.",
+        cta: "Consult Licensing Experts",
         items: [
           "License Audit",
           "Compliance Management",
@@ -87,6 +96,7 @@ export const translations = {
       disasterRecovery: {
         title: "Disaster Recovery",
         description: "Comprehensive planning and implementation of disaster recovery strategies.",
+        cta: "Consult Recovery Experts",
         items: [
           "Business Continuity",
           "Recovery Planning",
@@ -96,12 +106,23 @@ export const translations = {
       dataCenter: {
         title: "Data Center Design & Organization",
         description: "We design the physical layout of your Data Center, defining hardware location and cable organization to achieve an organized, efficient, and scalable infrastructure.",
+        cta: "Consult Data Center Experts",
         items: [
           "Physical Infrastructure Design",
           "Cable Management & Organization",
           "Scalable Architecture"
         ]
       }
+    },
+    labels: {
+      coreCapabilities: "CORE CAPABILITIES"
+    },
+    code: {
+      commentAlways: "// always!",
+      commentEvaluating: "// Evaluating your project...",
+      analysisCompleted: "Analysis completed",
+      result: "Result: \"TecnoLTS\"",
+      bestOption: "Your best option always"
     },
     heroGrid: {
       badge: "GET TO KNOW US",
@@ -217,6 +238,12 @@ export const translations = {
         scheduleValue: "Mon - Fri: 9:00 AM - 6:00 PM"
       }
     },
+    ui: {
+      scrollTopAria: "Back to top",
+      scrollTopText: "⬆️ Back to top",
+      whatsAppAria: "Contact via WhatsApp",
+      whatsAppText: "💬 Chat with us!"
+    },
     footer: {
       description: "Leading provider of enterprise IT solutions. We deliver innovation, security, and reliability in every project.",
       services: "Services",
@@ -228,7 +255,13 @@ export const translations = {
       privacy: "Privacy Policy",
       terms: "Terms of Service",
       contact: "Contact",
+      contactEmailLabel: "Email",
+      contactPhoneLabel: "Phone",
+      contactLocationLabel: "Location",
       rights: "All rights reserved."
+    },
+    seo: {
+      organizationDescription: "Enterprise IT solutions including software development, network infrastructure, and ISO 27001 security audits."
     }
   },
   es: {
@@ -240,10 +273,13 @@ export const translations = {
       getStarted: "Comenzar"
     },
     hero: {
+      badge: "Soluciones IT Empresariales",
       title: "Soluciones IT Empresariales para Negocios Modernos",
       description: "Transforma tu negocio, deja atrás los procesos lentos, sistemas rígidos y riesgos de seguridad. Nuestros servicios profesionales brindan soluciones a medida que liberan tu operación y te preparan para la nueva era tecnologica.",
       ctaPrimary: "Iniciar Tu Proyecto",
       ctaSecondary: "Ver Servicios",
+      uptimeBadge: "100% Disponibilidad",
+      secureBadge: "Seguro",
       stats: {
         experience: {
           value: "20+",
@@ -265,6 +301,7 @@ export const translations = {
       software: {
         title: "Desarrollo de Software",
         description: "Aplicaciones personalizadas construidas con tecnologías de vanguardia. Escalables, seguras y adaptadas a tus necesidades.",
+        cta: "Consulta Expertos en Desarrollo",
         items: [
           "Aplicaciones Web y Móviles",
           "Arquitectura Cloud-Native",
@@ -274,6 +311,7 @@ export const translations = {
       network: {
         title: "Soluciones de Redes",
         description: "Infraestructura empresarial diseñada para confiabilidad, rendimiento y seguridad.",
+        cta: "Consulta Expertos en Redes",
         items: [
           "Diseño de Redes",
           "Seguridad y Firewall",
@@ -283,6 +321,7 @@ export const translations = {
       iso: {
         title: "Auditorías ISO 27001",
         description: "Auditorías de seguridad integrales y servicios de cumplimiento para certificación.",
+        cta: "Consulta Expertos ISO",
         items: [
           "Análisis de Brechas",
           "Soporte de Implementación",
@@ -292,6 +331,7 @@ export const translations = {
       cybersecurity: {
         title: "Seguridad de la información",
         description: "Protección avanzada contra amenazas e infraestructura de seguridad para salvaguardar tus activos digitales.",
+        cta: "Consulta Expertos en Seguridad",
         items: [
           "Detección de Amenazas",
           "Escaneo de Vulnerabilidades",
@@ -301,6 +341,7 @@ export const translations = {
       backups: {
         title: "Gestión de Backups",
         description: "Soluciones confiables de respaldo con estrategias automáticas de recuperación para continuidad empresarial.",
+        cta: "Consulta Expertos en Respaldos",
         items: [
           "Backups Automatizados",
           "Recuperación ante Desastres",
@@ -310,6 +351,7 @@ export const translations = {
       licensing: {
         title: "Licenciamientos",
         description: "Asesoramiento experto en cumplimiento de licencias de software y optimización para tu organización.",
+        cta: "Consulta Expertos en Licencias",
         items: [
           "Auditoría de Licencias",
           "Gestión de Cumplimiento",
@@ -319,6 +361,7 @@ export const translations = {
       disasterRecovery: {
         title: "Recuperación de Desastres",
         description: "Planificación e implementación integral de estrategias de recuperación ante desastres.",
+        cta: "Consulta Expertos en Recuperación",
         items: [
           "Continuidad Empresarial",
           "Planificación de Recuperación",
@@ -328,12 +371,23 @@ export const translations = {
       dataCenter: {
         title: "Diseño y Organización de Data Center",
         description: "Diseñamos la disposición física de tu Data Center, definiendo la ubicacion del hardware y tambien organización de cableado para lograr una infraestructura ordenada, eficiente y escalable.",
+        cta: "Consulta Expertos en Data Center",
         items: [
           "Diseño de Infraestructura Física",
           "Gestión y Organización de Cableado",
           "Arquitectura Escalable"
         ]
       }
+    },
+    labels: {
+      coreCapabilities: "CAPACIDADES CLAVE"
+    },
+    code: {
+      commentAlways: "// ¡siempre!",
+      commentEvaluating: "// Evaluando tu proyecto...",
+      analysisCompleted: "Análisis completado",
+      result: "Resultado: \"TecnoLTS\"",
+      bestOption: "Tu mejor opción siempre"
     },
     heroGrid: {
       badge: "CONÓCENOS",
@@ -449,6 +503,12 @@ export const translations = {
         scheduleValue: "Lun - Vie: 9:00 AM - 6:00 PM"
       }
     },
+    ui: {
+      scrollTopAria: "Volver al inicio",
+      scrollTopText: "⬆️ Ir al inicio",
+      whatsAppAria: "Contactar por WhatsApp",
+      whatsAppText: "💬 ¡Chatea con nosotros!"
+    },
     footer: {
       description: "Proveedor líder de soluciones IT empresariales. Entregamos innovación, seguridad y confiabilidad en cada proyecto.",
       services: "Servicios",
@@ -460,7 +520,13 @@ export const translations = {
       privacy: "Política de Privacidad",
       terms: "Términos de Servicio",
       contact: "Contacto",
+      contactEmailLabel: "Email",
+      contactPhoneLabel: "Teléfono",
+      contactLocationLabel: "Ubicación",
       rights: "Todos los derechos reservados."
+    },
+    seo: {
+      organizationDescription: "Soluciones IT empresariales incluyendo desarrollo de software, infraestructura de red y auditorías de seguridad ISO 27001."
     }
   }
 } as const;

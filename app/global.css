@@ -76,8 +76,15 @@
   * {
     @apply border-border;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
+  }
+  .heading-safe {
+    line-height: 1.15;
+    padding-bottom: 0.08em;
   }
 }
 
@@ -383,6 +390,11 @@
   /* Magnetic Effect */
   .magnetic {
     transition: transform 0.2s ease-out;
+  }
+
+  /* Fallback hover motion for buttons when JS effects are disabled */
+  .magnetic:hover {
+    transform: translateX(6px);
   }
 
   /* Scroll Reveal (SSR-safe: keep content visible without JS) */

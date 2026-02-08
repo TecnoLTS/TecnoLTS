@@ -1,28 +1,33 @@
 "use client"
 
-import * as React from "react"
 import { Languages } from "lucide-react"
-import { useLanguage } from "@/components/language-provider"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 
-export function LanguageToggle() {
-  const { language, setLanguage } = useLanguage()
+export function LanguageToggle({ lang }: { lang: "en" | "es" }) {
+  const pathname = usePathname()
+  const currentLang = pathname?.startsWith("/es") ? "es" : "en"
+  const effectiveLang = lang ?? currentLang
+  const nextLang = effectiveLang === "en" ? "es" : "en"
+  const title = effectiveLang === "en" ? "Cambiar a Español" : "Switch to English"
 
   return (
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => setLanguage(language === "en" ? "es" : "en")}
+      asChild
       className="h-9 w-9"
-      title={language === "en" ? "Cambiar a Español" : "Switch to English"}
     >
-      <div className="flex items-center justify-center gap-1">
-        <Languages className="h-4 w-4" />
-        <span className="text-xs font-medium">
-          {language === "en" ? "ES" : "EN"}
-        </span>
-      </div>
-      <span className="sr-only">Toggle language</span>
+      <Link href={`/${nextLang}`} title={title} prefetch>
+        <div className="flex items-center justify-center gap-1">
+          <Languages className="h-4 w-4" />
+          <span className="text-xs font-medium">
+            {effectiveLang === "en" ? "ES" : "EN"}
+          </span>
+        </div>
+        <span className="sr-only">Toggle language</span>
+      </Link>
     </Button>
   )
 }
