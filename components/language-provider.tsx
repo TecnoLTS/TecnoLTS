@@ -1,6 +1,7 @@
 "use client"
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { translations, Language } from '@/lib/translations';
 
 type TranslationStructure = typeof translations.en;
@@ -14,10 +15,11 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('en');
+  const pathname = usePathname();
+  const [language, setLanguageState] = useState<Language>('es');
 
   useEffect(() => {
-    const pathLang = window.location.pathname.split('/').filter(Boolean)[0] as Language | undefined;
+    const pathLang = pathname?.split('/').filter(Boolean)[0] as Language | undefined;
     if (pathLang === 'en' || pathLang === 'es') {
       setLanguageState(pathLang);
       localStorage.setItem('language', pathLang);
@@ -36,7 +38,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'es')) {
       setLanguageState(savedLanguage);
     }
-  }, []);
+  }, [pathname]);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
