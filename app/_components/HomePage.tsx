@@ -1,16 +1,29 @@
 "use client"
 
-import { ArrowRight, Code, Shield, Network, CheckCircle, Zap, Lock, Layers, Users, TrendingUp, Award, Sparkles, Server, MessageCircle, ChevronDown, HardDrive, FileCheck, ArrowUp, MapPin, Phone, Mail, Clock, ChevronRight } from 'lucide-react';
+import { ArrowRight, Code, Shield, Network, CheckCircle, Zap, Lock, Layers, Users, TrendingUp, Award, Sparkles, Server, MessageCircle, ChevronDown, HardDrive, FileCheck, ArrowUp, MapPin, Phone, Mail, Clock, ChevronRight, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
 import ContactForm from "@/components/contact-form";
 import Image from 'next/image';
 import { useLanguage } from '@/components/language-provider';
+import { useState, useEffect } from 'react';
 import ScrollToTopButton from '@/app/_components/ScrollToTopButton';
 
 export default function HomePage() {
   const { t } = useLanguage();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      setShowScrollButton(scrollPercentage > 10);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
   const orgName = 'TecnoLTS';
   const orgSchema = {
@@ -45,9 +58,11 @@ export default function HomePage() {
             <div className="flex items-center">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 rounded-xl" />
-                <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">TecnoLTS</span>
+                <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">TecnoLTS</span>
               </div>
             </div>
+            
+            {/* Desktop Menu */}
             <div className="hidden md:flex items-center gap-4">
               <div className="relative group">
                 <button className="flex items-center gap-1 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium py-2">
@@ -116,80 +131,151 @@ export default function HomePage() {
                 <LanguageToggle />
               </div>
               <Button asChild className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 shadow-lg transition-all duration-300 magnetic hover-lift">
-                <a href="#contact">
+                <a href="#contact-form">
+                  {t.nav.getStarted}
+                </a>
+              </Button>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="flex md:hidden items-center gap-2">
+              <ThemeToggle />
+              <LanguageToggle />
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors touch-manipulation"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-700">
+            <div className="px-4 py-4 space-y-3 max-h-[calc(100vh-4rem)] overflow-y-auto">
+              <div className="space-y-2">
+                <div className="text-sm font-semibold text-gray-500 dark:text-gray-400 px-2 mb-2">{t.nav.services}</div>
+                <a href="#software" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
+                  <Code className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                  <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{t.services.software.title}</span>
+                </a>
+                <a href="#network" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-cyan-50 dark:hover:bg-cyan-900/20 transition-colors">
+                  <Network className="w-5 h-5 text-cyan-600 dark:text-cyan-400 flex-shrink-0" />
+                  <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{t.services.network.title}</span>
+                </a>
+                <a href="#iso" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors">
+                  <Lock className="w-5 h-5 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+                  <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{t.services.iso.title}</span>
+                </a>
+                <a href="#cybersecurity" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors">
+                  <Shield className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                  <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{t.services.cybersecurity.title}</span>
+                </a>
+                <a href="#backups" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors">
+                  <Layers className="w-5 h-5 text-orange-600 dark:text-orange-400 flex-shrink-0" />
+                  <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{t.services.backups.title}</span>
+                </a>
+                <a href="#licensing" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors">
+                  <FileCheck className="w-5 h-5 text-indigo-600 dark:text-indigo-400 flex-shrink-0" />
+                  <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{t.services.licensing.title}</span>
+                </a>
+                <a href="#disaster-recovery" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors">
+                  <Zap className="w-5 h-5 text-rose-600 dark:text-rose-400 flex-shrink-0" />
+                  <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{t.services.disasterRecovery.title}</span>
+                </a>
+                <a href="#datacenter" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors">
+                  <HardDrive className="w-5 h-5 text-teal-600 dark:text-teal-400 flex-shrink-0" />
+                  <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{t.services.dataCenter.title}</span>
+                </a>
+              </div>
+              
+              <div className="border-t border-gray-200 dark:border-slate-700 pt-3 space-y-2">
+                <a href="#about" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors text-sm font-medium">
+                  {t.nav.about}
+                </a>
+                <a href="#contact-form" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors text-sm font-medium">
+                  {t.nav.contact}
+                </a>
+              </div>
+
+              <Button asChild className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700">
+                <a href="#contact-form" onClick={() => setMobileMenuOpen(false)}>
                   {t.nav.getStarted}
                 </a>
               </Button>
             </div>
           </div>
-        </div>
+        )}
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section className="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left Content */}
             <div className="scroll-reveal">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20 border border-blue-500/20 dark:border-blue-400/30 rounded-full text-blue-600 dark:text-cyan-400 text-sm font-medium mb-6 animate-bounce-in">
-                <Sparkles className="w-4 h-4 animate-rotate-bounce" />
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20 border border-blue-500/20 dark:border-blue-400/30 rounded-full text-blue-600 dark:text-cyan-400 text-xs sm:text-sm font-medium mb-3 sm:mb-4 md:mb-6 animate-bounce-in">
+                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 animate-rotate-bounce" />
                 {t.hero.badge}
               </div>
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-text-reveal heading-safe">
+              <h1 className="text-[28px] leading-[1.2] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 sm:leading-tight animate-text-reveal heading-safe">
                 <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-cyan-700 dark:from-white dark:via-cyan-300 dark:to-blue-400 bg-clip-text text-transparent">
                   {t.hero.title}
                 </span>
               </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+              <p className="text-sm leading-relaxed sm:text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-5 sm:mb-6 md:mb-8">
                 {t.hero.description}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-lg shadow-xl shadow-blue-500/30 magnetic hover-lift animate-pulse-glow">
-                  <a href="#contact">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-1.5 sm:mb-0">
+                <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-sm sm:text-base md:text-lg shadow-xl shadow-blue-500/30 magnetic hover-lift animate-pulse-glow">
+                  <a href="#contact-form" className="flex items-center justify-center">
                     {t.hero.ctaPrimary}
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </a>
                 </Button>
               </div>
 
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-gray-200 dark:border-slate-700">
-                <div>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-1">{t.hero.stats.experience.value}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">{t.hero.stats.experience.label}</div>
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 mt-6 sm:mt-8 md:mt-12 pt-5 sm:pt-6 md:pt-8 border-t border-gray-200 dark:border-slate-700">
+                <div className="text-center sm:text-left">
+                  <div className="text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-0.5 sm:mb-1">{t.hero.stats.experience.value}</div>
+                  <div className="text-[10px] sm:text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-tight">{t.hero.stats.experience.label}</div>
                 </div>
-                <div>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-1">{t.hero.stats.quality.value}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">{t.hero.stats.quality.label}</div>
+                <div className="text-center sm:text-left">
+                  <div className="text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-0.5 sm:mb-1">{t.hero.stats.quality.value}</div>
+                  <div className="text-[10px] sm:text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-tight">{t.hero.stats.quality.label}</div>
                 </div>
-                <div>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-1">{t.hero.stats.technologies.value}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">{t.hero.stats.technologies.label}</div>
+                <div className="text-center sm:text-left">
+                  <div className="text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-0.5 sm:mb-1">{t.hero.stats.technologies.value}</div>
+                  <div className="text-[10px] sm:text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-tight">{t.hero.stats.technologies.label}</div>
                 </div>
               </div>
             </div>
 
             {/* Right Visual */}
-            <div className="relative">
-              <div className="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 shadow-2xl shadow-blue-500/30 border border-slate-700">
+            <div className="relative mt-6 lg:mt-0">
+              <div className="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 lg:p-8 shadow-2xl shadow-blue-500/20 sm:shadow-blue-500/30 border border-slate-700">
                 {/* Terminal/Code Editor Window */}
-                <div className="relative bg-slate-950 rounded-xl overflow-hidden border border-slate-700/50">
+                <div className="relative bg-slate-950 rounded-lg sm:rounded-xl overflow-hidden border border-slate-700/50">
                   {/* Window Header */}
-                  <div className="flex items-center gap-2 px-4 py-3 bg-slate-900 border-b border-slate-700/50">
-                    <div className="flex gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500" />
-                      <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                      <div className="w-3 h-3 rounded-full bg-green-500" />
+                  <div className="flex items-center gap-2 px-2.5 sm:px-3 md:px-4 py-1.5 sm:py-2 md:py-3 bg-slate-900 border-b border-slate-700/50">
+                    <div className="flex gap-1 sm:gap-1.5 md:gap-2">
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 md:w-3 md:h-3 rounded-full bg-red-500" />
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 md:w-3 md:h-3 rounded-full bg-yellow-500" />
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 md:w-3 md:h-3 rounded-full bg-green-500" />
                     </div>
-                    <div className="flex-1 text-center text-slate-400 text-xs font-mono">
+                    <div className="flex-1 text-center text-slate-400 text-[9px] sm:text-[10px] md:text-xs font-mono">
                       app.tsx
                     </div>
                   </div>
 
                   {/* Code Content */}
-                  <div className="p-6 font-mono text-sm space-y-2 min-h-[400px]">
-                    <div className="flex gap-3">
-                      <span className="text-slate-600">1</span>
+                  <div className="p-2.5 sm:p-3 md:p-4 lg:p-6 font-mono text-[9px] sm:text-[10px] md:text-xs lg:text-sm space-y-0.5 sm:space-y-1 md:space-y-2 min-h-[240px] sm:min-h-[280px] md:min-h-[350px] lg:min-h-[400px] overflow-x-auto">
+                    <div className="flex gap-1.5 sm:gap-2 md:gap-3">
+                      <span className="text-slate-600 flex-shrink-0">1</span>
                       <span className="text-purple-400">function</span>
                       <span className="text-yellow-300">chooseTechPartner</span>
                       <span className="text-slate-400">(</span>
@@ -197,8 +283,8 @@ export default function HomePage() {
                       <span className="text-slate-400">)</span>
                       <span className="text-yellow-300">{'{'}</span>
                     </div>
-                    <div className="flex gap-3 pl-6">
-                      <span className="text-slate-600">2</span>
+                    <div className="flex gap-1.5 sm:gap-2 md:gap-3 pl-3 sm:pl-4 md:pl-6">
+                      <span className="text-slate-600 flex-shrink-0">2</span>
                       <span className="text-purple-400">if</span>
                       <span className="text-slate-400">(</span>
                       <span className="text-orange-300">project</span>
@@ -209,43 +295,43 @@ export default function HomePage() {
                       <span className="text-slate-400">)</span>
                       <span className="text-yellow-300">{'{'}</span>
                     </div>
-                    <div className="flex gap-3 pl-12">
-                      <span className="text-slate-600">3</span>
+                    <div className="flex gap-1.5 sm:gap-2 md:gap-3 pl-6 sm:pl-8 md:pl-12">
+                      <span className="text-slate-600 flex-shrink-0">3</span>
                       <span className="text-purple-400">return</span>
                       <span className="text-emerald-300">"TecnoLTS"</span>
                       <span className="text-slate-400">;</span>
                     </div>
-                    <div className="flex gap-3 pl-6">
-                      <span className="text-slate-600">4</span>
+                    <div className="flex gap-1.5 sm:gap-2 md:gap-3 pl-3 sm:pl-4 md:pl-6">
+                      <span className="text-slate-600 flex-shrink-0">4</span>
                       <span className="text-yellow-300">{'}'}</span>
                       <span className="text-purple-400">else</span>
                       <span className="text-yellow-300">{'{'}</span>
                     </div>
-                    <div className="flex gap-3 pl-12">
-                      <span className="text-slate-600">5</span>
+                    <div className="flex gap-1.5 sm:gap-2 md:gap-3 pl-6 sm:pl-8 md:pl-12">
+                      <span className="text-slate-600 flex-shrink-0">5</span>
                       <span className="text-purple-400">return</span>
                       <span className="text-emerald-300">"TecnoLTS"</span>
                       <span className="text-slate-400">;</span>
-                      <span className="text-slate-600 ml-2">{t.code.commentAlways}</span>
+                      <span className="text-slate-600 ml-1 sm:ml-2">{t.code.commentAlways}</span>
                     </div>
-                    <div className="flex gap-3 pl-6">
-                      <span className="text-slate-600">6</span>
+                    <div className="flex gap-1.5 sm:gap-2 md:gap-3 pl-3 sm:pl-4 md:pl-6">
+                      <span className="text-slate-600 flex-shrink-0">6</span>
                       <span className="text-yellow-300">{'}'}</span>
                     </div>
-                    <div className="flex gap-3">
-                      <span className="text-slate-600">7</span>
+                    <div className="flex gap-1.5 sm:gap-2 md:gap-3">
+                      <span className="text-slate-600 flex-shrink-0">7</span>
                       <span className="text-yellow-300">{'}'}</span>
                     </div>
-                    <div className="flex gap-3">
-                      <span className="text-slate-600">8</span>
+                    <div className="flex gap-1.5 sm:gap-2 md:gap-3">
+                      <span className="text-slate-600 flex-shrink-0">8</span>
                       <span className="text-slate-500"></span>
                     </div>
-                    <div className="flex gap-3">
-                      <span className="text-slate-600">9</span>
+                    <div className="flex gap-1.5 sm:gap-2 md:gap-3">
+                      <span className="text-slate-600 flex-shrink-0">9</span>
                       <span className="text-slate-500">{t.code.commentEvaluating}</span>
                     </div>
-                    <div className="flex gap-3">
-                      <span className="text-slate-600">10</span>
+                    <div className="flex gap-1.5 sm:gap-2 md:gap-3">
+                      <span className="text-slate-600 flex-shrink-0">10</span>
                       <span className="text-purple-400">const</span>
                       <span className="text-blue-300">partner</span>
                       <span className="text-slate-400">=</span>
@@ -256,36 +342,36 @@ export default function HomePage() {
                     </div>
 
                     {/* Success Output */}
-                    <div className="pt-4 space-y-1 border-t border-slate-800 mt-4">
-                      <div className="flex gap-2 items-center">
-                        <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                        <span className="text-emerald-400 text-xs">{t.code.analysisCompleted}</span>
+                    <div className="pt-2 sm:pt-3 md:pt-4 space-y-0.5 sm:space-y-1 border-t border-slate-800 mt-2 sm:mt-3 md:mt-4">
+                      <div className="flex gap-1.5 sm:gap-2 items-center">
+                        <CheckCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-emerald-400 flex-shrink-0" />
+                        <span className="text-emerald-400 text-[9px] sm:text-[10px] md:text-xs">{t.code.analysisCompleted}</span>
                       </div>
-                      <div className="flex gap-2 items-center">
-                        <TrendingUp className="w-4 h-4 text-cyan-400 flex-shrink-0" />
-                        <span className="text-cyan-400 text-xs">{t.code.result}</span>
+                      <div className="flex gap-1.5 sm:gap-2 items-center">
+                        <TrendingUp className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-cyan-400 flex-shrink-0" />
+                        <span className="text-cyan-400 text-[9px] sm:text-[10px] md:text-xs">{t.code.result}</span>
                       </div>
-                      <div className="flex gap-2 items-center pt-2">
-                        <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                        <span className="text-emerald-400 text-xs">{t.code.bestOption}</span>
+                      <div className="flex gap-1.5 sm:gap-2 items-center pt-1 sm:pt-2">
+                        <CheckCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-emerald-400 flex-shrink-0" />
+                        <span className="text-emerald-400 text-[9px] sm:text-[10px] md:text-xs">{t.code.bestOption}</span>
                       </div>
                     </div>
 
                     {/* Blinking cursor */}
-                    <div className="flex gap-3 pt-2">
-                      <span className="text-slate-600">11</span>
-                      <span className="w-2 h-5 bg-cyan-400 animate-pulse inline-block"></span>
+                    <div className="flex gap-1.5 sm:gap-2 md:gap-3 pt-1 sm:pt-2">
+                      <span className="text-slate-600 flex-shrink-0">11</span>
+                      <span className="w-1.5 sm:w-2 h-3 sm:h-4 md:h-5 bg-cyan-400 animate-pulse inline-block"></span>
                     </div>
                   </div>
                 </div>
 
                 {/* Floating Badges */}
-                <div className="absolute -top-4 -right-4 bg-emerald-500 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-lg animate-bounce">
+                <div className="hidden sm:flex absolute -top-3 sm:-top-4 -right-3 sm:-right-4 bg-emerald-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold shadow-lg animate-bounce">
                   {t.hero.uptimeBadge}
                 </div>
-                <div className="absolute -bottom-4 -left-4 bg-blue-500 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-lg">
-                  <div className="flex items-center gap-2">
-                    <Shield className="w-4 h-4" />
+                <div className="hidden sm:flex absolute -bottom-3 sm:-bottom-4 -left-3 sm:-left-4 bg-blue-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold shadow-lg">
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <Shield className="w-3 h-3 sm:w-4 sm:h-4" />
                     {t.hero.secureBadge}
                   </div>
                 </div>
@@ -891,7 +977,7 @@ export default function HomePage() {
             {t.cta.description}
           </p>
           <div className="flex justify-center mb-12">
-            <a href="#contact">
+            <a href="#contact-form">
               <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 text-lg shadow-xl">
                 {t.cta.button}
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -937,6 +1023,7 @@ export default function HomePage() {
                 className="group relative block transition-all duration-300 hover:scale-110"
               >
                 <div className="relative h-24 flex items-center justify-center">
+                  {/* Logo para modo claro */}
                   <Image 
                     src="/logos/paramascotas.png" 
                     alt="Paramascotas" 
@@ -944,7 +1031,17 @@ export default function HomePage() {
                     height={500} 
                     quality={100}
                     priority
-                    className="object-contain max-w-full max-h-full transition-all duration-300"
+                    className="object-contain max-w-full max-h-full transition-all duration-300 dark:hidden"
+                  />
+                  {/* Logo para modo oscuro */}
+                  <Image 
+                    src="/logos/Logo-paramascotas-(blanco).png" 
+                    alt="Paramascotas" 
+                    width={1000} 
+                    height={500} 
+                    quality={100}
+                    priority
+                    className="object-contain max-w-full max-h-full transition-all duration-300 hidden dark:block"
                   />
                 </div>
               </a>
@@ -956,6 +1053,7 @@ export default function HomePage() {
                 className="group relative block transition-all duration-300 hover:scale-110"
               >
                 <div className="relative h-24 flex items-center justify-center">
+                  {/* Logo para modo claro */}
                   <Image 
                     src="/logos/autorespuestoscore.png" 
                     alt="Autorespuestos Core" 
@@ -963,7 +1061,17 @@ export default function HomePage() {
                     height={200} 
                     quality={100}
                     priority
-                    className="object-contain max-w-full max-h-full transition-all duration-300"
+                    className="object-contain max-w-full max-h-full transition-all duration-300 dark:hidden"
+                  />
+                  {/* Logo para modo oscuro */}
+                  <Image 
+                    src="/logos/Logo-autorepuestoscore-(blanco).png" 
+                    alt="Autorespuestos Core" 
+                    width={600} 
+                    height={200} 
+                    quality={100}
+                    priority
+                    className="object-contain max-w-full max-h-full transition-all duration-300 hidden dark:block"
                   />
                 </div>
               </a>
@@ -973,7 +1081,7 @@ export default function HomePage() {
       </section>
 
       {/* Contact Form Section */}
-      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 scroll-mt-20">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-5 gap-8 items-stretch">
             {/* Left Column - Contact Info + Map */}
@@ -1046,33 +1154,47 @@ export default function HomePage() {
             </div>
 
             {/* Right Column - Contact Form */}
-            <div className="lg:col-span-3">
+            <div id="contact-form" className="lg:col-span-3 scroll-mt-20">
               <ContactForm />
             </div>
           </div>
         </div>
       </section>
 
-      <ScrollToTopButton />
+      {/* Scroll to Top Button */}
+      {showScrollButton && (
+        <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 transition-all duration-300 animate-fade-in">
+          <a
+            href="#top"
+            className="relative bg-gradient-to-br from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center group"
+            aria-label={t.ui.scrollTopAria}
+          >
+            <ArrowUp className="w-6 h-6 relative z-10" />
+            <span className="hidden lg:block absolute right-full mr-4 bg-gradient-to-r from-gray-900 to-gray-800 text-white px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-gray-700">
+              {t.ui.scrollTopText}
+            </span>
+          </a>
+        </div>
+      )}
 
       {/* WhatsApp Floating Button */}
-      <div className="fixed bottom-28 right-6 z-50">
+      <div className="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 z-50">
         <a
           href="https://wa.me/593992910848?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20más%20información%20sobre%20sus%20servicios"
           target="_blank"
           rel="noopener noreferrer"
-          className="relative bg-gradient-to-br from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white p-5 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center group"
+          className="relative bg-gradient-to-br from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center group"
           aria-label={t.ui.whatsAppAria}
         >
           <div className="absolute inset-0 rounded-full bg-green-400/40 animate-ping"></div>
           <svg 
-            className="w-8 h-8 relative z-10" 
+            className="w-6 h-6 relative z-10" 
             fill="currentColor" 
             viewBox="0 0 24 24"
           >
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
           </svg>
-          <span className="absolute right-full mr-4 bg-gradient-to-r from-gray-900 to-gray-800 text-white px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-gray-700">
+          <span className="hidden lg:block absolute right-full mr-4 bg-gradient-to-r from-gray-900 to-gray-800 text-white px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl border border-gray-700">
             {t.ui.whatsAppText}
           </span>
         </a>

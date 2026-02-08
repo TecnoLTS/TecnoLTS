@@ -49,6 +49,7 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+      - /app/.next
     ports:
       - "${PORT:-3008}:${PORT:-3000}"
     networks:
