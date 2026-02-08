@@ -1,14 +1,15 @@
+"use client"
+
 import { ArrowRight, Code, Shield, Network, CheckCircle, Zap, Lock, Layers, Users, TrendingUp, Award, Sparkles, Server, MessageCircle, ChevronDown, HardDrive, FileCheck, ArrowUp, MapPin, Phone, Mail, Clock, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
 import ContactForm from "@/components/contact-form";
 import Image from 'next/image';
-import { translations, Language } from '@/lib/translations';
+import { useLanguage } from '@/components/language-provider';
 
-export default function HomePage({ lang }: { lang: Language }) {
-  const language: Language = lang === 'es' ? 'es' : 'en';
-  const t = translations[language];
+export default function HomePage() {
+  const { t } = useLanguage();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
   const orgName = 'TecnoLTS';
   const orgSchema = {
@@ -111,7 +112,7 @@ export default function HomePage({ lang }: { lang: Language }) {
               <a href="#contact" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">{t.nav.contact}</a>
               <div className="flex items-center gap-2 ml-2">
                 <ThemeToggle />
-                <LanguageToggle lang={language} />
+                <LanguageToggle />
               </div>
               <Button asChild className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 shadow-lg transition-all duration-300 magnetic hover-lift">
                 <a href="#contact">
