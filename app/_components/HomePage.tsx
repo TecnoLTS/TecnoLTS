@@ -217,11 +217,11 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left Content */}
             <div className="scroll-reveal">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20 border border-blue-500/20 dark:border-blue-400/30 rounded-full text-blue-600 dark:text-cyan-400 text-xs sm:text-sm font-medium mb-3 sm:mb-4 md:mb-6 animate-bounce-in">
-                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 animate-rotate-bounce" />
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20 border border-blue-500/20 dark:border-blue-400/30 rounded-full text-blue-600 dark:text-cyan-400 text-xs sm:text-sm font-medium mb-3 sm:mb-4 md:mb-6">
+                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
                 {t.hero.badge}
               </div>
-              <h1 className="text-[28px] leading-[1.2] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 sm:leading-tight animate-text-reveal heading-safe">
+              <h1 className="text-[28px] leading-[1.2] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 sm:leading-tight heading-safe">
                 <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-cyan-700 dark:from-white dark:via-cyan-300 dark:to-blue-400 bg-clip-text text-transparent">
                   {t.hero.title}
                 </span>
@@ -230,7 +230,7 @@ export default function HomePage() {
                 {t.hero.description}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-1.5 sm:mb-0">
-                <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-sm sm:text-base md:text-lg shadow-xl shadow-blue-500/30 magnetic hover-lift animate-pulse-glow">
+                <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-sm sm:text-base md:text-lg shadow-xl shadow-blue-500/30">
                   <a href="#contact-form" className="flex items-center justify-center">
                     {t.hero.ctaPrimary}
                     <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
@@ -360,13 +360,13 @@ export default function HomePage() {
                     {/* Blinking cursor */}
                     <div className="flex gap-1.5 sm:gap-2 md:gap-3 pt-1 sm:pt-2">
                       <span className="text-slate-600 flex-shrink-0">11</span>
-                      <span className="w-1.5 sm:w-2 h-3 sm:h-4 md:h-5 bg-cyan-400 animate-pulse inline-block"></span>
+                      <span className="w-1.5 sm:w-2 h-3 sm:h-4 md:h-5 bg-cyan-400 inline-block"></span>
                     </div>
                   </div>
                 </div>
 
                 {/* Floating Badges */}
-                <div className="hidden sm:flex absolute -top-3 sm:-top-4 -right-3 sm:-right-4 bg-emerald-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold shadow-lg animate-bounce">
+                <div className="hidden sm:flex absolute -top-3 sm:-top-4 -right-3 sm:-right-4 bg-emerald-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold shadow-lg">
                   {t.hero.uptimeBadge}
                 </div>
                 <div className="hidden sm:flex absolute -bottom-3 sm:-bottom-4 -left-3 sm:-left-4 bg-blue-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold shadow-lg">
@@ -386,9 +386,6 @@ export default function HomePage() {
         
         {/* Software Development */}
         <div id="software" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float-slow"></div>
-          </div>
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="flex flex-col lg:flex-row items-center gap-12">
               <div className="flex-1 scroll-reveal">
@@ -512,9 +509,6 @@ export default function HomePage() {
 
         {/* Network Solutions */}
         <div id="network" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-cyan-50 to-teal-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-cyan-500/30 rounded-full blur-3xl animate-float"></div>
-          </div>
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="flex flex-col lg:flex-row items-center gap-12">
               <div className="flex-1 scroll-reveal">
@@ -570,9 +564,6 @@ export default function HomePage() {
 
         {/* ISO 27001 */}
         <div id="iso" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-float-slow"></div>
-          </div>
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
               <div className="flex-1 scroll-reveal">
@@ -683,9 +674,6 @@ export default function HomePage() {
 
         {/* Software Licensing */}
         <div id="licensing" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-indigo-500/30 rounded-full blur-3xl animate-float"></div>
-          </div>
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
               <div className="flex-1 scroll-reveal">
@@ -741,9 +729,6 @@ export default function HomePage() {
 
         {/* Disaster Recovery */}
         <div id="disaster-recovery" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-rose-50 to-orange-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-rose-500/30 rounded-full blur-3xl animate-float-slow"></div>
-          </div>
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="flex flex-col lg:flex-row items-center gap-12">
               <div className="flex-1 scroll-reveal">
@@ -799,9 +784,6 @@ export default function HomePage() {
 
         {/* Data Center Design & Organization */}
         <div id="datacenter" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-1/2 right-1/3 w-96 h-96 bg-teal-500/30 rounded-full blur-3xl animate-float"></div>
-          </div>
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
               <div className="flex-1 scroll-reveal">
@@ -1029,9 +1011,9 @@ export default function HomePage() {
                     alt="Paramascotas" 
                     width={1000} 
                     height={500} 
-                    quality={100}
+                    quality={75}
                     priority
-                    className="object-contain max-w-full max-h-full transition-all duration-300 dark:hidden"
+                    className="object-contain max-w-full max-h-full dark:hidden"
                   />
                   {/* Logo para modo oscuro */}
                   <Image 
@@ -1039,9 +1021,9 @@ export default function HomePage() {
                     alt="Paramascotas" 
                     width={1000} 
                     height={500} 
-                    quality={100}
+                    quality={75}
                     priority
-                    className="object-contain max-w-full max-h-full transition-all duration-300 hidden dark:block"
+                    className="object-contain max-w-full max-h-full hidden dark:block"
                   />
                 </div>
               </a>
@@ -1059,9 +1041,9 @@ export default function HomePage() {
                     alt="Autorespuestos Core" 
                     width={600} 
                     height={200} 
-                    quality={100}
+                    quality={75}
                     priority
-                    className="object-contain max-w-full max-h-full transition-all duration-300 dark:hidden"
+                    className="object-contain max-w-full max-h-full dark:hidden"
                   />
                   {/* Logo para modo oscuro */}
                   <Image 
@@ -1069,9 +1051,9 @@ export default function HomePage() {
                     alt="Autorespuestos Core" 
                     width={600} 
                     height={200} 
-                    quality={100}
+                    quality={75}
                     priority
-                    className="object-contain max-w-full max-h-full transition-all duration-300 hidden dark:block"
+                    className="object-contain max-w-full max-h-full hidden dark:block"
                   />
                 </div>
               </a>
