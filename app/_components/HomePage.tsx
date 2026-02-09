@@ -387,11 +387,21 @@ export default function HomePage() {
         {/* Software Development */}
         <div id="software" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
           <div className="max-w-6xl mx-auto relative z-10">
-            <div className="flex flex-col lg:flex-row items-center gap-12">
-              <div className="flex-1 scroll-reveal">
-                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal heading-safe">
-                  {t.services.software.title}
-                </h2>
+            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-12">
+              <div className="flex-1 w-full">
+                {/* Título con icono en móvil */}
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="lg:hidden flex-shrink-0">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl shadow-lg flex items-center justify-center">
+                      <Code className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight heading-safe">
+                      {t.services.software.title}
+                    </h2>
+                  </div>
+                </div>
                 
                 <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
                   {t.services.software.description}
@@ -422,7 +432,7 @@ export default function HomePage() {
                   </li>
                 </ul>
 
-                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg group/btn transition-all duration-300 magnetic hover-lift">
+                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg group/btn">
                   <span className="flex items-center gap-2">
                     {t.services.software.cta}
                     <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
@@ -430,9 +440,10 @@ export default function HomePage() {
                 </Button>
               </div>
 
-              <div className="flex-shrink-0 scroll-reveal">
-                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-blue-500 to-blue-700 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
-                  <Code className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
+              {/* Icono grande solo en desktop */}
+              <div className="hidden lg:block flex-shrink-0">
+                <div className="w-64 h-64 bg-gradient-to-br from-blue-500 to-blue-700 rounded-3xl shadow-2xl flex items-center justify-center">
+                  <Code className="w-32 h-32 text-white" />
                 </div>
               </div>
             </div>
@@ -447,12 +458,20 @@ export default function HomePage() {
             <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float-slow"></div>
           </div>
           <div className="max-w-6xl mx-auto relative z-10">
-            <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
-              {/* Content */}
-              <div className="flex-1 scroll-reveal">
-                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal heading-safe">
-                  {t.services.cybersecurity.title}
-                </h2>
+            <div className="flex flex-col lg:flex-row-reverse items-start lg:items-center gap-6 lg:gap-12">
+              <div className="flex-1 w-full">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="lg:hidden flex-shrink-0">
+                    <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl shadow-lg flex items-center justify-center">
+                      <Shield className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight heading-safe">
+                      {t.services.cybersecurity.title}
+                    </h2>
+                  </div>
+                </div>
                 
                 <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
                   {t.services.cybersecurity.description || "In an era of sophisticated threats, we provide an impenetrable shield for your enterprise. Our approach combines proactive threat hunting with autonomous defensive architectures."}
@@ -497,10 +516,9 @@ export default function HomePage() {
                 </Button>
               </div>
 
-              {/* Icon/Visual */}
-              <div className="flex-shrink-0 scroll-reveal">
-                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
-                  <Shield className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
+              <div className="hidden lg:block flex-shrink-0">
+                <div className="w-64 h-64 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-3xl shadow-2xl flex items-center justify-center">
+                  <Shield className="w-32 h-32 text-white" />
                 </div>
               </div>
             </div>
@@ -510,11 +528,20 @@ export default function HomePage() {
         {/* Network Solutions */}
         <div id="network" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-cyan-50 to-teal-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
           <div className="max-w-6xl mx-auto relative z-10">
-            <div className="flex flex-col lg:flex-row items-center gap-12">
-              <div className="flex-1 scroll-reveal">
-                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal heading-safe">
-                  {t.services.network.title}
-                </h2>
+            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-12">
+              <div className="flex-1 w-full">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="lg:hidden flex-shrink-0">
+                    <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-teal-600 rounded-2xl shadow-lg flex items-center justify-center">
+                      <Network className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight heading-safe">
+                      {t.services.network.title}
+                    </h2>
+                  </div>
+                </div>
                 
                 <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
                   {t.services.network.description}
@@ -553,9 +580,9 @@ export default function HomePage() {
                 </Button>
               </div>
 
-              <div className="flex-shrink-0 scroll-reveal">
-                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-cyan-500 to-teal-600 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
-                  <Network className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
+              <div className="hidden lg:block flex-shrink-0">
+                <div className="w-64 h-64 bg-gradient-to-br from-cyan-500 to-teal-600 rounded-3xl shadow-2xl flex items-center justify-center">
+                  <Network className="w-32 h-32 text-white" />
                 </div>
               </div>
             </div>
@@ -565,11 +592,20 @@ export default function HomePage() {
         {/* ISO 27001 */}
         <div id="iso" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
           <div className="max-w-6xl mx-auto relative z-10">
-            <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
-              <div className="flex-1 scroll-reveal">
-                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal heading-safe">
-                  {t.services.iso.title}
-                </h2>
+            <div className="flex flex-col lg:flex-row-reverse items-start lg:items-center gap-6 lg:gap-12">
+              <div className="flex-1 w-full">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="lg:hidden flex-shrink-0">
+                    <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl shadow-lg flex items-center justify-center">
+                      <Lock className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight heading-safe">
+                      {t.services.iso.title}
+                    </h2>
+                  </div>
+                </div>
                 
                 <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
                   {t.services.iso.description}
@@ -608,9 +644,9 @@ export default function HomePage() {
                 </Button>
               </div>
 
-              <div className="flex-shrink-0 scroll-reveal">
-                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-purple-500 to-purple-700 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
-                  <Lock className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
+              <div className="hidden lg:block flex-shrink-0">
+                <div className="w-64 h-64 bg-gradient-to-br from-purple-500 to-purple-700 rounded-3xl shadow-2xl flex items-center justify-center">
+                  <Lock className="w-32 h-32 text-white" />
                 </div>
               </div>
             </div>
@@ -620,11 +656,20 @@ export default function HomePage() {
         {/* Backup Management */}
         <div id="backups" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-slate-900 dark:to-slate-800">
           <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col lg:flex-row items-center gap-12">
-              <div className="flex-1">
-                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight heading-safe">
-                  {t.services.backups.title}
-                </h2>
+            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-12">
+              <div className="flex-1 w-full">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="lg:hidden flex-shrink-0">
+                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl shadow-lg flex items-center justify-center">
+                      <Layers className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight heading-safe">
+                      {t.services.backups.title}
+                    </h2>
+                  </div>
+                </div>
                 
                 <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
                   {t.services.backups.description}
@@ -663,9 +708,9 @@ export default function HomePage() {
                 </Button>
               </div>
 
-              <div className="flex-shrink-0 scroll-reveal">
-                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
-                  <Layers className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
+              <div className="hidden lg:block flex-shrink-0">
+                <div className="w-64 h-64 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl shadow-2xl flex items-center justify-center">
+                  <Layers className="w-32 h-32 text-white" />
                 </div>
               </div>
             </div>
@@ -675,11 +720,20 @@ export default function HomePage() {
         {/* Software Licensing */}
         <div id="licensing" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-800 relative overflow-hidden">
           <div className="max-w-6xl mx-auto relative z-10">
-            <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
-              <div className="flex-1 scroll-reveal">
-                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal heading-safe">
-                  {t.services.licensing.title}
-                </h2>
+            <div className="flex flex-col lg:flex-row-reverse items-start lg:items-center gap-6 lg:gap-12">
+              <div className="flex-1 w-full">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="lg:hidden flex-shrink-0">
+                    <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-lg flex items-center justify-center">
+                      <Server className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight heading-safe">
+                      {t.services.licensing.title}
+                    </h2>
+                  </div>
+                </div>
                 
                 <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
                   {t.services.licensing.description}
@@ -718,7 +772,7 @@ export default function HomePage() {
                 </Button>
               </div>
 
-              <div className="flex-shrink-0 scroll-reveal">
+              <div className="hidden lg:block flex-shrink-0 scroll-reveal">
                 <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
                   <FileCheck className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
                 </div>
@@ -732,9 +786,18 @@ export default function HomePage() {
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="flex flex-col lg:flex-row items-center gap-12">
               <div className="flex-1 scroll-reveal">
-                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal heading-safe">
-                  {t.services.disasterRecovery.title}
-                </h2>
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="lg:hidden flex-shrink-0">
+                    <div className="w-16 h-16 bg-gradient-to-br from-rose-500 to-orange-600 rounded-2xl shadow-lg flex items-center justify-center">
+                      <Zap className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight animate-text-reveal heading-safe">
+                      {t.services.disasterRecovery.title}
+                    </h2>
+                  </div>
+                </div>
                 
                 <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
                   {t.services.disasterRecovery.description}
@@ -773,7 +836,7 @@ export default function HomePage() {
                 </Button>
               </div>
 
-              <div className="flex-shrink-0 scroll-reveal">
+              <div className="hidden lg:block flex-shrink-0 scroll-reveal">
                 <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-rose-500 to-orange-600 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
                   <Zap className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
                 </div>
@@ -787,9 +850,18 @@ export default function HomePage() {
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
               <div className="flex-1 scroll-reveal">
-                <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight animate-text-reveal heading-safe">
-                  {t.services.dataCenter.title}
-                </h2>
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="lg:hidden flex-shrink-0">
+                    <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl shadow-lg flex items-center justify-center">
+                      <Server className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight animate-text-reveal heading-safe">
+                      {t.services.dataCenter.title}
+                    </h2>
+                  </div>
+                </div>
                 
                 <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
                   {t.services.dataCenter.description}
@@ -828,7 +900,7 @@ export default function HomePage() {
                 </Button>
               </div>
 
-              <div className="flex-shrink-0 scroll-reveal">
+              <div className="hidden lg:block flex-shrink-0 scroll-reveal">
                 <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-3xl shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300 hover-lift magnetic">
                   <Server className="w-24 h-24 lg:w-32 lg:h-32 text-white" />
                 </div>
