@@ -12,14 +12,78 @@ export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const services = [
-    { href: '#software', icon: Code, title: t.services.software.title, color: 'blue' },
-    { href: '#network', icon: Network, title: t.services.network.title, color: 'cyan' },
-    { href: '#iso', icon: Lock, title: t.services.iso.title, color: 'purple' },
-    { href: '#cybersecurity', icon: Shield, title: t.services.cybersecurity.title, color: 'emerald' },
-    { href: '#backups', icon: Layers, title: t.services.backups.title, color: 'orange' },
-    { href: '#licensing', icon: FileCheck, title: t.services.licensing.title, color: 'indigo' },
-    { href: '#disaster-recovery', icon: Zap, title: t.services.disasterRecovery.title, color: 'rose' },
-    { href: '#datacenter', icon: HardDrive, title: t.services.dataCenter.title, color: 'teal' },
+    {
+      href: '#software',
+      icon: Code,
+      title: t.services.software.title,
+      bgColor: 'bg-blue-100 dark:bg-blue-900/50',
+      iconColor: 'text-blue-600 dark:text-blue-400',
+      hoverBg: 'group-hover/item:bg-blue-500',
+      mobileHover: 'hover:bg-blue-50 dark:hover:bg-blue-900/20'
+    },
+    {
+      href: '#network',
+      icon: Network,
+      title: t.services.network.title,
+      bgColor: 'bg-cyan-100 dark:bg-cyan-900/50',
+      iconColor: 'text-cyan-600 dark:text-cyan-400',
+      hoverBg: 'group-hover/item:bg-cyan-500',
+      mobileHover: 'hover:bg-cyan-50 dark:hover:bg-cyan-900/20'
+    },
+    {
+      href: '#iso',
+      icon: Lock,
+      title: t.services.iso.title,
+      bgColor: 'bg-purple-100 dark:bg-purple-900/50',
+      iconColor: 'text-purple-600 dark:text-purple-400',
+      hoverBg: 'group-hover/item:bg-purple-500',
+      mobileHover: 'hover:bg-purple-50 dark:hover:bg-purple-900/20'
+    },
+    {
+      href: '#cybersecurity',
+      icon: Shield,
+      title: t.services.cybersecurity.title,
+      bgColor: 'bg-emerald-100 dark:bg-emerald-900/50',
+      iconColor: 'text-emerald-600 dark:text-emerald-400',
+      hoverBg: 'group-hover/item:bg-emerald-500',
+      mobileHover: 'hover:bg-emerald-50 dark:hover:bg-emerald-900/20'
+    },
+    {
+      href: '#backups',
+      icon: Layers,
+      title: t.services.backups.title,
+      bgColor: 'bg-orange-100 dark:bg-orange-900/50',
+      iconColor: 'text-orange-600 dark:text-orange-400',
+      hoverBg: 'group-hover/item:bg-orange-500',
+      mobileHover: 'hover:bg-orange-50 dark:hover:bg-orange-900/20'
+    },
+    {
+      href: '#licensing',
+      icon: FileCheck,
+      title: t.services.licensing.title,
+      bgColor: 'bg-indigo-100 dark:bg-indigo-900/50',
+      iconColor: 'text-indigo-600 dark:text-indigo-400',
+      hoverBg: 'group-hover/item:bg-indigo-500',
+      mobileHover: 'hover:bg-indigo-50 dark:hover:bg-indigo-900/20'
+    },
+    {
+      href: '#disaster-recovery',
+      icon: Zap,
+      title: t.services.disasterRecovery.title,
+      bgColor: 'bg-rose-100 dark:bg-rose-900/50',
+      iconColor: 'text-rose-600 dark:text-rose-400',
+      hoverBg: 'group-hover/item:bg-rose-500',
+      mobileHover: 'hover:bg-rose-50 dark:hover:bg-rose-900/20'
+    },
+    {
+      href: '#datacenter',
+      icon: HardDrive,
+      title: t.services.dataCenter.title,
+      bgColor: 'bg-teal-100 dark:bg-teal-900/50',
+      iconColor: 'text-teal-600 dark:text-teal-400',
+      hoverBg: 'group-hover/item:bg-teal-500',
+      mobileHover: 'hover:bg-teal-50 dark:hover:bg-teal-900/20'
+    },
   ];
 
   return (
@@ -52,8 +116,8 @@ export default function Navigation() {
                           href={service.href}
                           className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item"
                         >
-                          <div className={`w-8 h-8 rounded-lg bg-${service.color}-100 dark:bg-${service.color}-900/50 flex items-center justify-center group-hover/item:bg-${service.color}-500 transition-colors`}>
-                            <Icon className={`w-4 h-4 text-${service.color}-600 dark:text-${service.color}-400 group-hover/item:text-white`} />
+                          <div className={`w-8 h-8 rounded-lg ${service.bgColor} ${service.hoverBg} flex items-center justify-center transition-colors`}>
+                            <Icon className={`w-4 h-4 ${service.iconColor} group-hover/item:text-white`} />
                           </div>
                           <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{service.title}</span>
                         </a>
@@ -104,9 +168,9 @@ export default function Navigation() {
                     key={service.href}
                     href={service.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-${service.color}-50 dark:hover:bg-${service.color}-900/20 transition-colors`}
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg ${service.mobileHover} transition-colors`}
                   >
-                    <Icon className={`w-5 h-5 text-${service.color}-600 dark:text-${service.color}-400 flex-shrink-0`} />
+                    <Icon className={`w-5 h-5 ${service.iconColor} flex-shrink-0`} />
                     <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{service.title}</span>
                   </a>
                 );

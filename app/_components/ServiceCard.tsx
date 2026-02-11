@@ -10,7 +10,8 @@ interface ServiceCardProps {
   cta: string;
   coreCapabilitiesLabel: string;
   gradient: string;
-  animated?: boolean;
+  backgroundColor?: string;
+  iconPosition?: 'left' | 'right';
   checkColor?: string;
 }
 
@@ -23,20 +24,20 @@ export default function ServiceCard({
   cta,
   coreCapabilitiesLabel,
   gradient,
-  animated = false,
+  backgroundColor = 'bg-white dark:bg-slate-800',
+  iconPosition = 'right',
   checkColor = 'text-emerald-500'
 }: ServiceCardProps) {
-  const bgClass = animated
-    ? "relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950"
-    : "bg-white dark:bg-slate-800";
+  const isIconLeft = iconPosition === 'left';
+  const isDarkBg = backgroundColor.includes('slate-900') || backgroundColor.includes('slate-950');
 
   return (
-    <div id={id} className={`py-20 px-4 sm:px-6 lg:px-8 ${bgClass} relative overflow-hidden`}>
-      {animated && (
+    <div id={id} className={`py-20 px-4 sm:px-6 lg:px-8 ${backgroundColor} relative overflow-hidden`}>
+      {isDarkBg && (
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-cyan-500/10 animate-gradient-shift"></div>
       )}
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-12">
+        <div className={`flex flex-col ${isIconLeft ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-start lg:items-center gap-6 lg:gap-12`}>
           <div className="flex-1 w-full">
             <div className="flex items-start gap-4 mb-6">
               <div className="lg:hidden flex-shrink-0">
@@ -45,18 +46,18 @@ export default function ServiceCard({
                 </div>
               </div>
               <div className="flex-1">
-                <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight heading-safe ${animated ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
+                <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight heading-safe ${isDarkBg ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                   {title}
                 </h2>
               </div>
             </div>
 
-            <p className={`mb-8 text-lg leading-relaxed ${animated ? 'text-gray-300' : 'text-gray-600 dark:text-gray-400'}`}>
+            <p className={`mb-8 text-lg leading-relaxed ${isDarkBg ? 'text-gray-300' : 'text-gray-600 dark:text-gray-400'}`}>
               {description}
             </p>
 
             <div className="mb-6">
-              <span className={`text-xs font-bold uppercase tracking-wider ${animated ? 'text-gray-400' : 'text-gray-500 dark:text-gray-400'}`}>
+              <span className={`text-xs font-bold uppercase tracking-wider ${isDarkBg ? 'text-gray-400' : 'text-gray-500 dark:text-gray-400'}`}>
                 {coreCapabilitiesLabel}
               </span>
             </div>
@@ -65,7 +66,7 @@ export default function ServiceCard({
               {items.map((item, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <CheckCircle className={`w-5 h-5 ${checkColor} flex-shrink-0 mt-1`} />
-                  <span className={`font-medium ${animated ? 'text-gray-200' : 'text-gray-700 dark:text-gray-300'}`}>
+                  <span className={`font-medium ${isDarkBg ? 'text-gray-200' : 'text-gray-700 dark:text-gray-300'}`}>
                     {item}
                   </span>
                 </li>

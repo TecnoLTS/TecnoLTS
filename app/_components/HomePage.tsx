@@ -54,6 +54,8 @@ export default function HomePage() {
         cta={t.services.software.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-blue-500 to-blue-700"
+        backgroundColor="bg-white dark:bg-slate-800"
+        iconPosition="right"
       />
 
       <ServiceCard
@@ -65,7 +67,8 @@ export default function HomePage() {
         cta={t.services.cybersecurity.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-emerald-500 to-emerald-700"
-        animated={true}
+        backgroundColor="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950"
+        iconPosition="left"
       />
 
       <ServiceCard
@@ -77,6 +80,8 @@ export default function HomePage() {
         cta={t.services.network.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-cyan-500 to-cyan-700"
+        backgroundColor="bg-white dark:bg-slate-800"
+        iconPosition="right"
       />
 
       <ServiceCard
@@ -88,6 +93,8 @@ export default function HomePage() {
         cta={t.services.iso.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-purple-500 to-purple-700"
+        backgroundColor="bg-white dark:bg-slate-800"
+        iconPosition="left"
       />
 
       <ServiceCard
@@ -99,6 +106,8 @@ export default function HomePage() {
         cta={t.services.backups.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-orange-500 to-orange-700"
+        backgroundColor="bg-white dark:bg-slate-800"
+        iconPosition="right"
       />
 
       <ServiceCard
@@ -110,6 +119,8 @@ export default function HomePage() {
         cta={t.services.licensing.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-indigo-500 to-indigo-700"
+        backgroundColor="bg-white dark:bg-slate-800"
+        iconPosition="left"
       />
 
       <ServiceCard
@@ -121,6 +132,8 @@ export default function HomePage() {
         cta={t.services.disasterRecovery.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-rose-500 to-rose-700"
+        backgroundColor="bg-white dark:bg-slate-800"
+        iconPosition="right"
       />
 
       <ServiceCard
@@ -132,6 +145,8 @@ export default function HomePage() {
         cta={t.services.dataCenter.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-teal-500 to-teal-700"
+        backgroundColor="bg-white dark:bg-slate-800"
+        iconPosition="left"
         checkColor="text-teal-500"
       />
 
