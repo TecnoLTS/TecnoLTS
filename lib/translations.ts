@@ -35,12 +35,15 @@ export const translations = {
       subtitle: "Comprehensive IT solutions tailored to your business needs",
       software: {
         title: "Software Development",
-        description: "Custom applications built with cutting-edge technologies. Scalable, secure, and tailored to your needs.",
+        description: "We transform your ideas into robust and scalable technological solutions. We develop web systems with custom APIs tailored to your specific needs. Our expertise in modern architectures with Docker, Kubernetes and microservices ensures high-performance applications. We follow OWASP Top 25 standards and SOLID principles to ensure secure and maintainable code. We constantly innovate to keep your business at the technological forefront.",
         cta: "Consult Development Experts",
         items: [
-          "Web & Mobile Apps",
-          "Cloud-Native Architecture",
-          "API Integration"
+          "Web Systems Experts",
+          "Modern and Scalable Architectures",
+          "Docker, Kubernetes and Microservices",
+          "OWASP Top 25 and SOLID Principles",
+          "Service Centralization",
+          "Cloud-Native Infrastructure"
         ]
       },
       network: {
@@ -300,12 +303,15 @@ export const translations = {
       subtitle: "Soluciones IT integrales adaptadas a las necesidades de tu negocio",
       software: {
         title: "Desarrollo de Software",
-        description: "Aplicaciones personalizadas construidas con tecnologías de vanguardia. Escalables, seguras y adaptadas a tus necesidades.",
+        description: "Transformamos sus ideas en soluciones tecnológicas robustas y escalables. Desarrollamos sistemas web con APIs personalizadas que se adaptan a sus necesidades específicas. Nuestra experiencia en arquitecturas modernas con Docker, Kubernetes y microservicios garantiza aplicaciones de alto rendimiento. Seguimos los estándares OWASP Top 25 y principios SOLID para asegurar código seguro y mantenible. Innovamos constantemente para mantener su negocio a la vanguardia tecnológica.",
         cta: "Consulta Expertos en Desarrollo",
         items: [
-          "Aplicaciones Web y Móviles",
-          "Arquitectura Cloud-Native",
-          "Integración de APIs"
+          "Expertos en Sistemas Web",
+          "Arquitecturas Modernas y Escalables",
+          "Docker, Kubernetes y Microservicios",
+          "OWASP Top 25 y Principios SOLID",
+          "Centralización de Servicios",
+          "Infraestructura Cloud-Native"
         ]
       },
       network: {

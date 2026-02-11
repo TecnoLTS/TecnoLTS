@@ -281,6 +281,18 @@
     }
   }
 
+  @keyframes cube-rotate {
+    0% {
+      transform: rotateX(0deg) rotateY(0deg);
+    }
+    50% {
+      transform: rotateX(360deg) rotateY(360deg);
+    }
+    100% {
+      transform: rotateX(360deg) rotateY(360deg);
+    }
+  }
+
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
@@ -297,6 +309,88 @@
   .animate-gradient-shift {
     background-size: 200% 200%;
     animation: gradient-shift 8s ease infinite;
+  }
+
+  .animate-cube-rotate {
+    animation: cube-rotate 3s ease-in-out;
+    transform-style: preserve-3d;
+  }
+
+  .perspective-3d {
+    perspective: 1200px;
+  }
+
+  .transform-3d {
+    transform-style: preserve-3d;
+  }
+
+  .cube-3d {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+
+  .cube-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: visible;
+    opacity: 1;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  }
+
+  .cube-face-front {
+    transform: translateZ(7rem);
+  }
+
+  .cube-face-back {
+    transform: rotateY(180deg) translateZ(7rem);
+  }
+
+  .cube-face-right {
+    transform: rotateY(90deg) translateZ(7rem);
+  }
+
+  .cube-face-left {
+    transform: rotateY(-90deg) translateZ(7rem);
+  }
+
+  .cube-face-top {
+    transform: rotateX(90deg) translateZ(7rem);
+  }
+
+  .cube-face-bottom {
+    transform: rotateX(-90deg) translateZ(7rem);
+  }
+
+  /* Mobile cube faces */
+  .cube-face-front-sm {
+    transform: translateZ(2rem);
+  }
+
+  .cube-face-back-sm {
+    transform: rotateY(180deg) translateZ(2rem);
+  }
+
+  .cube-face-right-sm {
+    transform: rotateY(90deg) translateZ(2rem);
+  }
+
+  .cube-face-left-sm {
+    transform: rotateY(-90deg) translateZ(2rem);
+  }
+
+  .cube-face-top-sm {
+    transform: rotateX(90deg) translateZ(2rem);
+  }
+
+  .cube-face-bottom-sm {
+    transform: rotateX(-90deg) translateZ(2rem);
   }
 
   .animation-delay-100 {

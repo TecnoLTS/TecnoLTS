@@ -22,6 +22,15 @@ export default function Navigation() {
       mobileHover: 'hover:bg-blue-50 dark:hover:bg-blue-900/20'
     },
     {
+      href: '#cybersecurity',
+      icon: Shield,
+      title: t.services.cybersecurity.title,
+      bgColor: 'bg-emerald-100 dark:bg-emerald-900/50',
+      iconColor: 'text-emerald-600 dark:text-emerald-400',
+      hoverBg: 'group-hover/item:bg-emerald-500',
+      mobileHover: 'hover:bg-emerald-50 dark:hover:bg-emerald-900/20'
+    },
+    {
       href: '#network',
       icon: Network,
       title: t.services.network.title,
@@ -38,15 +47,6 @@ export default function Navigation() {
       iconColor: 'text-purple-600 dark:text-purple-400',
       hoverBg: 'group-hover/item:bg-purple-500',
       mobileHover: 'hover:bg-purple-50 dark:hover:bg-purple-900/20'
-    },
-    {
-      href: '#cybersecurity',
-      icon: Shield,
-      title: t.services.cybersecurity.title,
-      bgColor: 'bg-emerald-100 dark:bg-emerald-900/50',
-      iconColor: 'text-emerald-600 dark:text-emerald-400',
-      hoverBg: 'group-hover/item:bg-emerald-500',
-      mobileHover: 'hover:bg-emerald-50 dark:hover:bg-emerald-900/20'
     },
     {
       href: '#backups',
