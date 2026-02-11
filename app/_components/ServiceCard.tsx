@@ -52,12 +52,12 @@ export default function ServiceCard({
               </div>
             </div>
 
-            <p className={`mb-8 text-lg leading-relaxed ${isDarkBg ? 'text-gray-300' : 'text-gray-600 dark:text-gray-400'} animate-fade-in-up animation-delay-100`}>
+            <p className={`mb-8 text-lg leading-relaxed ${isDarkBg ? 'text-gray-300' : 'text-gray-900 dark:text-gray-400'} animate-fade-in-up animation-delay-100`}>
               {description}
             </p>
 
             <div className="mb-6 animate-fade-in-up animation-delay-200">
-              <span className={`text-xs font-bold uppercase tracking-wider ${isDarkBg ? 'text-gray-400' : 'text-gray-500 dark:text-gray-400'}`}>
+              <span className={`text-xs font-bold uppercase tracking-wider ${isDarkBg ? 'text-gray-400' : 'text-gray-800 dark:text-gray-400'}`}>
                 {coreCapabilitiesLabel}
               </span>
             </div>
@@ -70,7 +70,7 @@ export default function ServiceCard({
                   style={{ animationDelay: `${300 + index * 100}ms` }}
                 >
                   <CheckCircle className={`w-5 h-5 ${checkColor} flex-shrink-0 mt-1 group-hover/item:scale-110 transition-all duration-500`} />
-                  <span className={`font-medium ${isDarkBg ? 'text-gray-200' : 'text-gray-700 dark:text-gray-300'}`}>
+                  <span className={`font-medium ${isDarkBg ? 'text-gray-200' : 'text-gray-900 dark:text-gray-300'}`}>
                     {item}
                   </span>
                 </li>
