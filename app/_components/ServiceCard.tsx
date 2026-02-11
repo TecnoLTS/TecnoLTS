@@ -41,8 +41,8 @@ export default function ServiceCard({
           <div className="flex-1 w-full">
             <div className="flex items-start gap-4 mb-6">
               <div className="lg:hidden flex-shrink-0 animate-fade-in">
-                <div className={`w-16 h-16 ${gradient} rounded-2xl shadow-lg flex items-center justify-center group/mobile-icon hover:scale-110 transition-all duration-300 hover:shadow-xl hover:rotate-3`}>
-                  <Icon className="w-8 h-8 text-white group-hover/mobile-icon:scale-110 transition-transform duration-300" />
+                <div className={`w-16 h-16 ${gradient} rounded-2xl shadow-lg flex items-center justify-center group/mobile-icon hover:scale-[1.05] transition-all duration-500 hover:shadow-[0_10px_30px_-10px_rgba(59,130,246,0.5)]`}>
+                  <Icon className="w-8 h-8 text-white group-hover/mobile-icon:scale-105 transition-transform duration-500" />
                 </div>
               </div>
               <div className="flex-1 animate-fade-in-up">
@@ -66,10 +66,10 @@ export default function ServiceCard({
               {items.map((item, index) => (
                 <li
                   key={index}
-                  className="flex items-start gap-3 animate-fade-in-up group/item"
+                  className="flex items-start gap-3 animate-fade-in-up group/item cursor-default"
                   style={{ animationDelay: `${300 + index * 100}ms` }}
                 >
-                  <CheckCircle className={`w-5 h-5 ${checkColor} flex-shrink-0 mt-1 group-hover/item:scale-110 group-hover/item:rotate-12 transition-all duration-300`} />
+                  <CheckCircle className={`w-5 h-5 ${checkColor} flex-shrink-0 mt-1 group-hover/item:scale-110 transition-all duration-500`} />
                   <span className={`font-medium ${isDarkBg ? 'text-gray-200' : 'text-gray-700 dark:text-gray-300'}`}>
                     {item}
                   </span>
@@ -77,17 +77,18 @@ export default function ServiceCard({
               ))}
             </ul>
 
-            <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg hover:shadow-2xl group/btn hover:scale-105 transition-all duration-300 animate-fade-in-up animation-delay-500">
-              <span className="flex items-center gap-2">
+            <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg hover:shadow-[0_10px_40px_-10px_rgba(59,130,246,0.6)] group/btn hover:scale-[1.02] transition-all duration-500 animate-fade-in-up animation-delay-500 relative overflow-hidden">
+              <span className="absolute inset-0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"></span>
+              <span className="flex items-center gap-2 relative z-10">
                 {cta}
-                <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform duration-300" />
+                <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform duration-500" />
               </span>
             </Button>
           </div>
 
           <div className="hidden lg:block flex-shrink-0 animate-fade-in-up animation-delay-200">
-            <div className={`w-64 h-64 ${gradient} rounded-3xl shadow-2xl flex items-center justify-center group/icon hover:shadow-3xl hover:scale-105 transition-all duration-500 hover:rotate-3 animate-float`}>
-              <Icon className="w-32 h-32 text-white group-hover/icon:scale-110 group-hover/icon:rotate-6 transition-all duration-500" />
+            <div className={`w-64 h-64 ${gradient} rounded-3xl shadow-2xl flex items-center justify-center group/icon hover:shadow-[0_20px_60px_-15px_rgba(59,130,246,0.5)] hover:scale-[1.02] transition-all duration-700 hover:-translate-y-1`}>
+              <Icon className="w-32 h-32 text-white group-hover/icon:scale-105 transition-all duration-700" />
             </div>
           </div>
         </div>

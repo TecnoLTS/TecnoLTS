@@ -92,8 +92,8 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <a href="#" className="flex items-center gap-2 group/logo">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 rounded-xl group-hover/logo:scale-110 group-hover/logo:rotate-6 transition-all duration-300 shadow-lg group-hover/logo:shadow-xl" />
-              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent group-hover/logo:from-blue-600 group-hover/logo:to-cyan-500 dark:group-hover/logo:from-blue-400 dark:group-hover/logo:to-cyan-400 transition-all duration-300">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 rounded-xl group-hover/logo:scale-105 transition-all duration-500 shadow-lg group-hover/logo:shadow-[0_5px_20px_-5px_rgba(59,130,246,0.5)]" />
+              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent group-hover/logo:from-blue-600 group-hover/logo:to-cyan-500 dark:group-hover/logo:from-blue-400 dark:group-hover/logo:to-cyan-400 transition-all duration-500">
                 TecnoLTS
               </span>
             </a>
@@ -114,12 +114,12 @@ export default function Navigation() {
                         <a
                           key={service.href}
                           href={service.href}
-                          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-200 group/item hover:scale-105 hover:translate-x-1"
+                          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-300 group/item hover:translate-x-1"
                         >
-                          <div className={`w-8 h-8 rounded-lg ${service.bgColor} ${service.hoverBg} flex items-center justify-center transition-all duration-300 group-hover/item:scale-110 group-hover/item:rotate-6`}>
-                            <Icon className={`w-4 h-4 ${service.iconColor} group-hover/item:text-white transition-all duration-300 group-hover/item:scale-110`} />
+                          <div className={`w-8 h-8 rounded-lg ${service.bgColor} ${service.hoverBg} flex items-center justify-center transition-all duration-500 group-hover/item:scale-105 group-hover/item:shadow-lg`}>
+                            <Icon className={`w-4 h-4 ${service.iconColor} group-hover/item:text-white transition-all duration-500 group-hover/item:scale-105`} />
                           </div>
-                          <span className="text-gray-700 dark:text-gray-300 font-medium text-sm group-hover/item:text-gray-900 dark:group-hover/item:text-white transition-colors">{service.title}</span>
+                          <span className="text-gray-700 dark:text-gray-300 font-medium text-sm group-hover/item:text-gray-900 dark:group-hover/item:text-white transition-colors duration-300">{service.title}</span>
                         </a>
                       );
                     })}
@@ -137,9 +137,9 @@ export default function Navigation() {
               <ThemeToggle />
               <LanguageToggle />
             </div>
-            <Button asChild className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 hover:-translate-y-0.5 relative overflow-hidden group/cta">
+            <Button asChild className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 shadow-lg hover:shadow-[0_10px_40px_-10px_rgba(59,130,246,0.6)] transition-all duration-500 hover:scale-[1.02] hover:-translate-y-0.5 relative overflow-hidden group/cta">
               <a href="#contact-form" className="relative z-10">
-                <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-600 opacity-0 group-hover/cta:opacity-100 transition-opacity duration-300"></span>
+                <span className="absolute inset-0 translate-x-[-100%] group-hover/cta:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></span>
                 <span className="relative">{t.nav.getStarted}</span>
               </a>
             </Button>

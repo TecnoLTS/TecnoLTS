@@ -14,8 +14,8 @@ export default function HeroSection({ t }: HeroSectionProps) {
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className="scroll-reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20 border border-blue-500/20 dark:border-blue-400/30 rounded-full text-blue-600 dark:text-cyan-400 text-xs sm:text-sm font-medium mb-3 sm:mb-4 md:mb-6 animate-fade-in-up hover:scale-105 hover:shadow-lg transition-all duration-300">
-              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20 border border-blue-500/20 dark:border-blue-400/30 rounded-full text-blue-600 dark:text-cyan-400 text-xs sm:text-sm font-medium mb-3 sm:mb-4 md:mb-6 animate-fade-in-up hover:scale-[1.02] hover:shadow-lg hover:border-blue-500/40 dark:hover:border-blue-400/50 transition-all duration-500 cursor-default">
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
               {t.hero.badge}
             </div>
             <h1 className="text-[28px] leading-[1.2] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 sm:leading-tight heading-safe animate-fade-in-up animation-delay-100">
@@ -27,10 +27,13 @@ export default function HeroSection({ t }: HeroSectionProps) {
               {t.hero.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-1.5 sm:mb-0 animate-fade-in-up animation-delay-300">
-              <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-sm sm:text-base md:text-lg shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:scale-105 hover:-translate-y-1 transition-all duration-300 group/hero-cta">
-                <a href="#contact-form" className="flex items-center justify-center">
-                  {t.hero.ctaPrimary}
-                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover/hero-cta:translate-x-1 transition-transform duration-300" />
+              <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-sm sm:text-base md:text-lg shadow-xl shadow-blue-500/30 hover:shadow-[0_20px_60px_-15px_rgba(59,130,246,0.7)] hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-500 group/hero-cta relative overflow-hidden">
+                <a href="#contact-form" className="flex items-center justify-center relative z-10">
+                  <span className="absolute inset-0 translate-x-[-100%] group-hover/hero-cta:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></span>
+                  <span className="relative flex items-center">
+                    {t.hero.ctaPrimary}
+                    <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover/hero-cta:translate-x-1 transition-transform duration-500" />
+                  </span>
                 </a>
               </Button>
             </div>
@@ -64,7 +67,7 @@ export default function HeroSection({ t }: HeroSectionProps) {
           </div>
 
           <div className="relative mt-6 lg:mt-0 animate-fade-in-up animation-delay-200">
-            <div className="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 lg:p-8 shadow-2xl shadow-blue-500/20 sm:shadow-blue-500/30 border border-slate-700 hover:shadow-3xl hover:scale-105 transition-all duration-500 group/terminal">
+            <div className="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 lg:p-8 shadow-2xl shadow-blue-500/20 sm:shadow-blue-500/30 border border-slate-700 hover:shadow-[0_25px_70px_-15px_rgba(59,130,246,0.4)] transition-all duration-700 group/terminal">
               <div className="relative bg-slate-950 rounded-lg sm:rounded-xl overflow-hidden border border-slate-700/50">
                 <div className="flex items-center gap-2 px-2.5 sm:px-3 md:px-4 py-1.5 sm:py-2 md:py-3 bg-slate-900 border-b border-slate-700/50">
                   <div className="flex gap-1 sm:gap-1.5 md:gap-2">
@@ -167,12 +170,12 @@ export default function HeroSection({ t }: HeroSectionProps) {
                 </div>
               </div>
 
-              <div className="hidden sm:flex absolute -top-3 sm:-top-4 -right-3 sm:-right-4 bg-emerald-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold shadow-lg animate-bounce-in animation-delay-500 hover:scale-110 hover:rotate-3 transition-all duration-300 cursor-default">
+              <div className="hidden sm:flex absolute -top-3 sm:-top-4 -right-3 sm:-right-4 bg-emerald-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold shadow-lg animate-fade-in animation-delay-500 hover:scale-105 hover:shadow-[0_10px_30px_-10px_rgba(16,185,129,0.6)] transition-all duration-500 cursor-default">
                 {t.hero.uptimeBadge}
               </div>
-              <div className="hidden sm:flex absolute -bottom-3 sm:-bottom-4 -left-3 sm:-left-4 bg-blue-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold shadow-lg animate-bounce-in animation-delay-500 hover:scale-110 hover:-rotate-3 transition-all duration-300 cursor-default group/shield">
+              <div className="hidden sm:flex absolute -bottom-3 sm:-bottom-4 -left-3 sm:-left-4 bg-blue-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold shadow-lg animate-fade-in animation-delay-500 hover:scale-105 hover:shadow-[0_10px_30px_-10px_rgba(59,130,246,0.6)] transition-all duration-500 cursor-default group/shield">
                 <div className="flex items-center gap-1.5 sm:gap-2">
-                  <Shield className="w-3 h-3 sm:w-4 sm:h-4 group-hover/shield:scale-110 transition-transform duration-300" />
+                  <Shield className="w-3 h-3 sm:w-4 sm:h-4 group-hover/shield:scale-105 transition-transform duration-500" />
                   {t.hero.secureBadge}
                 </div>
               </div>
