@@ -54,7 +54,7 @@ export default function HomePage() {
         cta={t.services.software.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-blue-500 to-blue-700"
-        backgroundColor="bg-white dark:bg-slate-800"
+        backgroundColor="bg-white dark:bg-slate-900"
         iconPosition="right"
       />
 
@@ -67,7 +67,7 @@ export default function HomePage() {
         cta={t.services.cybersecurity.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-cyan-500 to-blue-600"
-        backgroundColor="bg-gradient-to-br from-slate-50 to-blue-50 dark:bg-slate-800"
+        backgroundColor="bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-cyan-950/50"
         iconPosition="left"
       />
 
@@ -80,7 +80,7 @@ export default function HomePage() {
         cta={t.services.network.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-cyan-500 to-cyan-700"
-        backgroundColor="bg-white dark:bg-slate-800"
+        backgroundColor="bg-white dark:bg-slate-900"
         iconPosition="right"
       />
 
@@ -93,7 +93,7 @@ export default function HomePage() {
         cta={t.services.iso.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-purple-500 to-purple-700"
-        backgroundColor="bg-gradient-to-br from-purple-50 to-pink-50 dark:bg-slate-800"
+        backgroundColor="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-slate-900 dark:to-purple-950/50"
         iconPosition="left"
       />
 
@@ -106,7 +106,7 @@ export default function HomePage() {
         cta={t.services.backups.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-emerald-500 to-emerald-700"
-        backgroundColor="bg-white dark:bg-slate-800"
+        backgroundColor="bg-white dark:bg-slate-900"
         iconPosition="right"
       />
 
@@ -119,7 +119,7 @@ export default function HomePage() {
         cta={t.services.licensing.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-blue-500 to-indigo-600"
-        backgroundColor="bg-gradient-to-br from-blue-50 to-indigo-50 dark:bg-slate-800"
+        backgroundColor="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-blue-950/50"
         iconPosition="left"
       />
 
@@ -132,7 +132,7 @@ export default function HomePage() {
         cta={t.services.disasterRecovery.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-rose-500 to-rose-700"
-        backgroundColor="bg-white dark:bg-slate-800"
+        backgroundColor="bg-white dark:bg-slate-900"
         iconPosition="right"
       />
 
@@ -145,7 +145,7 @@ export default function HomePage() {
         cta={t.services.dataCenter.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-teal-500 to-teal-700"
-        backgroundColor="bg-gradient-to-br from-teal-50 to-cyan-50 dark:bg-slate-800"
+        backgroundColor="bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-slate-900 dark:to-teal-950/50"
         iconPosition="left"
         checkColor="text-teal-500"
       />
