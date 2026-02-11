@@ -67,7 +67,7 @@ export default function HomePage() {
         cta={t.services.cybersecurity.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-emerald-500 to-emerald-700"
-        backgroundColor="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950"
+        backgroundColor="bg-emerald-50 dark:bg-slate-800"
         iconPosition="left"
       />
 
