@@ -14,46 +14,46 @@ export default function HeroSection({ t }: HeroSectionProps) {
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className="scroll-reveal">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20 border border-blue-500/20 dark:border-blue-400/30 rounded-full text-blue-600 dark:text-cyan-400 text-xs sm:text-sm font-medium mb-3 sm:mb-4 md:mb-6">
-              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20 border border-blue-500/20 dark:border-blue-400/30 rounded-full text-blue-600 dark:text-cyan-400 text-xs sm:text-sm font-medium mb-3 sm:mb-4 md:mb-6 animate-fade-in-up hover:scale-105 hover:shadow-lg transition-all duration-300">
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 animate-pulse" />
               {t.hero.badge}
             </div>
-            <h1 className="text-[28px] leading-[1.2] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 sm:leading-tight heading-safe">
-              <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-cyan-700 dark:from-white dark:via-cyan-300 dark:to-blue-400 bg-clip-text text-transparent">
+            <h1 className="text-[28px] leading-[1.2] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 sm:leading-tight heading-safe animate-fade-in-up animation-delay-100">
+              <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-cyan-700 dark:from-white dark:via-cyan-300 dark:to-blue-400 bg-clip-text text-transparent animate-gradient-shift bg-[length:200%_auto]">
                 {t.hero.title}
               </span>
             </h1>
-            <p className="text-sm leading-relaxed sm:text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-5 sm:mb-6 md:mb-8">
+            <p className="text-sm leading-relaxed sm:text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-5 sm:mb-6 md:mb-8 animate-fade-in-up animation-delay-200">
               {t.hero.description}
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-1.5 sm:mb-0">
-              <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-sm sm:text-base md:text-lg shadow-xl shadow-blue-500/30">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-1.5 sm:mb-0 animate-fade-in-up animation-delay-300">
+              <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-sm sm:text-base md:text-lg shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:scale-105 hover:-translate-y-1 transition-all duration-300 group/hero-cta">
                 <a href="#contact-form" className="flex items-center justify-center">
                   {t.hero.ctaPrimary}
-                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover/hero-cta:translate-x-1 transition-transform duration-300" />
                 </a>
               </Button>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 mt-6 sm:mt-8 md:mt-12 pt-5 sm:pt-6 md:pt-8 border-t border-gray-200 dark:border-slate-700">
-              <div className="text-center sm:text-left">
-                <div className="text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-0.5 sm:mb-1">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 mt-6 sm:mt-8 md:mt-12 pt-5 sm:pt-6 md:pt-8 border-t border-gray-200 dark:border-slate-700 animate-fade-in-up animation-delay-400">
+              <div className="text-center sm:text-left group/stat hover:scale-110 transition-transform duration-300">
+                <div className="text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-0.5 sm:mb-1 group-hover/stat:from-cyan-600 group-hover/stat:to-blue-600 transition-all duration-300">
                   {t.hero.stats.experience.value}
                 </div>
                 <div className="text-[10px] sm:text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-tight">
                   {t.hero.stats.experience.label}
                 </div>
               </div>
-              <div className="text-center sm:text-left">
-                <div className="text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-0.5 sm:mb-1">
+              <div className="text-center sm:text-left group/stat hover:scale-110 transition-transform duration-300">
+                <div className="text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-0.5 sm:mb-1 group-hover/stat:from-cyan-600 group-hover/stat:to-blue-600 transition-all duration-300">
                   {t.hero.stats.quality.value}
                 </div>
                 <div className="text-[10px] sm:text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-tight">
                   {t.hero.stats.quality.label}
                 </div>
               </div>
-              <div className="text-center sm:text-left">
-                <div className="text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-0.5 sm:mb-1">
+              <div className="text-center sm:text-left group/stat hover:scale-110 transition-transform duration-300">
+                <div className="text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-0.5 sm:mb-1 group-hover/stat:from-cyan-600 group-hover/stat:to-blue-600 transition-all duration-300">
                   {t.hero.stats.technologies.value}
                 </div>
                 <div className="text-[10px] sm:text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-tight">
@@ -63,8 +63,8 @@ export default function HeroSection({ t }: HeroSectionProps) {
             </div>
           </div>
 
-          <div className="relative mt-6 lg:mt-0">
-            <div className="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 lg:p-8 shadow-2xl shadow-blue-500/20 sm:shadow-blue-500/30 border border-slate-700">
+          <div className="relative mt-6 lg:mt-0 animate-fade-in-up animation-delay-200">
+            <div className="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 lg:p-8 shadow-2xl shadow-blue-500/20 sm:shadow-blue-500/30 border border-slate-700 hover:shadow-3xl hover:scale-105 transition-all duration-500 group/terminal">
               <div className="relative bg-slate-950 rounded-lg sm:rounded-xl overflow-hidden border border-slate-700/50">
                 <div className="flex items-center gap-2 px-2.5 sm:px-3 md:px-4 py-1.5 sm:py-2 md:py-3 bg-slate-900 border-b border-slate-700/50">
                   <div className="flex gap-1 sm:gap-1.5 md:gap-2">
@@ -162,17 +162,17 @@ export default function HeroSection({ t }: HeroSectionProps) {
 
                   <div className="flex gap-1.5 sm:gap-2 md:gap-3 pt-1 sm:pt-2">
                     <span className="text-slate-600 flex-shrink-0">11</span>
-                    <span className="w-1.5 sm:w-2 h-3 sm:h-4 md:h-5 bg-cyan-400 inline-block"></span>
+                    <span className="w-1.5 sm:w-2 h-3 sm:h-4 md:h-5 bg-cyan-400 inline-block animate-pulse"></span>
                   </div>
                 </div>
               </div>
 
-              <div className="hidden sm:flex absolute -top-3 sm:-top-4 -right-3 sm:-right-4 bg-emerald-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold shadow-lg">
+              <div className="hidden sm:flex absolute -top-3 sm:-top-4 -right-3 sm:-right-4 bg-emerald-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold shadow-lg animate-bounce-in animation-delay-500 hover:scale-110 hover:rotate-3 transition-all duration-300 cursor-default">
                 {t.hero.uptimeBadge}
               </div>
-              <div className="hidden sm:flex absolute -bottom-3 sm:-bottom-4 -left-3 sm:-left-4 bg-blue-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold shadow-lg">
+              <div className="hidden sm:flex absolute -bottom-3 sm:-bottom-4 -left-3 sm:-left-4 bg-blue-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold shadow-lg animate-bounce-in animation-delay-500 hover:scale-110 hover:-rotate-3 transition-all duration-300 cursor-default group/shield">
                 <div className="flex items-center gap-1.5 sm:gap-2">
-                  <Shield className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <Shield className="w-3 h-3 sm:w-4 sm:h-4 group-hover/shield:scale-110 transition-transform duration-300" />
                   {t.hero.secureBadge}
                 </div>
               </div>
