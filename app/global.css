@@ -285,16 +285,22 @@
     0% {
       transform: rotateX(0deg) rotateY(0deg);
     }
+    25% {
+      transform: rotateX(180deg) rotateY(10deg);
+    }
     50% {
-      transform: rotateX(360deg) rotateY(360deg);
+      transform: rotateX(360deg) rotateY(240deg);
+    }
+    75% {
+      transform: rotateX(540deg) rotateY(450deg);
     }
     100% {
-      transform: rotateX(360deg) rotateY(360deg);
+      transform: rotateX(720deg) rotateY(720deg);
     }
   }
 
   .animate-float {
-    animation: float 6s ease-in-out infinite;
+    animation: float 32s ease-in-out infinite;
   }
 
   .animate-fade-in {
@@ -312,7 +318,7 @@
   }
 
   .animate-cube-rotate {
-    animation: cube-rotate 3s ease-in-out;
+    animation: cube-rotate 35s ease-in-out infinite;
     transform-style: preserve-3d;
   }
 
@@ -341,7 +347,6 @@
     justify-content: center;
     backface-visibility: visible;
     opacity: 1;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
   }
 
   .cube-face-front {

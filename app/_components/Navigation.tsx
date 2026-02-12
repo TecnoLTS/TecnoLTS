@@ -8,7 +8,7 @@ import { LanguageToggle } from '@/components/language-toggle';
 import { useLanguage } from '@/components/language-provider';
 
 export default function Navigation() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const services = [
@@ -100,6 +100,9 @@ export default function Navigation() {
           </div>
 
           <div className="hidden md:flex items-center gap-4">
+            <a href={`/${language}`} className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
+              {t.nav.home}
+            </a>
             <div className="relative group">
               <button className="flex items-center gap-1 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium py-2">
                 {t.nav.services}
@@ -162,6 +165,13 @@ export default function Navigation() {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-700">
           <div className="px-4 py-4 space-y-3 max-h-[calc(100vh-4rem)] overflow-y-auto">
+            <a
+              href={`/${language}`}
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors text-sm font-medium"
+            >
+              {t.nav.home}
+            </a>
             <div className="space-y-2">
               <div className="text-sm font-semibold text-gray-500 dark:text-gray-400 px-2 mb-2">{t.nav.services}</div>
               {services.map((service) => {

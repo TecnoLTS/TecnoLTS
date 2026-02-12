@@ -14,7 +14,7 @@ import WhatsAppButton from './WhatsAppButton';
 import Footer from './Footer';
 
 export default function HomePage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
   const orgName = 'TecnoLTS';
   const orgSchema = {
@@ -56,6 +56,7 @@ export default function HomePage() {
         gradient="bg-gradient-to-br from-blue-500 to-blue-700"
         backgroundColor="bg-white dark:bg-slate-900"
         iconPosition="right"
+        locale={language}
       />
 
       <ServiceCard
@@ -69,6 +70,7 @@ export default function HomePage() {
         gradient="bg-gradient-to-br from-cyan-500 to-blue-600"
         backgroundColor="bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-cyan-950/50"
         iconPosition="left"
+        locale={language}
       />
 
       <ServiceCard
@@ -82,6 +84,7 @@ export default function HomePage() {
         gradient="bg-gradient-to-br from-cyan-500 to-cyan-700"
         backgroundColor="bg-white dark:bg-slate-900"
         iconPosition="right"
+        locale={language}
       />
 
       <ServiceCard
@@ -95,6 +98,7 @@ export default function HomePage() {
         gradient="bg-gradient-to-br from-purple-500 to-purple-700"
         backgroundColor="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-slate-900 dark:to-purple-950/50"
         iconPosition="left"
+        locale={language}
       />
 
       <ServiceCard
@@ -108,6 +112,7 @@ export default function HomePage() {
         gradient="bg-gradient-to-br from-emerald-500 to-emerald-700"
         backgroundColor="bg-white dark:bg-slate-900"
         iconPosition="right"
+        locale={language}
       />
 
       <ServiceCard
@@ -121,6 +126,7 @@ export default function HomePage() {
         gradient="bg-gradient-to-br from-blue-500 to-indigo-600"
         backgroundColor="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-blue-950/50"
         iconPosition="left"
+        locale={language}
       />
 
       <ServiceCard
@@ -134,6 +140,7 @@ export default function HomePage() {
         gradient="bg-gradient-to-br from-rose-500 to-rose-700"
         backgroundColor="bg-white dark:bg-slate-900"
         iconPosition="right"
+        locale={language}
       />
 
       <ServiceCard
@@ -148,6 +155,7 @@ export default function HomePage() {
         backgroundColor="bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-slate-900 dark:to-teal-950/50"
         iconPosition="left"
         checkColor="text-teal-500"
+        locale={language}
       />
 
       <HeroGridSection t={t} />
