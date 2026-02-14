@@ -17,24 +17,24 @@ export default function HeroGridSection({ t }: HeroGridSectionProps) {
                 <img
                   src="/pexels-photo-3184292.jpeg"
                   alt="Business Professional"
-                  className="w-full h-full object-cover min-h-[600px] lg:min-h-[750px]"
+                  className="w-full h-full object-cover min-h-[280px] sm:min-h-[400px] lg:min-h-[750px]"
                 />
               </div>
 
-              <div className="box-area absolute bottom-0 left-0 w-full max-w-[241px] bg-white dark:bg-slate-900 rounded-tr-[12px] pt-[15px] pr-[15px] pb-0 pl-0">
+              <div className="box-area absolute bottom-0 left-0 w-full max-w-[180px] sm:max-w-[241px] bg-white dark:bg-slate-900 rounded-tr-[12px] pt-[12px] sm:pt-[15px] pr-[12px] sm:pr-[15px] pb-0 pl-0">
                 <div className="absolute left-0 w-[13px] h-[13px] -top-[13px] box-area-corner-before" />
                 <div className="absolute right-[-13px] bottom-0 w-[13px] h-[13px] box-area-corner-after" />
 
-                <div className="bg-white dark:bg-slate-800 rounded-tl-[12px] rounded-tr-[12px] rounded-br-[12px] rounded-bl-[12px] p-6 shadow-lg min-h-[226px] flex flex-col justify-between">
+                <div className="bg-white dark:bg-slate-800 rounded-tl-[12px] rounded-tr-[12px] rounded-br-[12px] rounded-bl-[12px] p-4 sm:p-6 shadow-lg min-h-[160px] sm:min-h-[226px] flex flex-col justify-between">
                   <div>
-                    <span className="text-cyan-600 dark:text-cyan-400 font-semibold text-sm mb-3 block">
+                    <span className="text-cyan-600 dark:text-cyan-400 font-semibold text-xs sm:text-sm mb-2 sm:mb-3 block">
                       {t.heroGrid.experiences.label}
                     </span>
-                    <div className="text-6xl font-bold text-gray-900 dark:text-white mb-2 leading-none">
+                    <div className="text-4xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2 leading-none">
                       {t.heroGrid.experiences.value}
                     </div>
                   </div>
-                  <h6 className="text-gray-600 dark:text-gray-300 text-sm font-normal leading-tight">
+                  <h6 className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm font-normal leading-tight">
                     {t.heroGrid.experiences.text}
                   </h6>
                 </div>
@@ -62,32 +62,32 @@ export default function HeroGridSection({ t }: HeroGridSectionProps) {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-500 dark:from-blue-700 dark:via-cyan-700 dark:to-teal-600 rounded-3xl p-8 flex flex-col justify-between shadow-xl text-white relative overflow-hidden min-h-[280px]">
+                <div className="bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-500 dark:from-blue-700 dark:via-cyan-700 dark:to-teal-600 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xl text-white relative overflow-hidden min-h-[200px] sm:min-h-[280px]">
                   <div>
-                    <div className="flex items-center gap-0.5 mb-4">
+                    <div className="flex items-center gap-0.5 mb-3 sm:mb-4">
                       {[...Array(5)].map((_, i) => (
-                        <svg key={i} className="w-5 h-5 fill-current text-yellow-300" viewBox="0 0 24 24">
+                        <svg key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-current text-yellow-300" viewBox="0 0 24 24">
                           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                         </svg>
                       ))}
                     </div>
-                    <p className="text-base mb-6 leading-relaxed text-white">
+                    <p className="text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed text-white">
                       {t.heroGrid.testimonial.text}
                     </p>
                   </div>
 
                   <div className="flex items-end justify-between relative z-10">
                     <div>
-                      <h6 className="font-bold text-lg mb-0.5 text-white">{t.heroGrid.testimonial.author}</h6>
-                      <span className="text-blue-100 text-sm">{t.heroGrid.testimonial.role}</span>
+                      <h6 className="font-bold text-base sm:text-lg mb-0.5 text-white">{t.heroGrid.testimonial.author}</h6>
+                      <span className="text-blue-100 text-xs sm:text-sm">{t.heroGrid.testimonial.role}</span>
                     </div>
-                    <svg className="w-12 h-12 text-white/20" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-10 h-10 sm:w-12 sm:h-12 text-white/20" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
                     </svg>
                   </div>
                 </div>
 
-                <div className="bg-gray-900 rounded-3xl overflow-hidden shadow-xl relative min-h-[280px]">
+                <div className="bg-gray-900 rounded-3xl overflow-hidden shadow-xl relative min-h-[200px] sm:min-h-[280px]">
                   <img
                     src="/pexels-photo-3184611.jpeg"
                     alt="Thumbnail"

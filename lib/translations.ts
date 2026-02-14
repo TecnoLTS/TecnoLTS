@@ -36,7 +36,7 @@ export const translations = {
       software: {
         title: "Software Development",
         description: "Custom applications built with cutting-edge technologies. Scalable, secure, and tailored to your needs.",
-        cta: "Consult Development Experts",
+        cta: "More Information",
         items: [
           "Web and Mobile Applications",
           "Cloud-Native Architecture",
@@ -46,7 +46,7 @@ export const translations = {
       network: {
         title: "Network Solutions",
         description: "Enterprise infrastructure designed for reliability, performance, and security.",
-        cta: "Consult Network Experts",
+        cta: "More Information",
         items: [
           "Network Design",
           "Security & Firewall",
@@ -56,7 +56,7 @@ export const translations = {
       iso: {
         title: "ISO 27001 Audits",
         description: "Comprehensive security audits and compliance services for certification.",
-        cta: "Consult ISO Experts",
+        cta: "More Information",
         items: [
           "Gap Analysis",
           "Implementation Support",
@@ -66,7 +66,7 @@ export const translations = {
       cybersecurity: {
         title: "Cyber Security",
         description: "Advanced threat protection and security infrastructure to safeguard your digital assets.",
-        cta: "Consult Security Experts",
+        cta: "More Information",
         items: [
           "Threat Detection",
           "Vulnerability Scanning",
@@ -76,7 +76,7 @@ export const translations = {
       backups: {
         title: "Backup Management",
         description: "Reliable backup solutions with automated recovery strategies for business continuity.",
-        cta: "Consult Backup Experts",
+        cta: "More Information",
         items: [
           "Automated Backups",
           "Disaster Recovery",
@@ -86,7 +86,7 @@ export const translations = {
       licensing: {
         title: "Software Licensing",
         description: "Expert guidance on software licensing compliance and optimization for your organization.",
-        cta: "Consult Licensing Experts",
+        cta: "More Information",
         items: [
           "License Audit",
           "Compliance Management",
@@ -96,7 +96,7 @@ export const translations = {
       disasterRecovery: {
         title: "Disaster Recovery",
         description: "Comprehensive planning and implementation of disaster recovery strategies.",
-        cta: "Consult Recovery Experts",
+        cta: "More Information",
         items: [
           "Business Continuity",
           "Recovery Planning",
@@ -106,7 +106,7 @@ export const translations = {
       dataCenter: {
         title: "Data Center Design & Organization",
         description: "We design the physical layout of your Data Center, defining hardware location and cable organization to achieve an organized, efficient, and scalable infrastructure.",
-        cta: "Consult Data Center Experts",
+        cta: "More Information",
         items: [
           "Physical Infrastructure Design",
           "Cable Management & Organization",
@@ -624,7 +624,7 @@ export const translations = {
       software: {
         title: "Desarrollo de Software",
         description: "Aplicaciones personalizadas construidas con tecnologías de vanguardia. Escalables, seguras y adaptadas a tus necesidades.",
-        cta: "Consulta Expertos en Desarrollo",
+        cta: "Más Información",
         items: [
           "Aplicaciones Web y Móviles",
           "Arquitectura Cloud-Native",
@@ -634,7 +634,7 @@ export const translations = {
       network: {
         title: "Soluciones de Redes",
         description: "Infraestructura empresarial diseñada para confiabilidad, rendimiento y seguridad.",
-        cta: "Consulta Expertos en Redes",
+        cta: "Más Información",
         items: [
           "Diseño de Redes",
           "Seguridad y Firewall",
@@ -644,7 +644,7 @@ export const translations = {
       iso: {
         title: "Auditorías ISO 27001",
         description: "Auditorías de seguridad integrales y servicios de cumplimiento para certificación.",
-        cta: "Consulta Expertos ISO",
+        cta: "Más Información",
         items: [
           "Análisis de Brechas",
           "Soporte de Implementación",
@@ -654,7 +654,7 @@ export const translations = {
       cybersecurity: {
         title: "Seguridad de la información",
         description: "Protección avanzada contra amenazas e infraestructura de seguridad para salvaguardar tus activos digitales.",
-        cta: "Consulta Expertos en Seguridad",
+        cta: "Más Información",
         items: [
           "Detección de Amenazas",
           "Escaneo de Vulnerabilidades",
@@ -664,7 +664,7 @@ export const translations = {
       backups: {
         title: "Gestión de Backups",
         description: "Soluciones confiables de respaldo con estrategias automáticas de recuperación para continuidad empresarial.",
-        cta: "Consulta Expertos en Respaldos",
+        cta: "Más Información",
         items: [
           "Backups Automatizados",
           "Recuperación ante Desastres",
@@ -674,7 +674,7 @@ export const translations = {
       licensing: {
         title: "Licenciamientos",
         description: "Asesoramiento experto en cumplimiento de licencias de software y optimización para tu organización.",
-        cta: "Consulta Expertos en Licencias",
+        cta: "Más Información",
         items: [
           "Auditoría de Licencias",
           "Gestión de Cumplimiento",
@@ -684,7 +684,7 @@ export const translations = {
       disasterRecovery: {
         title: "Recuperación de Desastres",
         description: "Planificación e implementación integral de estrategias de recuperación ante desastres.",
-        cta: "Consulta Expertos en Recuperación",
+        cta: "Más Información",
         items: [
           "Continuidad Empresarial",
           "Planificación de Recuperación",
@@ -694,7 +694,7 @@ export const translations = {
       dataCenter: {
         title: "Diseño y Organización de Data Center",
         description: "Diseñamos la disposición física de tu Data Center, definiendo la ubicacion del hardware y tambien organización de cableado para lograr una infraestructura ordenada, eficiente y escalable.",
-        cta: "Consulta Expertos en Data Center",
+        cta: "Más Información",
         items: [
           "Diseño de Infraestructura Física",
           "Gestión y Organización de Cableado",
