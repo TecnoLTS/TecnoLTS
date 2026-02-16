@@ -2,7 +2,6 @@ import './global.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
-import { LanguageProvider } from '@/components/language-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
@@ -13,7 +12,7 @@ export const metadata: Metadata = {
   description: 'Leading provider of enterprise IT solutions including software development, network infrastructure, and ISO 27001 security audits. Transform your business with innovative technology.',
   metadataBase: new URL(siteUrl),
   alternates: {
-    canonical: '/',
+    canonical: '/es',
     languages: {
       en: '/en',
       es: '/es',
@@ -78,9 +77,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <LanguageProvider initialLanguage={defaultLang}>
-            {children}
-          </LanguageProvider>
+          {children}
         </ThemeProvider>
       </body>
     </html>

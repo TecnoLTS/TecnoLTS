@@ -1,8 +1,6 @@
 import { Sparkles, ArrowRight, CheckCircle, TrendingUp, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import type { translations } from '@/lib/translations';
-
-type TranslationStructure = typeof translations.en;
+import type { TranslationStructure } from '@/lib/translations';
 
 interface HeroSectionProps {
   t: TranslationStructure;

@@ -1,9 +1,8 @@
 "use client"
 
-import React, { createContext, useContext, useState } from 'react';
-import { translations, Language } from '@/lib/translations';
-
-type TranslationStructure = typeof translations.en;
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { translations, Language, type TranslationStructure } from '@/lib/translations';
 
 interface LanguageContextType {
   language: Language;
@@ -20,19 +19,36 @@ export function LanguageProvider({
   children: React.ReactNode;
   initialLanguage?: Language;
 }) {
+  const pathname = usePathname();
   const [language, setLanguageState] = useState<Language>(initialLanguage);
+
+  const pathLanguage = useMemo<Language | null>(() => {
+    const segment = pathname?.split('/')[1];
+    if (segment === 'en' || segment === 'es') {
+      return segment;
+    }
+    return null;
+  }, [pathname]);
+
+  const resolvedLanguage = pathLanguage ?? language;
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = resolvedLanguage;
+    }
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', resolvedLanguage);
+    }
+  }, [resolvedLanguage]);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('language', lang);
-    }
   };
 
   const value: LanguageContextType = {
-    language,
+    language: resolvedLanguage,
     setLanguage,
-    t: translations[language] as TranslationStructure,
+    t: translations[resolvedLanguage] as TranslationStructure,
   };
 
   return (

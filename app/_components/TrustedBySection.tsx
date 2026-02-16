@@ -1,7 +1,5 @@
 import Image from 'next/image';
-import type { translations } from '@/lib/translations';
-
-type TranslationStructure = typeof translations.en;
+import type { TranslationStructure } from '@/lib/translations';
 
 interface TrustedBySectionProps {
   t: TranslationStructure;

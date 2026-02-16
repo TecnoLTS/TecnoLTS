@@ -1,20 +1,139 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
+export const runtime = 'nodejs';
+
+type RateLimitBucket = {
+  count: number;
+  resetAt: number;
+};
+
+type RateLimitStore = Map<string, RateLimitBucket>;
+
+type ContactPayload = {
+  name?: string;
+  email?: string;
+  phone?: string | null;
+  service?: string;
+  message?: string | null;
+  website?: string;
+  privacy_accepted?: boolean;
+};
+
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX_REQUESTS = 5;
+
+declare global {
+  var __contactRateLimitStore: RateLimitStore | undefined;
+}
+
+const globalStore = globalThis as typeof globalThis & {
+  __contactRateLimitStore?: RateLimitStore;
+};
+const rateLimitStore: RateLimitStore = globalStore.__contactRateLimitStore ?? new Map<string, RateLimitBucket>();
+globalStore.__contactRateLimitStore = rateLimitStore;
+
+const serviceNames: Record<string, string> = {
+  software: 'Desarrollo de Software',
+  monitoring: 'Monitoreo y observabilidad',
+  network: 'Soluciones de Red',
+  iso: 'Certificación ISO 27001',
+  cybersecurity: 'Ciberseguridad',
+  backups: 'Gestión de Respaldos',
+  licensing: 'Licenciamiento de Software',
+  disaster: 'Recuperación ante Desastres',
+  datacenter: 'Diseño de Data Center',
+  other: 'Otro',
+};
+
+function getClientIp(request: Request): string {
+  const forwardedFor = request.headers.get('x-forwarded-for');
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0].trim();
+  }
+
+  const realIp = request.headers.get('x-real-ip');
+  if (realIp) {
+    return realIp.trim();
+  }
+
+  return 'unknown';
+}
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+
+  for (const [key, value] of rateLimitStore.entries()) {
+    if (value.resetAt <= now) {
+      rateLimitStore.delete(key);
+    }
+  }
+
+  const current = rateLimitStore.get(ip);
+  if (!current || current.resetAt <= now) {
+    rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+
+  if (current.count >= RATE_LIMIT_MAX_REQUESTS) {
+    return true;
+  }
+
+  current.count += 1;
+  rateLimitStore.set(ip, current);
+  return false;
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const { name, email, phone, service, message, privacy_accepted } = body;
+    const body = (await request.json()) as ContactPayload;
+    const { name, email, phone, service, message, website, privacy_accepted } = body;
 
-    // Validación básica
-    if (!name || !email || !service || !privacy_accepted) {
+    if (typeof website === 'string' && website.trim()) {
+      return NextResponse.json({ message: 'Email enviado exitosamente' }, { status: 200 });
+    }
+
+    const ip = getClientIp(request);
+    if (isRateLimited(ip)) {
+      return NextResponse.json(
+        { error: 'Demasiadas solicitudes. Intenta nuevamente en un minuto.' },
+        { status: 429 }
+      );
+    }
+
+    if (
+      typeof name !== 'string' ||
+      typeof email !== 'string' ||
+      typeof service !== 'string' ||
+      !privacy_accepted
+    ) {
       return NextResponse.json(
         { error: 'Campos requeridos faltantes' },
         { status: 400 }
       );
     }
 
-    // Configuración del transporter de Nodemailer con Gmail
+    const normalizedName = name.trim().replace(/[\r\n]+/g, ' ');
+    const normalizedEmail = email.trim().toLowerCase().replace(/[\r\n]+/g, '');
+    const normalizedPhone = typeof phone === 'string' ? phone.trim().replace(/[\r\n]+/g, '') : '';
+    const normalizedMessage = typeof message === 'string' ? message.trim() : '';
+
+    const sanitizedName = escapeHtml(normalizedName);
+    const sanitizedEmail = escapeHtml(normalizedEmail);
+    const sanitizedPhone = normalizedPhone ? escapeHtml(normalizedPhone) : '';
+    const sanitizedMessage = normalizedMessage ? escapeHtml(normalizedMessage) : '';
+    const normalizedServiceName = serviceNames[service] || service;
+    const serviceName = escapeHtml(normalizedServiceName);
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -23,27 +142,11 @@ export async function POST(request: Request) {
       },
     });
 
-    // Mapeo de servicios a nombres legibles
-    const serviceNames: { [key: string]: string } = {
-      software: 'Desarrollo de Software',
-      network: 'Soluciones de Red',
-      iso: 'Certificación ISO 27001',
-      cybersecurity: 'Ciberseguridad',
-      backups: 'Gestión de Respaldos',
-      licensing: 'Licenciamiento de Software',
-      disaster: 'Recuperación ante Desastres',
-      datacenter: 'Diseño de Data Center',
-      other: 'Otro'
-    };
-
-    const serviceName = serviceNames[service] || service;
-
-    // Configuración del email
     const mailOptions = {
-      from: `"${name}" <${process.env.GMAIL_USER}>`,
+      from: `"${normalizedName.replaceAll('"', '')}" <${process.env.GMAIL_USER}>`,
       to: process.env.EMAIL_TO || process.env.GMAIL_USER,
-      replyTo: email,
-      subject: `Nueva consulta de ${name} - ${serviceName}`,
+      replyTo: normalizedEmail,
+      subject: `Nueva consulta de ${normalizedName} - ${normalizedServiceName}`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -117,34 +220,34 @@ export async function POST(request: Request) {
             <div class="content">
               <div class="field">
                 <div class="field-label">👤 Nombre Completo</div>
-                <div class="field-value">${name}</div>
+                <div class="field-value">${sanitizedName}</div>
               </div>
-              
+
               <div class="field">
                 <div class="field-label">📧 Email</div>
                 <div class="field-value">
-                  <a href="mailto:${email}" style="color: #0891b2; text-decoration: none;">${email}</a>
+                  <a href="mailto:${encodeURIComponent(normalizedEmail)}" style="color: #0891b2; text-decoration: none;">${sanitizedEmail}</a>
                 </div>
               </div>
-              
-              ${phone ? `
+
+              ${sanitizedPhone ? `
               <div class="field">
                 <div class="field-label">📱 Teléfono</div>
                 <div class="field-value">
-                  <a href="tel:${phone}" style="color: #0891b2; text-decoration: none;">${phone}</a>
+                  <a href="tel:${encodeURIComponent(normalizedPhone)}" style="color: #0891b2; text-decoration: none;">${sanitizedPhone}</a>
                 </div>
               </div>
               ` : ''}
-              
+
               <div class="field">
                 <div class="field-label">💼 Servicio de Interés</div>
                 <div class="field-value">${serviceName}</div>
               </div>
-              
-              ${message ? `
+
+              ${sanitizedMessage ? `
               <div class="field">
                 <div class="field-label">💬 Mensaje</div>
-                <div class="message-box">${message}</div>
+                <div class="message-box">${sanitizedMessage}</div>
               </div>
               ` : ''}
             </div>
@@ -157,7 +260,6 @@ export async function POST(request: Request) {
       `,
     };
 
-    // Enviar el email
     await transporter.sendMail(mailOptions);
 
     return NextResponse.json(

@@ -1,7 +1,7 @@
-import { ArrowRight } from 'lucide-react';
-import type { translations } from '@/lib/translations';
+'use client';
 
-type TranslationStructure = typeof translations.en;
+import { ArrowRight } from 'lucide-react';
+import type { TranslationStructure } from '@/lib/translations';
 
 interface FooterProps {
   t: TranslationStructure;
@@ -20,118 +20,128 @@ export default function Footer({ t }: FooterProps) {
               <div className="w-10 h-10 bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 rounded-xl" />
               <span className="text-2xl font-bold text-white">TecnoLTS</span>
             </div>
-            <p className="text-gray-400 mb-6 leading-relaxed text-sm">
+            <p className="text-gray-400 mb-6 leading-relaxed text-sm italic">
               {t.footer.description}
             </p>
             <div className="flex gap-3">
-              <a href="#" className="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center transition-colors border border-white/10">
+              <a href="#" className="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center transition-all border border-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_15px_-5px_rgba(6,182,212,0.5)]">
                 <span className="text-white">f</span>
               </a>
-              <a href="#" className="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center transition-colors border border-white/10">
+              <a href="#" className="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center transition-all border border-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_15px_-5px_rgba(6,182,212,0.5)]">
                 <span className="text-white">𝕏</span>
               </a>
-              <a href="#" className="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center transition-colors border border-white/10">
+              <a href="#" className="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center transition-all border border-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_15px_-5px_rgba(6,182,212,0.5)]">
                 <span className="text-white">in</span>
               </a>
             </div>
           </div>
 
           <div>
-            <h3 className="font-semibold text-white mb-4">{t.footer.services}</h3>
-            <ul className="space-y-2.5">
+            <h3 className="font-semibold text-white mb-6 uppercase tracking-wider text-sm">{t.footer.services}</h3>
+            <ul className="space-y-3.5">
               <li><a href="#software" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
-                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.software.title}</span>
               </a></li>
+              {/* Nuevo Enlace: Monitoreo */}
+              <li><a href="#monitoring" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
+                <span className="group-hover:translate-x-1 transition-transform">{t.services.monitoring.title}</span>
+              </a></li>
               <li><a href="#network" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
-                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.network.title}</span>
               </a></li>
               <li><a href="#cybersecurity" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
-                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.cybersecurity.title}</span>
               </a></li>
               <li><a href="#iso" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
-                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.iso.title}</span>
               </a></li>
               <li><a href="#backups" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
-                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.backups.title}</span>
               </a></li>
               <li><a href="#licensing" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
-                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.licensing.title}</span>
               </a></li>
               <li><a href="#disaster-recovery" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
-                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.disasterRecovery.title}</span>
               </a></li>
               <li><a href="#datacenter" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
-                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.dataCenter.title}</span>
               </a></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold text-white mb-4">{t.footer.company}</h3>
-            <ul className="space-y-2.5">
+            <h3 className="font-semibold text-white mb-6 uppercase tracking-wider text-sm">{t.footer.company}</h3>
+            <ul className="space-y-3.5">
               <li><a href="#about" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
-                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.footer.about}</span>
               </a></li>
               <li><a href="#" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
-                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.footer.careers}</span>
               </a></li>
               <li><a href="#" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
-                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.footer.blog}</span>
               </a></li>
               <li><a href="#" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
-                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.footer.privacy}</span>
               </a></li>
               <li><a href="#" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
-                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.footer.terms}</span>
               </a></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold text-white mb-4">{t.footer.contact}</h3>
-            <ul className="space-y-4">
+            <h3 className="font-semibold text-white mb-6 uppercase tracking-wider text-sm">{t.footer.contact}</h3>
+            <ul className="space-y-6">
               <li className="text-gray-400 flex items-start gap-3 text-sm">
-                <span className="text-cyan-400 mt-0.5 text-base">✉</span>
+                <span className="text-cyan-400 mt-1 flex-shrink-0">✉</span>
                 <div>
                   <p className="text-white font-medium mb-1">{t.footer.contactEmailLabel}</p>
-                  <a href="mailto:info@tecnotls.com" className="hover:text-cyan-400 transition-colors">info@tecnotls.com</a>
+                  <a href="mailto:info@tecnotls.com" className="break-all hover:text-cyan-400 transition-colors border-b border-gray-700 hover:border-cyan-400 pb-0.5">info@tecnotls.com</a>
                 </div>
               </li>
               <li className="text-gray-400 flex items-start gap-3 text-sm">
-                <span className="text-cyan-400 mt-0.5 text-base">☎</span>
+                <span className="text-cyan-400 mt-1 flex-shrink-0">☎</span>
                 <div>
                   <p className="text-white font-medium mb-1">{t.footer.contactPhoneLabel}</p>
-                  <a href="tel:+15551234567" className="hover:text-cyan-400 transition-colors">+1 (555) 123-4567</a>
+                  <a href="tel:+15551234567" className="break-words hover:text-cyan-400 transition-colors border-b border-gray-700 hover:border-cyan-400 pb-0.5">+1 (555) 123-4567</a>
                 </div>
               </li>
               <li className="text-gray-400 flex items-start gap-3 text-sm">
-                <span className="text-cyan-400 mt-0.5 text-base">📍</span>
+                <span className="text-cyan-400 mt-1 flex-shrink-0">📍</span>
                 <div>
                   <p className="text-white font-medium mb-1">{t.footer.contactLocationLabel}</p>
-                  <span>{t.contact.info.locationValue}</span>
+                  <span className="break-words leading-relaxed">{t.contact.info.locationValue}</span>
                 </div>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-center items-center gap-4">
-          <p className="text-gray-400 text-sm">
-            &copy; 2026 TecnoLTS. {t.footer.rights}
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-gray-500 text-sm">
+            &copy; {new Date().getFullYear()} TecnoLTS. {t.footer.rights}
           </p>
+          <div className="flex gap-6 text-xs text-gray-500">
+            <a href="#" className="hover:text-white transition-colors">v2.1.0</a>
+            <span className="opacity-20">|</span>
+            <a href="#top" className="hover:text-white transition-colors flex items-center gap-1">Top ↑</a>
+          </div>
         </div>
       </div>
     </footer>

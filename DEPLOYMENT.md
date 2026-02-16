@@ -1,205 +1,92 @@
-# Deployment Guide
+# Deployment Guide - TecnoLTS (Ubuntu Nuevo)
 
-This guide will help you deploy your TechCorp landing page.
+## 1) Preparar servidor Ubuntu
 
-## Quick Start with Docker
-
-The fastest way to get your site running in production:
-
-### 1. Prerequisites
-
-- Docker installed on your system
-- Docker Compose installed (comes with Docker Desktop)
-
-### 2. Deploy with Docker Compose
+Instalar Docker Engine + Compose Plugin:
 
 ```bash
-# Build and start the container
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-
-# Stop the container
-docker-compose down
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo systemctl enable --now docker
 ```
 
-Your site will be available at `http://localhost:3000`
-
-### 3. Production Configuration
-
-For production, you should:
-
-1. **Set environment variables** - Create a `.env.production` file:
-```env
-NEXT_PUBLIC_SITE_URL=https://yourdomain.com
-NEXT_PUBLIC_CONTACT_EMAIL=info@yourdomain.com
-```
-
-2. **Update docker-compose.yml** for production:
-```yaml
-version: '3.8'
-
-services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
-      - NEXT_PUBLIC_SITE_URL=https://yourdomain.com
-    restart: always
-```
-
-## Manual Docker Build
-
-If you prefer to build and run Docker manually:
+Opcional para usar Docker sin `sudo`:
 
 ```bash
-# Build the image
-docker build -t techcorp-landing:latest .
-
-# Run the container
-docker run -d \
-  -p 3000:3000 \
-  --name techcorp-web \
-  --restart unless-stopped \
-  techcorp-landing:latest
-
-# View logs
-docker logs -f techcorp-web
-
-# Stop and remove
-docker stop techcorp-web
-docker rm techcorp-web
+sudo usermod -aG docker $USER
+newgrp docker
 ```
 
-## Deployment to Cloud Providers
-
-### Deploy to AWS ECS
-
-1. Push your image to Amazon ECR:
-```bash
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin YOUR_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com
-docker tag techcorp-landing:latest YOUR_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/techcorp:latest
-docker push YOUR_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/techcorp:latest
-```
-
-2. Create an ECS task definition using your image
-3. Create an ECS service with an Application Load Balancer
-
-### Deploy to Google Cloud Run
+## 2) Preparar proyecto
 
 ```bash
-# Build and push to Google Container Registry
-gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/techcorp
-
-# Deploy to Cloud Run
-gcloud run deploy techcorp \
-  --image gcr.io/YOUR_PROJECT_ID/techcorp \
-  --platform managed \
-  --region us-central1 \
-  --allow-unauthenticated
+git clone <TU_REPO> tecnolts
+cd tecnolts
+cp .env.example .env
 ```
 
-### Deploy to Azure Container Instances
+Editar `.env` con datos reales:
+
+- `NEXT_PUBLIC_SITE_URL` (dominio final)
+- `GMAIL_USER`
+- `GMAIL_APP_PASSWORD`
+- `EMAIL_TO`
+- `HOST_PORT` (por defecto `3008`)
+
+## 3) Levantar en producción
 
 ```bash
-# Build and push to Azure Container Registry
-az acr build --registry YOUR_REGISTRY --image techcorp:latest .
-
-# Deploy to Container Instances
-az container create \
-  --resource-group YOUR_RESOURCE_GROUP \
-  --name techcorp-web \
-  --image YOUR_REGISTRY.azurecr.io/techcorp:latest \
-  --dns-name-label techcorp \
-  --ports 3000
+docker compose --profile production up -d --build
 ```
 
-## Deploy to Vercel (Alternative)
-
-If you prefer not to use Docker:
+Verificar estado:
 
 ```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-
-# Deploy to production
-vercel --prod
+docker compose ps
+docker compose logs -f web
+curl http://localhost:${HOST_PORT:-3008}/api/health
 ```
 
-## Deploy to Netlify (Alternative)
+Respuesta esperada:
 
-1. Install Netlify CLI:
+```json
+{"status":"ok","service":"tecnolts", ...}
+```
+
+## 4) Operación
+
+Actualizar versión:
+
 ```bash
-npm i -g netlify-cli
+git pull
+docker compose --profile production up -d --build
 ```
 
-2. Deploy:
+Detener:
+
 ```bash
-netlify deploy --prod
+docker compose --profile production down
 ```
 
-## Performance Optimization
+## 5) Desarrollo con Docker
 
-For production, consider:
-
-1. **CDN**: Use a CDN like Cloudflare or AWS CloudFront
-2. **Compression**: Enable gzip/brotli compression in your reverse proxy
-3. **Caching**: Set appropriate cache headers
-4. **SSL/TLS**: Always use HTTPS in production
-5. **Monitoring**: Set up monitoring with tools like DataDog, New Relic, or CloudWatch
-
-## Nginx Reverse Proxy (Optional)
-
-If you want to put Nginx in front of your Docker container:
-
-```nginx
-server {
-    listen 80;
-    server_name yourdomain.com;
-
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    }
-}
+```bash
+docker compose --profile development up -d --build
+docker compose logs -f web-dev
 ```
 
-## Health Checks
+## Checklist de salida a producción
 
-Add a health check endpoint by creating `app/api/health/route.ts`:
-
-```typescript
-export async function GET() {
-  return Response.json({ status: 'ok' });
-}
-```
-
-Then configure your load balancer to check `/api/health`
-
-## Backup and Recovery
-
-The site is statically generated, so backups are simple:
-- Keep your source code in Git
-- Store environment variables securely
-- Document any custom configurations
-
-## Support
-
-For deployment issues, check:
-- Docker logs: `docker logs YOUR_CONTAINER_NAME`
-- Next.js build output
-- Browser console for client-side errors
+- `docker compose --profile production ps` muestra `healthy`.
+- `curl /api/health` responde `200`.
+- Formulario `/api/contact` envía correo correctamente.
+- Dominio apunta al servidor y el puerto publicado está accesible.
+- SSL/TLS configurado en reverse proxy (Nginx/Caddy/Traefik) o balanceador.

@@ -5,7 +5,7 @@ import { useLanguage } from '@/components/language-provider';
 
 export default function DataCenterPage() {
   const { t } = useLanguage();
-  const service = t.serviceDetails.datacenter;
+  const service = t.serviceDetails.dataCenter;
   
   return (
     <ServiceDetailPage

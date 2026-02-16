@@ -1,8 +1,6 @@
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import ContactForm from '@/components/contact-form';
-import type { translations } from '@/lib/translations';
-
-type TranslationStructure = typeof translations.en;
+import type { TranslationStructure } from '@/lib/translations';
 
 interface ContactSectionProps {
   t: TranslationStructure;

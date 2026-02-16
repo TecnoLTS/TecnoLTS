@@ -1,63 +1,55 @@
-version: '3.8'
-
 services:
   web:
     profiles: ["production"]
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        APP_ENV: ${APP_ENV:-production}
-    container_name: tecnolts-app
-    hostname: tecnolts-app
+      target: runner
     restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
     environment:
-      NODE_ENV: ${APP_ENV:-production}
-      APP_ENV: ${APP_ENV:-production}
-      PORT: ${PORT:-3000}
-      GMAIL_USER: ${GMAIL_USER}
-      GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
-      EMAIL_TO: ${EMAIL_TO}
-    working_dir: /app
-    command: npm run start -- --hostname 0.0.0.0 --port ${PORT:-3000}
+      NODE_ENV: production
+      APP_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3008}
+      GMAIL_USER: ${GMAIL_USER:-}
+      GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD:-}
+      EMAIL_TO: ${EMAIL_TO:-}
     ports:
-      - "${PORT:-3008}:${PORT:-3000}"
-    networks:
-      edge:
-        aliases:
-          - tecnolts-app
+      - "${HOST_PORT:-3008}:3000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
   web-dev:
     profiles: ["development"]
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        APP_ENV: ${APP_ENV:-development}
-    container_name: tecnolts-app-dev
-    hostname: tecnolts-app-dev
+      target: dev
     restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
     environment:
-      NODE_ENV: ${APP_ENV:-development}
-      APP_ENV: ${APP_ENV:-development}
-      PORT: ${PORT:-3000}
-      GMAIL_USER: ${GMAIL_USER}
-      GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
-      EMAIL_TO: ${EMAIL_TO}
-    working_dir: /app
-    command: npm run dev -- --hostname 0.0.0.0 --port ${PORT:-3000}
+      NODE_ENV: development
+      APP_ENV: development
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3008}
+      GMAIL_USER: ${GMAIL_USER:-}
+      GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD:-}
+      EMAIL_TO: ${EMAIL_TO:-}
+    command: npm run dev -- --hostname 0.0.0.0 --port 3000
     volumes:
       - .:/app
       - /app/node_modules
       - /app/.next
     ports:
-      - "${PORT:-3008}:${PORT:-3000}"
-    networks:
-      edge:
-        aliases:
-          - tecnolts-app
-
-networks:
-  edge:
-    external: true
-    name: edge
+      - "${DEV_PORT:-3000}:3000"

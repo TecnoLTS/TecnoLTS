@@ -1,6 +1,8 @@
-import type { translations } from '@/lib/translations';
+'use client';
 
-type TranslationStructure = typeof translations.en;
+import Image from 'next/image';
+import { Award, Star, Quote } from 'lucide-react';
+import type { TranslationStructure } from '@/lib/translations';
 
 interface HeroGridSectionProps {
   t: TranslationStructure;
@@ -8,16 +10,20 @@ interface HeroGridSectionProps {
 
 export default function HeroGridSection({ t }: HeroGridSectionProps) {
   return (
-    <section id="about" className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900 scroll-mt-20">
+    <section id="about" className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900 scroll-mt-20 transition-colors duration-500">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-wrap -mx-4 lg:items-end">
+          
+          {/* --- SECCIÓN IZQUIERDA: EXACTAMENTE COMO TU ORIGINAL (SIN TOCAR) --- */}
           <div className="w-full lg:w-1/2 xl:w-1/2 px-4 order-2 lg:order-1">
             <div className="relative">
-              <div className="rounded-3xl overflow-hidden">
-                <img
+              <div className="relative rounded-3xl overflow-hidden min-h-[280px] sm:min-h-[400px] lg:min-h-[750px]">
+                <Image
                   src="/pexels-photo-3184292.jpeg"
                   alt="Business Professional"
-                  className="w-full h-full object-cover min-h-[280px] sm:min-h-[400px] lg:min-h-[750px]"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
                 />
               </div>
 
@@ -42,61 +48,63 @@ export default function HeroGridSection({ t }: HeroGridSectionProps) {
             </div>
           </div>
 
-          <div className="w-full lg:w-1/2 xl:w-1/2 px-4 order-1 lg:order-2 mb-8 lg:mb-0">
-            <div className="flex flex-col gap-8">
+          {/* --- SECCIÓN DERECHA: MEJORADA (MÁS LIMPIA Y EMPRESARIAL) --- */}
+          <div className="w-full lg:w-1/2 xl:w-1/2 px-4 order-1 lg:order-2 mb-12 lg:mb-0">
+            <div className="flex flex-col gap-10 lg:pl-6">
               <div className="flex flex-col justify-center">
+                {/* Badge Profesional */}
                 <div className="mb-6">
-                  <span className="inline-flex items-center px-3 py-1.5 bg-cyan-100 text-cyan-700 text-xs font-bold rounded-md uppercase tracking-wide">
-                    <svg className="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <rect x="3" y="3" width="18" height="18" rx="4" />
-                    </svg>
+                  <span className="inline-flex items-center px-4 py-1.5 bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300 text-xs font-bold rounded-full uppercase tracking-widest border border-cyan-100 dark:border-cyan-800/50">
+                    <Award className="w-3.5 h-3.5 mr-2" />
                     {t.heroGrid.badge}
                   </span>
                 </div>
 
-                <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-8 text-gray-900 dark:text-white leading-tight heading-safe">
-                  {t.heroGrid.title}<br />
-                  {t.heroGrid.titleLine2}<br />
-                  {t.heroGrid.titleLine3} <span className="text-cyan-600 dark:text-cyan-400">{t.heroGrid.titleHighlight}.</span>
+                {/* Título - Ajuste de interlineado y Sentence case */}
+                <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-slate-900 dark:text-white leading-[1.1] tracking-tight mb-6">
+                  {t.heroGrid.title} {t.heroGrid.titleLine2} {t.heroGrid.titleLine3} 
+                  <span className="text-cyan-600 dark:text-cyan-400"> {t.heroGrid.titleHighlight}.</span>
                 </h2>
+                <div className="w-20 h-1.5 bg-cyan-500 rounded-full opacity-20" />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-500 dark:from-blue-700 dark:via-cyan-700 dark:to-teal-600 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xl text-white relative overflow-hidden min-h-[200px] sm:min-h-[280px]">
-                  <div>
-                    <div className="flex items-center gap-0.5 mb-3 sm:mb-4">
+                {/* Tarjeta de Testimonio - Refinada */}
+                <div className="bg-gradient-to-br from-slate-800 to-blue-900 dark:from-slate-900 dark:to-blue-950 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xl text-white relative overflow-hidden min-h-[250px] sm:min-h-[300px]">
+                  <Quote className="absolute top-6 right-6 w-12 h-12 text-white/10" />
+                  
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-1 mb-4">
                       {[...Array(5)].map((_, i) => (
-                        <svg key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-current text-yellow-300" viewBox="0 0 24 24">
-                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
+                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                       ))}
                     </div>
-                    <p className="text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed text-white">
-                      {t.heroGrid.testimonial.text}
+                    <p className="text-sm sm:text-base mb-4 leading-relaxed italic text-blue-50/90">
+                      "{t.heroGrid.testimonial.text}"
                     </p>
                   </div>
 
-                  <div className="flex items-end justify-between relative z-10">
-                    <div>
-                      <h6 className="font-bold text-base sm:text-lg mb-0.5 text-white">{t.heroGrid.testimonial.author}</h6>
-                      <span className="text-blue-100 text-xs sm:text-sm">{t.heroGrid.testimonial.role}</span>
-                    </div>
-                    <svg className="w-10 h-10 sm:w-12 sm:h-12 text-white/20" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
-                    </svg>
+                  <div className="relative z-10 pt-4 border-t border-white/10">
+                    <h6 className="font-bold text-base sm:text-lg text-white">{t.heroGrid.testimonial.author}</h6>
+                    <span className="text-blue-200/70 text-xs sm:text-sm font-medium">{t.heroGrid.testimonial.role}</span>
                   </div>
                 </div>
 
-                <div className="bg-gray-900 rounded-3xl overflow-hidden shadow-xl relative min-h-[200px] sm:min-h-[280px]">
-                  <img
+                {/* Imagen Secundaria - Mejorada */}
+                <div className="bg-slate-900 rounded-3xl overflow-hidden shadow-xl border border-slate-100 dark:border-slate-800 relative min-h-[250px] sm:min-h-[300px]">
+                  <Image
                     src="/pexels-photo-3184611.jpeg"
-                    alt="Thumbnail"
-                    className="w-full h-full object-cover"
+                    alt="Team meeting"
+                    fill
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                    className="object-cover opacity-90 transition-opacity hover:opacity-100"
                   />
+                  <div className="absolute inset-0 bg-slate-900/10 pointer-events-none" />
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>

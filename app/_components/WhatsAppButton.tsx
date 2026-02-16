@@ -1,8 +1,6 @@
 'use client';
 
-import type { translations } from '@/lib/translations';
-
-type TranslationStructure = typeof translations.en;
+import type { TranslationStructure } from '@/lib/translations';
 
 interface WhatsAppButtonProps {
   t: TranslationStructure;

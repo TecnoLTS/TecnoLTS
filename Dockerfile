@@ -1,30 +1,44 @@
-FROM node:20-alpine
+FROM node:22-alpine AS base
 
 WORKDIR /app
-
-# Install dependencies
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN apk add --no-cache libc6-compat
 
-# Control de ambiente (development | production)
-ARG APP_ENV=production
-ENV APP_ENV=${APP_ENV}
-ENV NODE_ENV=${APP_ENV}
+FROM base AS deps
+COPY package.json package-lock.json ./
+RUN npm ci --omit=optional --no-audit --no-fund && npm cache clean --force
 
-# Instala dependencias
-COPY package*.json ./
-RUN NODE_ENV=development npm install --include=dev
-
-# Copia el código de la app
+FROM base AS builder
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN npm run build
 
-# Build de producción de Next (omitido en dev)
-RUN if [ "$APP_ENV" = "production" ]; then \
-      npm run build && \
-      npm prune --production; \
-    else \
-      echo "Skip build in development"; \
-    fi
+FROM base AS runner
+ENV NODE_ENV=production
+ENV APP_ENV=production
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
 
+RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
+
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+USER nextjs
 EXPOSE 3000
 
-CMD ["sh", "-c", "if [ \"$APP_ENV\" = \"development\" ]; then npm run dev -- --hostname 0.0.0.0 --port 3000; else npm run start -- --hostname 0.0.0.0 --port 3000; fi"]
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+  CMD node -e "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+
+CMD ["node", "server.js"]
+
+FROM base AS dev
+ENV NODE_ENV=development
+ENV APP_ENV=development
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+EXPOSE 3000
+CMD ["npm", "run", "dev", "--", "--hostname", "0.0.0.0", "--port", "3000"]

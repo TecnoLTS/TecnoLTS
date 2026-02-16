@@ -1,8 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Code, Shield, Network, Lock, Layers, FileCheck, Zap, HardDrive, ChevronDown, Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { 
+  Code, Shield, Network, Lock, Layers, 
+  FileCheck, Zap, HardDrive, ChevronDown, 
+  Menu, X, Activity 
+} from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
 import { useLanguage } from '@/components/language-provider';
@@ -11,9 +14,10 @@ export default function Navigation() {
   const { t, language } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Lista de servicios actualizada con Monitoreo
   const services = [
     {
-      href: '#software',
+      href: `/${language}#software`,
       icon: Code,
       title: t.services.software.title,
       bgColor: 'bg-blue-100 dark:bg-blue-900/50',
@@ -22,7 +26,16 @@ export default function Navigation() {
       mobileHover: 'hover:bg-blue-50 dark:hover:bg-blue-900/20'
     },
     {
-      href: '#cybersecurity',
+      href: `/${language}#monitoring`,
+      icon: Activity,
+      title: t.services.monitoring.title,
+      bgColor: 'bg-indigo-100 dark:bg-indigo-900/50',
+      iconColor: 'text-indigo-600 dark:text-indigo-400',
+      hoverBg: 'group-hover/item:bg-indigo-500',
+      mobileHover: 'hover:bg-indigo-50 dark:hover:bg-indigo-900/20'
+    },
+    {
+      href: `/${language}#cybersecurity`,
       icon: Shield,
       title: t.services.cybersecurity.title,
       bgColor: 'bg-emerald-100 dark:bg-emerald-900/50',
@@ -31,7 +44,7 @@ export default function Navigation() {
       mobileHover: 'hover:bg-emerald-50 dark:hover:bg-emerald-900/20'
     },
     {
-      href: '#network',
+      href: `/${language}#network`,
       icon: Network,
       title: t.services.network.title,
       bgColor: 'bg-cyan-100 dark:bg-cyan-900/50',
@@ -40,7 +53,7 @@ export default function Navigation() {
       mobileHover: 'hover:bg-cyan-50 dark:hover:bg-cyan-900/20'
     },
     {
-      href: '#iso',
+      href: `/${language}#iso`,
       icon: Lock,
       title: t.services.iso.title,
       bgColor: 'bg-purple-100 dark:bg-purple-900/50',
@@ -49,7 +62,7 @@ export default function Navigation() {
       mobileHover: 'hover:bg-purple-50 dark:hover:bg-purple-900/20'
     },
     {
-      href: '#backups',
+      href: `/${language}#backups`,
       icon: Layers,
       title: t.services.backups.title,
       bgColor: 'bg-orange-100 dark:bg-orange-900/50',
@@ -58,7 +71,7 @@ export default function Navigation() {
       mobileHover: 'hover:bg-orange-50 dark:hover:bg-orange-900/20'
     },
     {
-      href: '#licensing',
+      href: `/${language}#licensing`,
       icon: FileCheck,
       title: t.services.licensing.title,
       bgColor: 'bg-indigo-100 dark:bg-indigo-900/50',
@@ -67,7 +80,7 @@ export default function Navigation() {
       mobileHover: 'hover:bg-indigo-50 dark:hover:bg-indigo-900/20'
     },
     {
-      href: '#disaster-recovery',
+      href: `/${language}#disaster-recovery`,
       icon: Zap,
       title: t.services.disasterRecovery.title,
       bgColor: 'bg-rose-100 dark:bg-rose-900/50',
@@ -76,7 +89,7 @@ export default function Navigation() {
       mobileHover: 'hover:bg-rose-50 dark:hover:bg-rose-900/20'
     },
     {
-      href: '#datacenter',
+      href: `/${language}#datacenter`,
       icon: HardDrive,
       title: t.services.dataCenter.title,
       bgColor: 'bg-teal-100 dark:bg-teal-900/50',
@@ -91,7 +104,7 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <a href="#" className="flex items-center gap-2 group/logo">
+            <a href={`/${language}`} className="flex items-center gap-2 group/logo">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 rounded-xl group-hover/logo:scale-105 transition-all duration-500 shadow-lg group-hover/logo:shadow-[0_5px_20px_-5px_rgba(59,130,246,0.5)]" />
               <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent group-hover/logo:from-blue-600 group-hover/logo:to-cyan-500 dark:group-hover/logo:from-blue-400 dark:group-hover/logo:to-cyan-400 transition-all duration-500">
                 TecnoLTS
@@ -117,12 +130,12 @@ export default function Navigation() {
                         <a
                           key={service.href}
                           href={service.href}
-                          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-300 group/item hover:translate-x-1"
+                          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all duration-300 group/item hover:translate-x-1 min-w-0"
                         >
-                          <div className={`w-8 h-8 rounded-lg ${service.bgColor} ${service.hoverBg} flex items-center justify-center transition-all duration-500 group-hover/item:scale-105 group-hover/item:shadow-lg`}>
+                          <div className={`w-8 h-8 rounded-lg ${service.bgColor} ${service.hoverBg} flex items-center justify-center transition-all duration-500 group-hover/item:scale-105 group-hover/item:shadow-lg flex-shrink-0`}>
                             <Icon className={`w-4 h-4 ${service.iconColor} group-hover/item:text-white transition-all duration-500 group-hover/item:scale-105`} />
                           </div>
-                          <span className="text-gray-700 dark:text-gray-300 font-medium text-sm group-hover/item:text-gray-900 dark:group-hover/item:text-white transition-colors duration-300">{service.title}</span>
+                          <span className="min-w-0 flex-1 break-words text-gray-700 dark:text-gray-300 font-medium text-sm group-hover/item:text-gray-900 dark:group-hover/item:text-white transition-colors duration-300">{service.title}</span>
                         </a>
                       );
                     })}
@@ -130,22 +143,16 @@ export default function Navigation() {
                 </div>
               </div>
             </div>
-            <a href="#about" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
+            <a href={`/${language}#about`} className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
               {t.nav.about}
             </a>
-            <a href="#contact" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
+            <a href={`/${language}#contact`} className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
               {t.nav.contact}
             </a>
             <div className="flex items-center gap-2 ml-2">
               <ThemeToggle />
               <LanguageToggle />
             </div>
-            <Button asChild className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 shadow-lg hover:shadow-[0_10px_40px_-10px_rgba(59,130,246,0.6)] transition-all duration-500 hover:scale-[1.02] hover:-translate-y-0.5 relative overflow-hidden group/cta">
-              <a href="#contact-form" className="relative z-10">
-                <span className="absolute inset-0 translate-x-[-100%] group-hover/cta:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></span>
-                <span className="relative">{t.nav.getStarted}</span>
-              </a>
-            </Button>
           </div>
 
           <div className="flex md:hidden items-center gap-2">
@@ -163,7 +170,7 @@ export default function Navigation() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-700">
+        <div className="md:hidden bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-700 shadow-2xl animate-fade-in">
           <div className="px-4 py-4 space-y-3 max-h-[calc(100vh-4rem)] overflow-y-auto">
             <a
               href={`/${language}`}
@@ -173,7 +180,7 @@ export default function Navigation() {
               {t.nav.home}
             </a>
             <div className="space-y-2">
-              <div className="text-sm font-semibold text-gray-500 dark:text-gray-400 px-2 mb-2">{t.nav.services}</div>
+              <div className="text-sm font-semibold text-gray-400 dark:text-gray-500 px-3 mb-2 uppercase tracking-wider">{t.nav.services}</div>
               {services.map((service) => {
                 const Icon = service.icon;
                 return (
@@ -181,37 +188,33 @@ export default function Navigation() {
                     key={service.href}
                     href={service.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg ${service.mobileHover} transition-colors`}
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg ${service.mobileHover} transition-colors group min-w-0`}
                   >
-                    <Icon className={`w-5 h-5 ${service.iconColor} flex-shrink-0`} />
-                    <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{service.title}</span>
+                    <div className={`w-10 h-10 rounded-xl ${service.bgColor} flex items-center justify-center transition-transform group-active:scale-95`}>
+                      <Icon className={`w-5 h-5 ${service.iconColor}`} />
+                    </div>
+                    <span className="min-w-0 flex-1 break-words leading-snug text-gray-700 dark:text-gray-300 text-sm font-medium">{service.title}</span>
                   </a>
                 );
               })}
             </div>
 
-            <div className="border-t border-gray-200 dark:border-slate-700 pt-3 space-y-2">
+            <div className="border-t border-gray-200 dark:border-slate-700 pt-4 space-y-2">
               <a
-                href="#about"
+                href={`/${language}#about`}
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors text-sm font-medium"
               >
                 {t.nav.about}
               </a>
               <a
-                href="#contact-form"
+                href={`/${language}#contact`}
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors text-sm font-medium"
               >
                 {t.nav.contact}
               </a>
             </div>
-
-            <Button asChild className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700">
-              <a href="#contact-form" onClick={() => setMobileMenuOpen(false)}>
-                {t.nav.getStarted}
-              </a>
-            </Button>
           </div>
         </div>
       )}

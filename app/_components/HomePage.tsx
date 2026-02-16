@@ -1,7 +1,8 @@
 'use client';
 
 import { useLanguage } from '@/components/language-provider';
-import { Code, Shield, Network, Lock, Layers, Server, Zap, HardDrive } from 'lucide-react';
+// Añadimos "Activity" para el icono de monitoreo
+import { Code, Shield, Network, Lock, Layers, Server, Zap, HardDrive, Activity } from 'lucide-react';
 import Navigation from './Navigation';
 import HeroSection from './HeroSection';
 import ServiceCard from './ServiceCard';
@@ -45,6 +46,7 @@ export default function HomePage() {
 
       <HeroSection t={t} />
 
+      {/* --- 1. DESARROLLO DE SOFTWARE --- */}
       <ServiceCard
         id="software"
         icon={Code}
@@ -59,6 +61,22 @@ export default function HomePage() {
         locale={language}
       />
 
+      {/* --- 2. MONITOREO Y OBSERVABILIDAD (NUEVO) --- */}
+      <ServiceCard
+        id="monitoring"
+        icon={Activity}
+        title={t.services.monitoring.title}
+        description={t.services.monitoring.description}
+        items={t.services.monitoring.items}
+        cta={t.services.monitoring.cta}
+        coreCapabilitiesLabel={t.labels.coreCapabilities}
+        gradient="bg-gradient-to-br from-orange-500 to-red-600"
+        backgroundColor="bg-gradient-to-br from-slate-50 to-orange-50 dark:from-slate-900 dark:to-orange-950/20"
+        iconPosition="left"
+        locale={language}
+      />
+
+      {/* --- 3. CIBERSEGURIDAD --- */}
       <ServiceCard
         id="cybersecurity"
         icon={Shield}
@@ -68,11 +86,12 @@ export default function HomePage() {
         cta={t.services.cybersecurity.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-cyan-500 to-blue-600"
-        backgroundColor="bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-cyan-950/50"
-        iconPosition="left"
+        backgroundColor="bg-white dark:bg-slate-900"
+        iconPosition="right"
         locale={language}
       />
 
+      {/* --- 4. SOLUCIONES DE RED --- */}
       <ServiceCard
         id="network"
         icon={Network}
@@ -82,11 +101,12 @@ export default function HomePage() {
         cta={t.services.network.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-cyan-500 to-cyan-700"
-        backgroundColor="bg-white dark:bg-slate-900"
-        iconPosition="right"
+        backgroundColor="bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-cyan-950/50"
+        iconPosition="left"
         locale={language}
       />
 
+      {/* --- 5. ISO 27001 --- */}
       <ServiceCard
         id="iso"
         icon={Lock}
@@ -96,11 +116,12 @@ export default function HomePage() {
         cta={t.services.iso.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-purple-500 to-purple-700"
-        backgroundColor="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-slate-900 dark:to-purple-950/50"
-        iconPosition="left"
+        backgroundColor="bg-white dark:bg-slate-900"
+        iconPosition="right"
         locale={language}
       />
 
+      {/* --- 6. GESTIÓN DE BACKUPS --- */}
       <ServiceCard
         id="backups"
         icon={Layers}
@@ -110,11 +131,12 @@ export default function HomePage() {
         cta={t.services.backups.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-emerald-500 to-emerald-700"
-        backgroundColor="bg-white dark:bg-slate-900"
-        iconPosition="right"
+        backgroundColor="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-slate-900 dark:to-purple-950/50"
+        iconPosition="left"
         locale={language}
       />
 
+      {/* --- 7. LICENCIAMIENTOS --- */}
       <ServiceCard
         id="licensing"
         icon={Server}
@@ -124,11 +146,12 @@ export default function HomePage() {
         cta={t.services.licensing.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-blue-500 to-indigo-600"
-        backgroundColor="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-blue-950/50"
-        iconPosition="left"
+        backgroundColor="bg-white dark:bg-slate-900"
+        iconPosition="right"
         locale={language}
       />
 
+      {/* --- 8. REC. DE DESASTRES --- */}
       <ServiceCard
         id="disaster-recovery"
         icon={Zap}
@@ -138,11 +161,12 @@ export default function HomePage() {
         cta={t.services.disasterRecovery.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-rose-500 to-rose-700"
-        backgroundColor="bg-white dark:bg-slate-900"
-        iconPosition="right"
+        backgroundColor="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-blue-950/50"
+        iconPosition="left"
         locale={language}
       />
 
+      {/* --- 9. DATA CENTER --- */}
       <ServiceCard
         id="datacenter"
         icon={HardDrive}
@@ -152,8 +176,8 @@ export default function HomePage() {
         cta={t.services.dataCenter.cta}
         coreCapabilitiesLabel={t.labels.coreCapabilities}
         gradient="bg-gradient-to-br from-teal-500 to-teal-700"
-        backgroundColor="bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-slate-900 dark:to-teal-950/50"
-        iconPosition="left"
+        backgroundColor="bg-white dark:bg-slate-900"
+        iconPosition="right"
         checkColor="text-teal-500"
         locale={language}
       />

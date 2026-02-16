@@ -36,6 +36,7 @@ export default function ServiceCard({
   // Map service IDs to route paths
   const serviceRoutes: Record<string, string> = {
     'software': 'software',
+    'monitoring': 'monitoring',
     'cybersecurity': 'cybersecurity',
     'network': 'network',
     'iso': 'iso-27001',
@@ -55,30 +56,30 @@ export default function ServiceCard({
         <div className={`flex flex-col ${isIconLeft ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-start lg:items-center gap-6 ${isIconLeft ? 'lg:gap-20' : 'lg:gap-12'}`}>
           <div className="flex-1 w-full">
             <div className="flex items-start gap-4 mb-6">
-              <div className="lg:hidden flex-shrink-0 animate-fade-in perspective-3d">
-                <div className="w-16 h-16 cube-3d animate-cube-rotate">
+              <div className="lg:hidden relative z-10 flex-shrink-0 animate-fade-in perspective-3d overflow-visible">
+                <div className="w-16 h-16 cube-3d cube-3d-mobile animate-cube-rotate motion-reduce:animate-none">
                     {/* Front face */}
                     <div className={`cube-face cube-face-front-sm ${gradient} rounded-sm`}>
                       <Icon className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                     </div>
                     {/* Back face */}
-                    <div className={`cube-face cube-face-back-sm ${gradient} rounded-sm`}>
+                    <div className={`cube-face cube-face-back-sm cube-face-surface cube-face-surface-back ${gradient}`}>
                       <Icon className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                     </div>
                     {/* Right face */}
-                    <div className={`cube-face cube-face-right-sm ${gradient} rounded-sm`}>
+                    <div className={`cube-face cube-face-right-sm cube-face-surface cube-face-surface-side ${gradient}`}>
                       <Icon className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                     </div>
                     {/* Left face */}
-                    <div className={`cube-face cube-face-left-sm ${gradient} rounded-sm`}>
+                    <div className={`cube-face cube-face-left-sm cube-face-surface cube-face-surface-side ${gradient}`}>
                       <Icon className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                     </div>
                     {/* Top face */}
-                    <div className={`cube-face cube-face-top-sm ${gradient} rounded-sm`}>
+                    <div className={`cube-face cube-face-top-sm cube-face-surface cube-face-surface-top ${gradient}`}>
                       <Icon className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                     </div>
                     {/* Bottom face */}
-                    <div className={`cube-face cube-face-bottom-sm ${gradient} rounded-sm`}>
+                    <div className={`cube-face cube-face-bottom-sm cube-face-surface cube-face-surface-bottom ${gradient}`}>
                       <Icon className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                     </div>
                 </div>
@@ -129,30 +130,30 @@ export default function ServiceCard({
             </Button>
           </div>
 
-          <div className="hidden lg:block flex-shrink-0 animate-fade-in-up animation-delay-200 perspective-3d">
-            <div className="w-56 h-56 cube-3d group-hover/card:animate-cube-rotate">
+          <div className="hidden lg:block relative z-10 flex-shrink-0 animate-fade-in-up animation-delay-200 perspective-3d overflow-visible">
+            <div className="w-56 h-56 cube-3d cube-3d-desktop group-hover/card:animate-cube-rotate motion-reduce:animate-none">
                 {/* Front face */}
                 <div className={`cube-face cube-face-front ${gradient} rounded-lg`}>
                   <Icon className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
                 </div>
                 {/* Back face */}
-                <div className={`cube-face cube-face-back ${gradient} rounded-lg`}>
+                <div className={`cube-face cube-face-back cube-face-surface cube-face-surface-back ${gradient}`}>
                   <Icon className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
                 </div>
                 {/* Right face */}
-                <div className={`cube-face cube-face-right ${gradient} rounded-lg`}>
+                <div className={`cube-face cube-face-right cube-face-surface cube-face-surface-side ${gradient}`}>
                   <Icon className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
                 </div>
                 {/* Left face */}
-                <div className={`cube-face cube-face-left ${gradient} rounded-lg`}>
+                <div className={`cube-face cube-face-left cube-face-surface cube-face-surface-side ${gradient}`}>
                   <Icon className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
                 </div>
                 {/* Top face */}
-                <div className={`cube-face cube-face-top ${gradient} rounded-lg`}>
+                <div className={`cube-face cube-face-top cube-face-surface cube-face-surface-top ${gradient}`}>
                   <Icon className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
                 </div>
                 {/* Bottom face */}
-                <div className={`cube-face cube-face-bottom ${gradient} rounded-lg`}>
+                <div className={`cube-face cube-face-bottom cube-face-surface cube-face-surface-bottom ${gradient}`}>
                   <Icon className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
                 </div>
             </div>

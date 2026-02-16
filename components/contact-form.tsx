@@ -11,6 +11,7 @@ interface FormData {
   phone: string;
   service: string;
   message: string;
+  website: string;
   privacy: boolean;
 }
 
@@ -30,6 +31,7 @@ export default function ContactForm() {
     phone: "",
     service: "",
     message: "",
+    website: "",
     privacy: false,
   });
 
@@ -86,6 +88,7 @@ export default function ContactForm() {
           phone: formData.phone.trim() || null,
           service: formData.service,
           message: formData.message.trim() || null,
+          website: formData.website.trim(),
           privacy_accepted: formData.privacy,
         }),
       });
@@ -105,6 +108,7 @@ export default function ContactForm() {
         phone: "",
         service: "",
         message: "",
+        website: "",
         privacy: false,
       });
 
@@ -259,6 +263,7 @@ export default function ContactForm() {
                   >
                     <option value="">{t.contact.form.serviceSelect}</option>
                     <option value="software">{t.contact.form.serviceSoftware}</option>
+                    <option value="monitoring">{t.contact.form.serviceMonitoring}</option>
                     <option value="network">{t.contact.form.serviceNetwork}</option>
                     <option value="iso">{t.contact.form.serviceIso}</option>
                     <option value="cybersecurity">{t.contact.form.serviceCybersecurity}</option>
@@ -294,6 +299,19 @@ export default function ContactForm() {
                 ></textarea>
               </div>
               {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
+            </div>
+
+            <div className="hidden" aria-hidden="true">
+              <label htmlFor="website">Website</label>
+              <input
+                type="text"
+                id="website"
+                name="website"
+                value={formData.website}
+                onChange={handleChange}
+                autoComplete="off"
+                tabIndex={-1}
+              />
             </div>
 
             <div>

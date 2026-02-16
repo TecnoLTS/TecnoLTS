@@ -320,10 +320,12 @@
   .animate-cube-rotate {
     animation: cube-rotate 35s ease-in-out infinite;
     transform-style: preserve-3d;
+    will-change: transform;
   }
 
   .perspective-3d {
-    perspective: 1200px;
+    perspective: 1000px;
+    perspective-origin: center center;
   }
 
   .transform-3d {
@@ -336,6 +338,15 @@
     height: 100%;
     transform-style: preserve-3d;
     transform: rotateX(0deg) rotateY(0deg);
+    will-change: transform;
+  }
+
+  .cube-3d-mobile {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+
+  .cube-3d-desktop {
+    transform: rotateX(0deg) rotateY(0deg);
   }
 
   .cube-face {
@@ -345,8 +356,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    backface-visibility: visible;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
     opacity: 1;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  .cube-face-surface {
+    border-radius: 0.35rem;
+  }
+
+  .cube-face-surface-side {
+    filter: brightness(0.92) saturate(0.96);
+  }
+
+  .cube-face-surface-top {
+    filter: brightness(1.05) saturate(0.94);
+  }
+
+  .cube-face-surface-bottom,
+  .cube-face-surface-back {
+    filter: brightness(0.84) saturate(0.9);
   }
 
   .cube-face-front {
@@ -396,6 +427,22 @@
 
   .cube-face-bottom-sm {
     transform: rotateX(-90deg) translateZ(2rem);
+  }
+
+  @media (max-width: 640px) {
+    .perspective-3d {
+      perspective: 850px;
+    }
+
+    .animate-cube-rotate {
+      animation-duration: 32s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-cube-rotate {
+      animation: none !important;
+    }
   }
 
   .animation-delay-100 {
