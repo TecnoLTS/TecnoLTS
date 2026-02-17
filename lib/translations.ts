@@ -1307,7 +1307,7 @@ export const translations = {
       terms: "Términos de servicio",
       contact: "Contacto",
       contactEmailLabel: "Email",
-      contactPhoneLabel: "Soporte",
+      contactPhoneLabel: "Teléfono",
       contactLocationLabel: "Oficina",
       rights: "Todos los derechos reservados."
     },

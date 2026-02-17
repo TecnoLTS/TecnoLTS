@@ -194,7 +194,7 @@ export default function HomePage() {
 
       <WhatsAppButton t={t} />
 
-      <Footer t={t} />
+      <Footer t={t} locale={language} />
     </main>
   );
 }

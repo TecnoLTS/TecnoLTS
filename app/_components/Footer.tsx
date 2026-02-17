@@ -5,9 +5,10 @@ import type { TranslationStructure } from '@/lib/translations';
 
 interface FooterProps {
   t: TranslationStructure;
+  locale?: string;
 }
 
-export default function Footer({ t }: FooterProps) {
+export default function Footer({ t, locale = 'es' }: FooterProps) {
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
@@ -39,40 +40,40 @@ export default function Footer({ t }: FooterProps) {
           <div>
             <h3 className="font-semibold text-white mb-6 uppercase tracking-wider text-sm">{t.footer.services}</h3>
             <ul className="space-y-3.5">
-              <li><a href="#software" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              <li><a href={`/${locale}/services/software`} className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                 <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.software.title}</span>
               </a></li>
               {/* Nuevo Enlace: Monitoreo */}
-              <li><a href="#monitoring" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              <li><a href={`/${locale}/services/monitoring`} className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                 <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.monitoring.title}</span>
               </a></li>
-              <li><a href="#network" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              <li><a href={`/${locale}/services/network`} className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                 <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.network.title}</span>
               </a></li>
-              <li><a href="#cybersecurity" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              <li><a href={`/${locale}/services/cybersecurity`} className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                 <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.cybersecurity.title}</span>
               </a></li>
-              <li><a href="#iso" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              <li><a href={`/${locale}/services/iso-27001`} className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                 <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.iso.title}</span>
               </a></li>
-              <li><a href="#backups" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              <li><a href={`/${locale}/services/backups`} className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                 <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.backups.title}</span>
               </a></li>
-              <li><a href="#licensing" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              <li><a href={`/${locale}/services/licensing`} className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                 <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.licensing.title}</span>
               </a></li>
-              <li><a href="#disaster-recovery" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              <li><a href={`/${locale}/services/disaster-recovery`} className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                 <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.disasterRecovery.title}</span>
               </a></li>
-              <li><a href="#datacenter" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              <li><a href={`/${locale}/services/datacenter`} className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
                 <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.services.dataCenter.title}</span>
               </a></li>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import {
   Activity,
@@ -24,6 +25,7 @@ import Navigation from './Navigation';
 import Footer from './Footer';
 import WhatsAppButton from './WhatsAppButton';
 import ScrollToTopButton from './ScrollToTopButton';
+import ContactModal from '@/components/contact-modal';
 import { useLanguage } from '@/components/language-provider';
 
 const iconMap: Record<string, LucideIcon> = {
@@ -35,6 +37,17 @@ const iconMap: Record<string, LucideIcon> = {
   Server,
   Zap,
   HardDrive,
+};
+
+const serviceKeyMap: Record<string, string> = {
+  Code: 'software',
+  Shield: 'cybersecurity',
+  Network: 'network',
+  Lock: 'iso',
+  Layers: 'backups',
+  Server: 'licensing',
+  Zap: 'disaster',
+  HardDrive: 'datacenter',
 };
 
 type ThemeMetric = {
@@ -812,7 +825,9 @@ export default function ServiceDetailPage({
   labels,
 }: ServiceDetailPageProps) {
   const { t } = useLanguage();
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const Icon = iconMap[iconName] || Code;
+  const serviceKey = serviceKeyMap[iconName] || '';
   const theme = serviceThemes[iconName] || fallbackTheme;
   const isEs = locale === 'es';
 
@@ -869,7 +884,7 @@ export default function ServiceDetailPage({
           <div className={`lg:col-span-7 ${theme.swapHero ? 'lg:order-2' : ''}`}>
             <Link
               href={`/${locale}`}
-              className="mb-6 inline-flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-cyan-600 dark:text-slate-400 dark:hover:text-cyan-300"
+              className="mb-8 mr-4 inline-flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-cyan-600 dark:text-slate-400 dark:hover:text-cyan-300"
             >
               ← {labels.backToHome || (isEs ? 'Volver al inicio' : 'Back to home')}
             </Link>
@@ -895,14 +910,12 @@ export default function ServiceDetailPage({
 
             <div className="mb-8 flex flex-wrap items-center gap-3">
               <Button
-                asChild
+                onClick={() => setIsContactModalOpen(true)}
                 size="lg"
                 className="w-full justify-center bg-slate-900 text-sm font-semibold text-white hover:bg-slate-800 sm:w-auto sm:text-base dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
               >
-                <a href="#contact">
-                  {cta}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
+                {cta}
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
 
               <span className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/90 px-3 py-1.5 text-xs font-medium text-slate-600 sm:w-auto dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-300">
@@ -1134,18 +1147,21 @@ export default function ServiceDetailPage({
           </h2>
           <p className="mx-auto mb-7 max-w-2xl text-white/90">{ui.finalSubtitle}</p>
 
-          <Button asChild size="lg" className="w-full bg-white font-semibold text-slate-900 hover:bg-slate-100 sm:w-auto">
-            <a href={whatsAppHref}>
-              {ui.finalButton}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </a>
+          <Button onClick={() => setIsContactModalOpen(true)} size="lg" className="w-full bg-white font-semibold text-slate-900 hover:bg-slate-100 sm:w-auto">
+            {ui.finalButton}
+            <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
       </section>
 
-      <Footer t={t} />
+      <Footer t={t} locale={locale} />
       <WhatsAppButton t={t} />
       <ScrollToTopButton />
+      <ContactModal 
+        open={isContactModalOpen} 
+        onOpenChange={setIsContactModalOpen}
+        defaultService={serviceKey}
+      />
     </main>
   );
 }

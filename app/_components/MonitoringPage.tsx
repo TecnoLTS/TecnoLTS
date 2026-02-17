@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import {
   Activity,
@@ -19,6 +20,7 @@ import Navigation from '@/app/_components/Navigation';
 import Footer from '@/app/_components/Footer';
 import WhatsAppButton from '@/app/_components/WhatsAppButton';
 import ScrollToTopButton from '@/app/_components/ScrollToTopButton';
+import ContactModal from '@/components/contact-modal';
 import { useLanguage } from '@/components/language-provider';
 
 type MonitoringPillar = {
@@ -30,6 +32,7 @@ const pillarIcons = [Gauge, Network, FileSearch];
 
 export default function MonitoringPage() {
   const { t, language } = useLanguage();
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const data = t.serviceDetails.monitoring;
 
   const [mainTitle, accentTitle = ''] = data.heroTitle
@@ -96,6 +99,13 @@ export default function MonitoringPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-10 text-center sm:gap-14 lg:grid-cols-2 lg:gap-16 lg:text-left">
             <div>
+              <Link
+                href={`/${language}`}
+                className="mb-8 mr-4 inline-flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-cyan-600 dark:text-slate-400 dark:hover:text-cyan-300"
+              >
+                ← {isEs ? 'Volver al Inicio' : 'Back to Home'}
+              </Link>
+              
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold tracking-widest uppercase mb-6">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -116,10 +126,8 @@ export default function MonitoringPage() {
               </p>
 
               <div className="flex flex-wrap justify-center gap-3 sm:gap-4 lg:justify-start">
-                <Button asChild size="lg" className="w-full rounded-full bg-slate-900 px-6 py-5 text-base transition-transform hover:scale-105 sm:w-auto sm:px-8 sm:py-6 sm:text-lg dark:bg-white dark:text-slate-950">
-                  <Link href={`/${language}#contact`}>
-                    {data.cta} <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
+                <Button onClick={() => setIsContactModalOpen(true)} size="lg" className="w-full rounded-full bg-slate-900 px-6 py-5 text-base transition-transform hover:scale-105 sm:w-auto sm:px-8 sm:py-6 sm:text-lg dark:bg-white dark:text-slate-950">
+                  {data.cta} <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <div className="flex w-full items-center justify-center gap-4 rounded-full border border-slate-200 bg-white/50 px-6 py-3 backdrop-blur-sm sm:w-auto dark:border-slate-800 dark:bg-slate-900/50">
                   <Shield className="h-5 w-5 text-cyan-500" />
@@ -335,18 +343,21 @@ export default function MonitoringPage() {
                 <p className="mx-auto mb-10 max-w-2xl text-base text-blue-100/70 sm:text-lg">
                     {data.description}
                 </p>
-                <Button asChild size="lg" variant="secondary" className="w-full rounded-full bg-white px-8 py-6 text-base font-bold text-slate-950 shadow-xl shadow-cyan-900/20 hover:bg-cyan-50 sm:w-auto sm:px-10 sm:py-7 sm:text-lg">
-                    <Link href={`/${language}#contact`}>
-                        {data.cta} <ArrowRight className="ml-2 h-5 w-5" />
-                    </Link>
+                <Button onClick={() => setIsContactModalOpen(true)} size="lg" variant="secondary" className="w-full rounded-full bg-white px-8 py-6 text-base font-bold text-slate-950 shadow-xl shadow-cyan-900/20 hover:bg-cyan-50 sm:w-auto sm:px-10 sm:py-7 sm:text-lg">
+                    {data.cta} <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
             </div>
         </div>
       </section>
 
-      <Footer t={t} />
+      <Footer t={t} locale={language} />
       <WhatsAppButton t={t} />
       <ScrollToTopButton />
+      <ContactModal 
+        open={isContactModalOpen} 
+        onOpenChange={setIsContactModalOpen}
+        defaultService="monitoring"
+      />
     </main>
   );
 }
