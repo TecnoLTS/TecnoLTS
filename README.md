@@ -85,6 +85,38 @@ curl http://localhost:${HOST_PORT:-3008}/api/health
 docker compose --profile development up -d --build
 ```
 
+Por defecto en Docker desarrollo publica en `http://localhost:3009` (`DEV_PORT` configurable en `.env`).
+
+## SSL con gateway (local vs produccion)
+
+Desde `gateway`:
+
+1. Local/desarrollo (certificado autofirmado):
+
+```bash
+./scripts/setup-ssl-local.sh
+```
+
+2. Produccion (Let's Encrypt + auto-renovacion):
+
+```bash
+./scripts/setup-ssl-production.sh
+```
+
+Y para `tecnolts` usa:
+
+- Desarrollo:
+
+```bash
+docker compose --profile development up -d --build
+```
+
+- Produccion:
+
+```bash
+docker compose --profile production up -d --build
+```
+
 Guia completa para Ubuntu nuevo: `DEPLOYMENT.md`.
 
 ## Estructura relevante
@@ -94,3 +126,24 @@ Guia completa para Ubuntu nuevo: `DEPLOYMENT.md`.
 - `lib/translations.ts` contenido i18n
 - `components/language-provider.tsx` contexto de idioma
 - `app/api/contact/route.ts` endpoint de contacto
+
+
+
+
+
+Uso recomendado:
+
+Desarrollo
+cd /home/admincenter/contenedores/gateway
+./scripts/setup-ssl-local.sh
+
+cd /home/admincenter/contenedores/tecnolts
+docker compose --profile development up -d --build
+Producción
+cd /home/admincenter/contenedores/gateway
+CERTBOT_EMAIL=tu-correo@dominio.com ./scripts/setup-ssl-production.sh
+
+cd /home/admincenter/contenedores/tecnolts
+docker compose --profile production up -d --build
+
+

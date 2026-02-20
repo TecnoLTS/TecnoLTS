@@ -20,6 +20,12 @@ services:
       EMAIL_TO: ${EMAIL_TO:-}
     ports:
       - "${HOST_PORT:-3008}:3000"
+    container_name: tecnolts-app
+    hostname: tecnolts-app
+    networks:
+      edge:
+        aliases:
+          - tecnolts-app
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
       interval: 30s
@@ -52,4 +58,15 @@ services:
       - /app/node_modules
       - /app/.next
     ports:
-      - "${DEV_PORT:-3000}:3000"
+      - "${DEV_PORT:-3009}:3000"
+    container_name: tecnolts-app-dev
+    hostname: tecnolts-app-dev
+    networks:
+      edge:
+        aliases:
+          - tecnolts-app
+
+networks:
+  edge:
+    external: true
+    name: edge
