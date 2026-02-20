@@ -17,6 +17,14 @@ services:
       PORT: 3000
       HOSTNAME: 0.0.0.0
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://tecnolts.com}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_TLS_SERVERNAME: ${SMTP_TLS_SERVERNAME:-}
+      SMTP_TLS_INSECURE: ${SMTP_TLS_INSECURE:-false}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SMTP_FROM: ${SMTP_FROM:-}
       GMAIL_USER: ${GMAIL_USER:-}
       GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD:-}
       EMAIL_TO: ${EMAIL_TO:-}
@@ -26,6 +34,9 @@ services:
     hostname: tecnolts-app
     networks:
       edge:
+        aliases:
+          - tecnolts-app
+      webserver_default:
         aliases:
           - tecnolts-app
     healthcheck:
@@ -51,6 +62,14 @@ services:
       PORT: 3000
       HOSTNAME: 0.0.0.0
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3009}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_TLS_SERVERNAME: ${SMTP_TLS_SERVERNAME:-}
+      SMTP_TLS_INSECURE: ${SMTP_TLS_INSECURE:-false}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SMTP_FROM: ${SMTP_FROM:-}
       GMAIL_USER: ${GMAIL_USER:-}
       GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD:-}
       EMAIL_TO: ${EMAIL_TO:-}
@@ -67,8 +86,14 @@ services:
       edge:
         aliases:
           - tecnolts-app
+      webserver_default:
+        aliases:
+          - tecnolts-app
 
 networks:
   edge:
     external: true
     name: edge
+  webserver_default:
+    external: true
+    name: webserver_default

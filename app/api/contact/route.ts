@@ -20,6 +20,18 @@ type ContactPayload = {
   privacy_accepted?: boolean;
 };
 
+type MailConfig = {
+  host?: string;
+  port: number;
+  secure: boolean;
+  tlsServername?: string;
+  tlsRejectUnauthorized: boolean;
+  user: string;
+  pass: string;
+  to: string;
+  from: string;
+};
+
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX_REQUESTS = 5;
 
@@ -93,6 +105,44 @@ function escapeHtml(value: string): string {
     .replaceAll("'", '&#39;');
 }
 
+function parseBooleanEnv(value: string | undefined, defaultValue: boolean): boolean {
+  if (typeof value !== 'string' || !value.trim()) {
+    return defaultValue;
+  }
+  const normalized = value.trim().toLowerCase();
+  return normalized === '1' || normalized === 'true' || normalized === 'yes' || normalized === 'on';
+}
+
+function getMailConfig(): MailConfig | null {
+  const smtpHost = process.env.SMTP_HOST?.trim();
+  const smtpPortRaw = process.env.SMTP_PORT?.trim();
+  const smtpPort = Number.parseInt(smtpPortRaw || '587', 10);
+  const smtpSecure = parseBooleanEnv(process.env.SMTP_SECURE, smtpPort === 465);
+  const smtpTlsServername = process.env.SMTP_TLS_SERVERNAME?.trim();
+  const smtpTlsRejectUnauthorized = !parseBooleanEnv(process.env.SMTP_TLS_INSECURE, false);
+
+  const user = (process.env.SMTP_USER || process.env.GMAIL_USER || '').trim();
+  const pass = (process.env.SMTP_PASS || process.env.GMAIL_APP_PASSWORD || '').trim();
+  const to = (process.env.EMAIL_TO || user).trim();
+  const from = (process.env.SMTP_FROM || user).trim();
+
+  if (!user || !pass || !to || !from || !Number.isFinite(smtpPort)) {
+    return null;
+  }
+
+  return {
+    host: smtpHost || undefined,
+    port: smtpPort,
+    secure: smtpSecure,
+    tlsServername: smtpTlsServername || undefined,
+    tlsRejectUnauthorized: smtpTlsRejectUnauthorized,
+    user,
+    pass,
+    to,
+    from,
+  };
+}
+
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as ContactPayload;
@@ -134,17 +184,39 @@ export async function POST(request: Request) {
     const normalizedServiceName = serviceNames[service] || service;
     const serviceName = escapeHtml(normalizedServiceName);
 
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD,
-      },
-    });
+    const mailConfig = getMailConfig();
+    if (!mailConfig) {
+      return NextResponse.json(
+        { error: 'Configuracion SMTP incompleta. Revisa SMTP_USER/SMTP_PASS (o GMAIL_USER/GMAIL_APP_PASSWORD) y EMAIL_TO.' },
+        { status: 500 }
+      );
+    }
+
+    const transporter = mailConfig.host
+      ? nodemailer.createTransport({
+          host: mailConfig.host,
+          port: mailConfig.port,
+          secure: mailConfig.secure,
+          auth: {
+            user: mailConfig.user,
+            pass: mailConfig.pass,
+          },
+          tls: {
+            servername: mailConfig.tlsServername || mailConfig.host,
+            rejectUnauthorized: mailConfig.tlsRejectUnauthorized,
+          },
+        })
+      : nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: mailConfig.user,
+            pass: mailConfig.pass,
+          },
+        });
 
     const mailOptions = {
-      from: `"${normalizedName.replaceAll('"', '')}" <${process.env.GMAIL_USER}>`,
-      to: process.env.EMAIL_TO || process.env.GMAIL_USER,
+      from: `"${normalizedName.replaceAll('"', '')}" <${mailConfig.from}>`,
+      to: mailConfig.to,
       replyTo: normalizedEmail,
       subject: `Nueva consulta de ${normalizedName} - ${normalizedServiceName}`,
       html: `
