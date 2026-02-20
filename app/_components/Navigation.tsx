@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { 
   Code, Shield, Network, Lock, Layers, 
   FileCheck, Zap, HardDrive, ChevronDown, 
@@ -104,11 +105,15 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <a href={`/${language}`} className="flex items-center gap-2 group/logo">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 rounded-xl group-hover/logo:scale-105 transition-all duration-500 shadow-lg group-hover/logo:shadow-[0_5px_20px_-5px_rgba(59,130,246,0.5)]" />
-              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent group-hover/logo:from-blue-600 group-hover/logo:to-cyan-500 dark:group-hover/logo:from-blue-400 dark:group-hover/logo:to-cyan-400 transition-all duration-500">
-                TecnoLTS
-              </span>
+            <a href={`/${language}`} className="flex items-center">
+              <Image
+                src="/logos/tecnolts-logo.svg"
+                alt="TecnoLTS"
+                width={180}
+                height={44}
+                priority
+                className="h-10 w-auto object-contain"
+              />
             </a>
           </div>
 

@@ -139,8 +139,8 @@ export const translations = {
       },
       testimonial: {
         text: "We believe in building lasting relationships with our clients through trust, innovation, and exceptional technical service.",
-        author: "Esther Howard",
-        role: "Co-Founder"
+        author: "",
+        role: "Founder"
       }
     },
     features: {
@@ -789,10 +789,10 @@ export const translations = {
     },
     heroGrid: {
       badge: "CONÓCENOS MEJOR",
-      title: "Potenciando su",
-      titleHighlight: "Éxito",
+      title: "Potenciando tu negocio",
+      titleHighlight: "experto",
       titleLine2: "con innovación y soporte",
-      titleLine3: "técnico experto",
+      titleLine3: "técnico ",
       learnMore: "Nuestra historia",
       experiences: {
         label: "Experiencia",
@@ -801,8 +801,8 @@ export const translations = {
       },
       testimonial: {
         text: "Creemos en construir relaciones duraderas con nuestros clientes a través de la confianza, la innovación y un servicio técnico excepcional.",
-        author: "Esther Howard",
-        role: "Co-Fundadora"
+        author: "",
+        role: "Fundador"
       }
     },
     features: {

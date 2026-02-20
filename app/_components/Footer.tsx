@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import type { TranslationStructure } from '@/lib/translations';
 
@@ -18,8 +19,13 @@ export default function Footer({ t, locale = 'es' }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 rounded-xl" />
-              <span className="text-2xl font-bold text-white">TecnoLTS</span>
+              <Image
+                src="/logos/tecnolts-logo.svg"
+                alt="TecnoLTS"
+                width={220}
+                height={56}
+                className="h-12 w-auto object-contain"
+              />
             </div>
             <p className="text-gray-400 mb-6 leading-relaxed text-sm italic">
               {t.footer.description}
