@@ -9,6 +9,8 @@ COPY package.json package-lock.json ./
 RUN npm ci --omit=optional --no-audit --no-fund && npm cache clean --force
 
 FROM base AS builder
+ARG BUILD_MAX_OLD_SPACE_SIZE=1024
+ENV NODE_OPTIONS=--max-old-space-size=${BUILD_MAX_OLD_SPACE_SIZE}
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build

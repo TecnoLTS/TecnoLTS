@@ -63,17 +63,21 @@ export default function ContactSection({ t }: ContactSectionProps) {
               </div>
             </div>
 
-            <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-slate-700 flex-1 min-h-[320px]">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255168.17123728427!2d-78.52495258749998!3d-0.1806532!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d59a4002427c9f%3A0x44b991e158ef5572!2sQuito%2C%20Ecuador!5e0!3m2!1ses!2sec!4v1234567890"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="grayscale hover:grayscale-0 transition-all duration-300"
-              ></iframe>
+            <div className="rounded-2xl shadow-xl border border-gray-200 dark:border-slate-700 flex-1 min-h-[320px] p-6 bg-white dark:bg-slate-900 flex flex-col justify-center">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                {t.contact.info.location}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
+                {t.contact.info.locationValue}
+              </p>
+              <a
+                href="https://www.google.com/maps/place/Quito,+Ecuador"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 font-medium transition-colors"
+              >
+                Abrir en Google Maps
+              </a>
             </div>
           </div>
 

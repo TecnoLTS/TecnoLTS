@@ -5,6 +5,8 @@ services:
       context: .
       dockerfile: Dockerfile
       target: runner
+      args:
+        BUILD_MAX_OLD_SPACE_SIZE: ${BUILD_MAX_OLD_SPACE_SIZE:-1024}
     restart: unless-stopped
     env_file:
       - path: .env
