@@ -20,7 +20,7 @@ export default function Footer({ t, locale = 'es' }: FooterProps) {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Image
-                src="/logos/tecnolts-logo.svg"
+                src="/logos/tecnolts-logo-v2.svg"
                 alt="TecnoLTS"
                 width={220}
                 height={56}

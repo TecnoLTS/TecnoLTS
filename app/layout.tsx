@@ -42,10 +42,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-v2.svg', type: 'image/svg+xml' },
     ],
     apple: [
-      { url: '/apple-touch-icon.svg', type: 'image/svg+xml' },
+      { url: '/apple-touch-icon-v2.svg', type: 'image/svg+xml' },
     ],
   },
   manifest: '/manifest.webmanifest',

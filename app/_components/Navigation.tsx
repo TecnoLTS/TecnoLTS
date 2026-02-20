@@ -107,7 +107,7 @@ export default function Navigation() {
           <div className="flex items-center">
             <a href={`/${language}`} className="flex items-center">
               <Image
-                src="/logos/tecnolts-logo.svg"
+                src="/logos/tecnolts-logo-v2.svg"
                 alt="TecnoLTS"
                 width={180}
                 height={44}
