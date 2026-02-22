@@ -115,14 +115,15 @@ export default function ServiceCard({
             </ul>
 
             <Button 
-              className="w-full sm:w-auto max-w-full h-auto whitespace-normal bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-4 sm:px-8 py-4 sm:py-6 rounded-2xl shadow-lg hover:shadow-[0_10px_40px_-10px_rgba(59,130,246,0.6)] group/btn hover:scale-[1.02] hover:translate-x-1 transition-all duration-500 animate-fade-in-up animation-delay-500 relative overflow-hidden"
+              className="w-full sm:w-auto max-w-full h-auto whitespace-normal bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-4 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-[0_10px_40px_-10px_rgba(59,130,246,0.6)] group/btn hover:scale-[1.02] hover:translate-x-1 transition-all duration-500 animate-fade-in-up animation-delay-500 relative overflow-hidden"
               asChild
             >
               <a href={serviceUrl} aria-label={descriptiveCta} className="w-full">
                 <span className="absolute inset-0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"></span>
-                <span className="relative z-10 flex flex-wrap items-center justify-center gap-2 text-center leading-tight sm:leading-normal">
-                  <span className="break-words">{descriptiveCta}</span>
-                  <ArrowRight className="w-5 h-5 flex-shrink-0 group-hover/btn:translate-x-1 transition-transform duration-500" />
+                <span className="relative z-10 flex items-center justify-center gap-2 text-center leading-tight sm:leading-normal">
+                  <span className="sm:hidden">{cta}</span>
+                  <span className="hidden break-words sm:inline">{descriptiveCta}</span>
+                  <ArrowRight className="h-4 w-4 flex-shrink-0 transition-transform duration-500 group-hover/btn:translate-x-1 sm:h-5 sm:w-5" />
                 </span>
               </a>
             </Button>

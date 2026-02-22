@@ -16,12 +16,12 @@ export default function HeroSection({ t }: HeroSectionProps) {
               <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
               {t.hero.badge}
             </div>
-            <h1 className="text-[28px] leading-[1.2] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 sm:leading-tight heading-safe animate-fade-in-up animation-delay-100 min-h-[8.6rem] sm:min-h-0">
+            <h1 className="text-[28px] leading-[1.2] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 sm:leading-tight heading-safe animate-fade-in-up animation-delay-100">
               <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-cyan-700 dark:from-white dark:via-cyan-300 dark:to-blue-400 bg-clip-text text-transparent">
                 {t.hero.title}
               </span>
             </h1>
-            <p className="text-sm leading-relaxed sm:text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-5 sm:mb-6 md:mb-8 min-h-[5.8rem] sm:min-h-0">
+            <p className="text-sm leading-relaxed sm:text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-5 sm:mb-6 md:mb-8">
               {t.hero.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-1.5 sm:mb-0 animate-fade-in-up animation-delay-300">
