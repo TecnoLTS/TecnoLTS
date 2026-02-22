@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 import { Award, Star, Quote } from 'lucide-react';
 import type { TranslationStructure } from '@/lib/translations';
@@ -10,7 +8,7 @@ interface HeroGridSectionProps {
 
 export default function HeroGridSection({ t }: HeroGridSectionProps) {
   return (
-    <section id="about" className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900 scroll-mt-20 transition-colors duration-500">
+    <section id="about" className="deferred-section py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900 scroll-mt-20 transition-colors duration-500">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-wrap -mx-4 lg:items-end">
           
@@ -23,7 +21,7 @@ export default function HeroGridSection({ t }: HeroGridSectionProps) {
                   alt="Business Professional"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
               </div>
 
@@ -33,16 +31,16 @@ export default function HeroGridSection({ t }: HeroGridSectionProps) {
 
                 <div className="bg-white dark:bg-slate-800 rounded-tl-[12px] rounded-tr-[12px] rounded-br-[12px] rounded-bl-[12px] p-4 sm:p-6 shadow-lg min-h-[160px] sm:min-h-[226px] flex flex-col justify-between">
                   <div>
-                    <span className="text-cyan-600 dark:text-cyan-400 font-semibold text-xs sm:text-sm mb-2 sm:mb-3 block">
+                    <span className="text-cyan-700 dark:text-cyan-300 font-semibold text-xs sm:text-sm mb-2 sm:mb-3 block">
                       {t.heroGrid.experiences.label}
                     </span>
                     <div className="text-4xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2 leading-none">
                       {t.heroGrid.experiences.value}
                     </div>
                   </div>
-                  <h6 className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm font-normal leading-tight">
+                  <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm font-normal leading-tight">
                     {t.heroGrid.experiences.text}
-                  </h6>
+                  </p>
                 </div>
               </div>
             </div>
@@ -85,7 +83,7 @@ export default function HeroGridSection({ t }: HeroGridSectionProps) {
                   </div>
 
                   <div className="relative z-10 pt-4 border-t border-white/10">
-                    <h6 className="font-bold text-base sm:text-lg text-white">{t.heroGrid.testimonial.author}</h6>
+                    <p className="font-bold text-base sm:text-lg text-white">{t.heroGrid.testimonial.author}</p>
                     <span className="text-blue-200/70 text-xs sm:text-sm font-medium">{t.heroGrid.testimonial.role}</span>
                   </div>
                 </div>
@@ -96,8 +94,8 @@ export default function HeroGridSection({ t }: HeroGridSectionProps) {
                     src="/pexels-photo-3184611.jpeg"
                     alt="Team meeting"
                     fill
-                    sizes="(max-width: 640px) 100vw, 50vw"
-                    className="object-cover opacity-90 transition-opacity hover:opacity-100"
+                    sizes="(max-width: 1024px) 100vw, 25vw"
+                    className="absolute inset-0 h-full w-full object-cover opacity-90 transition-opacity hover:opacity-100"
                   />
                   <div className="absolute inset-0 bg-slate-900/10 pointer-events-none" />
                 </div>

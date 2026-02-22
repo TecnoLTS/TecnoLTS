@@ -7,6 +7,9 @@ services:
       target: runner
       args:
         BUILD_MAX_OLD_SPACE_SIZE: ${BUILD_MAX_OLD_SPACE_SIZE:-1024}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://tecnolts.com}
+        NEXT_PUBLIC_CONTACT_EMAIL: ${NEXT_PUBLIC_CONTACT_EMAIL:-}
+        NEXT_PUBLIC_CONTACT_PHONE: ${NEXT_PUBLIC_CONTACT_PHONE:-}
     restart: unless-stopped
     env_file:
       - path: .env
@@ -28,15 +31,14 @@ services:
       GMAIL_USER: ${GMAIL_USER:-}
       GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD:-}
       EMAIL_TO: ${EMAIL_TO:-}
+      UPSTASH_REDIS_REST_URL: ${UPSTASH_REDIS_REST_URL:-}
+      UPSTASH_REDIS_REST_TOKEN: ${UPSTASH_REDIS_REST_TOKEN:-}
     ports:
       - "${HOST_PORT:-3008}:3000"
     container_name: tecnolts-app
     hostname: tecnolts-app
     networks:
       edge:
-        aliases:
-          - tecnolts-app
-      webserver_default:
         aliases:
           - tecnolts-app
     healthcheck:
@@ -52,6 +54,10 @@ services:
       context: .
       dockerfile: Dockerfile
       target: dev
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3009}
+        NEXT_PUBLIC_CONTACT_EMAIL: ${NEXT_PUBLIC_CONTACT_EMAIL:-}
+        NEXT_PUBLIC_CONTACT_PHONE: ${NEXT_PUBLIC_CONTACT_PHONE:-}
     restart: unless-stopped
     env_file:
       - path: .env
@@ -73,6 +79,8 @@ services:
       GMAIL_USER: ${GMAIL_USER:-}
       GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD:-}
       EMAIL_TO: ${EMAIL_TO:-}
+      UPSTASH_REDIS_REST_URL: ${UPSTASH_REDIS_REST_URL:-}
+      UPSTASH_REDIS_REST_TOKEN: ${UPSTASH_REDIS_REST_TOKEN:-}
     command: npm run dev -- --hostname 0.0.0.0 --port 3000
     volumes:
       - .:/app
@@ -86,14 +94,8 @@ services:
       edge:
         aliases:
           - tecnolts-app
-      webserver_default:
-        aliases:
-          - tecnolts-app
 
 networks:
   edge:
     external: true
     name: edge
-  webserver_default:
-    external: true
-    name: webserver_default

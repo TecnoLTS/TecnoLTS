@@ -946,7 +946,7 @@ export const translations = {
       monitoring: {
         title: "Monitoreo y observabilidad",
         badge: "Observabilidad que protege su operación",
-        heroTitle: "Monitoreo y observavilidad",
+        heroTitle: "Monitoreo y observabilidad",
         description: "Monitoreamos sus aplicaciones, infraestructura y red en tiempo real para detectar incidentes antes de que se conviertan en caídas. Con alertas inteligentes y tableros claros, su equipo responde más rápido y mantiene la operación estable.",
         detailedDescription: "Implementamos observabilidad de extremo a extremo con OpenTelemetry, Prometheus, Zabbix y logs centralizados. Esto reduce el tiempo medio de detección y resolución (MTTD/MTTR), mejora la experiencia del usuario y le permite planificar capacidad y crecimiento con datos confiables.",
         showcaseTitle: "Visibilidad de negocio",
@@ -1318,4 +1318,4 @@ export const translations = {
 };
 
 export type Language = keyof typeof translations;
-export type TranslationStructure = Record<string, any>;
+export type TranslationStructure = (typeof translations)[Language];

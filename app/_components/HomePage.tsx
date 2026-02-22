@@ -1,8 +1,3 @@
-'use client';
-
-import { useLanguage } from '@/components/language-provider';
-// Añadimos "Activity" para el icono de monitoreo
-import { Code, Shield, Network, Lock, Layers, Server, Zap, HardDrive, Activity } from 'lucide-react';
 import Navigation from './Navigation';
 import HeroSection from './HeroSection';
 import ServiceCard from './ServiceCard';
@@ -13,26 +8,110 @@ import ContactSection from './ContactSection';
 import ScrollToTopButton from './ScrollToTopButton';
 import WhatsAppButton from './WhatsAppButton';
 import Footer from './Footer';
+import type { Language, TranslationStructure } from '@/lib/translations';
+import {
+  BRAND_NAME,
+  getLocalizedServiceUrls,
+  getSiteUrl,
+} from '@/lib/seo';
 
-export default function HomePage() {
-  const { t, language } = useLanguage();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-  const orgName = 'TecnoLTS';
-  const orgSchema = {
+interface HomePageProps {
+  t: TranslationStructure;
+  language: Language;
+}
+
+export default function HomePage({ t, language }: HomePageProps) {
+  const siteUrl = getSiteUrl();
+  const orgName = BRAND_NAME;
+  const orgId = `${siteUrl}#organization`;
+  const websiteId = `${siteUrl}#website`;
+  const localizedServices = getLocalizedServiceUrls(t, language);
+  const professionalServiceSchema = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': 'ProfessionalService',
+    '@id': `${siteUrl}#professional-service`,
     name: orgName,
-    url: siteUrl,
-    logo: `${siteUrl}/og-image.svg`,
+    url: `${siteUrl}/${language}`,
     description: t.seo.organizationDescription,
-    sameAs: [],
+    logo: `${siteUrl}/logos/tecnolts-logo-v2.svg`,
+    image: `${siteUrl}/og-image.svg`,
+    areaServed: [
+      {
+        '@type': 'Country',
+        name: 'Ecuador',
+      },
+    ],
+    serviceType:
+      language === 'es' ? 'Servicios IT empresariales' : 'Enterprise IT services',
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: language === 'es' ? 'Catálogo de servicios TecnoLTS' : 'TecnoLTS services catalog',
+      itemListElement: localizedServices.map((service) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: service.title,
+          description: service.description,
+          url: service.url,
+        },
+      })),
+    },
+    provider: {
+      '@id': orgId,
+    },
+  };
+  const servicesItemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${siteUrl}/${language}#services`,
+    name:
+      language === 'es'
+        ? 'Servicios IT empresariales de TecnoLTS'
+        : 'TecnoLTS enterprise IT services',
+    itemListOrder: 'https://schema.org/ItemListOrderAscending',
+    numberOfItems: localizedServices.length,
+    itemListElement: localizedServices.map((service, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: service.url,
+      name: service.title,
+      description: service.description,
+      provider: {
+        '@id': orgId,
+      },
+    })),
+  };
+
+  const homepageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${siteUrl}/${language}#webpage`,
+    url: `${siteUrl}/${language}`,
+    name:
+      language === 'es'
+        ? 'TecnoLTS - Soluciones y servicios IT empresariales'
+        : 'TecnoLTS - Enterprise IT solutions and services',
+    isPartOf: {
+      '@id': websiteId,
+    },
+    about: {
+      '@id': orgId,
+    },
   };
 
   return (
     <main id="top" className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative overflow-hidden">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesItemListSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageSchema) }}
       />
 
       <div className="fixed inset-0 pointer-events-none z-0">
@@ -42,14 +121,13 @@ export default function HomePage() {
         <div className="particle particle-4"></div>
       </div>
 
-      <Navigation />
+      <Navigation t={t} language={language} />
 
       <HeroSection t={t} />
 
       {/* --- 1. DESARROLLO DE SOFTWARE --- */}
       <ServiceCard
         id="software"
-        icon={Code}
         title={t.services.software.title}
         description={t.services.software.description}
         items={t.services.software.items}
@@ -64,7 +142,6 @@ export default function HomePage() {
       {/* --- 2. MONITOREO Y OBSERVABILIDAD (NUEVO) --- */}
       <ServiceCard
         id="monitoring"
-        icon={Activity}
         title={t.services.monitoring.title}
         description={t.services.monitoring.description}
         items={t.services.monitoring.items}
@@ -79,7 +156,6 @@ export default function HomePage() {
       {/* --- 3. CIBERSEGURIDAD --- */}
       <ServiceCard
         id="cybersecurity"
-        icon={Shield}
         title={t.services.cybersecurity.title}
         description={t.services.cybersecurity.description}
         items={t.services.cybersecurity.items}
@@ -94,7 +170,6 @@ export default function HomePage() {
       {/* --- 4. SOLUCIONES DE RED --- */}
       <ServiceCard
         id="network"
-        icon={Network}
         title={t.services.network.title}
         description={t.services.network.description}
         items={t.services.network.items}
@@ -109,7 +184,6 @@ export default function HomePage() {
       {/* --- 5. ISO 27001 --- */}
       <ServiceCard
         id="iso"
-        icon={Lock}
         title={t.services.iso.title}
         description={t.services.iso.description}
         items={t.services.iso.items}
@@ -124,7 +198,6 @@ export default function HomePage() {
       {/* --- 6. GESTIÓN DE BACKUPS --- */}
       <ServiceCard
         id="backups"
-        icon={Layers}
         title={t.services.backups.title}
         description={t.services.backups.description}
         items={t.services.backups.items}
@@ -139,7 +212,6 @@ export default function HomePage() {
       {/* --- 7. LICENCIAMIENTOS --- */}
       <ServiceCard
         id="licensing"
-        icon={Server}
         title={t.services.licensing.title}
         description={t.services.licensing.description}
         items={t.services.licensing.items}
@@ -154,7 +226,6 @@ export default function HomePage() {
       {/* --- 8. REC. DE DESASTRES --- */}
       <ServiceCard
         id="disaster-recovery"
-        icon={Zap}
         title={t.services.disasterRecovery.title}
         description={t.services.disasterRecovery.description}
         items={t.services.disasterRecovery.items}
@@ -169,7 +240,6 @@ export default function HomePage() {
       {/* --- 9. DATA CENTER --- */}
       <ServiceCard
         id="datacenter"
-        icon={HardDrive}
         title={t.services.dataCenter.title}
         description={t.services.dataCenter.description}
         items={t.services.dataCenter.items}
@@ -190,7 +260,7 @@ export default function HomePage() {
 
       <ContactSection t={t} />
 
-      <ScrollToTopButton />
+      <ScrollToTopButton t={t} />
 
       <WhatsAppButton t={t} />
 

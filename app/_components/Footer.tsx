@@ -1,8 +1,7 @@
-'use client';
-
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import type { TranslationStructure } from '@/lib/translations';
+import { getContactEmail, getContactPhone } from '@/lib/seo';
 
 interface FooterProps {
   t: TranslationStructure;
@@ -10,8 +9,11 @@ interface FooterProps {
 }
 
 export default function Footer({ t, locale = 'es' }: FooterProps) {
+  const contactEmail = getContactEmail();
+  const contactPhone = getContactPhone();
+
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <footer className="deferred-section bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
 
@@ -25,21 +27,22 @@ export default function Footer({ t, locale = 'es' }: FooterProps) {
                 width={220}
                 height={56}
                 className="h-12 w-auto object-contain"
+                loading="lazy"
               />
             </div>
             <p className="text-gray-400 mb-6 leading-relaxed text-sm italic">
               {t.footer.description}
             </p>
             <div className="flex gap-3">
-              <a href="#" className="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center transition-all border border-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_15px_-5px_rgba(6,182,212,0.5)]">
+              <span aria-label="Facebook (próximamente)" className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 opacity-70 cursor-not-allowed">
                 <span className="text-white">f</span>
-              </a>
-              <a href="#" className="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center transition-all border border-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_15px_-5px_rgba(6,182,212,0.5)]">
+              </span>
+              <span aria-label="X (próximamente)" className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 opacity-70 cursor-not-allowed">
                 <span className="text-white">𝕏</span>
-              </a>
-              <a href="#" className="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center transition-all border border-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_15px_-5px_rgba(6,182,212,0.5)]">
+              </span>
+              <span aria-label="LinkedIn (próximamente)" className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 opacity-70 cursor-not-allowed">
                 <span className="text-white">in</span>
-              </a>
+              </span>
             </div>
           </div>
 
@@ -93,22 +96,22 @@ export default function Footer({ t, locale = 'es' }: FooterProps) {
                 <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.footer.about}</span>
               </a></li>
-              <li><a href="#" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              <li><span className="text-sm text-gray-300 flex items-center gap-2 group">
                 <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.footer.careers}</span>
-              </a></li>
-              <li><a href="#" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              </span></li>
+              <li><span className="text-sm text-gray-300 flex items-center gap-2 group">
                 <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.footer.blog}</span>
-              </a></li>
-              <li><a href="#" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              </span></li>
+              <li><span className="text-sm text-gray-300 flex items-center gap-2 group">
                 <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.footer.privacy}</span>
-              </a></li>
-              <li><a href="#" className="text-sm hover:text-cyan-400 transition-colors flex items-center gap-2 group">
+              </span></li>
+              <li><span className="text-sm text-gray-300 flex items-center gap-2 group">
                 <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                 <span className="group-hover:translate-x-1 transition-transform">{t.footer.terms}</span>
-              </a></li>
+              </span></li>
             </ul>
           </div>
 
@@ -119,14 +122,14 @@ export default function Footer({ t, locale = 'es' }: FooterProps) {
                 <span className="text-cyan-400 mt-1 flex-shrink-0">✉</span>
                 <div>
                   <p className="text-white font-medium mb-1">{t.footer.contactEmailLabel}</p>
-                  <a href="mailto:info@tecnotls.com" className="break-all hover:text-cyan-400 transition-colors border-b border-gray-700 hover:border-cyan-400 pb-0.5">info@tecnotls.com</a>
+                  <a href={`mailto:${contactEmail}`} className="break-all hover:text-cyan-400 transition-colors border-b border-gray-700 hover:border-cyan-400 pb-0.5">{contactEmail}</a>
                 </div>
               </li>
               <li className="text-gray-400 flex items-start gap-3 text-sm">
                 <span className="text-cyan-400 mt-1 flex-shrink-0">☎</span>
                 <div>
                   <p className="text-white font-medium mb-1">{t.footer.contactPhoneLabel}</p>
-                  <a href="tel:+15551234567" className="break-words hover:text-cyan-400 transition-colors border-b border-gray-700 hover:border-cyan-400 pb-0.5">+1 (555) 123-4567</a>
+                  <a href={`tel:${contactPhone.replace(/[^\d+]/g, '')}`} className="break-words hover:text-cyan-400 transition-colors border-b border-gray-700 hover:border-cyan-400 pb-0.5">{contactPhone}</a>
                 </div>
               </li>
               <li className="text-gray-400 flex items-start gap-3 text-sm">
@@ -145,7 +148,7 @@ export default function Footer({ t, locale = 'es' }: FooterProps) {
             &copy; {new Date().getFullYear()} TecnoLTS. {t.footer.rights}
           </p>
           <div className="flex gap-6 text-xs text-gray-500">
-            <a href="#" className="hover:text-white transition-colors">v2.1.0</a>
+            <span className="text-gray-400">v2.1.0</span>
             <span className="opacity-20">|</span>
             <a href="#top" className="hover:text-white transition-colors flex items-center gap-1">Top ↑</a>
           </div>

@@ -1,10 +1,8 @@
-import { ArrowRight, CheckCircle, LucideIcon } from 'lucide-react';
+import { ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 
 interface ServiceCardProps {
   id: string;
-  icon: LucideIcon;
   title: string;
   description: string;
   items: readonly string[];
@@ -19,7 +17,6 @@ interface ServiceCardProps {
 
 export default function ServiceCard({
   id,
-  icon: Icon,
   title,
   description,
   items,
@@ -48,10 +45,11 @@ export default function ServiceCard({
 
   const servicePath = serviceRoutes[id] || id;
   const serviceUrl = `/${locale}/services/${servicePath}`;
+  const descriptiveCta = `${cta}: ${title}`;
 
 
   return (
-    <div id={id} className={`py-20 px-4 sm:px-6 lg:px-8 ${backgroundColor} relative overflow-hidden group/card`}>
+    <div id={id} className={`deferred-section scroll-mt-24 py-20 px-4 sm:px-6 lg:px-8 ${backgroundColor} relative overflow-visible group/card`}>
       <div className="max-w-6xl mx-auto relative z-10">
         <div className={`flex flex-col ${isIconLeft ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-start lg:items-center gap-6 ${isIconLeft ? 'lg:gap-20' : 'lg:gap-12'}`}>
           <div className="flex-1 w-full">
@@ -60,27 +58,27 @@ export default function ServiceCard({
                 <div className="w-16 h-16 cube-3d cube-3d-mobile animate-cube-rotate motion-reduce:animate-none">
                     {/* Front face */}
                     <div className={`cube-face cube-face-front-sm ${gradient} rounded-sm`}>
-                      <Icon className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
+                      <ServiceCubeIcon id={id} className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                     </div>
                     {/* Back face */}
                     <div className={`cube-face cube-face-back-sm cube-face-surface cube-face-surface-back ${gradient}`}>
-                      <Icon className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
+                      <ServiceCubeIcon id={id} className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                     </div>
                     {/* Right face */}
                     <div className={`cube-face cube-face-right-sm cube-face-surface cube-face-surface-side ${gradient}`}>
-                      <Icon className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
+                      <ServiceCubeIcon id={id} className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                     </div>
                     {/* Left face */}
                     <div className={`cube-face cube-face-left-sm cube-face-surface cube-face-surface-side ${gradient}`}>
-                      <Icon className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
+                      <ServiceCubeIcon id={id} className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                     </div>
                     {/* Top face */}
                     <div className={`cube-face cube-face-top-sm cube-face-surface cube-face-surface-top ${gradient}`}>
-                      <Icon className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
+                      <ServiceCubeIcon id={id} className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                     </div>
                     {/* Bottom face */}
                     <div className={`cube-face cube-face-bottom-sm cube-face-surface cube-face-surface-bottom ${gradient}`}>
-                      <Icon className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
+                      <ServiceCubeIcon id={id} className="w-8 h-8 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                     </div>
                 </div>
               </div>
@@ -117,16 +115,16 @@ export default function ServiceCard({
             </ul>
 
             <Button 
-              className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-8 py-6 rounded-2xl shadow-lg hover:shadow-[0_10px_40px_-10px_rgba(59,130,246,0.6)] group/btn hover:scale-[1.02] hover:translate-x-1 transition-all duration-500 animate-fade-in-up animation-delay-500 relative overflow-hidden"
+              className="w-full sm:w-auto max-w-full h-auto whitespace-normal bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 font-semibold px-4 sm:px-8 py-4 sm:py-6 rounded-2xl shadow-lg hover:shadow-[0_10px_40px_-10px_rgba(59,130,246,0.6)] group/btn hover:scale-[1.02] hover:translate-x-1 transition-all duration-500 animate-fade-in-up animation-delay-500 relative overflow-hidden"
               asChild
             >
-              <Link href={serviceUrl}>
+              <a href={serviceUrl} aria-label={descriptiveCta} className="w-full">
                 <span className="absolute inset-0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"></span>
-                <span className="flex items-center gap-2 relative z-10">
-                  {cta}
-                  <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform duration-500" />
+                <span className="relative z-10 flex flex-wrap items-center justify-center gap-2 text-center leading-tight sm:leading-normal">
+                  <span className="break-words">{descriptiveCta}</span>
+                  <ArrowRight className="w-5 h-5 flex-shrink-0 group-hover/btn:translate-x-1 transition-transform duration-500" />
                 </span>
-              </Link>
+              </a>
             </Button>
           </div>
 
@@ -134,32 +132,50 @@ export default function ServiceCard({
             <div className="w-56 h-56 cube-3d cube-3d-desktop group-hover/card:animate-cube-rotate motion-reduce:animate-none">
                 {/* Front face */}
                 <div className={`cube-face cube-face-front ${gradient} rounded-lg`}>
-                  <Icon className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
+                  <ServiceCubeIcon id={id} className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
                 </div>
                 {/* Back face */}
                 <div className={`cube-face cube-face-back cube-face-surface cube-face-surface-back ${gradient}`}>
-                  <Icon className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
+                  <ServiceCubeIcon id={id} className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
                 </div>
                 {/* Right face */}
                 <div className={`cube-face cube-face-right cube-face-surface cube-face-surface-side ${gradient}`}>
-                  <Icon className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
+                  <ServiceCubeIcon id={id} className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
                 </div>
                 {/* Left face */}
                 <div className={`cube-face cube-face-left cube-face-surface cube-face-surface-side ${gradient}`}>
-                  <Icon className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
+                  <ServiceCubeIcon id={id} className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
                 </div>
                 {/* Top face */}
                 <div className={`cube-face cube-face-top cube-face-surface cube-face-surface-top ${gradient}`}>
-                  <Icon className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
+                  <ServiceCubeIcon id={id} className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
                 </div>
                 {/* Bottom face */}
                 <div className={`cube-face cube-face-bottom cube-face-surface cube-face-surface-bottom ${gradient}`}>
-                  <Icon className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
+                  <ServiceCubeIcon id={id} className="w-28 h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
                 </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  );
+}
+
+function ServiceCubeIcon({ id, className }: { id: string; className: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <use href={`#service-icon-${id}`} />
+    </svg>
   );
 }

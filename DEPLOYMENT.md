@@ -1,92 +1,169 @@
 # Deployment Guide - TecnoLTS (Ubuntu Nuevo)
 
-## 1) Preparar servidor Ubuntu
+Esta guia deja el sitio listo en un servidor Ubuntu limpio usando Docker.
 
-Instalar Docker Engine + Compose Plugin:
+## 1) Requisitos del servidor
+
+Opcion recomendada (automatizada desde este proyecto):
 
 ```bash
-sudo apt-get update
-sudo apt-get install -y ca-certificates curl gnupg
-sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-sudo systemctl enable --now docker
+cd /opt/website/tecnolts
+./scripts/bootstrap-ubuntu.sh production
 ```
 
-Opcional para usar Docker sin `sudo`:
+Opcion manual: instalar Docker Engine + Compose Plugin:
+
+```bash
+cd /opt/website/gateway
+sudo ./scripts/install-docker-ubuntu.sh
+```
+
+Opcional (evitar `sudo`):
 
 ```bash
 sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-## 2) Preparar proyecto
+## 2) Clonar repositorio y preparar variables
 
 ```bash
-git clone <TU_REPO> tecnolts
-cd tecnolts
+cd /opt
+git clone <TU_REPO> website
+```
+
+### 2.1 Gateway (SSL + reverse proxy)
+
+```bash
+cd /opt/website/gateway
 cp .env.example .env
 ```
 
-Editar `.env` con datos reales:
+Editar `/opt/website/gateway/.env`:
 
-- `NEXT_PUBLIC_SITE_URL` (dominio final)
-- `GMAIL_USER`
-- `GMAIL_APP_PASSWORD`
-- `EMAIL_TO`
-- `HOST_PORT` (por defecto `3008`)
+- `CERTBOT_EMAIL=tu-correo@dominio.com`
+- `CERTBOT_DOMAINS=paramascotasec.com,www.paramascotasec.com,tecnolts.com,www.tecnolts.com,autorepuestoscore.com,www.autorepuestoscore.com`
+- `CERTBOT_STAGING=0` (usa `1` para pruebas de emision)
 
-## 3) Levantar en producción
+### 2.2 App TecnoLTS
 
 ```bash
-docker compose --profile production up -d --build
+cd /opt/website/tecnolts
+cp .env.example .env
 ```
 
-Verificar estado:
+Editar `/opt/website/tecnolts/.env`:
+
+- `NEXT_PUBLIC_SITE_URL=https://tecnolts.com`
+- SMTP (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`)
+- `EMAIL_TO=destino@dominio.com`
+- (opcional) rate-limit distribuido: `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`
+- (opcional) `HOST_PORT=3008`
+
+## 3) Desplegar en produccion
+
+### 3.1 Levantar gateway y certificados
 
 ```bash
+cd /opt/website/gateway
+./scripts/deploy-gateway-production.sh
+```
+
+Este script:
+
+- crea red Docker `edge` si no existe,
+- emite/renueva certificados Let's Encrypt,
+- sincroniza certificados a `certs/local-cert.*`,
+- recarga Nginx y programa renovacion por cron.
+
+### 3.2 Levantar app
+
+```bash
+cd /opt/website/tecnolts
+./scripts/deploy-production.sh
+```
+
+Este script:
+
+- valida Docker,
+- crea red `edge` si falta,
+- levanta `web` en perfil `production`,
+- verifica `/api/health` local.
+
+### 3.3 Solo TecnoLTS (sin gateway)
+
+Si en el servidor nuevo solo vas a levantar esta app (sin Nginx externo):
+
+```bash
+cd /opt/website/tecnolts
+./scripts/bootstrap-ubuntu.sh production
+curl -f http://127.0.0.1:${HOST_PORT:-3008}/api/health
+```
+
+## 4) Verificaciones post-deploy
+
+```bash
+cd /opt/website/gateway
 docker compose ps
-docker compose logs -f web
-curl http://localhost:${HOST_PORT:-3008}/api/health
+docker compose logs --tail=100 gateway
+
+cd /opt/website/tecnolts
+docker compose --profile production ps
+docker compose logs --tail=100 web
+curl -f https://tecnolts.com/api/health
 ```
 
-Respuesta esperada:
-
-```json
-{"status":"ok","service":"tecnolts", ...}
-```
-
-## 4) Operación
-
-Actualizar versión:
+Despliegue unificado (gateway + app) en un paso:
 
 ```bash
+cd /opt/website/gateway
+./scripts/deploy-full-stack.sh
+```
+
+Checklist:
+
+- DNS de `tecnolts.com` y `www.tecnolts.com` apunta al servidor.
+- Puertos `80` y `443` abiertos en firewall.
+- `/api/health` responde 200.
+- Formulario de contacto envia correo correctamente.
+
+## 5) Actualizacion de version
+
+```bash
+cd /opt/website
 git pull
-docker compose --profile production up -d --build
+
+cd /opt/website/gateway
+./scripts/deploy-gateway-production.sh
+
+cd /opt/website/tecnolts
+./scripts/deploy-production.sh
 ```
 
-Detener:
+## 6) Rollback rapido
 
 ```bash
-docker compose --profile production down
+cd /opt/website
+git log --oneline -n 5
+git checkout <commit_anterior>
+
+cd /opt/website/gateway
+./scripts/deploy-gateway-production.sh
+
+cd /opt/website/tecnolts
+./scripts/deploy-production.sh
 ```
 
-## 5) Desarrollo con Docker
+## 7) Desarrollo local con Docker
 
 ```bash
-docker compose --profile development up -d --build
-docker compose logs -f web-dev
+cd /opt/website/tecnolts
+./scripts/deploy-development.sh
 ```
 
-## Checklist de salida a producción
+Para SSL autofirmado en desarrollo:
 
-- `docker compose --profile production ps` muestra `healthy`.
-- `curl /api/health` responde `200`.
-- Formulario `/api/contact` envía correo correctamente.
-- Dominio apunta al servidor y el puerto publicado está accesible.
-- SSL/TLS configurado en reverse proxy (Nginx/Caddy/Traefik) o balanceador.
+```bash
+cd /opt/website/gateway
+./scripts/setup-ssl-local.sh
+```

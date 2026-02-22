@@ -7,7 +7,7 @@ interface TrustedBySectionProps {
 
 export default function TrustedBySection({ t }: TrustedBySectionProps) {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+    <section className="deferred-section py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
       <div className="max-w-5xl mx-auto">
         <div className="bg-white dark:bg-slate-800 rounded-3xl py-8 sm:py-12 px-4 sm:px-8 shadow-2xl">
           <p className="text-gray-500 dark:text-gray-400 text-xs font-medium mb-8 sm:mb-12 tracking-[0.2em] uppercase text-center">
@@ -26,18 +26,16 @@ export default function TrustedBySection({ t }: TrustedBySectionProps) {
                   alt="Paramascotas"
                   width={1000}
                   height={500}
-                  quality={75}
-                  priority
                   className="object-contain w-full h-full dark:hidden px-2 sm:px-0"
+                  loading="lazy"
                 />
                 <Image
                   src="/logos/Logo-paramascotas-(blanco).png"
                   alt="Paramascotas"
                   width={1000}
                   height={500}
-                  quality={75}
-                  priority
                   className="object-contain w-full h-full hidden dark:block px-2 sm:px-0"
+                  loading="lazy"
                 />
               </div>
             </a>
@@ -53,18 +51,16 @@ export default function TrustedBySection({ t }: TrustedBySectionProps) {
                   alt="Autorespuestos Core"
                   width={600}
                   height={200}
-                  quality={75}
-                  priority
                   className="object-contain w-full h-full dark:hidden px-2 sm:px-0"
+                  loading="lazy"
                 />
                 <Image
                   src="/logos/Logo-autorepuestoscore-(blanco).png"
                   alt="Autorespuestos Core"
                   width={600}
                   height={200}
-                  quality={75}
-                  priority
                   className="object-contain w-full h-full hidden dark:block px-2 sm:px-0"
+                  loading="lazy"
                 />
               </div>
             </a>

@@ -113,39 +113,6 @@
   }
 
   /* High Impact Animations */
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px) rotate(0deg);
-    }
-    25% {
-      transform: translateY(-20px) rotate(2deg);
-    }
-    50% {
-      transform: translateY(-10px) rotate(-1deg);
-    }
-    75% {
-      transform: translateY(-15px) rotate(1deg);
-    }
-  }
-
-  @keyframes float-slow {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-30px);
-    }
-  }
-
-  @keyframes pulse-glow {
-    0%, 100% {
-      box-shadow: 0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(59, 130, 246, 0.3), 0 0 60px rgba(59, 130, 246, 0.1);
-    }
-    50% {
-      box-shadow: 0 0 30px rgba(59, 130, 246, 0.7), 0 0 60px rgba(59, 130, 246, 0.5), 0 0 90px rgba(59, 130, 246, 0.3);
-    }
-  }
-
   @keyframes slide-in-left {
     0% {
       transform: translateX(-100px);
@@ -154,52 +121,6 @@
     100% {
       transform: translateX(0);
       opacity: 1;
-    }
-  }
-
-  @keyframes slide-in-right {
-    0% {
-      transform: translateX(100px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes scale-in {
-    0% {
-      transform: scale(0.8);
-      opacity: 0;
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-
-  @keyframes rotate-bounce {
-    0%, 100% {
-      transform: rotate(0deg) scale(1);
-    }
-    25% {
-      transform: rotate(5deg) scale(1.05);
-    }
-    50% {
-      transform: rotate(-5deg) scale(1.1);
-    }
-    75% {
-      transform: rotate(3deg) scale(1.05);
-    }
-  }
-
-  @keyframes shimmer {
-    0% {
-      background-position: -1000px 0;
-    }
-    100% {
-      background-position: 1000px 0;
     }
   }
 
@@ -217,38 +138,6 @@
     100% {
       transform: translateY(-100vh) translateX(50px) scale(0);
       opacity: 0;
-    }
-  }
-
-  @keyframes text-reveal {
-    0% {
-      clip-path: inset(0 100% 0 0);
-    }
-    100% {
-      clip-path: inset(0 0 0 0);
-    }
-  }
-
-  @keyframes bounce-in {
-    0% {
-      transform: scale(0) rotate(-180deg);
-      opacity: 0;
-    }
-    50% {
-      transform: scale(1.2) rotate(10deg);
-    }
-    100% {
-      transform: scale(1) rotate(0deg);
-      opacity: 1;
-    }
-  }
-
-  @keyframes morph {
-    0%, 100% {
-      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-    }
-    50% {
-      border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
     }
   }
 
@@ -272,15 +161,6 @@
     }
   }
 
-  @keyframes gradient-shift {
-    0%, 100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
-
   @keyframes cube-rotate {
     0% {
       transform: rotateX(0deg) rotateY(0deg);
@@ -299,22 +179,14 @@
     }
   }
 
-  .animate-float {
-    animation: float 32s ease-in-out infinite;
-  }
-
   .animate-fade-in {
     animation: fade-in 0.8s ease-out forwards;
   }
 
   .animate-fade-in-up {
     animation: fade-in-up 0.8s ease-out forwards;
-    opacity: 0;
-  }
-
-  .animate-gradient-shift {
-    background-size: 200% 200%;
-    animation: gradient-shift 8s ease infinite;
+    opacity: 1;
+    transform: none;
   }
 
   .animate-cube-rotate {
@@ -326,10 +198,6 @@
   .perspective-3d {
     perspective: 1000px;
     perspective-origin: center center;
-  }
-
-  .transform-3d {
-    transform-style: preserve-3d;
   }
 
   .cube-3d {
@@ -437,11 +305,32 @@
     .animate-cube-rotate {
       animation-duration: 32s;
     }
+
+    /* Mobile perf: keep first paint stable and reduce animation/layout cost */
+    .particle {
+      display: none;
+    }
+
+    .animate-fade-in,
+    .animate-fade-in-up,
+    .animate-slide-in-left {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .animate-cube-rotate {
       animation: none !important;
+    }
+
+    .animate-fade-in,
+    .animate-fade-in-up,
+    .animate-slide-in-left {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
     }
   }
 
@@ -465,46 +354,8 @@
     animation-delay: 500ms;
   }
 
-  .animate-float-slow {
-    animation: float-slow 8s ease-in-out;
-  }
-
-  .animate-pulse-glow {
-    animation: pulse-glow 3s ease-in-out;
-  }
-
   .animate-slide-in-left {
     animation: slide-in-left 0.8s ease-out forwards;
-  }
-
-  .animate-slide-in-right {
-    animation: slide-in-right 0.8s ease-out forwards;
-  }
-
-  .animate-scale-in {
-    animation: scale-in 0.6s ease-out forwards;
-  }
-
-  .animate-rotate-bounce {
-    animation: rotate-bounce 2s ease-in-out;
-  }
-
-  .animate-shimmer {
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    background-size: 200% 100%;
-    animation: shimmer 2s infinite;
-  }
-
-  .animate-bounce-in {
-    animation: bounce-in 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-  }
-
-  .animate-morph {
-    animation: morph 8s ease-in-out;
-  }
-
-  .animate-text-reveal {
-    animation: text-reveal 1s ease-out forwards;
   }
 
   /* Particle System */
@@ -550,62 +401,6 @@
     left: 70%;
   }
 
-  .particle-5 {
-    width: 8px;
-    height: 8px;
-    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-    animation: particle-float 17s linear infinite;
-    animation-delay: 3s;
-    left: 90%;
-  }
-
-  /* 3D Transform Effects */
-  .transform-3d {
-    transform-style: preserve-3d;
-    perspective: 1000px;
-  }
-
-  .hover-lift {
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-
-  .hover-lift:hover {
-    transform: translateY(-20px) rotateX(10deg) rotateY(-5deg) scale(1.05);
-    box-shadow: 0 30px 60px -12px rgba(59, 130, 246, 0.5), 0 20px 40px -8px rgba(59, 130, 246, 0.3);
-  }
-
-  /* Glowing Border Effect */
-  .glow-border {
-    position: relative;
-  }
-
-  .glow-border::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe);
-    background-size: 400% 400%;
-    border-radius: inherit;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s;
-    animation: shimmer 3s ease infinite;
-  }
-
-  .glow-border:hover::before {
-    opacity: 1;
-  }
-
-  /* Magnetic Effect */
-  .magnetic {
-    transition: transform 0.2s ease-out;
-  }
-
-  /* Fallback hover motion for buttons when JS effects are disabled */
-  .magnetic:hover {
-    transform: translateX(6px);
-  }
-
   /* Scroll Reveal (SSR-safe: keep content visible without JS) */
   .scroll-reveal {
     opacity: 1;
@@ -618,56 +413,42 @@
     transform: none;
   }
 
-  /* WhatsApp Button Animations */
-  @keyframes whatsapp-pulse {
-    0%, 100% {
-      transform: scale(1);
+  /* Render offscreen sections lazily to reduce initial mobile paint cost */
+  @supports (content-visibility: auto) {
+    .deferred-section {
+      content-visibility: auto;
+      contain: layout style;
+      contain-intrinsic-size: 1100px;
     }
-    50% {
-      transform: scale(1.05);
-    }
-  }
 
-  @keyframes whatsapp-ring {
-    0% {
-      transform: scale(1);
-      opacity: 1;
+    .anchor-nav-active .deferred-section {
+      content-visibility: visible;
+      contain: none;
+      contain-intrinsic-size: auto;
     }
-    100% {
-      transform: scale(1.5);
-      opacity: 0;
-    }
-  }
 
-  @keyframes whatsapp-bounce {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
+    @media (max-width: 1023px) {
+      .hero-visual-deferred {
+        content-visibility: auto;
+        contain: layout style paint;
+        contain-intrinsic-size: 520px;
+      }
     }
   }
 
-  .whatsapp-button {
-    animation: whatsapp-bounce 2s ease-in-out infinite;
-  }
+  @media (max-width: 1023px) {
+    .mobile-nav-surface {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background-color: rgba(255, 255, 255, 0.96);
+    }
 
-  .whatsapp-button::before,
-  .whatsapp-button::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: rgba(37, 211, 102, 0.4);
-    animation: whatsapp-ring 1.5s ease-out infinite;
-  }
+    .dark .mobile-nav-surface {
+      background-color: rgba(15, 23, 42, 0.96);
+    }
 
-  .whatsapp-button::after {
-    animation-delay: 0.5s;
-  }
-
-  .whatsapp-button:hover::before,
-  .whatsapp-button:hover::after {
-    animation: none;
+    .hero-terminal-shell {
+      box-shadow: 0 22px 45px -22px rgba(37, 99, 235, 0.4);
+    }
   }
 }

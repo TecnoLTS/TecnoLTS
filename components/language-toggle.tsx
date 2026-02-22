@@ -1,45 +1,56 @@
-"use client"
+'use client';
 
-import { Languages } from "lucide-react"
-import { usePathname, useRouter } from "next/navigation"
-import { useLanguage } from "@/components/language-provider"
-import { Button } from "@/components/ui/button"
+import { usePathname } from 'next/navigation';
+import type { Language } from '@/lib/translations';
 
-export function LanguageToggle() {
-  const router = useRouter()
-  const pathname = usePathname()
-  const { language } = useLanguage()
-  const currentFromPath = pathname?.split("/")[1]
-  const currentLanguage = currentFromPath === "en" || currentFromPath === "es" ? currentFromPath : language
-  const nextLang = currentLanguage === "en" ? "es" : "en"
-  const title = currentLanguage === "en" ? "Cambiar a Español" : "Switch to English"
+interface LanguageToggleProps {
+  initialLanguage?: Language;
+}
+
+const toggleButtonClass =
+  'inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2';
+
+const resolveLanguageFromPath = (
+  pathname: string,
+  fallback: Language
+): Language => {
+  const pathLanguage = pathname.split('/')[1];
+  return pathLanguage === 'en' || pathLanguage === 'es'
+    ? pathLanguage
+    : fallback;
+};
+
+export function LanguageToggle({
+  initialLanguage = 'es',
+}: LanguageToggleProps) {
+  const pathname = usePathname();
+  const currentLanguage = resolveLanguageFromPath(pathname || '/', initialLanguage);
+
+  const nextLang = currentLanguage === 'en' ? 'es' : 'en';
+  const title = currentLanguage === 'en' ? 'Cambiar a Español' : 'Switch to English';
 
   const handleToggle = () => {
-    const normalizedPath = pathname || "/"
-    const withoutLang = normalizedPath.replace(/^\/(en|es)(?=\/|$)/, "") || "/"
-    const destination = `/${nextLang}${withoutLang === "/" ? "" : withoutLang}`
-    const query = typeof window !== "undefined" ? window.location.search : ""
-    const href = query ? `${destination}${query}` : destination
+    const currentPath = pathname || window.location.pathname || '/';
+    const withoutLang = currentPath.replace(/^\/(en|es)(?=\/|$)/, '') || '/';
+    const destination = `/${nextLang}${withoutLang === '/' ? '' : withoutLang}`;
+    const query = window.location.search;
+    const hash = window.location.hash;
 
-    router.push(href)
-  }
+    window.location.assign(`${destination}${query}${hash}`);
+  };
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className="h-9 w-9"
+    <button
+      type="button"
+      className={toggleButtonClass}
       onClick={handleToggle}
+      aria-label="Toggle language"
+      title={title}
     >
-      <div title={title}>
-        <div className="flex items-center justify-center gap-1">
-          <Languages className="h-4 w-4" />
-          <span className="text-xs font-medium">
-            {currentLanguage === "en" ? "ES" : "EN"}
-          </span>
-        </div>
-        <span className="sr-only">Toggle language</span>
+      <div className="flex items-center justify-center gap-1">
+        <span className="text-xs font-medium">{currentLanguage === 'en' ? 'ES' : 'EN'}</span>
       </div>
-    </Button>
-  )
+      <span className="sr-only">Toggle language</span>
+    </button>
+  );
 }

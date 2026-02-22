@@ -1,5 +1,3 @@
-'use client';
-
 import { ArrowRight, Zap, Shield, Rocket, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { TranslationStructure } from '@/lib/translations';
@@ -10,7 +8,7 @@ interface CTASectionProps {
 
 export default function CTASection({ t }: CTASectionProps) {
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-500">
+    <section className="deferred-section py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-500">
       {/* FONDO ADAPTATIVO ELEGANTE: 
           Claro: Gradiente profundo de azul pizarra a azul marino. Más sobrio.
           Oscuro: Gradiente muy oscuro de pizarra a azul noche, se funde con el entorno.

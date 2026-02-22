@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { z } from 'zod';
 
 export const runtime = 'nodejs';
 
@@ -9,16 +10,6 @@ type RateLimitBucket = {
 };
 
 type RateLimitStore = Map<string, RateLimitBucket>;
-
-type ContactPayload = {
-  name?: string;
-  email?: string;
-  phone?: string | null;
-  service?: string;
-  message?: string | null;
-  website?: string;
-  privacy_accepted?: boolean;
-};
 
 type MailConfig = {
   host?: string;
@@ -34,6 +25,9 @@ type MailConfig = {
 
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX_REQUESTS = 5;
+const MAX_CONTENT_LENGTH_BYTES = 16_384;
+const UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL?.trim();
+const UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN?.trim();
 
 declare global {
   var __contactRateLimitStore: RateLimitStore | undefined;
@@ -42,10 +36,34 @@ declare global {
 const globalStore = globalThis as typeof globalThis & {
   __contactRateLimitStore?: RateLimitStore;
 };
-const rateLimitStore: RateLimitStore = globalStore.__contactRateLimitStore ?? new Map<string, RateLimitBucket>();
+const rateLimitStore: RateLimitStore =
+  globalStore.__contactRateLimitStore ?? new Map<string, RateLimitBucket>();
 globalStore.__contactRateLimitStore = rateLimitStore;
 
-const serviceNames: Record<string, string> = {
+const services = [
+  'software',
+  'monitoring',
+  'network',
+  'iso',
+  'cybersecurity',
+  'backups',
+  'licensing',
+  'disaster',
+  'datacenter',
+  'other',
+] as const;
+
+const contactSchema = z.object({
+  name: z.string().trim().min(2).max(120),
+  email: z.string().trim().email().max(254),
+  phone: z.string().trim().max(40).nullable().optional(),
+  service: z.enum(services),
+  message: z.string().trim().max(5000).nullable().optional(),
+  website: z.string().trim().max(255).optional().default(''),
+  privacy_accepted: z.literal(true),
+});
+
+const serviceNames: Record<(typeof services)[number], string> = {
   software: 'Desarrollo de Software',
   monitoring: 'Monitoreo y observabilidad',
   network: 'Soluciones de Red',
@@ -58,21 +76,71 @@ const serviceNames: Record<string, string> = {
   other: 'Otro',
 };
 
-function getClientIp(request: Request): string {
-  const forwardedFor = request.headers.get('x-forwarded-for');
-  if (forwardedFor) {
-    return forwardedFor.split(',')[0].trim();
+function jsonWithRateLimit(
+  body: Record<string, unknown>,
+  status: number,
+  rateLimit: { remaining: number; resetAt: number }
+) {
+  const retryAfterSeconds = Math.max(0, Math.ceil((rateLimit.resetAt - Date.now()) / 1000));
+
+  return NextResponse.json(body, {
+    status,
+    headers: {
+      'X-RateLimit-Limit': String(RATE_LIMIT_MAX_REQUESTS),
+      'X-RateLimit-Remaining': String(Math.max(0, rateLimit.remaining)),
+      'X-RateLimit-Reset': String(Math.ceil(rateLimit.resetAt / 1000)),
+      'Retry-After': String(retryAfterSeconds),
+    },
+  });
+}
+
+function sanitizeIp(value: string | null): string | null {
+  if (!value) {
+    return null;
   }
 
-  const realIp = request.headers.get('x-real-ip');
+  const normalized = value.trim();
+  if (!normalized) {
+    return null;
+  }
+
+  // Basic guard against header injection / malformed values.
+  if (/[^0-9a-fA-F:., ]/.test(normalized)) {
+    return null;
+  }
+
+  const candidate = normalized.split(',')[0].trim();
+  if (!candidate) {
+    return null;
+  }
+
+  return candidate;
+}
+
+function getClientIp(request: Request): string {
+  const realIp = sanitizeIp(request.headers.get('x-real-ip'));
   if (realIp) {
-    return realIp.trim();
+    return realIp;
+  }
+
+  const forwardedFor = sanitizeIp(request.headers.get('x-forwarded-for'));
+  if (forwardedFor) {
+    return forwardedFor;
+  }
+
+  const cloudflareIp = sanitizeIp(request.headers.get('cf-connecting-ip'));
+  if (cloudflareIp) {
+    return cloudflareIp;
   }
 
   return 'unknown';
 }
 
-function isRateLimited(ip: string): boolean {
+function consumeRateLimitLocal(ip: string): {
+  limited: boolean;
+  remaining: number;
+  resetAt: number;
+} {
   const now = Date.now();
 
   for (const [key, value] of rateLimitStore.entries()) {
@@ -83,17 +151,91 @@ function isRateLimited(ip: string): boolean {
 
   const current = rateLimitStore.get(ip);
   if (!current || current.resetAt <= now) {
-    rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-    return false;
+    const resetAt = now + RATE_LIMIT_WINDOW_MS;
+    rateLimitStore.set(ip, { count: 1, resetAt });
+
+    return {
+      limited: false,
+      remaining: RATE_LIMIT_MAX_REQUESTS - 1,
+      resetAt,
+    };
   }
 
   if (current.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return true;
+    return {
+      limited: true,
+      remaining: 0,
+      resetAt: current.resetAt,
+    };
   }
 
   current.count += 1;
   rateLimitStore.set(ip, current);
-  return false;
+
+  return {
+    limited: false,
+    remaining: RATE_LIMIT_MAX_REQUESTS - current.count,
+    resetAt: current.resetAt,
+  };
+}
+
+async function upstashCommand<T>(command: Array<string | number>): Promise<T> {
+  if (!UPSTASH_REDIS_REST_URL || !UPSTASH_REDIS_REST_TOKEN) {
+    throw new Error('Upstash no configurado');
+  }
+
+  const response = await fetch(`${UPSTASH_REDIS_REST_URL}/pipeline`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${UPSTASH_REDIS_REST_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify([{ command }]),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Upstash HTTP ${response.status}`);
+  }
+
+  const payload = (await response.json()) as Array<{ result: T; error?: string }>;
+  if (!Array.isArray(payload) || payload.length === 0 || payload[0].error) {
+    throw new Error(payload?.[0]?.error || 'Respuesta inválida de Upstash');
+  }
+
+  return payload[0].result;
+}
+
+async function consumeRateLimit(ip: string): Promise<{
+  limited: boolean;
+  remaining: number;
+  resetAt: number;
+}> {
+  if (!UPSTASH_REDIS_REST_URL || !UPSTASH_REDIS_REST_TOKEN) {
+    return consumeRateLimitLocal(ip);
+  }
+
+  try {
+    const key = `contact:rate-limit:${ip}`;
+    const count = Number(await upstashCommand<number>(['INCR', key]));
+
+    if (count === 1) {
+      await upstashCommand<number>(['PEXPIRE', key, RATE_LIMIT_WINDOW_MS]);
+    }
+
+    let ttlMs = Number(await upstashCommand<number>(['PTTL', key]));
+    if (!Number.isFinite(ttlMs) || ttlMs < 0) {
+      ttlMs = RATE_LIMIT_WINDOW_MS;
+    }
+
+    const resetAt = Date.now() + ttlMs;
+    const limited = count > RATE_LIMIT_MAX_REQUESTS;
+    const remaining = Math.max(0, RATE_LIMIT_MAX_REQUESTS - count);
+
+    return { limited, remaining, resetAt };
+  } catch (error) {
+    console.error('Fallo rate-limit distribuido, usando fallback local:', error);
+    return consumeRateLimitLocal(ip);
+  }
 }
 
 function escapeHtml(value: string): string {
@@ -109,17 +251,22 @@ function parseBooleanEnv(value: string | undefined, defaultValue: boolean): bool
   if (typeof value !== 'string' || !value.trim()) {
     return defaultValue;
   }
+
   const normalized = value.trim().toLowerCase();
   return normalized === '1' || normalized === 'true' || normalized === 'yes' || normalized === 'on';
 }
 
 function getMailConfig(): MailConfig | null {
-  const smtpHost = process.env.SMTP_HOST?.trim();
+  const rawSmtpHost = process.env.SMTP_HOST?.trim();
   const smtpPortRaw = process.env.SMTP_PORT?.trim();
   const smtpPort = Number.parseInt(smtpPortRaw || '587', 10);
   const smtpSecure = parseBooleanEnv(process.env.SMTP_SECURE, smtpPort === 465);
   const smtpTlsServername = process.env.SMTP_TLS_SERVERNAME?.trim();
   const smtpTlsRejectUnauthorized = !parseBooleanEnv(process.env.SMTP_TLS_INSECURE, false);
+  const smtpHost =
+    rawSmtpHost && rawSmtpHost.toLowerCase() !== 'mailserver'
+      ? rawSmtpHost
+      : smtpTlsServername || undefined;
 
   const user = (process.env.SMTP_USER || process.env.GMAIL_USER || '').trim();
   const pass = (process.env.SMTP_PASS || process.env.GMAIL_APP_PASSWORD || '').trim();
@@ -144,51 +291,58 @@ function getMailConfig(): MailConfig | null {
 }
 
 export async function POST(request: Request) {
+  const ip = getClientIp(request);
+  const rateLimit = await consumeRateLimit(ip);
+
+  if (rateLimit.limited) {
+    return jsonWithRateLimit(
+      { error: 'Demasiadas solicitudes. Intenta nuevamente en un minuto.' },
+      429,
+      rateLimit
+    );
+  }
+
   try {
-    const body = (await request.json()) as ContactPayload;
-    const { name, email, phone, service, message, website, privacy_accepted } = body;
-
-    if (typeof website === 'string' && website.trim()) {
-      return NextResponse.json({ message: 'Email enviado exitosamente' }, { status: 200 });
+    const contentLength = Number(request.headers.get('content-length') || '0');
+    if (Number.isFinite(contentLength) && contentLength > MAX_CONTENT_LENGTH_BYTES) {
+      return jsonWithRateLimit({ error: 'Payload demasiado grande.' }, 413, rateLimit);
     }
 
-    const ip = getClientIp(request);
-    if (isRateLimited(ip)) {
-      return NextResponse.json(
-        { error: 'Demasiadas solicitudes. Intenta nuevamente en un minuto.' },
-        { status: 429 }
-      );
+    const rawBody = await request.json();
+    const parsed = contactSchema.safeParse(rawBody);
+
+    if (!parsed.success) {
+      return jsonWithRateLimit({ error: 'Campos requeridos faltantes o inválidos.' }, 400, rateLimit);
     }
 
-    if (
-      typeof name !== 'string' ||
-      typeof email !== 'string' ||
-      typeof service !== 'string' ||
-      !privacy_accepted
-    ) {
-      return NextResponse.json(
-        { error: 'Campos requeridos faltantes' },
-        { status: 400 }
-      );
+    const { name, email, phone, service, message, website } = parsed.data;
+
+    // Honeypot field for basic bot filtering.
+    if (website) {
+      return jsonWithRateLimit({ message: 'Email enviado exitosamente' }, 200, rateLimit);
     }
 
-    const normalizedName = name.trim().replace(/[\r\n]+/g, ' ');
-    const normalizedEmail = email.trim().toLowerCase().replace(/[\r\n]+/g, '');
-    const normalizedPhone = typeof phone === 'string' ? phone.trim().replace(/[\r\n]+/g, '') : '';
-    const normalizedMessage = typeof message === 'string' ? message.trim() : '';
+    const normalizedName = name.replace(/[\r\n]+/g, ' ');
+    const normalizedEmail = email.toLowerCase().replace(/[\r\n]+/g, '');
+    const normalizedPhone = phone ? phone.replace(/[\r\n]+/g, '') : '';
+    const normalizedMessage = message ? message : '';
 
     const sanitizedName = escapeHtml(normalizedName);
     const sanitizedEmail = escapeHtml(normalizedEmail);
     const sanitizedPhone = normalizedPhone ? escapeHtml(normalizedPhone) : '';
     const sanitizedMessage = normalizedMessage ? escapeHtml(normalizedMessage) : '';
-    const normalizedServiceName = serviceNames[service] || service;
+    const normalizedServiceName = serviceNames[service];
     const serviceName = escapeHtml(normalizedServiceName);
 
     const mailConfig = getMailConfig();
     if (!mailConfig) {
-      return NextResponse.json(
-        { error: 'Configuracion SMTP incompleta. Revisa SMTP_USER/SMTP_PASS (o GMAIL_USER/GMAIL_APP_PASSWORD) y EMAIL_TO.' },
-        { status: 500 }
+      return jsonWithRateLimit(
+        {
+          error:
+            'Configuracion SMTP incompleta. Revisa SMTP_USER/SMTP_PASS (o GMAIL_USER/GMAIL_APP_PASSWORD) y EMAIL_TO.',
+        },
+        500,
+        rateLimit
       );
     }
 
@@ -302,26 +456,34 @@ export async function POST(request: Request) {
                 </div>
               </div>
 
-              ${sanitizedPhone ? `
+              ${
+                sanitizedPhone
+                  ? `
               <div class="field">
                 <div class="field-label">📱 Teléfono</div>
                 <div class="field-value">
                   <a href="tel:${encodeURIComponent(normalizedPhone)}" style="color: #0891b2; text-decoration: none;">${sanitizedPhone}</a>
                 </div>
               </div>
-              ` : ''}
+              `
+                  : ''
+              }
 
               <div class="field">
                 <div class="field-label">💼 Servicio de Interés</div>
                 <div class="field-value">${serviceName}</div>
               </div>
 
-              ${sanitizedMessage ? `
+              ${
+                sanitizedMessage
+                  ? `
               <div class="field">
                 <div class="field-label">💬 Mensaje</div>
                 <div class="message-box">${sanitizedMessage}</div>
               </div>
-              ` : ''}
+              `
+                  : ''
+              }
             </div>
             <div class="footer">
               <p>Este correo fue enviado desde el formulario de contacto de tu sitio web.</p>
@@ -334,15 +496,10 @@ export async function POST(request: Request) {
 
     await transporter.sendMail(mailOptions);
 
-    return NextResponse.json(
-      { message: 'Email enviado exitosamente' },
-      { status: 200 }
-    );
+    return jsonWithRateLimit({ message: 'Email enviado exitosamente' }, 200, rateLimit);
   } catch (error) {
     console.error('Error al enviar email:', error);
-    return NextResponse.json(
-      { error: 'Error al enviar el mensaje' },
-      { status: 500 }
-    );
+
+    return jsonWithRateLimit({ error: 'Error al enviar el mensaje' }, 500, rateLimit);
   }
 }

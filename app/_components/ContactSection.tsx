@@ -1,14 +1,18 @@
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
-import ContactForm from '@/components/contact-form';
+import LazyContactForm from './LazyContactForm';
 import type { TranslationStructure } from '@/lib/translations';
+import { getContactEmail, getContactPhone } from '@/lib/seo';
 
 interface ContactSectionProps {
   t: TranslationStructure;
 }
 
 export default function ContactSection({ t }: ContactSectionProps) {
+  const contactPhone = getContactPhone();
+  const contactEmail = getContactEmail();
+
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 scroll-mt-20">
+    <section id="contact" className="deferred-section py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 scroll-mt-20">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-5 gap-8 items-stretch">
           <div className="lg:col-span-2 flex flex-col gap-6">
@@ -37,7 +41,12 @@ export default function ContactSection({ t }: ContactSectionProps) {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-1">{t.contact.info.phone}</h3>
-                    <p className="text-gray-600 dark:text-gray-400">+593 99 291 0848</p>
+                    <a
+                      href={`tel:${contactPhone.replace(/[^\d+]/g, '')}`}
+                      className="text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
+                    >
+                      {contactPhone}
+                    </a>
                   </div>
                 </div>
 
@@ -47,7 +56,12 @@ export default function ContactSection({ t }: ContactSectionProps) {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-1">{t.contact.info.email}</h3>
-                    <p className="text-gray-600 dark:text-gray-400">info@tecnolts.com</p>
+                    <a
+                      href={`mailto:${contactEmail}`}
+                      className="text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors break-all"
+                    >
+                      {contactEmail}
+                    </a>
                   </div>
                 </div>
 
@@ -82,7 +96,7 @@ export default function ContactSection({ t }: ContactSectionProps) {
           </div>
 
           <div id="contact-form" className="lg:col-span-3 scroll-mt-20">
-            <ContactForm />
+            <LazyContactForm t={t} />
           </div>
         </div>
       </div>

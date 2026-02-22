@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, Sparkles, User, Mail, Phone, Briefcase, MessageSquare, Loader2, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
-import { useLanguage } from "@/components/language-provider";
+import type { TranslationStructure } from "@/lib/translations";
 
 interface FormData {
   name: string;
@@ -23,8 +23,11 @@ interface FormErrors {
   privacy?: string;
 }
 
-export default function ContactForm() {
-  const { t } = useLanguage();
+interface ContactFormProps {
+  t: TranslationStructure;
+}
+
+export default function ContactForm({ t }: ContactFormProps) {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -164,7 +167,7 @@ export default function ContactForm() {
   }
 
   return (
-    <section id="contact" className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50 dark:from-slate-900 dark:to-slate-800">
+    <section className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50 dark:from-slate-900 dark:to-slate-800">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 dark:bg-cyan-500/20 border border-cyan-500/20 dark:border-cyan-400/30 rounded-full text-cyan-600 dark:text-cyan-400 text-sm font-medium">

@@ -7,7 +7,10 @@
     "build": "NODE_ENV=production next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit --incremental false --pretty false"
+    "test": "npm run lint && npm run typecheck",
+    "typecheck": "tsc --noEmit --incremental false --pretty false",
+    "deploy:prod": "./scripts/deploy-production.sh",
+    "deploy:dev": "./scripts/deploy-development.sh"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -49,8 +52,6 @@
     "cmdk": "^1.0.4",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.6.0",
-    "eslint": "^9.0.0",
-    "eslint-config-next": "^16.1.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.446.0",
     "next": "^16.1.6",
@@ -72,6 +73,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/nodemailer": "^6.4.14"
+    "@types/nodemailer": "^6.4.14",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^16.1.0"
   }
 }

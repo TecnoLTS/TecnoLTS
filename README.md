@@ -13,33 +13,14 @@ Landing corporativo bilingue (ES/EN) para servicios IT empresariales, construido
 
 ## Funcionalidades clave
 
-- Rutas por idioma: `/es` y `/en`
-- Home con secciones de servicios y paginas de detalle
-- Pagina dedicada de Monitoreo y Observabilidad reutilizada por ambos idiomas
+- Rutas por idioma: `/es` y `/en` (App Router dinamico: `app/[lang]`)
+- Rutas de servicios: `/{lang}/services/{slug}`
 - Formulario de contacto con validacion en cliente y backend
 - Protecciones anti-spam basicas (honeypot + rate limiting por IP)
 - SEO tecnico: `robots`, `sitemap`, `manifest`, Open Graph y Twitter cards
 - Docker listo para desarrollo y produccion
 
-## Desarrollo local
-
-1. Instalar dependencias:
-
-```bash
-npm install
-```
-
-2. Configurar variables de entorno (copiar `.env.example` a `.env.local`).
-
-3. Ejecutar en desarrollo:
-
-```bash
-npm run dev
-```
-
-4. Abrir `http://localhost:3000`.
-
-## Scripts
+## Scripts de aplicacion
 
 ```bash
 npm run dev
@@ -49,101 +30,117 @@ npm run lint
 npm run typecheck
 ```
 
+## Despliegue de TecnoLTS
+
+### Ubuntu nuevo (automatizado)
+
+Un solo comando para preparar Docker + desplegar:
+
+```bash
+cd /opt/website/tecnolts
+./scripts/bootstrap-ubuntu.sh production
+```
+
+Para desarrollo:
+
+```bash
+cd /opt/website/tecnolts
+./scripts/bootstrap-ubuntu.sh development
+```
+
+### Desarrollo local (Docker)
+
+Usa este modo para trabajar localmente con hot reload.
+
+```bash
+cd /opt/website/tecnolts
+npm run deploy:dev
+```
+
+Comando equivalente:
+
+```bash
+cd /opt/website/tecnolts
+./scripts/deploy-development.sh
+```
+
+### Produccion (Docker)
+
+Usa este modo para entorno productivo (build optimizado + healthcheck).
+
+```bash
+cd /opt/website/tecnolts
+npm run deploy:prod
+```
+
+Comando equivalente:
+
+```bash
+cd /opt/website/tecnolts
+./scripts/deploy-production.sh
+```
+
+### Verificacion rapida
+
+```bash
+cd /opt/website/tecnolts
+docker compose --profile production ps
+curl http://localhost:${HOST_PORT:-3008}/api/health
+```
+
+## Comandos por proyecto
+
+### Proyecto `gateway` (`/opt/website/gateway`)
+
+Desarrollo (SSL local autofirmado):
+
+```bash
+cd /opt/website/gateway
+./scripts/setup-ssl-local.sh
+```
+
+Produccion (Let's Encrypt + renovacion automatica):
+
+```bash
+cd /opt/website/gateway
+./scripts/deploy-gateway-production.sh
+```
+
+### Proyecto `tecnolts` (`/opt/website/tecnolts`)
+
+Desarrollo (Docker profile `development`):
+
+```bash
+cd /opt/website/tecnolts
+./scripts/deploy-development.sh
+```
+
+Produccion (Docker profile `production`):
+
+```bash
+cd /opt/website/tecnolts
+./scripts/deploy-production.sh
+```
+
+### Full stack (gateway + tecnolts)
+
+Produccion completa en un comando:
+
+```bash
+cd /opt/website/gateway
+./scripts/deploy-full-stack.sh
+```
+
 ## Variables de entorno
 
 Revisar `.env.example`. Variables principales:
 
 - `NEXT_PUBLIC_SITE_URL`
-- `GMAIL_USER`
-- `GMAIL_APP_PASSWORD`
+- `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`
 - `EMAIL_TO`
+- Compatibilidad Gmail: `GMAIL_USER`, `GMAIL_APP_PASSWORD`
+- Rate limit distribuido (opcional): `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`
 
-## Docker
+## Produccion en Ubuntu nuevo
 
-1. Copia variables de entorno:
-
-```bash
-cp .env.example .env
-```
-
-2. Produccion:
-
-```bash
-docker compose --profile production up -d --build
-```
-
-3. Verificacion:
-
-```bash
-docker compose ps
-curl http://localhost:${HOST_PORT:-3008}/api/health
-```
-
-4. Desarrollo:
-
-```bash
-docker compose --profile development up -d --build
-```
-
-Por defecto en Docker desarrollo publica en `http://localhost:3009` (`DEV_PORT` configurable en `.env`).
-
-## SSL con gateway (local vs produccion)
-
-Desde `gateway`:
-
-1. Local/desarrollo (certificado autofirmado):
-
-```bash
-./scripts/setup-ssl-local.sh
-```
-
-2. Produccion (Let's Encrypt + auto-renovacion):
-
-```bash
-./scripts/setup-ssl-production.sh
-```
-
-Y para `tecnolts` usa:
-
-- Desarrollo:
-
-```bash
-docker compose --profile development up -d --build
-```
-
-- Produccion:
-
-```bash
-docker compose --profile production up -d --build
-```
-
-Guia completa para Ubuntu nuevo: `DEPLOYMENT.md`.
-
-## Estructura relevante
-
-- `app/` rutas App Router
-- `app/_components/` componentes principales de UI
-- `lib/translations.ts` contenido i18n
-- `components/language-provider.tsx` contexto de idioma
-- `app/api/contact/route.ts` endpoint de contacto
-
-
-
-
-
-Uso recomendado:
-
-Desarrollo
-cd /home/admincenter/contenedores/gateway
-./scripts/setup-ssl-local.sh
-
-cd /home/admincenter/contenedores/tecnolts
-docker compose --profile development up -d --build
-Producción
-cd /home/admincenter/contenedores/gateway
-CERTBOT_EMAIL=tu-correo@dominio.com ./scripts/setup-ssl-production.sh
-
-cd /home/admincenter/contenedores/tecnolts
-docker compose --profile production up -d --build
-
-
+Sigue la guia completa en `DEPLOYMENT.md`.

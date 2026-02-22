@@ -1,12 +1,11 @@
 "use client"
 
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { translations, Language, type TranslationStructure } from '@/lib/translations';
 
 interface LanguageContextType {
   language: Language;
-  setLanguage: (lang: Language) => void;
   t: TranslationStructure;
 }
 
@@ -20,7 +19,6 @@ export function LanguageProvider({
   initialLanguage?: Language;
 }) {
   const pathname = usePathname();
-  const [language, setLanguageState] = useState<Language>(initialLanguage);
 
   const pathLanguage = useMemo<Language | null>(() => {
     const segment = pathname?.split('/')[1];
@@ -30,25 +28,17 @@ export function LanguageProvider({
     return null;
   }, [pathname]);
 
-  const resolvedLanguage = pathLanguage ?? language;
+  const resolvedLanguage = pathLanguage ?? initialLanguage;
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
       document.documentElement.lang = resolvedLanguage;
     }
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('language', resolvedLanguage);
-    }
   }, [resolvedLanguage]);
-
-  const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
-  };
 
   const value: LanguageContextType = {
     language: resolvedLanguage,
-    setLanguage,
-    t: translations[resolvedLanguage] as TranslationStructure,
+    t: translations[resolvedLanguage],
   };
 
   return (

@@ -10,7 +10,13 @@ RUN npm ci --omit=optional --no-audit --no-fund && npm cache clean --force
 
 FROM base AS builder
 ARG BUILD_MAX_OLD_SPACE_SIZE=1024
+ARG NEXT_PUBLIC_SITE_URL=https://tecnolts.com
+ARG NEXT_PUBLIC_CONTACT_EMAIL=
+ARG NEXT_PUBLIC_CONTACT_PHONE=
 ENV NODE_OPTIONS=--max-old-space-size=${BUILD_MAX_OLD_SPACE_SIZE}
+ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
+ENV NEXT_PUBLIC_CONTACT_EMAIL=${NEXT_PUBLIC_CONTACT_EMAIL}
+ENV NEXT_PUBLIC_CONTACT_PHONE=${NEXT_PUBLIC_CONTACT_PHONE}
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
