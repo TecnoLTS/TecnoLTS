@@ -23,7 +23,7 @@ interface ServiceItem {
 
 export default function Navigation({ t, language }: NavigationProps) {
   const homeHref = `/${language}`;
-  const contactHref = `/${language}#contact`;
+  const contactHref = `/${language}#contact-form`;
   const services: ServiceItem[] = [
     {
       href: `/${language}#software`,

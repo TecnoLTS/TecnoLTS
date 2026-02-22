@@ -28,7 +28,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: {
         languages: {
           es: `${siteUrl}/es`,
+          'es-EC': `${siteUrl}/es`,
+          'es-419': `${siteUrl}/es`,
           en: `${siteUrl}/en`,
+          'en-US': `${siteUrl}/en`,
           'x-default': `${siteUrl}${defaultLanguagePath}`,
         },
       },
@@ -36,7 +39,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const homeEntries: MetadataRoute.Sitemap = languages.map((lang) => {
-    const alternateLang = lang === 'es' ? 'en' : 'es';
     return {
       url: `${siteUrl}/${lang}`,
       lastModified,
@@ -44,8 +46,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
       alternates: {
         languages: {
-          [lang]: `${siteUrl}/${lang}`,
-          [alternateLang]: `${siteUrl}/${alternateLang}`,
+          es: `${siteUrl}/es`,
+          'es-EC': `${siteUrl}/es`,
+          'es-419': `${siteUrl}/es`,
+          en: `${siteUrl}/en`,
+          'en-US': `${siteUrl}/en`,
           'x-default': `${siteUrl}${defaultLanguagePath}`,
         },
       },
@@ -54,7 +59,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const serviceEntries: MetadataRoute.Sitemap = languages.flatMap((lang) =>
     services.map((service) => {
-      const alternateLang = lang === 'es' ? 'en' : 'es';
       return {
         url: `${siteUrl}/${lang}/services/${service}`,
         lastModified,
@@ -62,8 +66,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.9,
         alternates: {
           languages: {
-            [lang]: `${siteUrl}/${lang}/services/${service}`,
-            [alternateLang]: `${siteUrl}/${alternateLang}/services/${service}`,
+            es: `${siteUrl}/es/services/${service}`,
+            'es-EC': `${siteUrl}/es/services/${service}`,
+            'es-419': `${siteUrl}/es/services/${service}`,
+            en: `${siteUrl}/en/services/${service}`,
+            'en-US': `${siteUrl}/en/services/${service}`,
             'x-default': `${siteUrl}${defaultLanguagePath}/services/${service}`,
           },
         },

@@ -17,11 +17,11 @@ import {
   Sparkles,
   Zap,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import Navigation from './Navigation';
 import Footer from './Footer';
 import WhatsAppButton from './WhatsAppButton';
 import ScrollToTopButton from './ScrollToTopButton';
+import ContactModalButton from './ContactModalButton';
 import type { Language, TranslationStructure } from '@/lib/translations';
 
 const iconMap: Record<string, LucideIcon> = {
@@ -33,6 +33,17 @@ const iconMap: Record<string, LucideIcon> = {
   Server,
   Zap,
   HardDrive,
+};
+
+const contactServiceByIconName: Record<string, string> = {
+  Code: 'software',
+  Shield: 'cybersecurity',
+  Network: 'network',
+  Lock: 'iso',
+  Layers: 'backups',
+  Server: 'licensing',
+  Zap: 'disaster',
+  HardDrive: 'datacenter',
 };
 
 type ThemeMetric = {
@@ -850,6 +861,7 @@ export default function ServiceDetailPage({
   const includes = serviceIncludes[iconName] || serviceIncludes.Code;
   const stackItems = ((technologies && technologies.length > 0 ? technologies : isEs ? includes.es : includes.en) as string[]).slice(0, 10);
   const imageIdeas = serviceImageIdeas[iconName] || serviceImageIdeas.Code;
+  const defaultService = contactServiceByIconName[iconName] || 'other';
 
   return (
     <main id="top" className="min-h-screen bg-[#f4f8fc] text-slate-900 dark:bg-slate-950 dark:text-slate-100">
@@ -887,12 +899,15 @@ export default function ServiceDetailPage({
             ) : null}
 
             <div className="mb-8 flex flex-wrap items-center gap-3">
-              <Button asChild size="lg" className="w-full justify-center bg-slate-900 text-sm font-semibold text-white hover:bg-slate-800 sm:w-auto sm:text-base dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">
-                <Link href={`/${locale}#contact`}>
-                  {cta}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+              <ContactModalButton
+                t={t}
+                defaultService={defaultService}
+                size="lg"
+                className="w-full justify-center bg-slate-900 text-sm font-semibold text-white hover:bg-slate-800 sm:w-auto sm:text-base dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+              >
+                {cta}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </ContactModalButton>
 
               <span className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/90 px-3 py-1.5 text-xs font-medium text-slate-600 sm:w-auto dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-300">
                 <span className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-white ${gradient}`}>
@@ -1123,12 +1138,15 @@ export default function ServiceDetailPage({
           </h2>
           <p className="mx-auto mb-7 max-w-2xl text-white/90">{ui.finalSubtitle}</p>
 
-          <Button asChild size="lg" className="w-full bg-white font-semibold text-slate-900 hover:bg-slate-100 sm:w-auto">
-            <Link href={`/${locale}#contact`}>
-              {ui.finalButton}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
+          <ContactModalButton
+            t={t}
+            defaultService={defaultService}
+            size="lg"
+            className="w-full bg-white font-semibold text-slate-900 hover:bg-slate-100 sm:w-auto"
+          >
+            {ui.finalButton}
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </ContactModalButton>
         </div>
       </section>
 

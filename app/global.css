@@ -418,20 +418,20 @@
     .deferred-section {
       content-visibility: auto;
       contain: layout style;
-      contain-intrinsic-size: 1100px;
+      contain-intrinsic-size: auto 1100px;
     }
 
     .anchor-nav-active .deferred-section {
       content-visibility: visible;
-      contain: none;
-      contain-intrinsic-size: auto;
+      contain: layout style;
+      contain-intrinsic-size: auto 1100px;
     }
 
     @media (max-width: 1023px) {
       .hero-visual-deferred {
         content-visibility: auto;
         contain: layout style paint;
-        contain-intrinsic-size: 520px;
+        contain-intrinsic-size: auto 520px;
       }
     }
   }

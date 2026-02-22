@@ -12,11 +12,11 @@ import {
   Zap,
   Layers
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import Navigation from '@/app/_components/Navigation';
 import Footer from '@/app/_components/Footer';
 import WhatsAppButton from '@/app/_components/WhatsAppButton';
 import ScrollToTopButton from '@/app/_components/ScrollToTopButton';
+import ContactModalButton from './ContactModalButton';
 import type { Language, TranslationStructure } from '@/lib/translations';
 
 type MonitoringPillar = {
@@ -125,11 +125,14 @@ export default function MonitoringPage({ t, language }: MonitoringPageProps) {
               </p>
 
               <div className="flex flex-wrap justify-center gap-3 sm:gap-4 lg:justify-start">
-                <Button asChild size="lg" className="w-full rounded-full bg-slate-900 px-6 py-5 text-base transition-transform hover:scale-105 sm:w-auto sm:px-8 sm:py-6 sm:text-lg dark:bg-white dark:text-slate-950">
-                  <Link href={`/${language}#contact`}>
-                    {data.cta} <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
+                <ContactModalButton
+                  t={t}
+                  defaultService="monitoring"
+                  size="lg"
+                  className="w-full rounded-full bg-slate-900 px-6 py-5 text-base transition-transform hover:scale-105 sm:w-auto sm:px-8 sm:py-6 sm:text-lg dark:bg-white dark:text-slate-950"
+                >
+                  {data.cta} <ArrowRight className="ml-2 h-5 w-5" />
+                </ContactModalButton>
                 <div className="flex w-full items-center justify-center gap-4 rounded-full border border-slate-200 bg-white/50 px-6 py-3 backdrop-blur-sm sm:w-auto dark:border-slate-800 dark:bg-slate-900/50">
                   <Shield className="h-5 w-5 text-cyan-500" />
                   <span className="text-sm font-medium">{t.hero.secureBadge}</span>
@@ -344,11 +347,15 @@ export default function MonitoringPage({ t, language }: MonitoringPageProps) {
                 <p className="mx-auto mb-10 max-w-2xl text-base text-blue-100/70 sm:text-lg">
                     {data.description}
                 </p>
-                <Button asChild size="lg" variant="secondary" className="w-full rounded-full bg-white px-8 py-6 text-base font-bold text-slate-950 shadow-xl shadow-cyan-900/20 hover:bg-cyan-50 sm:w-auto sm:px-10 sm:py-7 sm:text-lg">
-                  <Link href={`/${language}#contact`}>
-                    {data.cta} <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
+                <ContactModalButton
+                  t={t}
+                  defaultService="monitoring"
+                  size="lg"
+                  variant="secondary"
+                  className="w-full rounded-full bg-white px-8 py-6 text-base font-bold text-slate-950 shadow-xl shadow-cyan-900/20 hover:bg-cyan-50 sm:w-auto sm:px-10 sm:py-7 sm:text-lg"
+                >
+                  {data.cta} <ArrowRight className="ml-2 h-5 w-5" />
+                </ContactModalButton>
             </div>
         </div>
       </section>

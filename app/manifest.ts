@@ -5,9 +5,10 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'TecnoLTS',
     short_name: 'TecnoLTS',
     description:
-      'Enterprise IT solutions including software development, network infrastructure, and ISO 27001 security audits.',
+      'Soluciones y servicios IT empresariales: desarrollo de software, redes, monitoreo, ciberseguridad e ISO 27001.',
     start_url: '/es',
     display: 'standalone',
+    lang: 'es',
     background_color: '#f8fafc',
     theme_color: '#1d4ed8',
     icons: [

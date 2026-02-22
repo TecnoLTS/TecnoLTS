@@ -61,26 +61,43 @@ const cleanHashUrlScript = `
         return path.endsWith('/') ? path.slice(0, -1) : path;
       };
 
+      var alignToAnchorTarget = function (hash) {
+        if (!hash || hash === '#top' || hash === '#') {
+          return;
+        }
+
+        var target = null;
+        try {
+          target = document.querySelector(hash);
+        } catch (error) {}
+
+        if (!target) {
+          return;
+        }
+
+        var rect = target.getBoundingClientRect();
+        var top = Math.max(0, window.scrollY + rect.top - getNavOffset());
+        window.scrollTo({
+          top: top,
+          behavior: 'auto'
+        });
+      };
+
       var finalizeAnchorNavigation = function (hash, delay) {
         window.setTimeout(function () {
-          if (hash && hash !== '#top' && hash !== '#') {
-            var latestTarget = null;
-            try {
-              latestTarget = document.querySelector(hash);
-            } catch (error) {}
-
-            if (latestTarget) {
-              var latestRect = latestTarget.getBoundingClientRect();
-              var finalTop = Math.max(0, window.scrollY + latestRect.top - getNavOffset());
-              window.scrollTo({
-                top: finalTop,
-                behavior: 'auto'
-              });
-            }
-          }
-
+          alignToAnchorTarget(hash);
           cleanHashFromUrl();
-          document.documentElement.classList.remove(ANCHOR_NAV_CLASS);
+
+          window.requestAnimationFrame(function () {
+            document.documentElement.classList.remove(ANCHOR_NAV_CLASS);
+            window.requestAnimationFrame(function () {
+              alignToAnchorTarget(hash);
+            });
+          });
+
+          window.setTimeout(function () {
+            alignToAnchorTarget(hash);
+          }, 220);
         }, delay);
       };
 
@@ -212,7 +229,7 @@ const metadataByLocale: Record<Language, { title: string; description: string; l
     title: `${BRAND_NAME} - Soluciones y Servicios IT Empresariales`,
     description:
       'Proveedor líder de soluciones IT empresariales, incluyendo desarrollo de software, infraestructura de red, monitoreo y auditorías ISO 27001.',
-    locale: 'es_ES',
+    locale: 'es_EC',
   },
   en: {
     title: `${BRAND_NAME} - Enterprise IT Solutions & Services`,
@@ -306,7 +323,10 @@ export async function generateMetadata({
       canonical: `/${lang}`,
       languages: {
         es: '/es',
+        'es-EC': '/es',
+        'es-419': '/es',
         en: '/en',
+        'en-US': '/en',
         'x-default': '/es',
       },
     },
@@ -333,7 +353,7 @@ export async function generateMetadata({
       url: `${siteUrl}/${lang}`,
       siteName: BRAND_NAME,
       locale: localeMetadata.locale,
-      alternateLocale: lang === 'es' ? ['en_US'] : ['es_ES'],
+      alternateLocale: lang === 'es' ? ['en_US'] : ['es_EC'],
       images: [
         {
           url: '/og-image.svg',
@@ -374,6 +394,29 @@ export default async function LocaleLayout({
   const organizationId = `${siteUrl}#organization`;
   const websiteId = `${siteUrl}#website`;
   const socialProfiles = getSocialProfiles();
+  const siteNavigationItems =
+    lang === 'es'
+      ? [
+          { name: 'Inicio', url: `${siteUrl}/es` },
+          { name: 'Servicios', url: `${siteUrl}/es#software` },
+          { name: 'Contacto', url: `${siteUrl}/es#contact` },
+          { name: 'Desarrollo de software', url: `${siteUrl}/es/services/software` },
+          { name: 'Monitoreo y observabilidad', url: `${siteUrl}/es/services/monitoring` },
+          { name: 'Ciberseguridad', url: `${siteUrl}/es/services/cybersecurity` },
+          { name: 'Soluciones de redes', url: `${siteUrl}/es/services/network` },
+          { name: 'ISO 27001', url: `${siteUrl}/es/services/iso-27001` },
+        ]
+      : [
+          { name: 'Home', url: `${siteUrl}/en` },
+          { name: 'Services', url: `${siteUrl}/en#software` },
+          { name: 'Contact', url: `${siteUrl}/en#contact` },
+          { name: 'Software development', url: `${siteUrl}/en/services/software` },
+          { name: 'Monitoring and observability', url: `${siteUrl}/en/services/monitoring` },
+          { name: 'Cybersecurity', url: `${siteUrl}/en/services/cybersecurity` },
+          { name: 'Network solutions', url: `${siteUrl}/en/services/network` },
+          { name: 'ISO 27001', url: `${siteUrl}/en/services/iso-27001` },
+        ];
+
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -394,10 +437,19 @@ export default async function LocaleLayout({
     name: BRAND_NAME,
     alternateName: BRAND_ALIASES,
     url: siteUrl,
-    inLanguage: ['es', 'en'],
+    inLanguage: lang === 'es' ? ['es', 'es-EC'] : ['en', 'en-US'],
     publisher: {
       '@id': organizationId,
     },
+  };
+  const siteNavigationSchema = {
+    '@context': 'https://schema.org',
+    '@graph': siteNavigationItems.map((item, index) => ({
+      '@type': 'SiteNavigationElement',
+      '@id': `${siteUrl}#nav-${lang}-${index + 1}`,
+      name: item.name,
+      url: item.url,
+    })),
   };
 
   return (
@@ -415,6 +467,10 @@ export default async function LocaleLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteNavigationSchema) }}
         />
         {children}
         <script

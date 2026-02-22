@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { ArrowRight, Sparkles, User, Mail, Phone, Briefcase, MessageSquare, Loader2, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
-import { useLanguage } from "@/components/language-provider";
+import type { TranslationStructure } from "@/lib/translations";
 import {
   Dialog,
   DialogContent,
@@ -33,11 +33,11 @@ interface FormErrors {
 interface ContactModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  t: TranslationStructure;
   defaultService?: string;
 }
 
-export default function ContactModal({ open, onOpenChange, defaultService }: ContactModalProps) {
-  const { t } = useLanguage();
+export default function ContactModal({ open, onOpenChange, t, defaultService }: ContactModalProps) {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",

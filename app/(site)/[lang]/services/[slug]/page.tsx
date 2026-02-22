@@ -251,7 +251,10 @@ export async function generateMetadata({
       canonical: `/${lang}/services/${slug}`,
       languages: {
         es: `/es/services/${slug}`,
+        'es-EC': `/es/services/${slug}`,
+        'es-419': `/es/services/${slug}`,
         en: `/en/services/${slug}`,
+        'en-US': `/en/services/${slug}`,
         'x-default': `/es/services/${slug}`,
       },
     },
@@ -272,8 +275,8 @@ export async function generateMetadata({
       url: serviceUrl,
       siteName: BRAND_NAME,
       type: 'website',
-      locale: typedLang === 'es' ? 'es_ES' : 'en_US',
-      alternateLocale: typedLang === 'es' ? ['en_US'] : ['es_ES'],
+      locale: typedLang === 'es' ? 'es_EC' : 'en_US',
+      alternateLocale: typedLang === 'es' ? ['en_US'] : ['es_EC'],
       images: [
         {
           url: '/og-image.svg',

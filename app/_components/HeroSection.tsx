@@ -1,6 +1,6 @@
 import { Sparkles, ArrowRight, CheckCircle, TrendingUp, Shield } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import type { TranslationStructure } from '@/lib/translations';
+import ContactModalButton from './ContactModalButton';
 
 interface HeroSectionProps {
   t: TranslationStructure;
@@ -25,15 +25,17 @@ export default function HeroSection({ t }: HeroSectionProps) {
               {t.hero.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-1.5 sm:mb-0 animate-fade-in-up animation-delay-300">
-              <Button asChild size="lg" className="min-w-[12.5rem] bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-sm sm:text-base md:text-lg shadow-xl shadow-blue-500/30 hover:shadow-[0_20px_60px_-15px_rgba(59,130,246,0.7)] hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-500 group/hero-cta relative overflow-hidden">
-                <a href="#contact-form" className="flex items-center justify-center relative z-10">
-                  <span className="absolute inset-0 translate-x-[-100%] group-hover/hero-cta:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></span>
-                  <span className="relative flex items-center">
-                    {t.hero.ctaPrimary}
-                    <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover/hero-cta:translate-x-1 transition-transform duration-500" />
-                  </span>
-                </a>
-              </Button>
+              <ContactModalButton
+                t={t}
+                size="lg"
+                className="min-w-[12.5rem] bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-sm sm:text-base md:text-lg shadow-xl shadow-blue-500/30 hover:shadow-[0_20px_60px_-15px_rgba(59,130,246,0.7)] hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-500 group/hero-cta relative overflow-hidden"
+              >
+                <span className="absolute inset-0 translate-x-[-100%] group-hover/hero-cta:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></span>
+                <span className="relative flex items-center justify-center">
+                  {t.hero.ctaPrimary}
+                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover/hero-cta:translate-x-1 transition-transform duration-500" />
+                </span>
+              </ContactModalButton>
             </div>
 
             <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 mt-6 sm:mt-8 md:mt-12 pt-5 sm:pt-6 md:pt-8 border-t border-gray-200 dark:border-slate-700 animate-fade-in-up animation-delay-400">

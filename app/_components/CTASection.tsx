@@ -1,6 +1,6 @@
 import { ArrowRight, Zap, Shield, Rocket, Star } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import type { TranslationStructure } from '@/lib/translations';
+import ContactModalButton from './ContactModalButton';
 
 interface CTASectionProps {
   t: TranslationStructure;
@@ -48,17 +48,16 @@ export default function CTASection({ t }: CTASectionProps) {
 
           {/* Botón Principal - Colores más sobrios */}
           <div className="flex justify-center">
-            <a href="#contact-form">
-              <Button 
-                size="lg" 
-                // Modo claro: Texto gris oscuro en lugar de azul.
-                // Modo oscuro: Fondo azul más apagado (blue-800) en lugar de eléctrico.
-                className="bg-white text-slate-900 hover:bg-slate-100 dark:bg-blue-800 dark:text-white dark:hover:bg-blue-700 px-10 py-7 text-lg font-bold rounded-xl shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:shadow-blue-900/20 dark:hover:shadow-black/30"
-              >
-                {t.cta.button}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </a>
+            <ContactModalButton
+              t={t}
+              size="lg"
+              // Modo claro: Texto gris oscuro en lugar de azul.
+              // Modo oscuro: Fondo azul más apagado (blue-800) en lugar de eléctrico.
+              className="bg-white text-slate-900 hover:bg-slate-100 dark:bg-blue-800 dark:text-white dark:hover:bg-blue-700 px-10 py-7 text-lg font-bold rounded-xl shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:shadow-blue-900/20 dark:hover:shadow-black/30"
+            >
+              {t.cta.button}
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </ContactModalButton>
           </div>
         </div>
 

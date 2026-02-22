@@ -4,10 +4,7 @@ const config: Config = {
   darkMode: ['class'],
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/theme-toggle.tsx',
-    './components/language-toggle.tsx',
-    './components/contact-form.tsx',
-    './components/ui/button.tsx',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
