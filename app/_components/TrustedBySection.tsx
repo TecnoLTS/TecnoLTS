@@ -40,7 +40,7 @@ export default function TrustedBySection({ t }: TrustedBySectionProps) {
               </div>
             </a>
             <a
-              href="https://www.autorespuestoscore.com"
+              href="https://www.autorepuestoscore.com"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative block transition-all duration-300 hover:scale-110"
@@ -48,7 +48,7 @@ export default function TrustedBySection({ t }: TrustedBySectionProps) {
               <div className="relative h-16 sm:h-24 flex items-center justify-center">
                 <Image
                   src="/logos/autorespuestoscore.png"
-                  alt="Autorespuestos Core"
+                  alt="Autorepuestos Core"
                   width={600}
                   height={200}
                   className="object-contain w-full h-full dark:hidden px-2 sm:px-0"
@@ -56,7 +56,7 @@ export default function TrustedBySection({ t }: TrustedBySectionProps) {
                 />
                 <Image
                   src="/logos/Logo-autorepuestoscore-(blanco).png"
-                  alt="Autorespuestos Core"
+                  alt="Autorepuestos Core"
                   width={600}
                   height={200}
                   className="object-contain w-full h-full hidden dark:block px-2 sm:px-0"
