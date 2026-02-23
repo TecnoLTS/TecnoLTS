@@ -16,9 +16,7 @@ const resolveLanguageFromPath = (
   fallback: Language
 ): Language => {
   const pathLanguage = pathname.split('/')[1];
-  return pathLanguage === 'en' || pathLanguage === 'es'
-    ? pathLanguage
-    : fallback;
+  return pathLanguage === 'en' ? pathLanguage : fallback;
 };
 
 export function LanguageToggle({

@@ -22,7 +22,7 @@ export function LanguageProvider({
 
   const pathLanguage = useMemo<Language | null>(() => {
     const segment = pathname?.split('/')[1];
-    if (segment === 'en' || segment === 'es') {
+    if (segment === 'en') {
       return segment;
     }
     return null;

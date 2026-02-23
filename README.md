@@ -13,8 +13,8 @@ Landing corporativo bilingue (ES/EN) para servicios IT empresariales, construido
 
 ## Funcionalidades clave
 
-- Rutas por idioma: `/es` y `/en` (App Router dinamico: `app/[lang]`)
-- Rutas de servicios: `/{lang}/services/{slug}`
+- Rutas por idioma: español en `/` e inglés en `/en` (App Router dinámico: `app/[lang]`)
+- Rutas de servicios: español en `/services/{slug}` e inglés en `/en/services/{slug}`
 - Formulario de contacto con validacion en cliente y backend
 - Protecciones anti-spam basicas (honeypot + rate limiting por IP)
 - SEO tecnico: `robots`, `sitemap`, `manifest`, Open Graph y Twitter cards

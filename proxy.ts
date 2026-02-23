@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 /**
  * Lógica de proxy para manejar el SEO y la localización.
- * - Redirige /es/* a /* (Evitar contenido duplicado)
+ * - Redirige /es/* a /* (evita duplicados y conserva autoridad SEO)
  * - Reescribe /* a /es/* internamente para servir el idioma predeterminado
  */
 export function proxy(request: NextRequest) {
@@ -33,10 +33,13 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(redirectUrl, 308);
   }
 
-  // 2. El prefijo /es ya no existe públicamente.
-  // Español vive en la raíz y el único prefijo válido es /en.
+  // 2. El prefijo /es no existe públicamente.
+  // Español vive en la raíz y /es* siempre redirige a su canónico.
   if (normalizedPathname === '/es' || normalizedPathname.startsWith('/es/')) {
-    return new NextResponse('Not Found', { status: 404 });
+    const redirectUrl = request.nextUrl.clone();
+    const canonicalPath = normalizedPathname.replace(/^\/es(?=\/|$)/, '') || '/';
+    redirectUrl.pathname = canonicalPath;
+    return NextResponse.redirect(redirectUrl, 308);
   }
 
   // 3. Manejo de prefijos de idioma existentes (ej. /en)
