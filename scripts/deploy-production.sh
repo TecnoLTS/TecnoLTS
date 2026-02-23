@@ -24,7 +24,29 @@ if [[ ! -f .env ]]; then
   echo "Se creo .env desde .env.example. Ajusta valores antes de exponer a internet."
 fi
 
-docker compose --profile production up -d --build --force-recreate
+NO_CACHE_BUILD="${NO_CACHE_BUILD:-1}"
+PULL_BASE_IMAGES="${PULL_BASE_IMAGES:-1}"
+PRUNE_BUILD_CACHE="${PRUNE_BUILD_CACHE:-0}"
+
+BUILD_FLAGS=()
+if [[ "${NO_CACHE_BUILD}" == "1" ]]; then
+  BUILD_FLAGS+=(--no-cache)
+fi
+if [[ "${PULL_BASE_IMAGES}" == "1" ]]; then
+  BUILD_FLAGS+=(--pull)
+fi
+
+if [[ "${PRUNE_BUILD_CACHE}" == "1" ]]; then
+  echo "Limpiando cache de build de Docker..."
+  docker builder prune -af >/dev/null || true
+fi
+
+echo "Construyendo imagen de produccion (flags: ${BUILD_FLAGS[*]:-(none)})..."
+docker compose --profile production build "${BUILD_FLAGS[@]}" web
+
+echo "Recreando contenedor de produccion..."
+docker compose --profile production up -d --force-recreate --remove-orphans web
+docker image prune -f >/dev/null || true
 
 echo "Estado de contenedores:"
 docker compose --profile production ps
