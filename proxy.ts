@@ -23,22 +23,23 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 1. Normalizar barras finales (Trailing Slashes)
+  // 1. /es no existe públicamente. Redirigir en un solo salto al canónico.
+  if (pathname === '/es' || pathname.startsWith('/es/')) {
+    const redirectUrl = request.nextUrl.clone();
+    const withoutEsPrefix = pathname.replace(/^\/es(?=\/|$)/, '') || '/';
+    const canonicalPath =
+      withoutEsPrefix !== '/' ? withoutEsPrefix.replace(/\/+$/, '') || '/' : '/';
+    redirectUrl.pathname = canonicalPath;
+    return NextResponse.redirect(redirectUrl, 308);
+  }
+
+  // 2. Normalizar barras finales (Trailing Slashes)
   const normalizedPathname =
     pathname !== '/' ? pathname.replace(/\/+$/, '') || '/' : pathname;
 
   if (normalizedPathname !== pathname) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = normalizedPathname;
-    return NextResponse.redirect(redirectUrl, 308);
-  }
-
-  // 2. El prefijo /es no existe públicamente.
-  // Español vive en la raíz y /es* siempre redirige a su canónico.
-  if (normalizedPathname === '/es' || normalizedPathname.startsWith('/es/')) {
-    const redirectUrl = request.nextUrl.clone();
-    const canonicalPath = normalizedPathname.replace(/^\/es(?=\/|$)/, '') || '/';
-    redirectUrl.pathname = canonicalPath;
     return NextResponse.redirect(redirectUrl, 308);
   }
 

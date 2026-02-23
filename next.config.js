@@ -30,6 +30,7 @@ const nextConfig = {
   images: {
     formats: ['image/webp', 'image/avif'],
   },
+  skipTrailingSlashRedirect: true,
   ...(isDevelopment ? { allowedDevOrigins } : {}),
   output: 'standalone',
 };
