@@ -24,10 +24,11 @@ interface ServiceItem {
 
 export default function Navigation({ t, language }: NavigationProps) {
   const homeHref = localePath(language);
+  const servicesIndexHref = localePath(language, '/services');
   const contactHref = `${localePath(language)}#contact-form`;
   const services: ServiceItem[] = [
     {
-      href: `${localePath(language)}#software`,
+      href: localePath(language, '/services/software'),
       iconId: 'service-icon-software',
       title: t.services.software.title,
       bgColor: 'bg-blue-100 dark:bg-blue-900/50',
@@ -36,7 +37,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       mobileHover: 'hover:bg-blue-50 dark:hover:bg-blue-900/20',
     },
     {
-      href: `${localePath(language)}#monitoring`,
+      href: localePath(language, '/services/monitoring'),
       iconId: 'service-icon-monitoring',
       title: t.services.monitoring.title,
       bgColor: 'bg-indigo-100 dark:bg-indigo-900/50',
@@ -45,7 +46,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       mobileHover: 'hover:bg-indigo-50 dark:hover:bg-indigo-900/20',
     },
     {
-      href: `${localePath(language)}#cybersecurity`,
+      href: localePath(language, '/services/cybersecurity'),
       iconId: 'service-icon-cybersecurity',
       title: t.services.cybersecurity.title,
       bgColor: 'bg-emerald-100 dark:bg-emerald-900/50',
@@ -54,7 +55,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       mobileHover: 'hover:bg-emerald-50 dark:hover:bg-emerald-900/20',
     },
     {
-      href: `${localePath(language)}#network`,
+      href: localePath(language, '/services/network'),
       iconId: 'service-icon-network',
       title: t.services.network.title,
       bgColor: 'bg-cyan-100 dark:bg-cyan-900/50',
@@ -63,7 +64,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       mobileHover: 'hover:bg-cyan-50 dark:hover:bg-cyan-900/20',
     },
     {
-      href: `${localePath(language)}#iso`,
+      href: localePath(language, '/services/iso-27001'),
       iconId: 'service-icon-iso',
       title: t.services.iso.title,
       bgColor: 'bg-purple-100 dark:bg-purple-900/50',
@@ -72,7 +73,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       mobileHover: 'hover:bg-purple-50 dark:hover:bg-purple-900/20',
     },
     {
-      href: `${localePath(language)}#backups`,
+      href: localePath(language, '/services/backups'),
       iconId: 'service-icon-backups',
       title: t.services.backups.title,
       bgColor: 'bg-orange-100 dark:bg-orange-900/50',
@@ -81,7 +82,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       mobileHover: 'hover:bg-orange-50 dark:hover:bg-orange-900/20',
     },
     {
-      href: `${localePath(language)}#licensing`,
+      href: localePath(language, '/services/licensing'),
       iconId: 'service-icon-filecheck',
       title: t.services.licensing.title,
       bgColor: 'bg-indigo-100 dark:bg-indigo-900/50',
@@ -90,7 +91,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       mobileHover: 'hover:bg-indigo-50 dark:hover:bg-indigo-900/20',
     },
     {
-      href: `${localePath(language)}#disaster-recovery`,
+      href: localePath(language, '/services/disaster-recovery'),
       iconId: 'service-icon-disaster-recovery',
       title: t.services.disasterRecovery.title,
       bgColor: 'bg-rose-100 dark:bg-rose-900/50',
@@ -99,7 +100,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       mobileHover: 'hover:bg-rose-50 dark:hover:bg-rose-900/20',
     },
     {
-      href: `${localePath(language)}#datacenter`,
+      href: localePath(language, '/services/datacenter'),
       iconId: 'service-icon-datacenter',
       title: t.services.dataCenter.title,
       bgColor: 'bg-teal-100 dark:bg-teal-900/50',
@@ -132,6 +133,7 @@ export default function Navigation({ t, language }: NavigationProps) {
               </a>
               <NavigationDesktopServicesMenu
                 label={t.nav.services}
+                href={servicesIndexHref}
                 services={services}
               />
               <a href={contactHref} className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
@@ -147,6 +149,8 @@ export default function Navigation({ t, language }: NavigationProps) {
                   ariaLabel="Toggle menu"
                   homeHref={homeHref}
                   homeLabel={t.nav.home}
+                  servicesHref={servicesIndexHref}
+                  servicesLinkLabel={t.nav.services}
                   servicesLabel={t.nav.services}
                   contactHref={contactHref}
                   contactLabel={t.nav.contact}

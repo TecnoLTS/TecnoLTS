@@ -17,7 +17,7 @@ const pageMetaByLocale = {
   es: {
     title: `Servicios IT Empresariales | ${BRAND_NAME}`,
     description:
-      'Explore todos los servicios IT de TecnoLTS: desarrollo de software, monitoreo, ciberseguridad, redes, ISO 27001 y más.',
+      'Explora todos los servicios IT de TecnoLTS: desarrollo de software, monitoreo, ciberseguridad, redes, ISO 27001 y más.',
     heading: 'Servicios IT para empresas en crecimiento',
     lead: 'Seleccione un servicio para ver el detalle técnico y agendar una consulta especializada.',
     backLabel: 'Volver al inicio',
@@ -71,6 +71,8 @@ export async function generateMetadata({
       type: 'website',
       url: getAbsoluteUrl(currentPath),
       siteName: BRAND_NAME,
+      locale: lang === 'es' ? 'es_EC' : 'en_US',
+      alternateLocale: lang === 'es' ? ['en_US'] : ['es_EC'],
       images: [
         {
           url: '/og-image.svg',

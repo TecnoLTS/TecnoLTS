@@ -3,23 +3,31 @@ import type { NextRequest } from 'next/server';
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const normalizedPathname =
+    pathname !== '/' ? pathname.replace(/\/+$/, '') || '/' : pathname;
 
-  if (pathname === '/es' || pathname.startsWith('/es/')) {
+  if (normalizedPathname === '/es' || normalizedPathname.startsWith('/es/')) {
     const redirectUrl = request.nextUrl.clone();
-    const redirectedPath = pathname.replace(/^\/es/, '') || '/';
+    const redirectedPath = normalizedPathname.replace(/^\/es/, '') || '/';
     redirectUrl.pathname = redirectedPath;
     return NextResponse.redirect(redirectUrl, 308);
   }
 
-  if (pathname === '/') {
+  if (normalizedPathname !== pathname) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = normalizedPathname;
+    return NextResponse.redirect(redirectUrl, 308);
+  }
+
+  if (normalizedPathname === '/') {
     const rewriteUrl = request.nextUrl.clone();
     rewriteUrl.pathname = '/es';
     return NextResponse.rewrite(rewriteUrl);
   }
 
-  if (pathname === '/services' || pathname.startsWith('/services/')) {
+  if (normalizedPathname === '/services' || normalizedPathname.startsWith('/services/')) {
     const rewriteUrl = request.nextUrl.clone();
-    rewriteUrl.pathname = `/es${pathname}`;
+    rewriteUrl.pathname = `/es${normalizedPathname}`;
     return NextResponse.rewrite(rewriteUrl);
   }
 

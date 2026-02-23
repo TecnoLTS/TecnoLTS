@@ -1,5 +1,5 @@
 import '../../global.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { isLocale, localePath, locales } from '@/lib/i18n';
@@ -7,8 +7,12 @@ import type { Language } from '@/lib/translations';
 import {
   BRAND_ALIASES,
   BRAND_NAME,
+  getContactCountryCode,
+  getContactCountryName,
   getContactEmail,
+  getContactLocality,
   getContactPhone,
+  getContactRegion,
   getSiteUrl,
   getSocialProfiles,
 } from '@/lib/seo';
@@ -239,6 +243,13 @@ const metadataByLocale: Record<Language, { title: string; description: string; l
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#020617' },
+  ],
+};
+
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
@@ -399,8 +410,15 @@ export default async function LocaleLayout({
 
   const localizedMetadata = metadataByLocale[lang];
   const organizationId = `${siteUrl}#organization`;
+  const localBusinessId = `${siteUrl}#local-business`;
   const websiteId = `${siteUrl}#website`;
   const socialProfiles = getSocialProfiles();
+  const contactEmail = getContactEmail();
+  const contactPhone = getContactPhone();
+  const contactCountryCode = getContactCountryCode();
+  const contactCountryName = getContactCountryName();
+  const contactLocality = getContactLocality();
+  const contactRegion = getContactRegion();
   const siteNavigationItems =
     lang === 'es'
       ? [
@@ -432,10 +450,49 @@ export default async function LocaleLayout({
     alternateName: BRAND_ALIASES,
     url: siteUrl,
     logo: `${siteUrl}/icon-512.png`,
+    image: `${siteUrl}/og-image.svg`,
     description: localizedMetadata.description,
-    email: getContactEmail(),
-    telephone: getContactPhone(),
+    email: contactEmail,
+    telephone: contactPhone,
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        contactType: 'customer support',
+        telephone: contactPhone,
+        email: contactEmail,
+        availableLanguage: ['es', 'en'],
+        areaServed: contactCountryCode,
+        url: `${siteUrl}/#contact-form`,
+      },
+    ],
     sameAs: socialProfiles.length > 0 ? socialProfiles : undefined,
+  };
+  const localBusinessSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    '@id': localBusinessId,
+    name: BRAND_NAME,
+    image: `${siteUrl}/og-image.svg`,
+    logo: `${siteUrl}/icon-512.png`,
+    url: siteUrl,
+    email: contactEmail,
+    telephone: contactPhone,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: contactLocality,
+      addressRegion: contactRegion,
+      addressCountry: contactCountryCode,
+    },
+    areaServed: [
+      {
+        '@type': 'Country',
+        name: contactCountryName,
+      },
+    ],
+    availableLanguage: ['es', 'en'],
+    parentOrganization: {
+      '@id': organizationId,
+    },
   };
   const websiteSchema = {
     '@context': 'https://schema.org',
@@ -447,6 +504,9 @@ export default async function LocaleLayout({
     inLanguage: lang === 'es' ? ['es', 'es-EC'] : ['en', 'en-US'],
     publisher: {
       '@id': organizationId,
+    },
+    about: {
+      '@id': localBusinessId,
     },
   };
   const siteNavigationSchema = {
@@ -474,6 +534,10 @@ export default async function LocaleLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
         <script
           type="application/ld+json"

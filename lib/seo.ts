@@ -7,6 +7,10 @@ export const BRAND_ALIASES = ['Tecno LTS', 'TencoLTS', 'tecnolts'] as const;
 const FALLBACK_SITE_URL = 'http://localhost:3000';
 const FALLBACK_CONTACT_EMAIL = 'info@tecnolts.com';
 const FALLBACK_CONTACT_PHONE = '+593 (96) 368-2212';
+const FALLBACK_CONTACT_LOCALITY = 'Quito';
+const FALLBACK_CONTACT_REGION = 'Pichincha';
+const FALLBACK_CONTACT_COUNTRY_CODE = 'EC';
+const FALLBACK_CONTACT_COUNTRY_NAME = 'Ecuador';
 const SOCIAL_PROFILE_ENV_KEYS = [
   'NEXT_PUBLIC_LINKEDIN_URL',
   'NEXT_PUBLIC_FACEBOOK_URL',
@@ -41,6 +45,22 @@ export function getContactEmail() {
 
 export function getContactPhone() {
   return process.env.NEXT_PUBLIC_CONTACT_PHONE || FALLBACK_CONTACT_PHONE;
+}
+
+export function getContactLocality() {
+  return process.env.NEXT_PUBLIC_CONTACT_LOCALITY || FALLBACK_CONTACT_LOCALITY;
+}
+
+export function getContactRegion() {
+  return process.env.NEXT_PUBLIC_CONTACT_REGION || FALLBACK_CONTACT_REGION;
+}
+
+export function getContactCountryCode() {
+  return process.env.NEXT_PUBLIC_CONTACT_COUNTRY_CODE || FALLBACK_CONTACT_COUNTRY_CODE;
+}
+
+export function getContactCountryName() {
+  return process.env.NEXT_PUBLIC_CONTACT_COUNTRY_NAME || FALLBACK_CONTACT_COUNTRY_NAME;
 }
 
 function isValidAbsoluteHttpUrl(value: string) {

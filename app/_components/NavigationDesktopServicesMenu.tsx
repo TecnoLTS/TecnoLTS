@@ -9,17 +9,19 @@ interface NavigationDesktopServiceItem {
 
 interface NavigationDesktopServicesMenuProps {
   label: string;
+  href: string;
   services: NavigationDesktopServiceItem[];
 }
 
 export default function NavigationDesktopServicesMenu({
   label,
+  href,
   services,
 }: NavigationDesktopServicesMenuProps) {
   return (
     <div className="group/menu relative">
-      <button
-        type="button"
+      <a
+        href={href}
         className="flex items-center gap-1 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium py-2"
         aria-haspopup="menu"
       >
@@ -37,7 +39,7 @@ export default function NavigationDesktopServicesMenu({
         >
           <path d="m6 9 6 6 6-6" />
         </svg>
-      </button>
+      </a>
 
       <div className="absolute top-full left-0 z-50 w-72 pt-2 opacity-0 invisible pointer-events-none translate-y-1 transition-all duration-200 group-hover/menu:opacity-100 group-hover/menu:visible group-hover/menu:pointer-events-auto group-hover/menu:translate-y-0 group-focus-within/menu:opacity-100 group-focus-within/menu:visible group-focus-within/menu:pointer-events-auto group-focus-within/menu:translate-y-0">
         <div className="bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-gray-200 dark:border-slate-700 overflow-hidden backdrop-blur-lg">

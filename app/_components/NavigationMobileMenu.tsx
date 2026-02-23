@@ -15,6 +15,8 @@ interface NavigationMobileMenuProps {
   ariaLabel: string;
   homeHref: string;
   homeLabel: string;
+  servicesHref: string;
+  servicesLinkLabel: string;
   servicesLabel: string;
   contactHref: string;
   contactLabel: string;
@@ -25,6 +27,8 @@ export default function NavigationMobileMenu({
   ariaLabel,
   homeHref,
   homeLabel,
+  servicesHref,
+  servicesLinkLabel,
   servicesLabel,
   contactHref,
   contactLabel,
@@ -63,6 +67,12 @@ export default function NavigationMobileMenu({
               className="block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors text-sm font-medium"
             >
               {homeLabel}
+            </a>
+            <a
+              href={servicesHref}
+              className="block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors text-sm font-medium"
+            >
+              {servicesLinkLabel}
             </a>
             <div className="space-y-2">
               <div className="text-sm font-semibold text-gray-400 dark:text-gray-500 px-3 mb-2 uppercase tracking-wider">
