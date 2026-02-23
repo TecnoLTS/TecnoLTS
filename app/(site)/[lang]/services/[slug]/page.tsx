@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import MonitoringPage from '@/app/_components/MonitoringPage';
 import ServiceDetailPage from '@/app/_components/ServiceDetailPage';
-import { isLocale, locales } from '@/lib/i18n';
+import { isLocale, localePath, locales } from '@/lib/i18n';
 import { translations } from '@/lib/translations';
 import { BRAND_ALIASES, BRAND_NAME, getAbsoluteUrl, getSiteUrl } from '@/lib/seo';
 
@@ -238,7 +238,8 @@ export async function generateMetadata({
 
   const typedLang = lang as 'es' | 'en';
   const serviceData = getServiceData(typedLang, slug as ServiceSlug);
-  const serviceUrl = getAbsoluteUrl(`/${lang}/services/${slug}`);
+  const localizedServicePath = localePath(typedLang, `/services/${slug}`);
+  const serviceUrl = getAbsoluteUrl(localizedServicePath);
   const metadataTitle = serviceData.metadata?.title || `${serviceData.title} | ${BRAND_NAME}`;
   const metadataDescription = serviceData.metadata?.description || serviceData.description;
   const keywords = buildServiceKeywords(typedLang, slug as ServiceSlug, serviceData);
@@ -248,14 +249,14 @@ export async function generateMetadata({
     description: metadataDescription,
     keywords,
     alternates: {
-      canonical: `/${lang}/services/${slug}`,
+      canonical: localizedServicePath,
       languages: {
-        es: `/es/services/${slug}`,
-        'es-EC': `/es/services/${slug}`,
-        'es-419': `/es/services/${slug}`,
+        es: `/services/${slug}`,
+        'es-EC': `/services/${slug}`,
+        'es-419': `/services/${slug}`,
         en: `/en/services/${slug}`,
         'en-US': `/en/services/${slug}`,
-        'x-default': `/es/services/${slug}`,
+        'x-default': `/services/${slug}`,
       },
     },
     robots: {
@@ -315,7 +316,8 @@ export default async function ServicePage({
   const typedSlug = slug as ServiceSlug;
   const siteUrl = getSiteUrl();
   const serviceData = getServiceData(typedLang, typedSlug);
-  const serviceUrl = getAbsoluteUrl(`/${lang}/services/${slug}`);
+  const localizedServicePath = localePath(typedLang, `/services/${slug}`);
+  const serviceUrl = getAbsoluteUrl(localizedServicePath);
   const serviceKeywords = buildServiceKeywords(typedLang, typedSlug, serviceData);
 
   const serviceSchema = {
@@ -357,7 +359,7 @@ export default async function ServicePage({
         '@type': 'ListItem',
         position: 1,
         name: typedLang === 'es' ? 'Inicio' : 'Home',
-        item: `${siteUrl}/${typedLang}`,
+        item: getAbsoluteUrl(localePath(typedLang)),
       },
       {
         '@type': 'ListItem',

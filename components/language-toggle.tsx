@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import type { Language } from '@/lib/translations';
+import { localePath } from '@/lib/i18n';
 
 interface LanguageToggleProps {
   initialLanguage?: Language;
@@ -32,7 +33,7 @@ export function LanguageToggle({
   const handleToggle = () => {
     const currentPath = pathname || window.location.pathname || '/';
     const withoutLang = currentPath.replace(/^\/(en|es)(?=\/|$)/, '') || '/';
-    const destination = `/${nextLang}${withoutLang === '/' ? '' : withoutLang}`;
+    const destination = localePath(nextLang, withoutLang);
     const query = window.location.search;
     const hash = window.location.hash;
 

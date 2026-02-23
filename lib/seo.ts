@@ -1,4 +1,5 @@
 import type { Language, TranslationStructure } from './translations';
+import { localePath } from './i18n';
 
 export const BRAND_NAME = 'TecnoLTS';
 export const BRAND_ALIASES = ['Tecno LTS', 'TencoLTS', 'tecnolts'] as const;
@@ -120,6 +121,6 @@ export function getServiceDefinitions(t: TranslationStructure): ServiceDefinitio
 export function getLocalizedServiceUrls(t: TranslationStructure, language: Language) {
   return getServiceDefinitions(t).map((service) => ({
     ...service,
-    url: getAbsoluteUrl(`/${language}/services/${service.slug}`),
+    url: getAbsoluteUrl(localePath(language, `/services/${service.slug}`)),
   }));
 }

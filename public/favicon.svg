@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.25 18.56">
-  <defs>
-    <style>
-      .cls-1 {
-        fill: #296780;
-      }
-    </style>
-  </defs>
-  <polygon class="cls-1" points="1.86 0 0 0 0 3.71 1.86 3.71 5.57 3.71 5.57 7.42 5.57 11.14 5.57 14.85 5.57 18.56 9.28 14.85 9.28 11.14 9.28 7.42 9.28 3.71 5.57 0 1.86 0"/>
-  <polygon class="cls-1" points="10.54 0 6.82 0 10.54 3.71 14.25 3.71 14.25 0 10.54 0"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" aria-label="TecnoLTS favicon">
+  <g fill="#126e95">
+    <polygon points="9.6,0 4.79,0 4.79,9.59 9.6,9.59 19.19,9.59 19.19,19.19 19.19,28.83 19.19,38.42 19.19,48 28.79,38.42 28.79,28.83 28.79,19.19 28.79,9.59 19.19,0 9.6,0"/>
+    <polygon points="32.04,0 22.45,0 32.04,9.59 41.62,9.59 41.62,0 32.04,0"/>
+  </g>
 </svg>

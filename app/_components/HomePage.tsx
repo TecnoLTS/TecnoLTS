@@ -14,6 +14,7 @@ import {
   getLocalizedServiceUrls,
   getSiteUrl,
 } from '@/lib/seo';
+import { localePath } from '@/lib/i18n';
 
 interface HomePageProps {
   t: TranslationStructure;
@@ -26,14 +27,15 @@ export default function HomePage({ t, language }: HomePageProps) {
   const orgId = `${siteUrl}#organization`;
   const websiteId = `${siteUrl}#website`;
   const localizedServices = getLocalizedServiceUrls(t, language);
+  const localizedHomePath = localePath(language);
   const professionalServiceSchema = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
     '@id': `${siteUrl}#professional-service`,
     name: orgName,
-    url: `${siteUrl}/${language}`,
+    url: `${siteUrl}${localizedHomePath}`,
     description: t.seo.organizationDescription,
-    logo: `${siteUrl}/logos/tecnolts-logo-v2.svg`,
+    logo: `${siteUrl}/icon-512.png`,
     image: `${siteUrl}/og-image.svg`,
     areaServed: [
       {
@@ -63,7 +65,7 @@ export default function HomePage({ t, language }: HomePageProps) {
   const servicesItemListSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    '@id': `${siteUrl}/${language}#services`,
+    '@id': `${siteUrl}${localizedHomePath}#services`,
     name:
       language === 'es'
         ? 'Servicios IT empresariales de TecnoLTS'
@@ -85,8 +87,8 @@ export default function HomePage({ t, language }: HomePageProps) {
   const homepageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    '@id': `${siteUrl}/${language}#webpage`,
-    url: `${siteUrl}/${language}`,
+    '@id': `${siteUrl}${localizedHomePath}#webpage`,
+    url: `${siteUrl}${localizedHomePath}`,
     name:
       language === 'es'
         ? 'TecnoLTS - Soluciones y servicios IT empresariales'
@@ -123,7 +125,7 @@ export default function HomePage({ t, language }: HomePageProps) {
 
       <Navigation t={t} language={language} />
 
-      <HeroSection t={t} />
+      <HeroSection t={t} language={language} />
 
       {/* --- 1. DESARROLLO DE SOFTWARE --- */}
       <ServiceCard

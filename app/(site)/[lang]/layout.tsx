@@ -2,7 +2,7 @@ import '../../global.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { notFound } from 'next/navigation';
-import { isLocale, locales } from '@/lib/i18n';
+import { isLocale, localePath, locales } from '@/lib/i18n';
 import type { Language } from '@/lib/translations';
 import {
   BRAND_ALIASES,
@@ -254,6 +254,7 @@ export async function generateMetadata({
   }
 
   const localeMetadata = metadataByLocale[lang];
+  const localizedHomePath = localePath(lang);
   const keywords =
     lang === 'es'
       ? [
@@ -320,20 +321,26 @@ export async function generateMetadata({
       telephone: false,
     },
     alternates: {
-      canonical: `/${lang}`,
+      canonical: localizedHomePath,
       languages: {
-        es: '/es',
-        'es-EC': '/es',
-        'es-419': '/es',
+        es: '/',
+        'es-EC': '/',
+        'es-419': '/',
         en: '/en',
         'en-US': '/en',
-        'x-default': '/es',
+        'x-default': '/',
       },
     },
     manifest: '/manifest.webmanifest',
     icons: {
-      icon: [{ url: '/favicon-v2.svg', type: 'image/svg+xml' }],
-      apple: [{ url: '/apple-touch-icon-v2.svg', type: 'image/svg+xml' }],
+      icon: [
+        { url: '/favicon.ico', sizes: 'any' },
+        { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
+        { url: '/icon-512.png', type: 'image/png', sizes: '512x512' },
+        { url: '/favicon.svg', type: 'image/svg+xml' },
+      ],
+      shortcut: ['/favicon.ico'],
+      apple: [{ url: '/apple-touch-icon.png', type: 'image/png', sizes: '180x180' }],
     },
     robots: {
       index: true,
@@ -350,7 +357,7 @@ export async function generateMetadata({
       title: localeMetadata.title,
       description: localeMetadata.description,
       type: 'website',
-      url: `${siteUrl}/${lang}`,
+      url: `${siteUrl}${localizedHomePath}`,
       siteName: BRAND_NAME,
       locale: localeMetadata.locale,
       alternateLocale: lang === 'es' ? ['en_US'] : ['es_EC'],
@@ -397,19 +404,19 @@ export default async function LocaleLayout({
   const siteNavigationItems =
     lang === 'es'
       ? [
-          { name: 'Inicio', url: `${siteUrl}/es` },
-          { name: 'Servicios', url: `${siteUrl}/es#software` },
-          { name: 'Contacto', url: `${siteUrl}/es#contact` },
-          { name: 'Desarrollo de software', url: `${siteUrl}/es/services/software` },
-          { name: 'Monitoreo y observabilidad', url: `${siteUrl}/es/services/monitoring` },
-          { name: 'Ciberseguridad', url: `${siteUrl}/es/services/cybersecurity` },
-          { name: 'Soluciones de redes', url: `${siteUrl}/es/services/network` },
-          { name: 'ISO 27001', url: `${siteUrl}/es/services/iso-27001` },
+          { name: 'Inicio', url: `${siteUrl}/` },
+          { name: 'Servicios', url: `${siteUrl}/services` },
+          { name: 'Contacto', url: `${siteUrl}/#contact-form` },
+          { name: 'Desarrollo de software', url: `${siteUrl}/services/software` },
+          { name: 'Monitoreo y observabilidad', url: `${siteUrl}/services/monitoring` },
+          { name: 'Ciberseguridad', url: `${siteUrl}/services/cybersecurity` },
+          { name: 'Soluciones de redes', url: `${siteUrl}/services/network` },
+          { name: 'ISO 27001', url: `${siteUrl}/services/iso-27001` },
         ]
       : [
           { name: 'Home', url: `${siteUrl}/en` },
-          { name: 'Services', url: `${siteUrl}/en#software` },
-          { name: 'Contact', url: `${siteUrl}/en#contact` },
+          { name: 'Services', url: `${siteUrl}/en/services` },
+          { name: 'Contact', url: `${siteUrl}/en#contact-form` },
           { name: 'Software development', url: `${siteUrl}/en/services/software` },
           { name: 'Monitoring and observability', url: `${siteUrl}/en/services/monitoring` },
           { name: 'Cybersecurity', url: `${siteUrl}/en/services/cybersecurity` },
@@ -424,7 +431,7 @@ export default async function LocaleLayout({
     name: BRAND_NAME,
     alternateName: BRAND_ALIASES,
     url: siteUrl,
-    logo: `${siteUrl}/logos/tecnolts-logo-v2.svg`,
+    logo: `${siteUrl}/icon-512.png`,
     description: localizedMetadata.description,
     email: getContactEmail(),
     telephone: getContactPhone(),

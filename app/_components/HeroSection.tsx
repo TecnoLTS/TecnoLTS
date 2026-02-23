@@ -1,12 +1,15 @@
+import Link from 'next/link';
 import { Sparkles, ArrowRight, CheckCircle, TrendingUp, Shield } from 'lucide-react';
-import type { TranslationStructure } from '@/lib/translations';
+import type { Language, TranslationStructure } from '@/lib/translations';
+import { localePath } from '@/lib/i18n';
 import ContactModalButton from './ContactModalButton';
 
 interface HeroSectionProps {
   t: TranslationStructure;
+  language: Language;
 }
 
-export default function HeroSection({ t }: HeroSectionProps) {
+export default function HeroSection({ t, language }: HeroSectionProps) {
   return (
     <section className="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 lg:px-8 relative z-10">
       <div className="max-w-7xl mx-auto">
@@ -36,6 +39,12 @@ export default function HeroSection({ t }: HeroSectionProps) {
                   <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover/hero-cta:translate-x-1 transition-transform duration-500" />
                 </span>
               </ContactModalButton>
+              <Link
+                href={localePath(language, '/services')}
+                className="min-w-[12.5rem] inline-flex items-center justify-center rounded-lg border border-cyan-200 bg-white px-6 py-3 text-sm font-semibold text-cyan-700 transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-cyan-50 hover:shadow-lg sm:text-base md:text-lg dark:border-cyan-900/70 dark:bg-slate-900 dark:text-cyan-300 dark:hover:bg-slate-800"
+              >
+                {t.hero.ctaSecondary}
+              </Link>
             </div>
 
             <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 mt-6 sm:mt-8 md:mt-12 pt-5 sm:pt-6 md:pt-8 border-t border-gray-200 dark:border-slate-700 animate-fade-in-up animation-delay-400">

@@ -1,5 +1,6 @@
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { localePath } from '@/lib/i18n';
 
 interface ServiceCardProps {
   id: string;
@@ -44,7 +45,7 @@ export default function ServiceCard({
   };
 
   const servicePath = serviceRoutes[id] || id;
-  const serviceUrl = `/${locale}/services/${servicePath}`;
+  const serviceUrl = localePath(locale === 'en' ? 'en' : 'es', `/services/${servicePath}`);
   const descriptiveCta = `${cta}: ${title}`;
 
 

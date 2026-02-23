@@ -1,11 +1,9 @@
 import type { MetadataRoute } from 'next';
-import { locales } from '@/lib/i18n';
 import { getSiteUrl } from '@/lib/seo';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
   const lastModified = new Date();
-  const languages = locales;
   const services = [
     'software',
     'monitoring',
@@ -17,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'disaster-recovery',
     'datacenter',
   ];
-  const defaultLanguagePath = '/es';
+  const defaultLanguagePath = '/';
 
   const rootEntry: MetadataRoute.Sitemap = [
     {
@@ -27,9 +25,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
       alternates: {
         languages: {
-          es: `${siteUrl}/es`,
-          'es-EC': `${siteUrl}/es`,
-          'es-419': `${siteUrl}/es`,
+          es: `${siteUrl}/`,
+          'es-EC': `${siteUrl}/`,
+          'es-419': `${siteUrl}/`,
           en: `${siteUrl}/en`,
           'en-US': `${siteUrl}/en`,
           'x-default': `${siteUrl}${defaultLanguagePath}`,
@@ -38,45 +36,94 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const homeEntries: MetadataRoute.Sitemap = languages.map((lang) => {
-    return {
-      url: `${siteUrl}/${lang}`,
+  const homeEntries: MetadataRoute.Sitemap = [
+    {
+      url: `${siteUrl}/en`,
       lastModified,
       changeFrequency: 'weekly',
       priority: 1,
       alternates: {
         languages: {
-          es: `${siteUrl}/es`,
-          'es-EC': `${siteUrl}/es`,
-          'es-419': `${siteUrl}/es`,
+          es: `${siteUrl}/`,
+          'es-EC': `${siteUrl}/`,
+          'es-419': `${siteUrl}/`,
           en: `${siteUrl}/en`,
           'en-US': `${siteUrl}/en`,
           'x-default': `${siteUrl}${defaultLanguagePath}`,
         },
       },
-    };
-  });
+    },
+  ];
 
-  const serviceEntries: MetadataRoute.Sitemap = languages.flatMap((lang) =>
-    services.map((service) => {
-      return {
-        url: `${siteUrl}/${lang}/services/${service}`,
-        lastModified,
-        changeFrequency: 'weekly',
-        priority: 0.9,
-        alternates: {
-          languages: {
-            es: `${siteUrl}/es/services/${service}`,
-            'es-EC': `${siteUrl}/es/services/${service}`,
-            'es-419': `${siteUrl}/es/services/${service}`,
-            en: `${siteUrl}/en/services/${service}`,
-            'en-US': `${siteUrl}/en/services/${service}`,
-            'x-default': `${siteUrl}${defaultLanguagePath}/services/${service}`,
-          },
+  const servicesIndexEntries: MetadataRoute.Sitemap = [
+    {
+      url: `${siteUrl}/services`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+      alternates: {
+        languages: {
+          es: `${siteUrl}/services`,
+          'es-EC': `${siteUrl}/services`,
+          'es-419': `${siteUrl}/services`,
+          en: `${siteUrl}/en/services`,
+          'en-US': `${siteUrl}/en/services`,
+          'x-default': `${siteUrl}/services`,
         },
-      };
-    })
-  );
+      },
+    },
+    {
+      url: `${siteUrl}/en/services`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+      alternates: {
+        languages: {
+          es: `${siteUrl}/services`,
+          'es-EC': `${siteUrl}/services`,
+          'es-419': `${siteUrl}/services`,
+          en: `${siteUrl}/en/services`,
+          'en-US': `${siteUrl}/en/services`,
+          'x-default': `${siteUrl}/services`,
+        },
+      },
+    },
+  ];
 
-  return [...rootEntry, ...homeEntries, ...serviceEntries];
+  const serviceEntries: MetadataRoute.Sitemap = services.flatMap((service) => [
+    {
+      url: `${siteUrl}/services/${service}`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+      alternates: {
+        languages: {
+          es: `${siteUrl}/services/${service}`,
+          'es-EC': `${siteUrl}/services/${service}`,
+          'es-419': `${siteUrl}/services/${service}`,
+          en: `${siteUrl}/en/services/${service}`,
+          'en-US': `${siteUrl}/en/services/${service}`,
+          'x-default': `${siteUrl}/services/${service}`,
+        },
+      },
+    },
+    {
+      url: `${siteUrl}/en/services/${service}`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+      alternates: {
+        languages: {
+          es: `${siteUrl}/services/${service}`,
+          'es-EC': `${siteUrl}/services/${service}`,
+          'es-419': `${siteUrl}/services/${service}`,
+          en: `${siteUrl}/en/services/${service}`,
+          'en-US': `${siteUrl}/en/services/${service}`,
+          'x-default': `${siteUrl}/services/${service}`,
+        },
+      },
+    },
+  ]);
+
+  return [...rootEntry, ...homeEntries, ...servicesIndexEntries, ...serviceEntries];
 }
