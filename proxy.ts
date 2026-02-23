@@ -9,6 +9,20 @@ import type { NextRequest } from 'next/server';
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Nunca reescribir recursos estáticos ni endpoints técnicos.
+  if (
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/api/') ||
+    pathname === '/favicon.ico' ||
+    pathname === '/favicon.svg' ||
+    pathname === '/robots.txt' ||
+    pathname === '/sitemap.xml' ||
+    pathname === '/manifest.webmanifest' ||
+    pathname.includes('.')
+  ) {
+    return NextResponse.next();
+  }
+
   // 1. Normalizar barras finales (Trailing Slashes)
   const normalizedPathname =
     pathname !== '/' ? pathname.replace(/\/+$/, '') || '/' : pathname;
@@ -19,12 +33,10 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(redirectUrl, 308);
   }
 
-  // 2. Redirigir prefijo /es a la raíz (SEO: contenido canónico en la raíz)
+  // 2. El prefijo /es ya no existe públicamente.
+  // Español vive en la raíz y el único prefijo válido es /en.
   if (normalizedPathname === '/es' || normalizedPathname.startsWith('/es/')) {
-    const redirectUrl = request.nextUrl.clone();
-    const redirectedPath = normalizedPathname.replace(/^\/es/, '') || '/';
-    redirectUrl.pathname = redirectedPath;
-    return NextResponse.redirect(redirectUrl, 308);
+    return new NextResponse('Not Found', { status: 404 });
   }
 
   // 3. Manejo de prefijos de idioma existentes (ej. /en)
@@ -53,6 +65,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * - public assets (files with extensions)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|[\\w-]+\\.\\w+).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|manifest.webmanifest).*)',
   ],
 };
