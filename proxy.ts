@@ -25,12 +25,11 @@ export function proxy(request: NextRequest) {
 
   // 1. /es no existe públicamente. Redirigir en un solo salto al canónico.
   if (pathname === '/es' || pathname.startsWith('/es/')) {
-    const redirectUrl = request.nextUrl.clone();
     const withoutEsPrefix = pathname.replace(/^\/es(?=\/|$)/, '') || '/';
     const canonicalPath =
       withoutEsPrefix !== '/' ? withoutEsPrefix.replace(/\/+$/, '') || '/' : '/';
-    redirectUrl.pathname = canonicalPath;
-    return NextResponse.redirect(redirectUrl, 308);
+    const destination = `${canonicalPath}${request.nextUrl.search}`;
+    return NextResponse.redirect(new URL(destination, request.url), 308);
   }
 
   // 2. Normalizar barras finales (Trailing Slashes)
@@ -38,9 +37,8 @@ export function proxy(request: NextRequest) {
     pathname !== '/' ? pathname.replace(/\/+$/, '') || '/' : pathname;
 
   if (normalizedPathname !== pathname) {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = normalizedPathname;
-    return NextResponse.redirect(redirectUrl, 308);
+    const destination = `${normalizedPathname}${request.nextUrl.search}`;
+    return NextResponse.redirect(new URL(destination, request.url), 308);
   }
 
   // 3. Manejo de prefijos de idioma existentes (ej. /en)
