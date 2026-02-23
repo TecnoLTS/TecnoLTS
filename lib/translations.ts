@@ -163,6 +163,19 @@ export const translations = {
         description: "Over 500 successful projects delivered across various complex industries."
       }
     },
+    featuresExtended: {
+      title: "Our strategic approach",
+      description: "At TecnoLTS, we don't just provide technical services; we become your strategic technology partner. We understand that every business is unique, which is why we adapt each solution to maximize ROI and operational efficiency. Our commitment is to deliver excellence in every line of code and every network configuration, ensuring your competitive edge in a digital-first world.",
+      reliabilityTitle: "Enterprise reliability",
+      reliabilityDesc: "We implement systems designed to fail safely, with built-in redundancy and 24/7 proactive monitoring. Your business never stops, and neither does our commitment to your stability.",
+      innovationTitle: "Continuous innovation",
+      innovationDesc: "We stay at the forefront of emerging technologies to always offer you the most modern and competitive tools on the market. From AI integration to cloud-native architectures.",
+      supportTitle: "Expert support",
+      supportDesc: "You have direct access to certified engineers who know your infrastructure and respond with agility and professional precision. No chatbots, only experts.",
+      imageAlt: "TecnoLTS strategic approach",
+      badgeLabel: "ENABLERS",
+      badgeValue: "Professional applications"
+    },
     cta: {
       badge: "Let's build something amazing",
       title: "Ready to transform your business?",
@@ -313,7 +326,7 @@ export const translations = {
           "Lower operating costs from recurring incidents"
         ],
         technologies: [
-          "OpenTelemetry", "Prometheus", "Zabbix", "Grafana", "ELK Stack", 
+          "OpenTelemetry", "Prometheus", "Zabbix", "Grafana", "ELK Stack",
           "Jaeger", "VictoriaMetrics", "Loki", "Netdata", "CloudWatch", "Datadog"
         ],
         pillars: [
@@ -825,6 +838,19 @@ export const translations = {
         description: "Más de 500 proyectos exitosos entregados en diversas industrias complejas."
       }
     },
+    featuresExtended: {
+      title: "Nuestro enfoque estratégico",
+      description: "En TecnoLTS, no solo proporcionamos servicios técnicos; nos convertimos en su socio estratégico de tecnología. Entendemos que cada empresa es única, por lo que adaptamos cada solución para maximizar el retorno de inversión y la eficiencia operativa. Nuestro compromiso es entregar excelencia en cada línea de código y cada configuración de red.",
+      reliabilityTitle: "Confiabilidad empresarial",
+      reliabilityDesc: "Implementamos sistemas diseñados para fallar de manera segura, con redundancia incorporada y monitoreo proactivo 24/7. Su negocio nunca se detiene.",
+      innovationTitle: "Innovación continua",
+      innovationDesc: "Nos mantenemos a la vanguardia de las tecnologías emergentes para ofrecerle siempre las herramientas más modernas y competitivas del mercado.",
+      supportTitle: "Soporte de expertos",
+      supportDesc: "Usted cuenta con acceso directo a ingenieros certificados que conocen su infraestructura y responden con agilidad y precisión profesional.",
+      imageAlt: "Enfoque estratégico de TecnoLTS",
+      badgeLabel: "IMPULSADORES",
+      badgeValue: "Aplicaciones profesionales"
+    },
     cta: {
       badge: "Construyamos algo increíble",
       title: "¿Listo para transformar su negocio?",
@@ -975,7 +1001,7 @@ export const translations = {
           "Reducción de costos por incidentes recurrentes"
         ],
         technologies: [
-          "OpenTelemetry", "Prometheus", "Zabbix", "Grafana", "ELK Stack", 
+          "OpenTelemetry", "Prometheus", "Zabbix", "Grafana", "ELK Stack",
           "Jaeger", "VictoriaMetrics", "Loki", "Netdata", "CloudWatch", "Datadog"
         ],
         pillars: [

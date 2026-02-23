@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "test": "npm run lint && npm run typecheck",
-    "typecheck": "tsc --noEmit --incremental false --pretty false",
+    "typecheck": "next typegen && tsc -p tsconfig.typecheck.json --noEmit --incremental false --pretty false",
     "deploy:prod": "./scripts/deploy-production.sh",
     "deploy:dev": "./scripts/deploy-development.sh"
   },

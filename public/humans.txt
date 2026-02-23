@@ -1,0 +1,9 @@
+/* TEAM */
+    Developer: Antigravity AI
+    Site: https://tecnolts.com
+
+/* SITE */
+    Last update: 2026/02/23
+    Language: Spanish, English
+    Software: Next.js (React), TypeScript, Tailwind CSS, Nginx, Docker
+    Design: Premium Enterprise Aesthetic

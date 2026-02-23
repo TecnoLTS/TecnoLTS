@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import type { Language, TranslationStructure } from '@/lib/translations';
-import { getContactEmail, getContactPhone } from '@/lib/seo';
+import { getContactEmail, getContactPhone, getWhatsAppHref } from '@/lib/seo';
 import { localePath } from '@/lib/i18n';
+import EmailLink from '@/components/EmailLink';
 
 interface FooterProps {
   t: TranslationStructure;
@@ -12,6 +13,7 @@ interface FooterProps {
 export default function Footer({ t, locale = 'es' }: FooterProps) {
   const contactEmail = getContactEmail();
   const contactPhone = getContactPhone();
+  const whatsAppHref = getWhatsAppHref();
   const serviceHref = (slug: string) => localePath(locale, `/services/${slug}`);
 
   return (
@@ -124,14 +126,21 @@ export default function Footer({ t, locale = 'es' }: FooterProps) {
                 <span className="text-cyan-400 mt-1 flex-shrink-0">✉</span>
                 <div>
                   <p className="text-white font-medium mb-1">{t.footer.contactEmailLabel}</p>
-                  <a href={`mailto:${contactEmail}`} className="break-all hover:text-cyan-400 transition-colors border-b border-gray-700 hover:border-cyan-400 pb-0.5">{contactEmail}</a>
+                  <EmailLink email={contactEmail} className="break-all" />
                 </div>
               </li>
               <li className="text-gray-400 flex items-start gap-3 text-sm">
                 <span className="text-cyan-400 mt-1 flex-shrink-0">☎</span>
                 <div>
                   <p className="text-white font-medium mb-1">{t.footer.contactPhoneLabel}</p>
-                  <a href={`tel:${contactPhone.replace(/[^\d+]/g, '')}`} className="break-words hover:text-cyan-400 transition-colors border-b border-gray-700 hover:border-cyan-400 pb-0.5">{contactPhone}</a>
+                  <a
+                    href={whatsAppHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="break-words hover:text-cyan-400 transition-colors border-b border-gray-700 hover:border-cyan-400 pb-0.5"
+                  >
+                    {contactPhone}
+                  </a>
                 </div>
               </li>
               <li className="text-gray-400 flex items-start gap-3 text-sm">

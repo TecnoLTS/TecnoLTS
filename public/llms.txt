@@ -1,0 +1,18 @@
+# TecnoLTS - Enterprise IT Solutions
+
+> Professional IT services for modern businesses, specializing in software development, cybersecurity, and infrastructure.
+
+## Core Services
+- **Software Development**: Custom solutions, web and mobile apps.
+- **Monitoring & Observability**: Real-time insights using OpenTelemetry, Prometheus, and Zabbix.
+- **Cybersecurity**: Enterprise protection, ransomware defense, and ISO 27001 readiness.
+- **Network Solutions**: Infrastructure design and management.
+- **Business Continuity**: Backup, disaster recovery, and licensing.
+
+## Contact Information
+- **Website**: https://tecnolts.com
+- **Email**: info@tecnolts.com
+- **Location**: Quito, Ecuador
+
+## Full Documentation
+For detailed service descriptions, technical implementation details, and company background, see [llms-full.txt](https://tecnolts.com/llms-full.txt).

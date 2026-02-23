@@ -1,7 +1,7 @@
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import LazyContactForm from './LazyContactForm';
 import type { TranslationStructure } from '@/lib/translations';
-import { getContactEmail, getContactPhone } from '@/lib/seo';
+import { getContactEmail, getContactPhone, getWhatsAppHref } from '@/lib/seo';
 
 interface ContactSectionProps {
   t: TranslationStructure;
@@ -10,6 +10,7 @@ interface ContactSectionProps {
 export default function ContactSection({ t }: ContactSectionProps) {
   const contactPhone = getContactPhone();
   const contactEmail = getContactEmail();
+  const whatsAppHref = getWhatsAppHref();
 
   return (
     <section id="contact" className="deferred-section py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 scroll-mt-20">
@@ -42,7 +43,9 @@ export default function ContactSection({ t }: ContactSectionProps) {
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-1">{t.contact.info.phone}</h3>
                     <a
-                      href={`tel:${contactPhone.replace(/[^\d+]/g, '')}`}
+                      href={whatsAppHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
                     >
                       {contactPhone}

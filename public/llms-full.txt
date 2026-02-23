@@ -1,0 +1,39 @@
+# TecnoLTS Full Service Directory
+
+This document provides a comprehensive overview of TecnoLTS services and technical capabilities for automated analysis.
+
+## 1. Software Development
+Tailored software solutions designed to simplify operations and prepare businesses for the digital future.
+- **Focus**: Efficiency, scalability, and modern UI/UX.
+- **Technologies**: React, Next.js, TypeScript, Node.js, and more.
+
+## 2. Monitoring and Observability
+Vanguard monitoring solutions providing 360-degree visibility of IT stacks.
+- **Tools**: OpenTelemetry, Prometheus, Zabbix, Grafana.
+- **Value**: Proactive issue detection and performance optimization.
+
+## 3. Cybersecurity and Protection
+Enterprise-grade security to protect digital assets from modern threats.
+- **Services**: Ransomware protection, security audits, managed security services.
+- **Compliance**: ISO 27001 readiness and implementation.
+
+## 4. Network Solutions
+Building the foundation of enterprise communication.
+- **Services**: Network design, SD-WAN, secure wireless, and data center networking.
+
+## 5. Business Continuity
+Ensuring operations never stop.
+- **Backup**: Immutable backups and off-site replication.
+- **Disaster Recovery**: DRaaS and business continuity planning.
+- **Licensing**: Software asset management and compliance.
+
+## 6. Infrastructure & Data Center
+Specialized design for performance and reliability.
+- **Services**: Data center design, virtualization, and storage solutions.
+
+## Company Information
+TecnoLTS is a leading IT provider based in Quito, Ecuador, serving enterprise clients with a focus on high-quality standards and professional expertise.
+
+- **Founding Location**: Quito, Pichincha, Ecuador.
+- **Primary Market**: Ecuador and Latin America.
+- **Languages**: Spanish (Primary), English.

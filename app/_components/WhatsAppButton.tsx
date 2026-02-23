@@ -1,14 +1,17 @@
 import type { TranslationStructure } from '@/lib/translations';
+import { getWhatsAppHref } from '@/lib/seo';
 
 interface WhatsAppButtonProps {
   t: TranslationStructure;
 }
 
 export default function WhatsAppButton({ t }: WhatsAppButtonProps) {
+  const whatsAppHref = getWhatsAppHref();
+
   return (
     <div className="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 z-50">
       <a
-        href="https://wa.me/593963682212?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20más%20información%20sobre%20sus%20servicios"
+        href={whatsAppHref}
         target="_blank"
         rel="noopener noreferrer"
         className="relative bg-gradient-to-br from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center group"

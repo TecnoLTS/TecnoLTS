@@ -8,6 +8,7 @@ import ContactSection from './ContactSection';
 import ScrollToTopButton from './ScrollToTopButton';
 import WhatsAppButton from './WhatsAppButton';
 import Footer from './Footer';
+import AboutSection from './AboutSection';
 import type { Language, TranslationStructure } from '@/lib/translations';
 import {
   BRAND_NAME,
@@ -126,6 +127,7 @@ export default function HomePage({ t, language }: HomePageProps) {
       <Navigation t={t} language={language} />
 
       <HeroSection t={t} language={language} />
+
 
       {/* --- 1. DESARROLLO DE SOFTWARE --- */}
       <ServiceCard
@@ -259,6 +261,8 @@ export default function HomePage({ t, language }: HomePageProps) {
       <CTASection t={t} />
 
       <TrustedBySection t={t} />
+      <AboutSection t={t} />
+
 
       <ContactSection t={t} />
 

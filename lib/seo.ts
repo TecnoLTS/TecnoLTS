@@ -6,7 +6,8 @@ export const BRAND_ALIASES = ['Tecno LTS', 'TencoLTS', 'tecnolts'] as const;
 
 const FALLBACK_SITE_URL = 'http://localhost:3000';
 const FALLBACK_CONTACT_EMAIL = 'info@tecnolts.com';
-const FALLBACK_CONTACT_PHONE = '+593 (96) 368-2212';
+const FALLBACK_CONTACT_PHONE = '+593 96 368 2212';
+const FALLBACK_WHATSAPP_MESSAGE = 'Hola, me gustaría obtener más información sobre sus servicios';
 const FALLBACK_CONTACT_LOCALITY = 'Quito';
 const FALLBACK_CONTACT_REGION = 'Pichincha';
 const FALLBACK_CONTACT_COUNTRY_CODE = 'EC';
@@ -45,6 +46,12 @@ export function getContactEmail() {
 
 export function getContactPhone() {
   return process.env.NEXT_PUBLIC_CONTACT_PHONE || FALLBACK_CONTACT_PHONE;
+}
+
+export function getWhatsAppHref() {
+  const phone = (process.env.NEXT_PUBLIC_WHATSAPP_PHONE || getContactPhone()).replace(/[^\d]/g, '');
+  const message = encodeURIComponent(process.env.NEXT_PUBLIC_WHATSAPP_MESSAGE || FALLBACK_WHATSAPP_MESSAGE);
+  return `https://wa.me/${phone}?text=${message}`;
 }
 
 export function getContactLocality() {
