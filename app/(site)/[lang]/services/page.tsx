@@ -20,7 +20,6 @@ const pageMetaByLocale = {
       'Explora todos los servicios IT de TecnoLTS: desarrollo de software, monitoreo, ciberseguridad, redes, ISO 27001 y más.',
     heading: 'Servicios IT para empresas en crecimiento',
     lead: 'Seleccione un servicio para ver el detalle técnico y agendar una consulta especializada.',
-    backLabel: 'Volver al inicio',
     ctaLabel: 'Ver detalle del servicio',
   },
   en: {
@@ -29,7 +28,6 @@ const pageMetaByLocale = {
       'Explore all TecnoLTS enterprise IT services: software development, monitoring, cybersecurity, network solutions, ISO 27001 and more.',
     heading: 'Enterprise IT services built for growth',
     lead: 'Select a service to view technical details and schedule a specialized consultation.',
-    backLabel: 'Back to home',
     ctaLabel: 'View service details',
   },
 } as const;
@@ -147,12 +145,6 @@ export default async function ServicesIndexPage({
       <Navigation t={t} language={lang} />
 
       <section className="mx-auto max-w-7xl px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:px-8 lg:pt-36">
-        <Link
-          href={localePath(lang)}
-          className="mb-6 inline-flex items-center text-sm text-slate-600 transition-colors hover:text-cyan-600 dark:text-slate-400 dark:hover:text-cyan-300"
-        >
-          ← {localeMeta.backLabel}
-        </Link>
         <h1 className="max-w-3xl text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
           {localeMeta.heading}
         </h1>

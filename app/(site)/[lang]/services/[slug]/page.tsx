@@ -401,14 +401,12 @@ export default async function ServicePage({
         technologies: 'Tecnologías y Herramientas',
         process: 'Nuestro Proceso',
         getStarted: '¿Listo para comenzar?',
-        backToHome: 'Volver al Inicio',
       }
     : {
         benefits: 'Core Capabilities',
         technologies: 'Technologies and Tools',
         process: 'Our Process',
         getStarted: 'Ready to get started?',
-        backToHome: 'Back to Home',
       };
 
   return (

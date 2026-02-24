@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import {
   Activity,
   ArrowRight,
@@ -23,7 +22,6 @@ import WhatsAppButton from './WhatsAppButton';
 import ScrollToTopButton from './ScrollToTopButton';
 import ContactModalButton from './ContactModalButton';
 import type { Language, TranslationStructure } from '@/lib/translations';
-import { localePath } from '@/lib/i18n';
 
 const iconMap: Record<string, LucideIcon> = {
   Code,
@@ -803,7 +801,6 @@ interface ServiceDetailPageProps {
     technologies?: string;
     process?: string;
     getStarted?: string;
-    backToHome?: string;
   };
 }
 
@@ -863,7 +860,6 @@ export default function ServiceDetailPage({
   const stackItems = ((technologies && technologies.length > 0 ? technologies : isEs ? includes.es : includes.en) as string[]).slice(0, 10);
   const imageIdeas = serviceImageIdeas[iconName] || serviceImageIdeas.Code;
   const defaultService = contactServiceByIconName[iconName] || 'other';
-  const homePath = localePath(locale);
 
   return (
     <main id="top" className="min-h-screen bg-[#f4f8fc] text-slate-900 dark:bg-slate-950 dark:text-slate-100">
@@ -874,13 +870,6 @@ export default function ServiceDetailPage({
 
         <div className="relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
           <div className={`lg:col-span-7 ${theme.swapHero ? 'lg:order-2' : ''}`}>
-            <Link
-              href={homePath}
-              className="mb-8 mr-4 inline-flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-cyan-600 dark:text-slate-400 dark:hover:text-cyan-300"
-            >
-              ← {labels.backToHome || (isEs ? 'Volver al inicio' : 'Back to home')}
-            </Link>
-
             <div className={`mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wider ${theme.palette.badgeClass}`}>
               <Sparkles className="h-3.5 w-3.5" />
               {ui.badge}

@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import {
   Activity,
   ArrowRight,
@@ -18,7 +17,6 @@ import WhatsAppButton from '@/app/_components/WhatsAppButton';
 import ScrollToTopButton from '@/app/_components/ScrollToTopButton';
 import ContactModalButton from './ContactModalButton';
 import type { Language, TranslationStructure } from '@/lib/translations';
-import { localePath } from '@/lib/i18n';
 
 type MonitoringPillar = {
   title: string;
@@ -34,7 +32,6 @@ interface MonitoringPageProps {
 
 export default function MonitoringPage({ t, language }: MonitoringPageProps) {
   const data = t.serviceDetails.monitoring;
-  const homePath = localePath(language);
 
   const [mainTitle, accentTitle = ''] = data.heroTitle
     .split(',')
@@ -100,13 +97,6 @@ export default function MonitoringPage({ t, language }: MonitoringPageProps) {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-10 text-center sm:gap-14 lg:grid-cols-2 lg:gap-16 lg:text-left">
             <div>
-              <Link
-                href={homePath}
-                className="mb-8 mr-4 inline-flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-cyan-600 dark:text-slate-400 dark:hover:text-cyan-300"
-              >
-                ← {isEs ? 'Volver al Inicio' : 'Back to Home'}
-              </Link>
-              
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold tracking-widest uppercase mb-6">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
