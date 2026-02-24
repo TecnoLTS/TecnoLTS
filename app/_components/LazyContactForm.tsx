@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { ComponentType } from 'react';
 import type { TranslationStructure } from '@/lib/translations';
 
@@ -39,6 +39,33 @@ export default function LazyContactForm({ t }: LazyContactFormProps) {
   const [ContactFormComponent, setContactFormComponent] =
     useState<ContactFormComponentType | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const realignContactAnchor = useCallback((behavior: ScrollBehavior = 'auto') => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const hash = window.location.hash.toLowerCase();
+    if (hash !== '#contact' && hash !== '#contact-form') {
+      return;
+    }
+
+    const target =
+      document.getElementById('contact-form') ?? document.getElementById('contact');
+
+    if (!target) {
+      return;
+    }
+
+    const nav = document.querySelector('nav');
+    const navHeight = nav instanceof HTMLElement ? nav.offsetHeight : 0;
+    const top = window.scrollY + target.getBoundingClientRect().top - navHeight - 12;
+
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior,
+    });
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current || shouldLoad) {
@@ -79,6 +106,24 @@ export default function LazyContactForm({ t }: LazyContactFormProps) {
       isCancelled = true;
     };
   }, [shouldLoad, ContactFormComponent]);
+
+  useEffect(() => {
+    if (!ContactFormComponent) {
+      return;
+    }
+
+    const frameId = window.requestAnimationFrame(() => {
+      realignContactAnchor('auto');
+    });
+    const timeoutIds = [120, 320].map((delay) =>
+      window.setTimeout(() => realignContactAnchor('auto'), delay)
+    );
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      timeoutIds.forEach((id) => window.clearTimeout(id));
+    };
+  }, [ContactFormComponent, realignContactAnchor]);
 
   return (
     <div ref={containerRef}>

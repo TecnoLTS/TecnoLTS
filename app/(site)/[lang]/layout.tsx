@@ -232,7 +232,7 @@ export default async function LocaleLayout({
       ? [
         { name: 'Inicio', url: `${siteUrl}/` },
         { name: 'Servicios', url: `${siteUrl}/services` },
-        { name: 'Contacto', url: `${siteUrl}/#contact-form` },
+        { name: 'Contacto', url: `${siteUrl}/#contact` },
         { name: 'Desarrollo de software', url: `${siteUrl}/services/software` },
         { name: 'Monitoreo y observabilidad', url: `${siteUrl}/services/monitoring` },
         { name: 'Ciberseguridad', url: `${siteUrl}/services/cybersecurity` },
@@ -242,7 +242,7 @@ export default async function LocaleLayout({
       : [
         { name: 'Home', url: `${siteUrl}/en` },
         { name: 'Services', url: `${siteUrl}/en/services` },
-        { name: 'Contact', url: `${siteUrl}/en#contact-form` },
+        { name: 'Contact', url: `${siteUrl}/en#contact` },
         { name: 'Software development', url: `${siteUrl}/en/services/software` },
         { name: 'Monitoring and observability', url: `${siteUrl}/en/services/monitoring` },
         { name: 'Cybersecurity', url: `${siteUrl}/en/services/cybersecurity` },
@@ -270,7 +270,7 @@ export default async function LocaleLayout({
         email: contactEmail,
         availableLanguage: ['es', 'en'],
         areaServed: contactCountryCode,
-        url: `${siteUrl}/#contact-form`,
+        url: `${siteUrl}/#contact`,
       },
     ],
     sameAs: socialProfiles.length > 0 ? socialProfiles : undefined,

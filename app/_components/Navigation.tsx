@@ -25,7 +25,7 @@ interface ServiceItem {
 export default function Navigation({ t, language }: NavigationProps) {
   const homeHref = localePath(language);
   const servicesIndexHref = localePath(language, '/services');
-  const contactHref = `${localePath(language)}#contact-form`;
+  const contactHref = `${localePath(language)}#contact`;
   const services: ServiceItem[] = [
     {
       href: localePath(language, '/services/software'),
