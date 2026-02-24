@@ -122,8 +122,7 @@ export default function ServiceCard({
               <a href={serviceUrl} aria-label={descriptiveCta} className="w-full">
                 <span className="absolute inset-0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"></span>
                 <span className="relative z-10 flex items-center justify-center gap-2 text-center leading-tight sm:leading-normal">
-                  <span className="sm:hidden">{cta}</span>
-                  <span className="hidden break-words sm:inline">{descriptiveCta}</span>
+                  <span className="break-words">{descriptiveCta}</span>
                   <ArrowRight className="h-4 w-4 flex-shrink-0 transition-transform duration-500 group-hover/btn:translate-x-1 sm:h-5 sm:w-5" />
                 </span>
               </a>
