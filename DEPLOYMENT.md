@@ -55,6 +55,14 @@ cp .env.example .env
 Editar `/opt/website/tecnolts/.env`:
 
 - `NEXT_PUBLIC_SITE_URL=https://tecnolts.com`
+- SEO local recomendado:
+  - `NEXT_PUBLIC_CONTACT_STREET_ADDRESS=...`
+  - `NEXT_PUBLIC_CONTACT_POSTAL_CODE=...`
+  - `NEXT_PUBLIC_CONTACT_LATITUDE=...`
+  - `NEXT_PUBLIC_CONTACT_LONGITUDE=...`
+  - `NEXT_PUBLIC_GOOGLE_MAPS_URL=...`
+  - `NEXT_PUBLIC_GOOGLE_BUSINESS_PROFILE_URL=...`
+  - `NEXT_PUBLIC_LINKEDIN_URL=...` (y otros perfiles sociales disponibles)
 - SMTP (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`)
 - `EMAIL_TO=destino@dominio.com`
 - (opcional) rate-limit distribuido: `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`

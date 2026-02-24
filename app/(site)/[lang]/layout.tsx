@@ -10,11 +10,17 @@ import {
   getContactCountryCode,
   getContactCountryName,
   getContactEmail,
+  getContactGeoCoordinates,
   getContactLocality,
+  getContactPostalCode,
   getContactPhone,
   getContactRegion,
+  getContactStreetAddress,
+  getGoogleBusinessProfileUrl,
+  getGoogleMapsUrl,
   getSiteUrl,
   getSocialProfiles,
+  normalizePhoneForStructuredData,
 } from '@/lib/seo';
 
 type LayoutParams = {
@@ -223,10 +229,27 @@ export default async function LocaleLayout({
   const socialProfiles = getSocialProfiles();
   const contactEmail = getContactEmail();
   const contactPhone = getContactPhone();
+  const contactPhoneForSchema = normalizePhoneForStructuredData(contactPhone) || contactPhone;
   const contactCountryCode = getContactCountryCode();
   const contactCountryName = getContactCountryName();
   const contactLocality = getContactLocality();
   const contactRegion = getContactRegion();
+  const contactStreetAddress = getContactStreetAddress();
+  const contactPostalCode = getContactPostalCode();
+  const contactGeoCoordinates = getContactGeoCoordinates();
+  const googleMapsUrl = getGoogleMapsUrl();
+  const googleBusinessProfileUrl = getGoogleBusinessProfileUrl();
+  const sameAsProfiles = Array.from(
+    new Set([...socialProfiles, googleBusinessProfileUrl].filter((value) => value !== ''))
+  );
+  const postalAddress = {
+    '@type': 'PostalAddress',
+    addressLocality: contactLocality,
+    addressRegion: contactRegion,
+    addressCountry: contactCountryCode,
+    ...(contactStreetAddress ? { streetAddress: contactStreetAddress } : {}),
+    ...(contactPostalCode ? { postalCode: contactPostalCode } : {}),
+  };
   const siteNavigationItems =
     lang === 'es'
       ? [
@@ -261,38 +284,58 @@ export default async function LocaleLayout({
     image: `${siteUrl}/og-image.svg`,
     description: localizedMetadata.description,
     email: contactEmail,
-    telephone: contactPhone,
+    telephone: contactPhoneForSchema,
     contactPoint: [
       {
         '@type': 'ContactPoint',
         contactType: 'customer support',
-        telephone: contactPhone,
+        telephone: contactPhoneForSchema,
         email: contactEmail,
         availableLanguage: ['es', 'en'],
         areaServed: contactCountryCode,
         url: `${siteUrl}/#contact`,
       },
     ],
-    sameAs: socialProfiles.length > 0 ? socialProfiles : undefined,
+    location: {
+      '@id': localBusinessId,
+    },
+    sameAs: sameAsProfiles.length > 0 ? sameAsProfiles : undefined,
   };
   const localBusinessSchema = {
     '@context': 'https://schema.org',
-    '@type': 'ProfessionalService',
+    '@type': ['ProfessionalService', 'LocalBusiness'],
     '@id': localBusinessId,
     name: BRAND_NAME,
     image: `${siteUrl}/og-image.svg`,
     logo: `${siteUrl}/icon-512.png`,
     url: siteUrl,
+    description: localizedMetadata.description,
     email: contactEmail,
-    telephone: contactPhone,
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: contactLocality,
-      addressRegion: contactRegion,
-      addressCountry: contactCountryCode,
-    },
-    openingHours: 'Mo-Fr 08:30-17:30',
-    priceRange: 'N/A',
+    telephone: contactPhoneForSchema,
+    address: postalAddress,
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: [
+          'https://schema.org/Monday',
+          'https://schema.org/Tuesday',
+          'https://schema.org/Wednesday',
+          'https://schema.org/Thursday',
+          'https://schema.org/Friday',
+        ],
+        opens: '08:30',
+        closes: '17:30',
+      },
+    ],
+    geo: contactGeoCoordinates
+      ? {
+        '@type': 'GeoCoordinates',
+        latitude: contactGeoCoordinates.latitude,
+        longitude: contactGeoCoordinates.longitude,
+      }
+      : undefined,
+    hasMap: googleMapsUrl || undefined,
+    priceRange: '$$',
     areaServed: [
       {
         '@type': 'Country',
@@ -300,9 +343,11 @@ export default async function LocaleLayout({
       },
     ],
     availableLanguage: ['es', 'en'],
+    sameAs: sameAsProfiles.length > 0 ? sameAsProfiles : undefined,
     parentOrganization: {
       '@id': organizationId,
     },
+    mainEntityOfPage: siteUrl,
   };
   const websiteSchema = {
     '@context': 'https://schema.org',
@@ -311,13 +356,14 @@ export default async function LocaleLayout({
     name: BRAND_NAME,
     alternateName: BRAND_ALIASES,
     url: siteUrl,
-    inLanguage: lang === 'es' ? ['es', 'es-EC'] : ['en', 'en-US'],
+    inLanguage: ['es-EC', 'en-US'],
     publisher: {
       '@id': organizationId,
     },
     about: {
       '@id': localBusinessId,
     },
+    sameAs: sameAsProfiles.length > 0 ? sameAsProfiles : undefined,
   };
   const siteNavigationSchema = {
     '@context': 'https://schema.org',

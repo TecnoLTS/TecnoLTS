@@ -12,6 +12,12 @@ const FALLBACK_CONTACT_LOCALITY = 'Quito';
 const FALLBACK_CONTACT_REGION = 'Pichincha';
 const FALLBACK_CONTACT_COUNTRY_CODE = 'EC';
 const FALLBACK_CONTACT_COUNTRY_NAME = 'Ecuador';
+const FALLBACK_CONTACT_STREET_ADDRESS = '';
+const FALLBACK_CONTACT_POSTAL_CODE = '';
+const FALLBACK_CONTACT_LATITUDE = '';
+const FALLBACK_CONTACT_LONGITUDE = '';
+const FALLBACK_GOOGLE_MAPS_URL = '';
+const FALLBACK_GOOGLE_BUSINESS_PROFILE_URL = '';
 const SOCIAL_PROFILE_ENV_KEYS = [
   'NEXT_PUBLIC_LINKEDIN_URL',
   'NEXT_PUBLIC_FACEBOOK_URL',
@@ -29,6 +35,10 @@ export type ServiceDefinition = {
 
 function removeTrailingSlash(value: string) {
   return value.replace(/\/+$/, '');
+}
+
+function getTrimmedEnvValue(envKey: string, fallback = '') {
+  return (process.env[envKey] || fallback).trim();
 }
 
 export function getSiteUrl() {
@@ -68,6 +78,61 @@ export function getContactCountryCode() {
 
 export function getContactCountryName() {
   return process.env.NEXT_PUBLIC_CONTACT_COUNTRY_NAME || FALLBACK_CONTACT_COUNTRY_NAME;
+}
+
+export function getContactStreetAddress() {
+  return getTrimmedEnvValue('NEXT_PUBLIC_CONTACT_STREET_ADDRESS', FALLBACK_CONTACT_STREET_ADDRESS);
+}
+
+export function getContactPostalCode() {
+  return getTrimmedEnvValue('NEXT_PUBLIC_CONTACT_POSTAL_CODE', FALLBACK_CONTACT_POSTAL_CODE);
+}
+
+function getContactLatitudeRaw() {
+  return getTrimmedEnvValue('NEXT_PUBLIC_CONTACT_LATITUDE', FALLBACK_CONTACT_LATITUDE);
+}
+
+function getContactLongitudeRaw() {
+  return getTrimmedEnvValue('NEXT_PUBLIC_CONTACT_LONGITUDE', FALLBACK_CONTACT_LONGITUDE);
+}
+
+export function getContactGeoCoordinates() {
+  const latitudeRaw = getContactLatitudeRaw();
+  const longitudeRaw = getContactLongitudeRaw();
+
+  if (latitudeRaw === '' || longitudeRaw === '') {
+    return null;
+  }
+
+  const latitude = Number.parseFloat(latitudeRaw);
+  const longitude = Number.parseFloat(longitudeRaw);
+
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+    return null;
+  }
+
+  return { latitude, longitude };
+}
+
+export function getGoogleMapsUrl() {
+  const value = getTrimmedEnvValue('NEXT_PUBLIC_GOOGLE_MAPS_URL', FALLBACK_GOOGLE_MAPS_URL);
+  return isValidAbsoluteHttpUrl(value) ? value : '';
+}
+
+export function getGoogleBusinessProfileUrl() {
+  const value = getTrimmedEnvValue(
+    'NEXT_PUBLIC_GOOGLE_BUSINESS_PROFILE_URL',
+    FALLBACK_GOOGLE_BUSINESS_PROFILE_URL
+  );
+  return isValidAbsoluteHttpUrl(value) ? value : '';
+}
+
+export function normalizePhoneForStructuredData(rawPhone: string) {
+  const digitsOnly = rawPhone.replace(/[^\d]/g, '');
+  if (!digitsOnly) {
+    return '';
+  }
+  return `+${digitsOnly}`;
 }
 
 function isValidAbsoluteHttpUrl(value: string) {
