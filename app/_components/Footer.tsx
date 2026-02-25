@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Facebook, Instagram } from 'lucide-react';
 import type { Language, TranslationStructure } from '@/lib/translations';
-import { getContactEmail, getContactPhone, getWhatsAppHref } from '@/lib/seo';
+import { getContactEmail, getContactPhone, getWhatsAppHref, getFacebookUrl, getInstagramUrl, getTikTokUrl } from '@/lib/seo';
 import { localePath } from '@/lib/i18n';
 import EmailLink from '@/components/EmailLink';
 
@@ -14,6 +14,9 @@ export default function Footer({ t, locale = 'es' }: FooterProps) {
   const contactEmail = getContactEmail();
   const contactPhone = getContactPhone();
   const whatsAppHref = getWhatsAppHref();
+  const facebookUrl = getFacebookUrl();
+  const instagramUrl = getInstagramUrl();
+  const tiktokUrl = getTikTokUrl();
   const serviceHref = (slug: string) => localePath(locale, `/services/${slug}`);
 
   return (
@@ -38,15 +41,55 @@ export default function Footer({ t, locale = 'es' }: FooterProps) {
               {t.footer.description}
             </p>
             <div className="flex gap-3">
-              <span aria-label="Facebook (próximamente)" className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 opacity-70 cursor-not-allowed">
-                <span className="text-white">f</span>
-              </span>
-              <span aria-label="X (próximamente)" className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 opacity-70 cursor-not-allowed">
-                <span className="text-white">𝕏</span>
-              </span>
-              <span aria-label="LinkedIn (próximamente)" className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 opacity-70 cursor-not-allowed">
-                <span className="text-white">in</span>
-              </span>
+              {facebookUrl ? (
+                <a
+                  href={facebookUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="w-10 h-10 bg-white/5 hover:bg-blue-600/20 rounded-lg flex items-center justify-center border border-white/10 hover:border-blue-500/50 transition-all duration-300"
+                >
+                  <Facebook className="w-5 h-5 text-white" />
+                </a>
+              ) : (
+                <span aria-label="Facebook (próximamente)" className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 opacity-70 cursor-not-allowed">
+                  <Facebook className="w-5 h-5 text-white" />
+                </span>
+              )}
+              {instagramUrl ? (
+                <a
+                  href={instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="w-10 h-10 bg-white/5 hover:bg-pink-600/20 rounded-lg flex items-center justify-center border border-white/10 hover:border-pink-500/50 transition-all duration-300"
+                >
+                  <Instagram className="w-5 h-5 text-white" />
+                </a>
+              ) : (
+                <span aria-label="Instagram (próximamente)" className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 opacity-70 cursor-not-allowed">
+                  <Instagram className="w-5 h-5 text-white" />
+                </span>
+              )}
+              {tiktokUrl ? (
+                <a
+                  href={tiktokUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="TikTok"
+                  className="w-10 h-10 bg-white/5 hover:bg-cyan-600/20 rounded-lg flex items-center justify-center border border-white/10 hover:border-cyan-500/50 transition-all duration-300"
+                >
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" className="text-white"/>
+                  </svg>
+                </a>
+              ) : (
+                <span aria-label="TikTok (próximamente)" className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 opacity-70 cursor-not-allowed">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" className="text-white"/>
+                  </svg>
+                </span>
+              )}
             </div>
           </div>
 

@@ -9,7 +9,7 @@ export const translations = {
     hero: {
       badge: "High-standard professional services",
       title: "Premium IT solutions for the modern enterprise",
-      description: "We help you modernize your business by leaving behind slow processes and security risks. Our team builds custom technology that simplifies your operations and prepares you for the digital future.",
+      description: "The right technology doesn’t just solve problems — it drives growth. At Tecnolts, we turn operational challenges into robust, secure, and scalable systems that work for you 24/7. If you’re looking for real efficiency, full control, and measurable results, you’re in the right place.",
       ctaPrimary: "Start your project",
       ctaSecondary: "Explore our services",
       uptimeBadge: "100% System availability",
@@ -676,7 +676,7 @@ export const translations = {
     hero: {
       badge: "Servicios profesionales de alto estándar",
       title: "Soluciones IT premium para negocios modernos",
-      description: "Le ayudamos a modernizar su negocio dejando atrás procesos lentos y riesgos de seguridad. Nuestro equipo construye tecnología a medida que simplifica su operación y le prepara para el futuro digital.",
+      description: "La tecnología correcta no solo resuelve problemas, impulsa crecimiento.\n En Tecnolts convertimos desafíos operativos en sistemas robustos, seguros y escalables que trabajan para usted 24/7.\nSi busca eficiencia real, control total y resultados medibles, está en el lugar correcto.",
       ctaPrimary: "Iniciar proyecto",
       ctaSecondary: "Ver servicios",
       uptimeBadge: "Disponibilidad del 100%",

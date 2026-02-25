@@ -23,6 +23,7 @@ const SOCIAL_PROFILE_ENV_KEYS = [
   'NEXT_PUBLIC_FACEBOOK_URL',
   'NEXT_PUBLIC_INSTAGRAM_URL',
   'NEXT_PUBLIC_X_URL',
+  'NEXT_PUBLIC_TIKTOK_URL',
   'NEXT_PUBLIC_YOUTUBE_URL',
 ] as const;
 
@@ -149,6 +150,36 @@ export function getSocialProfiles() {
     .map((value) => value.trim())
     .filter((value, index, list) => value !== '' && list.indexOf(value) === index)
     .filter(isValidAbsoluteHttpUrl);
+}
+
+export function getFacebookUrl() {
+  const value = getTrimmedEnvValue('NEXT_PUBLIC_FACEBOOK_URL', '');
+  return isValidAbsoluteHttpUrl(value) ? value : '';
+}
+
+export function getInstagramUrl() {
+  const value = getTrimmedEnvValue('NEXT_PUBLIC_INSTAGRAM_URL', '');
+  return isValidAbsoluteHttpUrl(value) ? value : '';
+}
+
+export function getXUrl() {
+  const value = getTrimmedEnvValue('NEXT_PUBLIC_X_URL', '');
+  return isValidAbsoluteHttpUrl(value) ? value : '';
+}
+
+export function getTikTokUrl() {
+  const value = getTrimmedEnvValue('NEXT_PUBLIC_TIKTOK_URL', '');
+  return isValidAbsoluteHttpUrl(value) ? value : '';
+}
+
+export function getLinkedInUrl() {
+  const value = getTrimmedEnvValue('NEXT_PUBLIC_LINKEDIN_URL', '');
+  return isValidAbsoluteHttpUrl(value) ? value : '';
+}
+
+export function getYouTubeUrl() {
+  const value = getTrimmedEnvValue('NEXT_PUBLIC_YOUTUBE_URL', '');
+  return isValidAbsoluteHttpUrl(value) ? value : '';
 }
 
 export function getServiceDefinitions(t: TranslationStructure): ServiceDefinition[] {
