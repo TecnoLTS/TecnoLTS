@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import MonitoringPage from '@/app/_components/MonitoringPage';
 import ServiceDetailPage from '@/app/_components/ServiceDetailPage';
 import { isLocale, localePath, locales } from '@/lib/i18n';
 import { translations } from '@/lib/translations';
@@ -12,6 +11,12 @@ const serviceConfig = {
     iconName: 'Code',
     gradient: 'bg-gradient-to-br from-blue-500 to-blue-700',
     checkColor: 'text-blue-500',
+  },
+  monitoring: {
+    translationKey: 'monitoring',
+    iconName: 'Radar',
+    gradient: 'bg-gradient-to-br from-cyan-500 to-emerald-600',
+    checkColor: 'text-cyan-500',
   },
   network: {
     translationKey: 'network',
@@ -78,11 +83,6 @@ type PageParams = {
 
 function getServiceData(lang: 'es' | 'en', slug: ServiceSlug) {
   const t = translations[lang];
-
-  if (slug === 'monitoring') {
-    return t.serviceDetails.monitoring;
-  }
-
   return t.serviceDetails[serviceConfig[slug as keyof typeof serviceConfig].translationKey];
 }
 
@@ -371,26 +371,6 @@ export default async function ServicePage({
   };
 
   const faqSchema = buildServiceFaqSchema(typedLang, serviceData);
-
-  if (slug === 'monitoring') {
-    return (
-      <>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-        <MonitoringPage t={t} language={lang} />
-      </>
-    );
-  }
 
   const config = serviceConfig[slug as keyof typeof serviceConfig];
   const service = t.serviceDetails[config.translationKey];
