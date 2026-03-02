@@ -77,7 +77,7 @@ export default function AboutSection({ t }: AboutSectionProps) {
                         <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-[2.5rem] blur-2xl opacity-10 group-hover:opacity-20 transition-opacity duration-500" />
                         <div className="relative aspect-[4/3] sm:aspect-video lg:aspect-square rounded-[2rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
                             <Image
-                                src="/images/about-strategic.png"
+                                src="/images/Nuestra-estrategia-tecnolts.jpg"
                                 alt={f.imageAlt}
                                 fill
                                 className="object-cover transition-transform duration-700 group-hover:scale-105"

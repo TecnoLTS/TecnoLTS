@@ -680,7 +680,7 @@ export const translations = {
       ctaPrimary: "Iniciar proyecto",
       ctaSecondary: "Ver servicios",
       uptimeBadge: "Disponibilidad del 100%",
-      secureBadge: "Seguridad de nivel bancario",
+      secureBadge: "Seguridad del mas alto nivel",
       stats: {
         experience: {
           value: "24/7",
