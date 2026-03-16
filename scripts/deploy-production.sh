@@ -19,7 +19,10 @@ if ! docker network inspect edge >/dev/null 2>&1; then
   docker network create edge >/dev/null
 fi
 
-if [[ ! -f .env ]]; then
+ENV_FILE=".env"
+if [[ -f .env.production ]]; then
+  ENV_FILE=".env.production"
+elif [[ ! -f "${ENV_FILE}" ]]; then
   cp .env.example .env
   echo "Se creo .env desde .env.example. Ajusta valores antes de exponer a internet."
 fi
@@ -42,19 +45,19 @@ if [[ "${PRUNE_BUILD_CACHE}" == "1" ]]; then
 fi
 
 echo "Construyendo imagen de produccion (flags: ${BUILD_FLAGS[*]:-(none)})..."
-docker compose --profile production build "${BUILD_FLAGS[@]}" web
+docker compose --env-file "${ENV_FILE}" --profile production build "${BUILD_FLAGS[@]}" web
 
 echo "Recreando contenedor de produccion..."
-docker compose --profile production up -d --force-recreate --remove-orphans web
+docker compose --env-file "${ENV_FILE}" --profile production up -d --force-recreate --remove-orphans web
 docker image prune -f >/dev/null || true
 
 echo "Estado de contenedores:"
-docker compose --profile production ps
+docker compose --env-file "${ENV_FILE}" --profile production ps
 
 echo "Healthcheck local:"
-HOST_PORT_VALUE="$(grep -E '^HOST_PORT=' .env | tail -n 1 | cut -d= -f2- | tr -d '"' || true)"
+HOST_PORT_VALUE="$(grep -E '^HOST_PORT=' "${ENV_FILE}" | tail -n 1 | cut -d= -f2- | tr -d '"' || true)"
 HOST_PORT_VALUE="${HOST_PORT_VALUE:-3008}"
-WEB_CONTAINER_ID="$(docker compose --profile production ps -q web)"
+WEB_CONTAINER_ID="$(docker compose --env-file "${ENV_FILE}" --profile production ps -q web)"
 if [[ -z "${WEB_CONTAINER_ID}" ]]; then
   echo "No se pudo obtener el contenedor del servicio web"
   exit 1
@@ -83,5 +86,5 @@ for ((attempt=1; attempt<=MAX_ATTEMPTS; attempt++)); do
 done
 
 echo "No se pudo validar /api/health en puerto ${HOST_PORT_VALUE} despues de $((MAX_ATTEMPTS * SLEEP_SECONDS))s."
-docker compose --profile production logs --tail=120 web || true
+docker compose --env-file "${ENV_FILE}" --profile production logs --tail=120 web || true
 exit 1

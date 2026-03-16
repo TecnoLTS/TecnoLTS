@@ -19,12 +19,23 @@ if ! docker network inspect edge >/dev/null 2>&1; then
   docker network create edge >/dev/null
 fi
 
-if [[ ! -f .env ]]; then
-  cp .env.example .env
+ENV_FILE=".env.development"
+if [[ ! -f "${ENV_FILE}" ]]; then
+  if [[ -f .env.development.example ]]; then
+    cp .env.development.example "${ENV_FILE}"
+    echo "Se creo ${ENV_FILE} desde .env.development.example."
+  elif [[ -f .env ]]; then
+    ENV_FILE=".env"
+  else
+    cp .env.example .env
+    ENV_FILE=".env"
+    echo "Se creo .env desde .env.example."
+  fi
 fi
 
-docker compose --profile development up -d --build
+echo "Levantando TecnoLTS en desarrollo usando ${ENV_FILE}..."
+docker compose --env-file "${ENV_FILE}" --profile development up -d --build --remove-orphans
 
-docker compose --profile development ps
+docker compose --env-file "${ENV_FILE}" --profile development ps
 
 echo "Deploy de desarrollo completado"

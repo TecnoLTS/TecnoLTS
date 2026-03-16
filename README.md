@@ -32,6 +32,32 @@ npm run typecheck
 
 ## Despliegue de TecnoLTS
 
+## Comandos exactos
+
+Desarrollo:
+
+```bash
+cd /home/admincenter/contenedores/tecnolts
+./scripts/deploy-development.sh
+```
+
+Produccion:
+
+```bash
+cd /home/admincenter/contenedores/tecnolts
+./scripts/deploy-production.sh
+```
+
+## Regla simple
+- Cambio persistente por archivo:
+  - `.env.development` para desarrollo.
+  - `.env` o `.env.production` para produccion.
+- Cambio por comando:
+  - `./scripts/deploy-development.sh`
+  - `./scripts/deploy-production.sh`
+- `COMPOSE_PROFILES` debe coincidir con `APP_ENV`.
+- Los scripts usan `--remove-orphans`, asi que al cambiar de ambiente retiran el contenedor del perfil opuesto.
+
 ### Ubuntu nuevo (automatizado)
 
 Un solo comando para preparar Docker + desplegar:
@@ -63,6 +89,8 @@ Comando equivalente:
 cd /opt/website/tecnolts
 ./scripts/deploy-development.sh
 ```
+
+Si no existe `.env.development`, el script lo crea desde `.env.development.example`.
 
 ### Produccion (Docker)
 
@@ -106,6 +134,8 @@ cd /opt/website/gateway
 ./scripts/deploy-gateway-production.sh
 ```
 
+`certbot` no debe arrancarse con `docker compose up` normal. Solo se usa con los scripts de SSL/Let's Encrypt en produccion.
+
 ### Proyecto `tecnolts` (`/opt/website/tecnolts`)
 
 Desarrollo (Docker profile `development`):
@@ -147,3 +177,38 @@ Revisar `.env.example`. Variables principales:
 ## Produccion en Ubuntu nuevo
 
 Sigue la guia completa en `DEPLOYMENT.md`.
+
+
+
+
+
+Workspace completo en /home/admincenter/contenedores:
+
+cd /home/admincenter/contenedores
+./scripts/deploy-workspace.sh development
+./scripts/deploy-workspace.sh production
+paramascotasec:
+
+cd /home/admincenter/contenedores/paramascotasec
+./scripts/deploy-development.sh
+./scripts/deploy-production.sh
+paramascotasec-backend:
+
+cd /home/admincenter/contenedores/paramascotasec-backend
+./scripts/deploy-development.sh
+./scripts/deploy-production.sh
+RUN_COMPOSER_INSTALL=1 RUN_DB_BOOTSTRAP=1 ./scripts/deploy-development.sh
+RUN_COMPOSER_INSTALL=1 RUN_DB_BOOTSTRAP=1 ./scripts/deploy-production.sh
+tecnolts:
+
+cd /home/admincenter/contenedores/tecnolts
+./scripts/deploy-development.sh
+./scripts/deploy-production.sh
+gateway:
+
+cd /home/admincenter/contenedores/gateway
+./scripts/setup-ssl-local.sh
+./scripts/deploy-gateway-production.sh
+./scripts/renew-letsencrypt.sh
+
+
