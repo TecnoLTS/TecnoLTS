@@ -42,7 +42,7 @@ cp .env.example .env
 Editar `/opt/website/gateway/.env`:
 
 - `CERTBOT_EMAIL=tu-correo@dominio.com`
-- `CERTBOT_DOMAINS=paramascotasec.com,www.paramascotasec.com,tecnolts.com,www.tecnolts.com,autorepuestoscore.com,www.autorepuestoscore.com`
+- `CERTBOT_DOMAINS=paramascotasec.com,www.paramascotasec.com,tecnolts.com,www.tecnolts.com`
 - `CERTBOT_STAGING=0` (usa `1` para pruebas de emision)
 
 ### 2.2 App TecnoLTS

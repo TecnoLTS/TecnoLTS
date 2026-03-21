@@ -13,7 +13,7 @@ export default function TrustedBySection({ t }: TrustedBySectionProps) {
           <p className="text-gray-500 dark:text-gray-400 text-xs font-medium mb-8 sm:mb-12 tracking-[0.2em] uppercase text-center">
             {t.cta.trustedBy}
           </p>
-          <div className="grid grid-cols-2 gap-4 sm:gap-8 max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 gap-4 sm:gap-8 max-w-xl mx-auto">
             <a
               href="https://www.paramascotasecc.com"
               target="_blank"
@@ -34,31 +34,6 @@ export default function TrustedBySection({ t }: TrustedBySectionProps) {
                   alt="Paramascotas"
                   width={1000}
                   height={500}
-                  className="object-contain w-full h-full hidden dark:block px-2 sm:px-0"
-                  loading="lazy"
-                />
-              </div>
-            </a>
-            <a
-              href="https://www.autorepuestoscore.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative block transition-all duration-300 hover:scale-110"
-            >
-              <div className="relative h-16 sm:h-24 flex items-center justify-center">
-                <Image
-                  src="/logos/autorespuestoscore.png"
-                  alt="Autorepuestos Core"
-                  width={600}
-                  height={200}
-                  className="object-contain w-full h-full dark:hidden px-2 sm:px-0"
-                  loading="lazy"
-                />
-                <Image
-                  src="/logos/Logo-autorepuestoscore-(blanco).png"
-                  alt="Autorepuestos Core"
-                  width={600}
-                  height={200}
                   className="object-contain w-full h-full hidden dark:block px-2 sm:px-0"
                   loading="lazy"
                 />
