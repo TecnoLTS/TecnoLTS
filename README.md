@@ -1,24 +1,14 @@
-# TecnoLTS - Corporate IT Services Website
+# TecnoLTS
 
-Landing corporativo bilingue (ES/EN) para servicios IT empresariales, construido con Next.js App Router.
+Landing corporativo bilingue construido con Next.js.
 
 ## Stack
 
-- Next.js 16
-- React 19
+- Next.js
+- React
 - TypeScript
 - Tailwind CSS
-- shadcn/ui
-- Nodemailer (formulario de contacto)
-
-## Funcionalidades clave
-
-- Rutas por idioma: español en `/` e inglés en `/en` (App Router dinámico: `app/[lang]`)
-- Rutas de servicios: español en `/services/{slug}` e inglés en `/en/services/{slug}`
-- Formulario de contacto con validacion en cliente y backend
-- Protecciones anti-spam basicas (honeypot + rate limiting por IP)
-- SEO tecnico: `robots`, `sitemap`, `manifest`, Open Graph y Twitter cards
-- Docker listo para desarrollo y produccion
+- Nodemailer para contacto
 
 ## Scripts de aplicacion
 
@@ -30,228 +20,114 @@ npm run lint
 npm run typecheck
 ```
 
-## Despliegue de TecnoLTS
+## Despliegue
 
-## Comandos exactos
-
-Desarrollo:
+### Desarrollo
 
 ```bash
 cd /home/admincenter/contenedores/tecnolts
 ./scripts/deploy-development.sh
 ```
 
-Produccion:
+### Produccion
 
 ```bash
 cd /home/admincenter/contenedores/tecnolts
 ./scripts/deploy-production.sh
 ```
 
-## Regla simple
-- Cambio persistente por archivo:
-  - `.env.development` para desarrollo.
-  - `.env` o `.env.production` para produccion.
-- Cambio por comando:
-  - `./scripts/deploy-development.sh`
-  - `./scripts/deploy-production.sh`
-- `COMPOSE_PROFILES` debe coincidir con `APP_ENV`.
-- Los scripts usan `--remove-orphans`, asi que al cambiar de ambiente retiran el contenedor del perfil opuesto.
+## Modelo de entornos
 
-### Ubuntu nuevo (automatizado)
+### Desarrollo
 
-Un solo comando para preparar Docker + desplegar:
+Por defecto usa:
 
 ```bash
-cd /opt/website/tecnolts
-./scripts/bootstrap-ubuntu.sh production
+FRONTEND_DEV_RUNTIME=hot
+FRONTEND_DEV_BUNDLER=webpack
 ```
 
-Para desarrollo:
+Eso significa:
+
+- corre con `next dev`,
+- tiene hot reload real,
+- y usa `webpack` por defecto para priorizar estabilidad en este entorno.
+
+Si quieres probar un runtime mas parecido a produccion, cambia en `.env.development`:
 
 ```bash
-cd /opt/website/tecnolts
-./scripts/bootstrap-ubuntu.sh development
+FRONTEND_DEV_RUNTIME=stable
 ```
 
-### Desarrollo local (Docker)
-
-Usa este modo para trabajar localmente con hot reload.
+y redepliega:
 
 ```bash
-cd /opt/website/tecnolts
-npm run deploy:dev
-```
-
-Comando equivalente:
-
-```bash
-cd /opt/website/tecnolts
+cd /home/admincenter/contenedores/tecnolts
 ./scripts/deploy-development.sh
 ```
 
-Si no existe `.env.development`, el script lo crea desde `.env.development.example`.
+### Produccion
 
-### Produccion (Docker)
+Produccion siempre corre con build optimizado y runtime estable.
 
-Usa este modo para entorno productivo (build optimizado + healthcheck).
+## Archivos de entorno
 
-```bash
-cd /opt/website/tecnolts
-npm run deploy:prod
-```
+- desarrollo: `.env.development`
+- produccion: `.env` o `.env.production`
 
-Comando equivalente:
+Si no existe `.env.development`, el script intenta crearlo desde:
 
-```bash
-cd /opt/website/tecnolts
-./scripts/deploy-production.sh
-```
+- `.env.development.example`
+- o `.env.example`
 
-### Verificacion rapida
+## Variables relevantes
 
-```bash
-cd /opt/website/tecnolts
-docker compose --profile production ps
-curl http://localhost:${HOST_PORT:-3008}/api/health
-```
-
-## Comandos por proyecto
-
-### Proyecto `gateway` (`/opt/website/gateway`)
-
-Desarrollo (SSL local autofirmado):
-
-```bash
-cd /opt/website/gateway
-./scripts/setup-ssl-local.sh
-```
-
-Produccion (Let's Encrypt + renovacion automatica):
-
-```bash
-cd /opt/website/gateway
-./scripts/deploy-gateway-production.sh
-```
-
-`certbot` no debe arrancarse con `docker compose up` normal. Solo se usa con los scripts de SSL/Let's Encrypt en produccion.
-
-### Proyecto `tecnolts` (`/opt/website/tecnolts`)
-
-Desarrollo (Docker profile `development`):
-
-```bash
-cd /opt/website/tecnolts
-./scripts/deploy-development.sh
-```
-
-Produccion (Docker profile `production`):
-
-```bash
-cd /opt/website/tecnolts
-./scripts/deploy-production.sh
-```
-
-### Full stack (gateway + tecnolts)
-
-Produccion completa en un comando:
-
-```bash
-cd /opt/website/gateway
-./scripts/deploy-full-stack.sh
-```
-
-## Variables de entorno
-
-Revisar `.env.example`. Variables principales:
-
+- `APP_ENV`
+- `COMPOSE_PROFILES`
+- `FRONTEND_DEV_RUNTIME`
 - `NEXT_PUBLIC_SITE_URL`
-- SEO/negocio local: `NEXT_PUBLIC_CONTACT_*`, `NEXT_PUBLIC_GOOGLE_MAPS_URL`, `NEXT_PUBLIC_GOOGLE_BUSINESS_PROFILE_URL`
-- Perfiles sociales (entity consistency): `NEXT_PUBLIC_LINKEDIN_URL`, `NEXT_PUBLIC_FACEBOOK_URL`, `NEXT_PUBLIC_INSTAGRAM_URL`, `NEXT_PUBLIC_X_URL`, `NEXT_PUBLIC_TIKTOK_URL`, `NEXT_PUBLIC_YOUTUBE_URL`
-- Verificacion buscadores: `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`, `NEXT_PUBLIC_YANDEX_VERIFICATION`, `NEXT_PUBLIC_YAHOO_VERIFICATION`
-- `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`
+- `HOST_PORT`
+- `DEV_PORT`
 - `EMAIL_TO`
-- Compatibilidad Gmail: `GMAIL_USER`, `GMAIL_APP_PASSWORD`
-- Rate limit distribuido (opcional): `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`
+- `SMTP_HOST`
+- `SMTP_PORT`
+- `SMTP_USER`
+- `SMTP_PASS`
 
-## Produccion en Ubuntu nuevo
+## Operacion
 
-Sigue la guia completa en `DEPLOYMENT.md`.
+Estado:
 
-
-
-
-
-Workspace completo en /home/admincenter/contenedores:
-
-cd /home/admincenter/contenedores
-./scripts/deploy-workspace.sh development
-./scripts/deploy-workspace.sh production
-paramascotasec:
-
-cd /home/admincenter/contenedores/paramascotasec
-./scripts/deploy-development.sh
-./scripts/deploy-production.sh
-paramascotasec-backend:
-
-cd /home/admincenter/contenedores/paramascotasec-backend
-./scripts/deploy-development.sh
-./scripts/deploy-production.sh
-RUN_COMPOSER_INSTALL=1 RUN_DB_BOOTSTRAP=1 ./scripts/deploy-development.sh
-RUN_COMPOSER_INSTALL=1 RUN_DB_BOOTSTRAP=1 ./scripts/deploy-production.sh
-tecnolts:
-
+```bash
 cd /home/admincenter/contenedores/tecnolts
-./scripts/deploy-development.sh
-./scripts/deploy-production.sh
-gateway:
+docker compose ps
+```
 
-cd /home/admincenter/contenedores/gateway
-./scripts/setup-ssl-local.sh
-./scripts/deploy-gateway-production.sh
-./scripts/renew-letsencrypt.sh
+Logs de desarrollo:
 
-
----------------------------------------------------------------------------------------------------------------------------
-Lista nueva de despliegues
-
-Workspace completo
-
-cd /home/admincenter/contenedores
-./scripts/deploy-workspace.sh development
-./scripts/deploy-workspace.sh production
-paramascotasec
-
-cd /home/admincenter/contenedores/paramascotasec
-./scripts/deploy-development.sh
-./scripts/deploy-production.sh
-paramascotasec-backend
-
-cd /home/admincenter/contenedores/paramascotasec-backend
-./scripts/deploy-development.sh
-./scripts/deploy-production.sh
-Si necesitas instalar dependencias PHP y preparar base de datos:
-
-cd /home/admincenter/contenedores/paramascotasec-backend
-RUN_COMPOSER_INSTALL=1 RUN_DB_SETUP=1 ./scripts/deploy-development.sh
-RUN_COMPOSER_INSTALL=1 RUN_DB_SETUP=1 ./scripts/deploy-production.sh
-paramascostas-DB
-
-cd /home/admincenter/contenedores/paramascostas-DB
-./scripts/deploy.sh development
-./scripts/deploy.sh production
-tecnolts
-
+```bash
 cd /home/admincenter/contenedores/tecnolts
-./scripts/deploy-development.sh
-./scripts/deploy-production.sh
-gateway
+docker compose logs -f web-dev
+```
 
-cd /home/admincenter/contenedores/gateway
-./scripts/setup-ssl-local.sh
-./scripts/deploy-gateway-production.sh
-./scripts/renew-letsencrypt.sh
-Facturador
+Logs de produccion:
 
-cd /home/admincenter/contenedores/Facturador
-./scripts/deploy.sh
+```bash
+cd /home/admincenter/contenedores/tecnolts
+docker compose logs -f web
+```
+
+Verificacion de salud:
+
+```bash
+curl http://localhost:3009/api/health
+```
+
+## Nota de arquitectura
+
+Este proyecto esta alineado con `paramascotasec`:
+
+- desarrollo con hot reload por defecto,
+- modo estable como opcion,
+- perfiles Docker separados,
+- y cambio de ambiente siempre mediante script.
