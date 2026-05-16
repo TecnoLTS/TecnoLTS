@@ -15,7 +15,7 @@ export default function TrustedBySection({ t }: TrustedBySectionProps) {
           </p>
           <div className="grid grid-cols-1 gap-4 sm:gap-8 max-w-xl mx-auto">
             <a
-              href="https://www.paramascotasecc.com"
+              href="https://www.paramascotasec.com"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative block transition-all duration-300 hover:scale-110"
