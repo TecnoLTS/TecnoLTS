@@ -36,6 +36,7 @@ services:
       - path: .env
         required: false
     environment:
+      TZ: America/Guayaquil
       NODE_ENV: production
       APP_ENV: production
       NEXT_TELEMETRY_DISABLED: 1
@@ -55,6 +56,9 @@ services:
       EMAIL_TO: ${EMAIL_TO:-}
       UPSTASH_REDIS_REST_URL: ${UPSTASH_REDIS_REST_URL:-}
       UPSTASH_REDIS_REST_TOKEN: ${UPSTASH_REDIS_REST_TOKEN:-}
+    volumes:
+      - /usr/share/zoneinfo/America/Guayaquil:/etc/localtime:ro
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
     ports:
       - "${HOST_PORT:-3008}:3000"
     container_name: tecnolts-app
@@ -106,6 +110,7 @@ services:
       - path: .env
         required: false
     environment:
+      TZ: America/Guayaquil
       NODE_ENV: development
       APP_ENV: development
       NEXT_PUBLIC_APP_ENV: development
@@ -143,13 +148,15 @@ services:
         fi;
         exec env NODE_ENV=production npm run start -- --hostname 0.0.0.0 --port 3000
       '
-    volumes:
-      - .:/app
-      - tecnolts_node_modules:/app/node_modules
-      - tecnolts_next_build:/app/.next
     tmpfs:
       - /app/.next/dev:size=1536m,mode=1777
       - /app/.next/cache:size=768m,mode=1777
+    volumes:
+      - /usr/share/zoneinfo/America/Guayaquil:/etc/localtime:ro
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+      - .:/app
+      - tecnolts_node_modules:/app/node_modules
+      - tecnolts_next_build:/app/.next
     ports:
       - "${DEV_PORT:-3009}:3000"
     container_name: tecnolts-app-dev
