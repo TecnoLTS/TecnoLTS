@@ -8,6 +8,30 @@ import type { NextRequest } from 'next/server';
  */
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const normalizedPathname =
+    pathname !== '/' ? pathname.replace(/\/+$/, '') || '/' : pathname;
+
+  // Mantener operativa la URL historica del portafolio aunque el archivo real
+  // viva en /public como /portafolio.html.
+  if (normalizedPathname === '/portafolio') {
+    if (pathname !== normalizedPathname) {
+      const destination = `${normalizedPathname}${request.nextUrl.search}`;
+      return NextResponse.redirect(new URL(destination, request.url), 308);
+    }
+
+    const rewriteUrl = request.nextUrl.clone();
+    rewriteUrl.pathname = '/portafolio.html';
+    return NextResponse.rewrite(rewriteUrl);
+  }
+
+  // Consolidar variantes antiguas con /es al alias canonico sin extension.
+  if (
+    normalizedPathname === '/es/portafolio' ||
+    normalizedPathname === '/es/portafolio.html'
+  ) {
+    const destination = `/portafolio${request.nextUrl.search}`;
+    return NextResponse.redirect(new URL(destination, request.url), 308);
+  }
 
   // Nunca reescribir recursos estáticos ni endpoints técnicos.
   if (
@@ -33,9 +57,6 @@ export function proxy(request: NextRequest) {
   }
 
   // 2. Normalizar barras finales (Trailing Slashes)
-  const normalizedPathname =
-    pathname !== '/' ? pathname.replace(/\/+$/, '') || '/' : pathname;
-
   if (normalizedPathname !== pathname) {
     const destination = `${normalizedPathname}${request.nextUrl.search}`;
     return NextResponse.redirect(new URL(destination, request.url), 308);

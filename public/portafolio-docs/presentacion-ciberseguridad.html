@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ciberseguridad · TecnoLTS</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --panel: #f3f7f9;
+  --panel-2: #eaf1f4;
+  --ink: #0e3a47;
+  --ink-soft: #3c4f57;
+  --muted: #6b7c84;
+  --teal: #1c6c87;
+  --teal-light: #2d869f;
+  --line: rgba(14,58,71,0.14);
+  --red: #d64545; --red-bg: #fbeaea;
+  --green: #2f9e5e; --green-bg: #e7f6ee;
+  --amber: #c9821a; --amber-bg: #fbf1e0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M5 2 L5 24 L11 18 L15 27 L19 25 L15 16 L23 16 Z' fill='%23c9821a' stroke='white' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 5 2, auto; }
+body { font-family: "Open Sans", sans-serif; display: flex; align-items: center; justify-content: center; }
+
+.slides-container { position: relative; width: 1920px; height: 1080px; background: var(--bg); flex: 0 0 auto; transform-origin: center center; }
+.slide { position: absolute; top: 0; left: 0; width: 1920px; height: 1080px; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 90px 110px; opacity: 0; transition: opacity 0.5s ease-in-out; }
+.slide.active { display: flex; opacity: 1; }
+
+/* Portada */
+.slide-portada::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: var(--teal); }
+.slide-portada .logo-card { margin-bottom: 50px; }
+.slide-portada .logo-card img { height: 150px; display: block; }
+.slide-portada h2 { font-size: 64px; font-weight: 800; color: var(--ink); font-family: "Montserrat"; margin-bottom: 26px; text-align: center; letter-spacing: -0.015em; }
+.slide-portada .accent-rule { width: 90px; height: 4px; background: var(--teal); border-radius: 2px; margin-bottom: 38px; }
+.slide-portada .tagline { font-size: 27px; color: var(--ink-soft); max-width: 1020px; text-align: center; line-height: 1.6; }
+.slide-portada .tagline .lead { color: var(--teal); font-weight: 600; }
+
+/* Slide genérico */
+.slide h3 { font-size: 52px; font-weight: 700; color: var(--ink); font-family: "Montserrat"; margin-bottom: 4px; align-self: flex-start; position: relative; padding-bottom: 16px; letter-spacing: -0.01em; }
+.slide h3::after { content: ""; position: absolute; left: 0; bottom: 0; width: 64px; height: 4px; background: var(--teal); border-radius: 2px; }
+.cap-claim { font-size: 22px; font-weight: 600; color: var(--teal); margin-top: 14px; }
+
+/* ===== Panorama: 3 pilares ===== */
+.dv-grid { display: flex; gap: 28px; width: 100%; margin-top: 40px; align-items: stretch; }
+.dv-pillar { flex: 1 1 0; border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: 0 12px 32px rgba(14,58,71,.09); padding: 30px 28px; display: flex; flex-direction: column; }
+.dv-p-head { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+.dv-p-ic { width: 60px; height: 60px; border-radius: 15px; background: var(--panel-2); color: var(--teal); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.dv-p-ic svg { width: 32px; height: 32px; }
+.dv-p-title { font-family: "Montserrat"; font-weight: 800; font-size: 24px; color: var(--ink); line-height: 1.1; }
+.dv-p-sub { font-size: 15px; color: var(--muted); margin: 4px 0 22px; }
+.dv-p-list { display: flex; flex-direction: column; gap: 15px; }
+.dv-item { display: flex; align-items: flex-start; gap: 13px; }
+.dv-check { width: 24px; height: 24px; border-radius: 7px; background: var(--green-bg); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex: 0 0 auto; margin-top: 1px; }
+.dv-it-t { font-family: "Montserrat"; font-weight: 700; font-size: 16px; color: var(--ink); line-height: 1.2; }
+.dv-it-d { font-size: 15.5px; color: var(--ink-soft); line-height: 1.35; margin-top: 2px; }
+
+@keyframes dvUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.slide-dev.active .dv-pillar { animation: dvUp .6s both; }
+.slide-dev.active .dv-pillar:nth-child(1) { animation-delay: .08s; }
+.slide-dev.active .dv-pillar:nth-child(2) { animation-delay: .26s; }
+.slide-dev.active .dv-pillar:nth-child(3) { animation-delay: .44s; }
+.slide-dev.active .dv-p-list .dv-item { animation: dvUp .5s both; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(1) { animation-delay: .55s; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(2) { animation-delay: .64s; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(3) { animation-delay: .73s; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(4) { animation-delay: .82s; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(5) { animation-delay: .91s; }
+
+/* ===== Barra de métricas (compartida) ===== */
+.sc-bar { display:flex; align-items:center; gap:26px; width:100%; margin-top:24px; border:1px solid var(--line); border-radius:14px; background:var(--panel); padding:16px 28px; }
+.sc-users-metric { display:flex; align-items:baseline; gap:12px; flex:0 0 auto; }
+.sc-users-v { font-family:"Montserrat"; font-weight:800; font-size:44px; color:var(--ink); line-height:1; transition:color .3s; }
+.sc-users-v.hot { color:var(--amber); }
+.sc-users-l { font-family:"JetBrains Mono"; font-size:15px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+.sc-bar-spacer { flex:1 1 auto; }
+.sc-metric { text-align:right; flex:0 0 auto; }
+.sc-metric .v { font-family:"Montserrat"; font-weight:800; font-size:24px; color:var(--ink); transition:color .3s; }
+.sc-metric .v.warn { color:var(--amber); }
+.sc-metric .v.bad { color:var(--red); }
+.sc-metric .v.ok { color:var(--green); }
+.sc-metric .l { font-family:"JetBrains Mono"; font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-top:3px; }
+.sc-state { font-family:"JetBrains Mono"; font-size:15px; font-weight:700; padding:9px 16px; border-radius:20px; background:var(--green-bg); color:var(--green); white-space:nowrap; transition:all .3s; flex:0 0 auto; }
+.sc-state.warn { background:var(--amber-bg); color:var(--amber); }
+.sc-state.bad { background:var(--red-bg); color:var(--red); }
+
+/* ===== Conclusión (compartida) ===== */
+.sc-concl { width:100%; margin-top:20px; display:flex; align-items:center; gap:18px; border:1px solid var(--green); border-radius:14px; background:var(--green-bg); padding:18px 26px; opacity:0; transform:translateY(10px); transition:opacity .5s, transform .5s; }
+.sc-concl.on { opacity:1; transform:translateY(0); }
+.sc-concl-ic { width:48px; height:48px; border-radius:13px; background:#fff; color:var(--green); display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; flex:0 0 auto; }
+.sc-concl-t { font-family:"Montserrat"; font-weight:700; font-size:18px; color:var(--ink); }
+.sc-concl-t b { color:var(--green); }
+.sc-concl-d { font-size:16px; color:var(--ink-soft); margin-top:3px; line-height:1.4; }
+.sc-concl-d b { color:var(--teal); font-weight:700; }
+
+/* ===== Slide: Evaluación ofensiva (pentest) ===== */
+.pe-row { display:flex; gap:20px; width:100%; margin-top:22px; align-items:stretch; }
+.pe-panel { border:1px solid var(--line); border-radius:14px; background:#fff; box-shadow:0 10px 26px rgba(14,58,71,.07); padding:18px 20px; }
+.pe-panel.left { flex:0 0 760px; }
+.pe-panel.right { flex:1 1 auto; }
+.pe-panel-h { font-family:"JetBrains Mono"; font-size:14.5px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:14px; }
+.pe-assets { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.pe-asset { display:flex; align-items:center; gap:11px; border:1.5px dashed var(--line); border-radius:11px; padding:10px 13px; opacity:.5; transition:opacity .35s, border-color .3s, box-shadow .3s; }
+.pe-asset.scan { opacity:1; border-style:solid; border-color:var(--amber); animation:peScan 1s ease-in-out infinite; }
+@keyframes peScan { 0%,100% { box-shadow:0 0 0 0 rgba(201,130,26,0); } 50% { box-shadow:0 0 0 5px rgba(201,130,26,.2); } }
+.pe-asset.ok { opacity:1; border-style:solid; border-color:var(--green); animation:none; }
+.pe-asset.vul { opacity:1; border-style:solid; border-color:var(--red); box-shadow:0 0 0 1px var(--red); animation:none; }
+.pe-asset.med { opacity:1; border-style:solid; border-color:var(--amber); animation:none; }
+.pe-as-ic { width:38px; height:38px; border-radius:10px; background:var(--panel-2); color:var(--teal); display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+.pe-as-ic svg { width:21px; height:21px; }
+.pe-as-t { font-family:"Montserrat"; font-weight:700; font-size:16.5px; color:var(--ink); }
+.pe-as-s { font-family:"JetBrains Mono"; font-size:13px; color:var(--muted); margin-top:1px; }
+.pe-as-tag { margin-left:auto; font-family:"JetBrains Mono"; font-size:13px; font-weight:700; color:var(--muted); white-space:nowrap; }
+.pe-asset.ok .pe-as-tag { color:var(--green); }
+.pe-asset.vul .pe-as-tag { color:var(--red); }
+.pe-asset.med .pe-as-tag { color:var(--amber); }
+.pe-fnds { display:flex; flex-direction:column; gap:10px; }
+.pe-fnd { display:flex; align-items:center; gap:12px; opacity:0; transform:translateX(14px); transition:opacity .4s, transform .4s; }
+.pe-fnd.on { opacity:1; transform:none; }
+.sev { font-family:"JetBrains Mono"; font-size:13px; font-weight:800; border-radius:7px; padding:4px 9px; flex:0 0 auto; min-width:78px; text-align:center; }
+.sev-c { background:var(--red); color:#fff; }
+.sev-a { background:var(--amber); color:#fff; }
+.sev-m { background:var(--amber-bg); color:var(--amber); }
+.sev-i { background:var(--panel-2); color:var(--teal); }
+.pe-fnd-t { font-size:16px; font-weight:600; color:var(--ink); }
+.pe-fnd-d { font-family:"JetBrains Mono"; font-size:13.5px; color:var(--muted); margin-top:1px; }
+.pe-remrow { display:flex; align-items:stretch; gap:14px; width:100%; margin-top:18px; }
+.pe-rem-title { flex:0 0 200px; display:flex; flex-direction:column; justify-content:center; font-family:"Montserrat"; font-weight:800; font-size:16px; color:var(--ink); line-height:1.25; }
+.pe-rem-title span { font-family:"JetBrains Mono"; font-weight:400; font-size:13.5px; color:var(--muted); margin-top:4px; }
+.pe-rem { flex:1 1 0; display:flex; align-items:center; gap:11px; border:1px solid var(--line); border-radius:12px; background:#fff; padding:12px 15px; opacity:0; transform:translateY(10px); transition:opacity .4s, transform .4s, border-color .3s; box-shadow:0 6px 16px rgba(14,58,71,.06); }
+.pe-rem.show { opacity:1; transform:none; }
+.pe-rem.done { border-color:var(--green); }
+.pe-prio { font-family:"JetBrains Mono"; font-size:13.5px; font-weight:800; border-radius:7px; padding:4px 9px; flex:0 0 auto; }
+.pe-prio.p1 { background:var(--red-bg); color:var(--red); }
+.pe-prio.p2 { background:var(--amber-bg); color:var(--amber); }
+.pe-prio.p3 { background:var(--panel-2); color:var(--teal); }
+.pe-rem-t { font-size:15.5px; font-weight:600; color:var(--ink); line-height:1.25; }
+.pe-rem .tg { margin-left:auto; font-family:"JetBrains Mono"; font-size:13px; font-weight:700; color:var(--muted); white-space:nowrap; }
+.pe-rem.done .tg { color:var(--green); }
+
+/* ===== Slide: Defensa en tiempo real ===== */
+.df-row { display:flex; gap:20px; width:100%; margin-top:22px; align-items:stretch; }
+.df-panel { border:1px solid var(--line); border-radius:14px; background:#fff; box-shadow:0 10px 26px rgba(14,58,71,.07); padding:18px 20px; flex:0 0 720px; }
+.df-eps { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.df-ep { display:flex; align-items:center; gap:10px; border:1.5px solid var(--line); border-radius:11px; padding:10px 13px; background:#fff; transition:border-color .3s, box-shadow .3s; }
+.df-ep .dot { width:10px; height:10px; border-radius:50%; background:var(--green); flex:0 0 auto; transition:background .3s; }
+.df-ep.inf { border-color:var(--red); animation:dfInf .7s ease-in-out infinite; }
+.df-ep.inf .dot { background:var(--red); }
+@keyframes dfInf { 0%,100% { box-shadow:0 0 0 1px var(--red); } 50% { box-shadow:0 0 0 6px rgba(214,69,69,.25); } }
+.df-ep.iso { border-style:dashed; border-color:var(--amber); animation:none; }
+.df-ep.iso .dot { background:var(--amber); }
+.df-ep-t { font-family:"Montserrat"; font-weight:700; font-size:16px; color:var(--ink); }
+.df-ep-s { font-family:"JetBrains Mono"; font-size:12.5px; color:var(--muted); margin-top:1px; }
+.df-ep .tg { margin-left:auto; font-family:"JetBrains Mono"; font-size:12.5px; font-weight:700; color:var(--green); text-align:right; transition:color .3s; }
+.df-ep.inf .tg { color:var(--red); }
+.df-ep.iso .tg { color:var(--amber); }
+.df-feed { flex:1 1 auto; background:#0c2832; border-radius:14px; padding:18px 24px; font-family:"JetBrains Mono"; font-size:16px; line-height:1.95; box-shadow:0 12px 30px rgba(14,58,71,.2); }
+.df-feed-h { color:#5d8c9c; font-size:13.5px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
+.df-feed > div { opacity:0; transition:opacity .45s; }
+.df-feed > div.on { opacity:1; }
+.df-feed .lg { color:#7fb6c6; }
+.df-feed .er { color:#f28080; }
+.df-feed .wr { color:#f0c060; }
+.df-feed .okl { color:#7cd6a0; }
+
+/* ===== Slide: Cifrado y llaves ===== */
+.cr-vault { display:flex; align-items:center; gap:18px; border:2px solid var(--teal); border-radius:16px; background:#fff; box-shadow:0 12px 30px rgba(28,108,135,.15); padding:16px 24px; margin-top:26px; width:820px; }
+.cr-vault-ic { width:56px; height:56px; border-radius:14px; background:var(--teal); color:#fff; display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+.cr-vault-ic svg { width:30px; height:30px; }
+.cr-vault-t { font-family:"Montserrat"; font-weight:800; font-size:17px; color:var(--ink); }
+.cr-keys { display:flex; gap:30px; margin-top:7px; }
+.cr-key { font-family:"JetBrains Mono"; font-size:14.5px; color:var(--ink-soft); }
+.cr-key .k { font-weight:700; color:var(--teal); }
+.cr-key .tg { margin-left:8px; font-weight:700; color:var(--green); transition:color .3s; }
+.cr-key .tg.rot { color:var(--amber); }
+.cr-scope { display:flex; gap:18px; width:100%; margin-top:24px; }
+.cr-scope-col { flex:1 1 0; border:1px solid var(--line); border-radius:14px; background:#fff; box-shadow:0 8px 22px rgba(14,58,71,.06); padding:14px 22px; }
+.cr-scope-col.yes { border-color:rgba(47,158,94,.45); }
+.cr-scope-col.no { border-color:rgba(201,130,26,.5); background:#fffaf2; }
+.cr-scope-h { display:flex; align-items:center; gap:10px; font-family:"Montserrat"; font-weight:800; font-size:15.5px; color:var(--ink); margin-bottom:8px; }
+.cr-scope-h .b { width:24px; height:24px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:800; flex:0 0 auto; }
+.cr-scope-col.yes .b { background:var(--green-bg); color:var(--green); }
+.cr-scope-col.no .b { background:var(--amber-bg); color:var(--amber); }
+.cr-scope-li { display:flex; align-items:flex-start; gap:9px; font-family:"Open Sans"; font-size:15px; color:var(--ink-soft); line-height:1.4; padding:3.5px 0; }
+.cr-scope-li .d { color:var(--muted); font-weight:800; flex:0 0 auto; }
+.cr-flow { display:flex; align-items:center; width:100%; margin-top:26px; }
+.cr-card { flex:0 0 300px; border:1.5px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 26px rgba(14,58,71,.08); padding:20px 18px; text-align:center; }
+.cr-ic { width:60px; height:60px; border-radius:15px; background:#e4f0f4; color:var(--teal); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; }
+.cr-ic svg { width:32px; height:32px; }
+.cr-t { font-family:"Montserrat"; font-weight:800; font-size:17px; color:var(--ink); }
+.cr-s { font-family:"JetBrains Mono"; font-size:14px; color:var(--muted); margin-top:5px; line-height:1.45; }
+.cr-files { margin-top:10px; font-family:"JetBrains Mono"; font-size:14px; background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:7px 9px; color:var(--ink-soft); line-height:1.6; }
+.cr-tunnel { flex:1 1 auto; margin:0 18px; height:72px; border:2px dashed rgba(28,108,135,.45); border-radius:36px; background:rgba(228,240,244,.5); position:relative; display:flex; align-items:center; justify-content:center; }
+.cr-lock { position:absolute; top:-15px; left:50%; transform:translateX(-50%); background:var(--teal); color:#fff; border-radius:10px; padding:4px 12px; font-family:"JetBrains Mono"; font-size:13.5px; font-weight:700; white-space:nowrap; }
+.cr-cipher { font-family:"JetBrains Mono"; font-size:16.5px; color:var(--teal); letter-spacing:1.5px; white-space:nowrap; opacity:.9; }
+.cr-atk { display:flex; align-items:center; gap:14px; width:100%; margin-top:24px; border:1.5px solid var(--red); border-radius:13px; background:var(--red-bg); padding:13px 20px; opacity:0; transform:translateY(10px); transition:opacity .45s, transform .45s; }
+.cr-atk.live { opacity:1; transform:none; }
+.cr-atk-ic { width:42px; height:42px; border-radius:11px; background:#fff; color:var(--red); display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+.cr-atk-ic svg { width:23px; height:23px; }
+.cr-atk-t { font-family:"Montserrat"; font-weight:700; font-size:15.5px; color:var(--ink); }
+.cr-atk-d { font-family:"JetBrains Mono"; font-size:14.5px; color:var(--ink-soft); margin-top:2px; }
+.cr-loot { color:var(--red); font-weight:700; letter-spacing:1px; }
+.cr-atk-b { margin-left:auto; font-family:"JetBrains Mono"; font-size:15px; font-weight:800; color:var(--red); opacity:0; transition:opacity .3s; white-space:nowrap; }
+.cr-atk.blocked .cr-atk-b { opacity:1; }
+.cr-chips { display:flex; gap:16px; width:100%; margin-top:22px; }
+.cr-chip { flex:1 1 0; display:flex; gap:12px; align-items:flex-start; border:1px solid var(--line); border-radius:13px; background:#fff; padding:14px 16px; box-shadow:0 6px 16px rgba(14,58,71,.06); opacity:0; transform:translateY(12px); transition:opacity .45s, transform .45s; }
+.cr-chip.on { opacity:1; transform:none; }
+.cr-chip-t { font-family:"Montserrat"; font-weight:700; font-size:15px; color:var(--ink); }
+.cr-chip-d { font-size:14.5px; color:var(--ink-soft); margin-top:2px; line-height:1.35; }
+
+/* Cierre */
+.slide-cierre::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: var(--teal); }
+.cierre-logo { margin-bottom: 30px; }
+.cierre-logo img { height: 110px; display: block; }
+.slide-cierre h2 { font-family: "Montserrat"; font-weight: 800; font-size: 54px; color: var(--ink); text-align: center; max-width: 1100px; line-height: 1.1; }
+.slide-cierre .accent-rule { width: 90px; height: 4px; background: var(--teal); border-radius: 2px; margin: 30px 0; }
+.cierre-sub { font-size: 24px; color: var(--ink-soft); text-align: center; max-width: 940px; line-height: 1.5; margin-bottom: 46px; }
+.cierre-sub b { color: var(--teal); font-weight: 600; }
+.cierre-back { display: flex; align-items: center; gap: 12px; padding: 17px 34px; background: var(--teal); border-radius: 14px; text-decoration: none; box-shadow: 0 16px 40px rgba(28,108,135,.3); font-family: "Montserrat"; font-weight: 700; font-size: 20px; color: #fff; }
+
+/* UI */
+.ui-label { position: absolute; top: 22px; left: 40px; font-family: "JetBrains Mono"; font-size: 14px; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; z-index: 50; font-weight: 700; }
+.ui-logo { position: absolute; top: 20px; right: 40px; z-index: 50; }
+.ui-logo img { height: 32px; display: block; }
+.nav-buttons { position: absolute; bottom: 24px; right: 40px; display: flex; gap: 12px; z-index: 50; }
+.nav-buttons .back-link { padding: 10px 18px; border: 1px solid var(--line); background: #fff; color: var(--ink-soft); border-radius: 6px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; }
+.nav-buttons .back-link:hover { border-color: var(--teal); color: var(--teal); }
+button { padding: 10px 18px; border: 1px solid var(--teal); background: #fff; color: var(--teal); cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: 600; transition: all 0.2s; font-family: "Open Sans"; box-shadow: 0 2px 8px rgba(14,58,71,0.08); }
+button:hover:not(:disabled) { background: var(--teal); color: #fff; }
+button:disabled { opacity: 0.35; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<div class="slides-container">
+
+  <!-- Slide 1: Portada -->
+  <div class="slide slide-portada active">
+    <div class="logo-card"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+    <h2>Ciberseguridad y protección</h2>
+    <div class="accent-rule"></div>
+    <div class="tagline">
+      <div class="lead">Protege tus activos digitales</div>
+      <div style="margin-top: 16px;">Encontramos y corregimos los riesgos antes de que una amenaza afecte la operación de tu empresa.</div>
+    </div>
+  </div>
+
+  <!-- Slide 2: Panorama (3 pilares) -->
+  <div class="slide slide-dev" style="justify-content:flex-start; padding-top:84px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Cómo protegemos tu empresa</h3>
+      <div class="cap-claim">Evaluamos como un atacante, defendemos en tiempo real y ciframos lo que más importa</div>
+    </div>
+
+    <div class="dv-grid">
+
+      <!-- Pilar 1: Evaluación ofensiva -->
+      <div class="dv-pillar">
+        <div class="dv-p-head">
+          <div class="dv-p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="1.6"/></svg></div>
+          <div><div class="dv-p-title">Evaluación ofensiva</div></div>
+        </div>
+        <div class="dv-p-sub">Encontramos el riesgo antes que el atacante</div>
+        <div class="dv-p-list">
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Pentesting</div><div class="dv-it-d">Simulación controlada de ataques para hallar riesgos reales.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Detección de vulnerabilidades</div><div class="dv-it-d">Fallas en servidores, aplicaciones, redes y servicios.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Evaluación de exposición externa</div><div class="dv-it-d">Qué publicas a internet y qué riesgo implica.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Reportes ejecutivos</div><div class="dv-it-d">Informes claros para decisiones gerenciales.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Plan de remediación</div><div class="dv-it-d">Acciones correctivas priorizadas por nivel de riesgo.</div></div></div>
+        </div>
+      </div>
+
+      <!-- Pilar 2: Defensa activa -->
+      <div class="dv-pillar">
+        <div class="dv-p-head">
+          <div class="dv-p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <div><div class="dv-p-title">Defensa activa</div></div>
+        </div>
+        <div class="dv-p-sub">Protección continua de equipos y datos</div>
+        <div class="dv-p-list">
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Antivirus / EDR</div><div class="dv-it-d">Malware, ransomware y comportamientos sospechosos detectados al instante.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">DLP · prevención de fuga</div><div class="dv-it-d">Evita salidas no autorizadas de información sensible.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Hardening de sistemas</div><div class="dv-it-d">Configuración segura de servidores, equipos, bases de datos y servicios críticos.</div></div></div>
+        </div>
+      </div>
+
+      <!-- Pilar 3: Criptografía y datos -->
+      <div class="dv-pillar">
+        <div class="dv-p-head">
+          <div class="dv-p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.2"/><path d="M10.8 12.2L21 2M15.5 7.5l3 3M18.5 4.5l2 2"/></svg></div>
+          <div><div class="dv-p-title">Criptografía y datos</div></div>
+        </div>
+        <div class="dv-p-sub">Tu información, ilegible para terceros</div>
+        <div class="dv-p-list">
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Cifrado de disco (BitLocker)</div><div class="dv-it-d">El disco del equipo queda ilegible si lo pierden o lo roban.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Cifrado de datos en sistemas propios</div><div class="dv-it-d">En los sistemas que desarrollamos, ciframos app y base de datos.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Llave protegida y resguardada</div><div class="dv-it-d">Llave en el chip TPM del equipo y respaldo de recuperación.</div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Slide 3: Evaluación ofensiva (pentest animado) -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Evaluación ofensiva</h3>
+      <div class="cap-claim">Atacamos tu infraestructura de forma controlada para encontrar los riesgos antes que un atacante real</div>
+    </div>
+
+    <!-- Barra de métricas -->
+    <div class="sc-bar">
+      <div class="sc-users-metric"><div class="sc-users-v" id="pe-act">0</div><div class="sc-users-l">activos evaluados</div></div>
+      <div class="sc-bar-spacer"></div>
+      <div class="sc-metric"><div class="v" id="pe-find">0</div><div class="l">hallazgos</div></div>
+      <div class="sc-metric"><div class="v" id="pe-risk">—</div><div class="l">nivel de riesgo / 100</div></div>
+      <div class="sc-state" id="pe-state">● reconocimiento de superficie</div>
+    </div>
+
+    <!-- Superficie + hallazgos -->
+    <div class="pe-row">
+      <div class="pe-panel left">
+        <div class="pe-panel-h">Superficie expuesta a internet</div>
+        <div class="pe-assets">
+          <div class="pe-asset" id="pe-as1"><div class="pe-as-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18-2.5-2.6-2.5-15.4 0-18z"/></svg></div><div><div class="pe-as-t">Servidor web</div><div class="pe-as-s">en espera</div></div><span class="pe-as-tag">—</span></div>
+          <div class="pe-asset" id="pe-as2"><div class="pe-as-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M6.5 6.7h.01M9 6.7h.01"/></svg></div><div><div class="pe-as-t">Portal de clientes</div><div class="pe-as-s">en espera</div></div><span class="pe-as-tag">—</span></div>
+          <div class="pe-asset" id="pe-as3"><div class="pe-as-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg></div><div><div class="pe-as-t">VPN corporativa</div><div class="pe-as-s">en espera</div></div><span class="pe-as-tag">—</span></div>
+          <div class="pe-asset" id="pe-as4"><div class="pe-as-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div><div><div class="pe-as-t">Correo corporativo</div><div class="pe-as-s">en espera</div></div><span class="pe-as-tag">—</span></div>
+          <div class="pe-asset" id="pe-as5"><div class="pe-as-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div><div><div class="pe-as-t">Base de datos</div><div class="pe-as-s">en espera</div></div><span class="pe-as-tag">—</span></div>
+          <div class="pe-asset" id="pe-as6"><div class="pe-as-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4"/><path d="M16 8l4 4-4 4"/><path d="M13.5 6l-3 12"/></svg></div><div><div class="pe-as-t">API de integraciones</div><div class="pe-as-s">en espera</div></div><span class="pe-as-tag">—</span></div>
+        </div>
+      </div>
+
+      <div class="pe-panel right">
+        <div class="pe-panel-h">Hallazgos del pentest</div>
+        <div class="pe-fnds">
+          <div class="pe-fnd" id="pe-f1"><span class="sev sev-c">CRÍTICA</span><div><div class="pe-fnd-t">Servidor web con versión vulnerable</div><div class="pe-fnd-d">permite ejecución remota de código · explotable desde internet</div></div></div>
+          <div class="pe-fnd" id="pe-f2"><span class="sev sev-m">MEDIA</span><div><div class="pe-fnd-t">Portal sin cabeceras de seguridad</div><div class="pe-fnd-d">facilita ataques de tipo XSS / clickjacking</div></div></div>
+          <div class="pe-fnd" id="pe-f3"><span class="sev sev-a">ALTA</span><div><div class="pe-fnd-t">VPN sin doble factor (MFA)</div><div class="pe-fnd-d">una contraseña filtrada daría acceso directo a la red</div></div></div>
+          <div class="pe-fnd" id="pe-f4"><span class="sev sev-m">MEDIA</span><div><div class="pe-fnd-t">Correo sin SPF / DMARC completo</div><div class="pe-fnd-d">riesgo de suplantación de identidad (phishing)</div></div></div>
+          <div class="pe-fnd" id="pe-f5"><span class="sev sev-a">ALTA</span><div><div class="pe-fnd-t">Base de datos expuesta a internet</div><div class="pe-fnd-d">puerto accesible desde cualquier origen</div></div></div>
+          <div class="pe-fnd" id="pe-f6"><span class="sev sev-i">INFORME</span><div><div class="pe-fnd-t">Reporte ejecutivo + plan de remediación</div><div class="pe-fnd-d">riesgos explicados en lenguaje gerencial, priorizados por impacto</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plan de remediación -->
+    <div class="pe-remrow">
+      <div class="pe-rem-title">Plan de remediación<span>priorizado por riesgo</span></div>
+      <div class="pe-rem" id="pe-r1"><span class="pe-prio p1">P1</span><div class="pe-rem-t">Parchar servidor web · falla crítica</div><span class="tg">pendiente</span></div>
+      <div class="pe-rem" id="pe-r2"><span class="pe-prio p2">P2</span><div class="pe-rem-t">MFA en VPN y cierre de puerto de BD</div><span class="tg">pendiente</span></div>
+      <div class="pe-rem" id="pe-r3"><span class="pe-prio p3">P3</span><div class="pe-rem-t">Cabeceras de seguridad y SPF / DMARC</div><span class="tg">pendiente</span></div>
+    </div>
+
+    <!-- Conclusión -->
+    <div class="sc-concl" id="pe-concl">
+      <div class="sc-concl-ic">&#10003;</div>
+      <div>
+        <div class="sc-concl-t">El riesgo crítico se encontró en una simulación controlada — <b>no en un ataque real</b></div>
+        <div class="sc-concl-d">Hallazgos priorizados, reporte ejecutivo claro y remediación según nivel de riesgo. <b>Decisiones de seguridad basadas en evidencia, no en suposiciones.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Defensa en tiempo real (EDR + DLP + Hardening) -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Defensa en tiempo real</h3>
+      <div class="cap-claim">EDR, DLP y hardening trabajando juntos: las amenazas se detectan, se aíslan y se neutralizan en segundos</div>
+    </div>
+
+    <!-- Barra de métricas -->
+    <div class="sc-bar">
+      <div class="sc-users-metric"><div class="sc-users-v">48</div><div class="sc-users-l">equipos protegidos</div></div>
+      <div class="sc-bar-spacer"></div>
+      <div class="sc-metric"><div class="v" id="df-thr">0</div><div class="l">amenazas neutralizadas</div></div>
+      <div class="sc-metric"><div class="v ok" id="df-leak">0</div><div class="l">fugas de información</div></div>
+      <div class="sc-state" id="df-state">● protección activa · EDR</div>
+    </div>
+
+    <!-- Equipos + consola de seguridad -->
+    <div class="df-row">
+      <div class="df-panel">
+        <div class="pe-panel-h">Equipos y servidores · EDR activo</div>
+        <div class="df-eps">
+          <div class="df-ep" id="df-ep1"><span class="dot"></span><div><div class="df-ep-t">PC-01</div><div class="df-ep-s">ventas</div></div><span class="tg">protegido</span></div>
+          <div class="df-ep" id="df-ep2"><span class="dot"></span><div><div class="df-ep-t">PC-02</div><div class="df-ep-s">contabilidad</div></div><span class="tg">protegido</span></div>
+          <div class="df-ep" id="df-ep3"><span class="dot"></span><div><div class="df-ep-t">PC-03</div><div class="df-ep-s">gerencia</div></div><span class="tg">protegido</span></div>
+          <div class="df-ep" id="df-ep4"><span class="dot"></span><div><div class="df-ep-t">PC-04</div><div class="df-ep-s">recepción</div></div><span class="tg">protegido</span></div>
+          <div class="df-ep" id="df-ep5"><span class="dot"></span><div><div class="df-ep-t">PC-05</div><div class="df-ep-s">bodega</div></div><span class="tg">protegido</span></div>
+          <div class="df-ep" id="df-ep6"><span class="dot"></span><div><div class="df-ep-t">PC-06</div><div class="df-ep-s">diseño</div></div><span class="tg">protegido</span></div>
+          <div class="df-ep" id="df-ep7"><span class="dot"></span><div><div class="df-ep-t">SRV-01</div><div class="df-ep-s">archivos</div></div><span class="tg">protegido</span></div>
+          <div class="df-ep" id="df-ep8"><span class="dot"></span><div><div class="df-ep-t">SRV-02</div><div class="df-ep-s">aplicaciones</div></div><span class="tg">protegido</span></div>
+        </div>
+      </div>
+
+      <div class="df-feed">
+        <div class="df-feed-h">consola de seguridad · tiempo real</div>
+        <div class="lg" id="df-l1">10:41:58 · EDR activo en 48 equipos — monitoreo de comportamiento en tiempo real</div>
+        <div class="er" id="df-l2">10:42:03 &#9888; ransomware detectado en PC-04 — cifrado masivo de archivos</div>
+        <div class="wr" id="df-l3">10:42:05 &#9940; PC-04 aislado de la red automáticamente — 2 s después de la detección</div>
+        <div class="okl" id="df-l4">10:42:31 &#10003; amenaza eliminada · archivos restaurados — ningún otro equipo afectado</div>
+        <div class="wr" id="df-l5">11:08:17 &#9940; DLP · bloqueado envío de «clientes.xlsx» a un correo personal</div>
+        <div class="lg" id="df-l6">12:30:00 &#128737; hardening · escritorio remoto expuesto deshabilitado en SRV-02</div>
+        <div class="okl" id="df-l7">&#10003; 48 equipos protegidos · 0 fugas de información · 0 incidentes activos</div>
+      </div>
+    </div>
+
+    <!-- Conclusión -->
+    <div class="sc-concl" id="df-concl">
+      <div class="sc-concl-ic">&#10003;</div>
+      <div>
+        <div class="sc-concl-t">El ransomware se detuvo en <b>2 segundos y no se propagó</b></div>
+        <div class="sc-concl-d">EDR aísla equipos comprometidos, DLP evita fugas de información y el hardening cierra puertas antes del ataque. <b>Tu operación nunca se detiene.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Cifrado del equipo (BitLocker) -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start; width:100%; display:flex; align-items:flex-end; gap:30px;">
+      <div style="flex:1 1 auto;">
+        <h3 style="margin-bottom:0;">Cifrado del equipo con BitLocker</h3>
+        <div class="cap-claim">Si pierden o roban el equipo, el disco completo queda ilegible sin la llave</div>
+      </div>
+      <div class="sc-state" id="cr-state" style="margin-bottom:6px;">● disco del equipo cifrado · BitLocker</div>
+    </div>
+
+    <!-- Alcance honesto: qué protege y qué no -->
+    <div class="cr-scope">
+      <div class="cr-scope-col yes">
+        <div class="cr-scope-h"><span class="b">&#10003;</span> Lo que sí protege</div>
+        <div class="cr-scope-li"><span class="d">&#8250;</span> Equipo perdido o robado: el disco no se puede leer.</div>
+        <div class="cr-scope-li"><span class="d">&#8250;</span> Disco extraído y conectado a otra máquina.</div>
+        <div class="cr-scope-li"><span class="d">&#8250;</span> Arranque sin las credenciales (TPM + PIN).</div>
+      </div>
+      <div class="cr-scope-col no">
+        <div class="cr-scope-h"><span class="b">!</span> Lo que no reemplaza</div>
+        <div class="cr-scope-li"><span class="d">&#8250;</span> Un equipo encendido y ya desbloqueado por el usuario.</div>
+        <div class="cr-scope-li"><span class="d">&#8250;</span> Malware o accesos con la sesión ya iniciada.</div>
+        <div class="cr-scope-li"><span class="d">&#8250;</span> Por eso se combina con antivirus, respaldos y control de accesos.</div>
+      </div>
+    </div>
+
+    <!-- Flujo: disco del equipo → BitLocker → disco cifrado en reposo -->
+    <div class="cr-flow">
+      <div class="cr-card">
+        <div class="cr-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.6"/><path d="M2 20h20"/><path d="M10 16h4"/></svg></div>
+        <div class="cr-t">Disco del equipo</div>
+        <div class="cr-s">todo lo que vive en el PC</div>
+        <div class="cr-files">nómina.xlsx · clientes.db · finanzas.pdf</div>
+      </div>
+      <div class="cr-tunnel">
+        <div class="cr-lock">&#128274; BitLocker · cifrado de disco (AES-256)</div>
+        <div class="cr-cipher" id="cr-cipher">f3a9 c1d8 4b27 90ee 51ac 7d4f</div>
+      </div>
+      <div class="cr-card">
+        <div class="cr-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 018 0v3"/><circle cx="12" cy="15" r="1.3"/></svg></div>
+        <div class="cr-t">Disco cifrado en reposo</div>
+        <div class="cr-s">la llave la protege el chip TPM<br/>del propio equipo</div>
+        <div class="cr-files">&#128274; ilegible sin la llave</div>
+      </div>
+    </div>
+
+    <!-- Equipo robado: atacante sin la llave -->
+    <div class="cr-atk" id="cr-atk">
+      <div class="cr-atk-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5L22 20H2z"/><path d="M12 10v4.5M12 17.5h.01"/></svg></div>
+      <div>
+        <div class="cr-atk-t">Roban el equipo e intentan leer el disco</div>
+        <div class="cr-atk-d">esto es todo lo que obtienen: <span class="cr-loot" id="cr-loot">9f2e 77c4 1ab8 e03d 55f1 c2</span></div>
+      </div>
+      <span class="cr-atk-b">&#10007; ilegible sin la llave</span>
+    </div>
+
+    <!-- Conceptos -->
+    <div class="cr-chips">
+      <div class="cr-chip" id="cr-chip1"><span class="dv-check">&#10003;</span><div><div class="cr-chip-t">Cifrado de disco completo</div><div class="cr-chip-d">Todo el disco cifrado y transparente para el usuario.</div></div></div>
+      <div class="cr-chip" id="cr-chip2"><span class="dv-check">&#10003;</span><div><div class="cr-chip-t">Llave protegida por TPM</div><div class="cr-chip-d">La llave vive en el chip del equipo; sin TPM/PIN no arranca.</div></div></div>
+      <div class="cr-chip" id="cr-chip3"><span class="dv-check">&#10003;</span><div><div class="cr-chip-t">Llave de recuperación resguardada</div><div class="cr-chip-d">TI conserva la llave de respaldo para no perder el acceso.</div></div></div>
+      <div class="cr-chip" id="cr-chip4"><span class="dv-check">&#10003;</span><div><div class="cr-chip-t">Cifrado en sistemas que desarrollamos</div><div class="cr-chip-d">Complemento: ciframos los datos en la app y la base de datos.</div></div></div>
+    </div>
+
+    <!-- Conclusión -->
+    <div class="sc-concl" id="cr-concl">
+      <div class="sc-concl-ic">&#10003;</div>
+      <div>
+        <div class="sc-concl-t">Equipo robado <b>no es información expuesta</b></div>
+        <div class="sc-concl-d">El cifrado de disco protege lo que está guardado en el equipo; donde construimos el sistema, además ciframos los datos en la aplicación y la base de datos. <b>El cifrado es una capa más, no el único control.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Cierre -->
+  <div class="slide slide-cierre">
+    <div class="cierre-logo"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+    <h2>Seguridad que se adelanta a las amenazas</h2>
+    <div class="accent-rule"></div>
+    <div class="cierre-sub">Evaluamos como un atacante, <b>protegemos en tiempo real</b> y ciframos lo que más importa — con <b>reportes claros</b> para decidir.</div>
+    <a class="cierre-back" href="Portafolio TecnoLTS.html#servicios">&#8592; Volver a Nuestros servicios</a>
+  </div>
+
+
+
+<div class="ui-label" id="slide-label">01 — Portada</div>
+<div class="ui-logo"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+
+<div class="nav-buttons">
+  <a class="back-link" href="Portafolio TecnoLTS.html#servicios">&#8962; Servicios</a>
+  <button id="btn-prev">← Anterior</button>
+  <button id="btn-next">Siguiente →</button>
+</div>
+
+</div>
+
+<script>
+let currentSlide = 0;
+let playhead = 0;
+let lastTime = Date.now();
+const slides = [
+  { name: 'Portada', duration: 3 },
+  { name: 'Panorama', duration: 10 },
+  { name: 'Evaluación ofensiva', duration: 32 },
+  { name: 'Defensa activa', duration: 30 },
+  { name: 'Cifrado del equipo (BitLocker)', duration: 30 },
+  { name: 'Cierre', duration: 5 }
+];
+
+function goToSlide(n) {
+  if (n < 0 || n >= slides.length) return;
+  document.querySelectorAll('.slide').forEach((s, i) => s.classList.toggle('active', i === n));
+  currentSlide = n;
+  playhead = 0;
+  document.getElementById('slide-label').textContent = String(n + 1).padStart(2, '0') + ' — ' + slides[n].name;
+  document.getElementById('btn-prev').disabled = currentSlide === 0;
+  document.getElementById('btn-next').disabled = currentSlide === slides.length - 1;
+}
+document.getElementById('btn-prev').addEventListener('click', () => goToSlide(currentSlide - 1));
+document.getElementById('btn-next').addEventListener('click', () => goToSlide(currentSlide + 1));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+  if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+});
+
+function animate() {
+  const now = Date.now();
+  const dt = (now - lastTime) / 1000;
+  lastTime = now;
+  playhead += dt;
+  if (playhead > slides[currentSlide].duration) playhead = slides[currentSlide].duration;
+  const t = Math.min(1, playhead / slides[currentSlide].duration);
+  const clamp = (x) => Math.max(0, Math.min(1, x));
+
+  // Slide evaluación ofensiva — pentest (index 2)
+  if (currentSlide === 2) {
+    const assets = [
+      { id: 'pe-as1', s: 0.08, r: 0.16, st: 'vul', tag: '1 crítico', sub: 'falla explotable' },
+      { id: 'pe-as2', s: 0.16, r: 0.24, st: 'med', tag: '1 medio', sub: 'cabeceras ausentes' },
+      { id: 'pe-as3', s: 0.24, r: 0.32, st: 'vul', tag: '1 alto', sub: 'sin doble factor' },
+      { id: 'pe-as4', s: 0.32, r: 0.40, st: 'med', tag: '1 medio', sub: 'SPF/DMARC incompleto' },
+      { id: 'pe-as5', s: 0.40, r: 0.52, st: 'vul', tag: '1 alto', sub: 'puerto expuesto' },
+      { id: 'pe-as6', s: 0.52, r: 0.58, st: 'ok', tag: 'sin hallazgos', sub: 'configuración correcta' }
+    ];
+    assets.forEach(a => {
+      const el = document.getElementById(a.id);
+      if (!el) return;
+      el.classList.remove('scan', 'ok', 'vul', 'med');
+      let sub = 'en espera', tag = '—';
+      if (t >= a.r) { el.classList.add(a.st); sub = a.sub; tag = a.tag; }
+      else if (t >= a.s) { el.classList.add('scan'); sub = 'escaneando…'; tag = '…'; }
+      const sEl = el.querySelector('.pe-as-s');
+      if (sEl) sEl.textContent = sub;
+      const tEl = el.querySelector('.pe-as-tag');
+      if (tEl) tEl.textContent = tag;
+    });
+
+    const fts = { 'pe-f1': 0.16, 'pe-f2': 0.24, 'pe-f3': 0.32, 'pe-f4': 0.40, 'pe-f5': 0.52, 'pe-f6': 0.62 };
+    let found = 0;
+    Object.keys(fts).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('on', t >= fts[id]);
+      if (id !== 'pe-f6' && t >= fts[id]) found++;
+    });
+    const aEl = document.getElementById('pe-act');
+    if (aEl) aEl.textContent = Math.round(24 * clamp((t - 0.04) / 0.54));
+    const fEl = document.getElementById('pe-find');
+    if (fEl) { fEl.textContent = found; fEl.classList.toggle('bad', found >= 1 && t < 0.88); fEl.classList.toggle('ok', t >= 0.88); }
+
+    const riskSteps = [[0.88, 21, 'ok'], [0.80, 35, 'warn'], [0.72, 54, 'warn'], [0.52, 82, 'bad'], [0.40, 68, 'bad'], [0.32, 61, 'bad'], [0.24, 46, 'warn'], [0.16, 38, 'warn']];
+    let risk = '—', rCls = '';
+    for (const [ts, v, c] of riskSteps) { if (t >= ts) { risk = v; rCls = c; break; } }
+    const rEl = document.getElementById('pe-risk');
+    if (rEl) { rEl.textContent = risk; rEl.className = 'v' + (rCls ? ' ' + rCls : ''); }
+
+    const rems = [['pe-r1', 0.62, 0.72], ['pe-r2', 0.64, 0.80], ['pe-r3', 0.66, 0.88]];
+    rems.forEach(([id, show, done]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.toggle('show', t >= show);
+      el.classList.toggle('done', t >= done);
+      const tg = el.querySelector('.tg');
+      if (tg) tg.textContent = t >= done ? 'corregido ✓' : 'pendiente';
+    });
+
+    const st = document.getElementById('pe-state');
+    if (st) {
+      if (t >= 0.90) { st.textContent = '● riesgo reducido a 21/100'; st.className = 'sc-state'; }
+      else if (t >= 0.62) { st.textContent = '● remediación en curso'; st.className = 'sc-state warn'; }
+      else if (t >= 0.58) { st.textContent = '● 5 hallazgos · 1 crítico'; st.className = 'sc-state bad'; }
+      else if (t >= 0.08) { st.textContent = '● escaneo en curso'; st.className = 'sc-state warn'; }
+      else { st.textContent = '● reconocimiento de superficie'; st.className = 'sc-state'; }
+    }
+    const concl = document.getElementById('pe-concl');
+    if (concl) concl.classList.toggle('on', t >= 0.90);
+  }
+
+  // Slide defensa en tiempo real — EDR / DLP / hardening (index 3)
+  if (currentSlide === 3) {
+    const pc4 = document.getElementById('df-ep4');
+    if (pc4) {
+      pc4.classList.remove('inf', 'iso');
+      const tg = pc4.querySelector('.tg');
+      if (t >= 0.40) { if (tg) tg.textContent = t >= 0.62 ? 'protegido' : 'restaurado ✓'; }
+      else if (t >= 0.22) { pc4.classList.add('iso'); if (tg) tg.textContent = 'aislado de la red'; }
+      else if (t >= 0.14) { pc4.classList.add('inf'); if (tg) tg.textContent = '⚠ ransomware'; }
+      else if (tg) tg.textContent = 'protegido';
+    }
+    const srv2 = document.getElementById('df-ep8');
+    if (srv2) { const tg = srv2.querySelector('.tg'); if (tg) tg.textContent = t >= 0.66 ? 'reforzado ✓' : 'protegido'; }
+
+    const feed = { 'df-l1': 0.06, 'df-l2': 0.14, 'df-l3': 0.22, 'df-l4': 0.36, 'df-l5': 0.52, 'df-l6': 0.66, 'df-l7': 0.78 };
+    Object.keys(feed).forEach(id => { const el = document.getElementById(id); if (el) el.classList.toggle('on', t >= feed[id]); });
+
+    const thr = (t >= 0.36 ? 1 : 0) + (t >= 0.52 ? 1 : 0) + (t >= 0.66 ? 1 : 0);
+    const tEl = document.getElementById('df-thr');
+    if (tEl) { tEl.textContent = thr; tEl.classList.toggle('ok', thr > 0); }
+
+    const st = document.getElementById('df-state');
+    if (st) {
+      if (t >= 0.78) { st.textContent = '● operación protegida · 0 incidentes'; st.className = 'sc-state'; }
+      else if (t >= 0.40) { st.textContent = '● amenaza neutralizada'; st.className = 'sc-state'; }
+      else if (t >= 0.14) { st.textContent = '● incidente activo — conteniendo'; st.className = 'sc-state bad'; }
+      else { st.textContent = '● protección activa · EDR'; st.className = 'sc-state'; }
+    }
+    const concl = document.getElementById('df-concl');
+    if (concl) concl.classList.toggle('on', t >= 0.86);
+  }
+
+  // Slide cifrado y llaves (index 4)
+  if (currentSlide === 4) {
+    if (!window.__crC || now - window.__crC > 90) {
+      window.__crC = now;
+      const h = '0123456789abcdef';
+      const gen = n => { let s = ''; for (let i = 0; i < n; i++) { s += h[(Math.random() * 16) | 0]; if (i % 4 === 3) s += ' '; } return s; };
+      const c1 = document.getElementById('cr-cipher');
+      if (c1) c1.textContent = gen(24);
+      const c2 = document.getElementById('cr-loot');
+      if (c2 && t >= 0.52) c2.textContent = gen(22);
+    }
+    const atk = document.getElementById('cr-atk');
+    if (atk) {
+      atk.classList.toggle('live', t >= 0.52);
+      atk.classList.toggle('blocked', t >= 0.62);
+    }
+    const chips = { 'cr-chip1': 0.14, 'cr-chip2': 0.26, 'cr-chip3': 0.44, 'cr-chip4': 0.62 };
+    Object.keys(chips).forEach(id => { const el = document.getElementById(id); if (el) el.classList.toggle('on', t >= chips[id]); });
+
+    const st = document.getElementById('cr-state');
+    if (st) {
+      if (t >= 0.62) { st.textContent = '● acceso sin la llave: denegado'; st.className = 'sc-state'; }
+      else if (t >= 0.52) { st.textContent = '● equipo robado · intento de lectura del disco'; st.className = 'sc-state bad'; }
+      else { st.textContent = '● disco del equipo cifrado · BitLocker'; st.className = 'sc-state'; }
+    }
+    const concl = document.getElementById('cr-concl');
+    if (concl) concl.classList.toggle('on', t >= 0.84);
+  }
+
+  requestAnimationFrame(animate);
+}
+
+goToSlide(0);
+requestAnimationFrame(animate);
+
+function fitStage() {
+  const stage = document.querySelector('.slides-container');
+  const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  stage.style.transform = 'scale(' + scale + ')';
+}
+window.addEventListener('resize', fitStage);
+fitStage();
+</script>
+
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var n = e.target;
+    while (n && n.nodeName !== 'A') { n = n.parentNode; }
+    if (!n || !n.getAttribute) return;
+    var href = n.getAttribute('href');
+    if (!href) return;
+    if (href.charAt(0) === '#') return;
+    if (/^(https?:|mailto:|tel:|data:)/i.test(href)) return;
+    e.preventDefault();
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ tlNav: href }, '*');
+    }
+  }, true);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,3758 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monitoreo de Infraestructura Tecnológica</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --panel: #f3f7f9;
+      --panel-2: #eaf1f4;
+      --ink: #0e3a47;
+      /* teal oscuro — titulares */
+      --ink-soft: #3c4f57;
+      /* cuerpo */
+      --muted: #6b7c84;
+      /* secundario */
+      --teal: #1c6c87;
+      /* acento */
+      --teal-light: #2d869f;
+      --line: rgba(14, 58, 71, 0.14);
+      --red: #d64545;
+      --red-bg: #fbeaea;
+      --green: #2f9e5e;
+      --green-bg: #e7f6ee;
+      --amber: #c9821a;
+      --amber-bg: #fbf1e0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M5 2 L5 24 L11 18 L15 27 L19 25 L15 16 L23 16 Z' fill='%23c9821a' stroke='white' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 5 2, auto;
+    }
+
+    body {
+      font-family: "Open Sans", sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slides-container {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      background: var(--bg);
+      flex: 0 0 auto;
+      transform-origin: center center;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1920px;
+      height: 1080px;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 90px 110px;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    /* Portada */
+    .slide-portada {
+      background: var(--bg);
+    }
+
+    .slide-portada::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 10px;
+      background: var(--teal);
+    }
+
+    .slide-portada .logo-card {
+      margin-bottom: 52px;
+    }
+
+    .slide-portada .logo-card img {
+      height: 160px;
+      display: block;
+    }
+
+    .slide-portada h2 {
+      font-size: 62px;
+      font-weight: 700;
+      color: var(--ink);
+      font-family: "Montserrat";
+      margin-bottom: 26px;
+      text-align: center;
+      letter-spacing: -0.01em;
+    }
+
+    .slide-portada .accent-rule {
+      width: 90px;
+      height: 4px;
+      background: var(--teal);
+      border-radius: 2px;
+      margin-bottom: 40px;
+    }
+
+    .slide-portada .tagline {
+      font-size: 27px;
+      color: var(--ink-soft);
+      max-width: 940px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .slide-portada .tagline .lead {
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    /* Slide genérico */
+    .slide h3 {
+      font-size: 54px;
+      font-weight: 700;
+      color: var(--ink);
+      font-family: "Montserrat";
+      margin-bottom: 38px;
+      align-self: flex-start;
+      position: relative;
+      padding-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .slide h3::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 64px;
+      height: 4px;
+      background: var(--teal);
+      border-radius: 2px;
+    }
+
+    /* ===== Slide Capacidad — Zabbix host cards ===== */
+    .zbx-stage {
+      position: relative;
+      display: flex;
+      gap: 56px;
+      justify-content: center;
+      align-items: flex-start;
+      margin: 80px 0 30px;
+    }
+
+    .zbx-host {
+      width: 360px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #ffffff;
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(14, 58, 71, 0.1);
+    }
+
+    .zbx-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 16px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .zbx-status-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+      transition: background 0.4s, box-shadow 0.4s;
+    }
+
+    .zbx-hostname {
+      font-family: "JetBrains Mono";
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    .zbx-ip {
+      font-family: "JetBrains Mono";
+      font-size: 14px;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    .zbx-body {
+      padding: 22px 18px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .server-icon {
+      display: flex;
+      justify-content: center;
+    }
+
+    .metric-row {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .metric-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .metric-label {
+      font-family: "JetBrains Mono";
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .metric-val {
+      font-family: "JetBrains Mono";
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    /* Gauge with real 0-100 scale */
+    .gauge {
+      position: relative;
+      height: 22px;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .gauge-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0%;
+      transition: width 0.12s linear, background 0.3s;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .gauge-threshold {
+      position: absolute;
+      top: -3px;
+      bottom: -3px;
+      width: 2px;
+      background: rgba(214, 69, 69, 0.6);
+      left: 85%;
+    }
+
+    .gauge-threshold::after {
+      content: "85%";
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: "JetBrains Mono";
+      font-size: 11px;
+      color: var(--red);
+      white-space: nowrap;
+    }
+
+    .gauge-scale {
+      display: flex;
+      justify-content: space-between;
+      font-family: "JetBrains Mono";
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Migration packet */
+    .migrate-chip {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: #e4f0f4;
+      border: 1px solid var(--teal);
+      border-radius: 20px;
+      font-family: "JetBrains Mono";
+      font-size: 15px;
+      color: var(--teal);
+      white-space: nowrap;
+      opacity: 0;
+      box-shadow: 0 6px 18px rgba(28, 108, 135, 0.2);
+      pointer-events: none;
+    }
+
+    .migrate-chip .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .migrate-arrow {
+      position: absolute;
+      top: -32px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 180px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(28, 108, 135, 0.5), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    /* Subtitle / claim */
+    .cap-claim {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--teal);
+      letter-spacing: 0.01em;
+      margin-top: 14px;
+    }
+
+    /* Zabbix Problems bar */
+    .zbx-problems {
+      width: 920px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #ffffff;
+      overflow: hidden;
+      margin-top: 6px;
+      box-shadow: 0 8px 22px rgba(14, 58, 71, 0.08);
+    }
+
+    .zbx-problems-head {
+      font-family: "JetBrains Mono";
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 9px 16px;
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .zbx-prob-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 16px;
+      font-family: "JetBrains Mono";
+      font-size: 16px;
+    }
+
+    .sev-badge {
+      font-weight: 700;
+      font-size: 14px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+      flex: 0 0 auto;
+      transition: all 0.4s;
+    }
+
+    .prob-time {
+      color: var(--muted);
+      flex: 0 0 auto;
+    }
+
+    .prob-host {
+      color: var(--teal);
+      font-weight: 700;
+      flex: 0 0 auto;
+    }
+
+    .prob-text {
+      color: var(--ink-soft);
+    }
+
+    .prob-status {
+      margin-left: auto;
+      font-weight: 700;
+      flex: 0 0 auto;
+      transition: color 0.4s;
+    }
+
+    /* Culprit service callout */
+    .culprit {
+      position: absolute;
+      top: 254px;
+      left: 50%;
+      transform: translateX(-340px);
+      width: 300px;
+      border: 1px solid var(--amber);
+      border-radius: 10px;
+      background: var(--amber-bg);
+      padding: 14px 16px;
+      opacity: 0;
+      box-shadow: 0 12px 28px rgba(14, 58, 71, 0.18);
+      pointer-events: none;
+    }
+
+    .culprit-title {
+      font-family: "JetBrains Mono";
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--amber);
+      margin-bottom: 8px;
+    }
+
+    .culprit-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: "JetBrains Mono";
+      font-size: 16px;
+      color: var(--ink);
+    }
+
+    .culprit-decision {
+      margin-top: 10px;
+      font-family: "Open Sans";
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Conclusion */
+    .cap-conclusion {
+      max-width: 1040px;
+      text-align: center;
+      font-size: 20px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      opacity: 0;
+    }
+
+    .cap-conclusion b {
+      color: var(--teal);
+      font-weight: 700;
+    }
+
+    /* Gráfico datos reales (slide capacidad) */
+    .cap-chart {
+      width: 478px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 10px 28px rgba(14, 58, 71, 0.1);
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.4s;
+      align-self: center;
+    }
+
+    .cap-chart-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      font-family: "JetBrains Mono";
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .cap-chart-tag {
+      margin-left: auto;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--green);
+      background: var(--green-bg);
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.06em;
+    }
+
+    .cap-chart-body {
+      padding: 12px 14px 6px;
+    }
+
+    .cap-chart svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* ===== Slide 3 — Eventos disruptivos ===== */
+    .ev-examples {
+      display: flex;
+      gap: 14px;
+      margin-top: 26px;
+      flex-wrap: wrap;
+    }
+
+    .ev-chip {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 18px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: #fff;
+      font-size: 16px;
+      color: var(--ink);
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(14, 58, 71, 0.06);
+    }
+
+    .ev-chip .ev-ic {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--red-bg);
+      color: var(--red);
+      font-size: 15px;
+    }
+
+    .ev-stage {
+      display: flex;
+      gap: 36px;
+      align-items: stretch;
+      margin-top: 32px;
+      width: 100%;
+      position: relative;
+    }
+
+    .ev-fly {
+      position: absolute;
+      top: 46%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 18px;
+      background: var(--teal);
+      color: #fff;
+      border-radius: 26px;
+      font-family: "JetBrains Mono";
+      font-size: 15px;
+      font-weight: 700;
+      box-shadow: 0 10px 26px rgba(28, 108, 135, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 6;
+    }
+
+    .ev-fly-ic {
+      font-size: 17px;
+    }
+
+    .ev-causes {
+      width: 100%;
+      margin-top: 24px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .ev-causes-title {
+      flex: 0 0 230px;
+      font-family: "Montserrat";
+      font-weight: 700;
+      font-size: 19px;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .ev-causes-list {
+      flex: 1 1 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 30px;
+    }
+
+    .ev-cause {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 16.5px;
+      color: var(--ink-soft);
+    }
+
+    .ev-cause i {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+    }
+
+    .ev-cause i.red {
+      background: var(--red);
+    }
+
+    .ev-cause i.amber {
+      background: var(--amber);
+    }
+
+    .ev-causes-note {
+      flex: 0 0 264px;
+      font-size: 15.5px;
+      color: var(--teal);
+      font-weight: 600;
+      line-height: 1.45;
+      border-left: 1px solid var(--line);
+      padding-left: 26px;
+    }
+
+    .ev-causes-note b {
+      font-weight: 800;
+    }
+
+    /* ===== Slide 4 — Mapa de red ===== */
+    .net-map {
+      position: relative;
+      width: 1500px;
+      height: 430px;
+      margin: 30px auto 0;
+    }
+
+    .net-links {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .net-node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      z-index: 2;
+    }
+
+    .net-ico {
+      width: 86px;
+      height: 66px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1.5px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 16px rgba(14, 58, 71, 0.1);
+      transition: border-color .3s, box-shadow .3s;
+    }
+
+    .net-node.down .net-ico {
+      border-color: var(--red);
+      box-shadow: 0 0 0 2px rgba(214, 69, 69, 0.45), 0 6px 16px rgba(214, 69, 69, 0.25);
+    }
+
+    .net-label {
+      font-family: "JetBrains Mono";
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .net-sub {
+      font-family: "JetBrains Mono";
+      font-size: 13.5px;
+      color: var(--muted);
+      transition: color .3s;
+    }
+
+    .net-node.down .net-sub {
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    .net-badge {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 13px;
+      border-radius: 9px;
+      font-family: "JetBrains Mono";
+      font-size: 15.5px;
+      font-weight: 700;
+      white-space: nowrap;
+      opacity: 0;
+      z-index: 3;
+      box-shadow: 0 8px 20px rgba(14, 58, 71, 0.18);
+    }
+
+    .net-badge.ok {
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid var(--green);
+    }
+
+    .net-badge.bad {
+      background: var(--red-bg);
+      color: var(--red);
+      border: 1px solid var(--red);
+    }
+
+    .net-scan {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 18px;
+      border-radius: 22px;
+      background: var(--teal);
+      color: #fff;
+      font-family: "JetBrains Mono";
+      font-size: 16px;
+      font-weight: 700;
+      opacity: 0;
+      z-index: 4;
+      box-shadow: 0 8px 20px rgba(28, 108, 135, 0.35);
+    }
+
+    .net-conclusion {
+      width: 1500px;
+      margin: 16px auto 0;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    .net-conclusion .nc-ic {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: var(--green-bg);
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .net-conclusion .nc-text {
+      font-size: 18.5px;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .net-conclusion .nc-text b {
+      color: var(--teal);
+      font-weight: 800;
+    }
+
+    .net-conclusion .nc-text .bad {
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    .ev-monitor {
+      flex: 1 1 auto;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      overflow: hidden;
+      box-shadow: 0 12px 32px rgba(14, 58, 71, 0.12);
+      transition: box-shadow .3s;
+    }
+
+    .ev-monitor.alarm {
+      box-shadow: 0 0 0 2px var(--red), 0 12px 32px rgba(214, 69, 69, 0.22);
+    }
+
+    .ev-mon-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px 20px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .ev-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      transition: background .3s, box-shadow .3s;
+      flex: 0 0 auto;
+    }
+
+    .ev-host {
+      font-family: "JetBrains Mono";
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--ink);
+    }
+
+    .ev-meta {
+      font-family: "JetBrains Mono";
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .ev-status {
+      margin-left: auto;
+      font-family: "JetBrains Mono";
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--green);
+      transition: color .3s;
+    }
+
+    .ev-mon-body {
+      display: flex;
+      gap: 10px;
+      padding: 20px 22px 16px;
+      align-items: center;
+    }
+
+    .ev-readout {
+      flex: 0 0 154px;
+    }
+
+    .ev-read-label {
+      font-family: "JetBrains Mono";
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: .04em;
+    }
+
+    .ev-read-val {
+      font-family: "Montserrat";
+      font-weight: 800;
+      font-size: 64px;
+      line-height: 1.05;
+      color: #0e3a47;
+      transition: color .2s;
+    }
+
+    .ev-read-sub {
+      font-family: "JetBrains Mono";
+      font-size: 15px;
+      color: #9aa7b2;
+      margin-top: 4px;
+      transition: color .3s;
+    }
+
+    .ev-chart {
+      flex: 1 1 auto;
+      width: 100%;
+      height: auto;
+    }
+
+    .ev-email {
+      flex: 0 0 408px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 16px 40px rgba(14, 58, 71, 0.16);
+      padding: 20px 22px;
+      opacity: 0;
+      transform: translateX(30px);
+      align-self: center;
+    }
+
+    .ev-email.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .ev-email-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .ev-mailbadge {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--red-bg);
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex: 0 0 auto;
+    }
+
+    .ev-from {
+      font-family: "JetBrains Mono";
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--ink);
+    }
+
+    .ev-to {
+      font-family: "JetBrains Mono";
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .ev-time {
+      margin-left: auto;
+      font-family: "JetBrains Mono";
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .ev-subject {
+      font-family: "Montserrat";
+      font-weight: 700;
+      font-size: 19px;
+      color: var(--red);
+      margin: 16px 0 14px;
+      line-height: 1.3;
+    }
+
+    .ev-body {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .ev-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      font-family: "JetBrains Mono";
+      font-size: 16px;
+      color: var(--muted);
+    }
+
+    .ev-row b {
+      color: var(--ink);
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .ev-detected {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      font-family: "Open Sans";
+      font-size: 15px;
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    /* Alert (slide 3) */
+    .alert-box {
+      border: 2px solid var(--red);
+      border-radius: 12px;
+      background: var(--red-bg);
+      padding: 30px;
+      width: 600px;
+      box-shadow: 0 10px 28px rgba(214, 69, 69, 0.12);
+    }
+
+    .alert-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--red);
+      font-family: "Montserrat";
+      margin-bottom: 20px;
+    }
+
+    .alert-content {
+      font-family: "JetBrains Mono";
+      color: var(--ink);
+      line-height: 1.8;
+      font-size: 18px;
+    }
+
+    /* Card genérica (slides 3-6) */
+    .host-node {
+      font-size: 16px;
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .host-sub {
+      font-size: 16px;
+      color: var(--muted);
+      font-family: "JetBrains Mono";
+      margin-top: 8px;
+    }
+
+    /* UI Controls */
+    .ui-label {
+      position: absolute;
+      top: 22px;
+      left: 40px;
+      font-family: "JetBrains Mono";
+      font-size: 14px;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      z-index: 50;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .ui-logo {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+    }
+
+    .ui-logo img {
+      height: 32px;
+      display: block;
+    }
+
+    .nav-buttons {
+      position: absolute;
+      bottom: 24px;
+      right: 40px;
+      display: flex;
+      gap: 12px;
+      z-index: 50;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    html:hover .nav-buttons {
+      opacity: 1;
+    }
+
+    button {
+      padding: 10px 18px;
+      border: 1px solid var(--teal);
+      background: #ffffff;
+      color: var(--teal);
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.2s;
+      font-family: "Open Sans";
+      box-shadow: 0 2px 8px rgba(14, 58, 71, 0.08);
+    }
+
+    button:hover:not(:disabled) {
+      background: var(--teal);
+      color: #fff;
+    }
+
+    button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* ===== Left panel RAM chart cards ===== */
+    .zbx-chart-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(14, 58, 71, 0.08);
+    }
+
+    .zbx-chart-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      font-family: "JetBrains Mono";
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    /* ===== Slide 5 — Monitoreo de servicios web ===== */
+    .web-stage {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+      width: 100%;
+      margin-top: 26px;
+      position: relative;
+    }
+
+    /* Zona izquierda: clientes + carril + navegador */
+    .web-side {
+      display: flex;
+      gap: 20px;
+      align-items: stretch;
+      flex: 0 0 auto;
+    }
+
+    /* Separador vertical entre la tienda y la vista de Zabbix */
+    .web-divider {
+      flex: 0 0 54px;
+      align-self: stretch;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .web-divider::before {
+      content: "";
+      position: absolute;
+      top: 8%;
+      bottom: 8%;
+      left: 50%;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, var(--line) 18%, var(--line) 82%, transparent);
+    }
+
+    .web-divider span {
+      position: relative;
+      background: var(--bg);
+      padding: 8px 0;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: "JetBrains Mono";
+      font-size: 13px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Clientes */
+    .web-clients {
+      flex: 0 0 150px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      justify-content: center;
+    }
+
+    .web-clients-title {
+      font-family: "JetBrains Mono";
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+
+    .web-client {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 6px 16px rgba(14, 58, 71, .07);
+    }
+
+    .web-client .av {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--panel-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      flex: 0 0 auto;
+    }
+
+    .web-client .nm {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .web-client .sub {
+      font-family: "JetBrains Mono";
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* Carril de trafico */
+    .web-lane {
+      flex: 0 0 60px;
+      align-self: center;
+      position: relative;
+      text-align: center;
+    }
+
+    .web-lane-label {
+      font-family: "JetBrains Mono";
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--green);
+      margin-top: 6px;
+      transition: color .3s;
+    }
+
+    /* Navegador / sitio ecommerce */
+    .web-browser {
+      flex: 0 0 750px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      overflow: hidden;
+      box-shadow: 0 18px 48px rgba(14, 58, 71, .16);
+      transition: box-shadow .35s, border-color .35s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .web-browser.down {
+      border-color: var(--red);
+      box-shadow: 0 0 0 2px var(--red), 0 18px 48px rgba(214, 69, 69, .22);
+    }
+
+    .web-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 18px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .web-dots {
+      display: flex;
+      gap: 6px;
+      flex: 0 0 auto;
+    }
+
+    .web-dots i {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .web-url {
+      flex: 1 1 auto;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-family: "JetBrains Mono";
+      font-size: 16px;
+      color: var(--ink-soft);
+    }
+
+    .web-status {
+      font-family: "JetBrains Mono";
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--green);
+      white-space: nowrap;
+      transition: color .3s;
+      flex: 0 0 auto;
+    }
+
+    .web-viewport {
+      position: relative;
+      height: 312px;
+      background: linear-gradient(180deg, #fbfdfe, #f1f6f8);
+      overflow: hidden;
+    }
+
+    /* Tienda */
+    .store {
+      position: absolute;
+      inset: 0;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: opacity .35s, filter .35s;
+    }
+
+    .store-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .store-brand {
+      font-family: "Montserrat";
+      font-weight: 800;
+      font-size: 21px;
+      color: var(--teal);
+    }
+
+    .store-cart {
+      font-family: "JetBrains Mono";
+      font-size: 16px;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--green-bg);
+      border: 1px solid var(--green);
+      color: var(--green);
+      padding: 5px 11px;
+      border-radius: 18px;
+      font-weight: 700;
+    }
+
+    .store-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .store-prod {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .store-prod .ph {
+      height: 92px;
+      background: linear-gradient(135deg, #dfeaef, #eef4f6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+    }
+
+    .store-prod .pi {
+      padding: 8px 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .store-prod .pn {
+      font-size: 14.5px;
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .store-prod .pp {
+      font-family: "JetBrains Mono";
+      font-size: 14.5px;
+      color: var(--teal);
+      font-weight: 700;
+    }
+
+    /* Overlay de caida */
+    .web-down {
+      position: absolute;
+      inset: 0;
+      background: rgba(251, 234, 234, .95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      opacity: 0;
+    }
+
+    .web-down .code {
+      font-family: "JetBrains Mono";
+      font-weight: 800;
+      font-size: 60px;
+      color: var(--red);
+      line-height: 1;
+    }
+
+    .web-down .msg {
+      font-family: "Montserrat";
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--red);
+    }
+
+    .web-down .sub {
+      font-family: "JetBrains Mono";
+      font-size: 15.5px;
+      color: #a4585a;
+    }
+
+    /* Pulso 200 OK */
+    .web-pulse {
+      position: absolute;
+      right: 18px;
+      bottom: 16px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-family: "JetBrains Mono";
+      font-weight: 700;
+      font-size: 16px;
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid var(--green);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Metricas bajo el navegador */
+    .web-metrics {
+      display: flex;
+      gap: 30px;
+      padding: 13px 20px;
+      border-top: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .web-metric {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .web-metric .ml {
+      font-family: "JetBrains Mono";
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .web-metric .mv {
+      font-family: "Montserrat";
+      font-weight: 800;
+      font-size: 23px;
+      color: var(--ink);
+      transition: color .3s;
+    }
+
+    /* Mapa Zabbix — estilo corporativo claro */
+    .web-map {
+      flex: 0 0 750px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 16px 44px rgba(14, 58, 71, .14);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .web-map-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      font-family: "JetBrains Mono";
+      font-size: 14px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .web-map-head .zbx-z {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background: #d40000;
+      color: #fff;
+      font-family: "Montserrat";
+      font-weight: 900;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+    }
+
+    .web-map-name {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .web-map-canvas {
+      position: relative;
+      flex: 1 1 auto;
+      background-color: var(--panel);
+      background-image: radial-gradient(circle, rgba(28, 108, 135, .16) 1px, transparent 1px);
+      background-size: 40px 40px;
+      min-height: 260px;
+    }
+
+    .web-map-links {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .web-mnode {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      z-index: 2;
+    }
+
+    .web-mico {
+      width: 75px;
+      height: 69px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1.5px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 14px rgba(14, 58, 71, .12);
+      transition: border-color .3s, box-shadow .3s;
+    }
+
+    .web-mnode.down .web-mico {
+      border-color: var(--red);
+      box-shadow: 0 0 0 2px rgba(214, 69, 69, .4), 0 6px 16px rgba(214, 69, 69, .22);
+    }
+
+    .web-mnode.ok .web-mico {
+      border-color: var(--green);
+      box-shadow: 0 0 0 1px rgba(47, 158, 94, .35), 0 4px 14px rgba(14, 58, 71, .1);
+    }
+
+    .web-mlabel {
+      font-family: "JetBrains Mono";
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--ink);
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .web-mstatus {
+      font-family: "JetBrains Mono";
+      font-size: 12.5px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .web-mstatus.ok {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .web-mstatus.bad {
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    .web-map-badge {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 7px;
+      font-family: "JetBrains Mono";
+      font-size: 13.5px;
+      font-weight: 700;
+      white-space: nowrap;
+      opacity: 0;
+      z-index: 3;
+      background: var(--red-bg);
+      color: var(--red);
+      border: 1px solid var(--red);
+      box-shadow: 0 6px 18px rgba(14, 58, 71, .18);
+    }
+
+    .web-map-status {
+      font-family: "JetBrains Mono";
+      font-weight: 700;
+      font-size: 14.5px;
+      color: var(--green);
+      text-align: center;
+      padding: 9px 16px;
+      border-top: 1px solid var(--line);
+      background: var(--panel);
+      transition: color .3s;
+    }
+
+    /* Barra de acciones automaticas */
+    .web-action {
+      width: 100%;
+      margin-top: 22px;
+      display: flex;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    /* Resumen ejecutivo (slide 5) */
+    .web-summary { width:100%; margin-top:46px; background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--teal); border-radius:12px; padding:16px 26px; }
+    .web-summary .ws-lead { font-family:"Montserrat"; font-weight:700; font-size:15.5px; color:var(--ink); margin-bottom:13px; }
+    .web-summary .ws-lead b { color:var(--teal); }
+    .web-summary .ws-grid { display:flex; gap:40px; align-items:start; }
+    .web-summary .ws-item { flex:1 1 0; display:grid; grid-template-columns:27px 1fr; column-gap:13px; row-gap:5px; }
+    .web-summary .ws-num { grid-column:1; grid-row:1; width:27px; height:27px; border-radius:50%; background:var(--teal); color:#fff; font-family:"Montserrat"; font-weight:800; font-size:16px; display:flex; align-items:center; justify-content:center; }
+    .web-summary .ws-item .ws-h { grid-column:2; grid-row:1; align-self:center; font-family:"Montserrat"; font-weight:700; font-size:16.5px; color:var(--teal); }
+    .web-summary .ws-item .ws-tx { grid-column:2; grid-row:2; font-size:15.5px; color:var(--ink-soft); line-height:1.4; }
+
+    .web-step {
+      flex: 1 1 0;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      opacity: .4;
+      transform: translateY(8px);
+      transition: opacity .4s, transform .4s, background .4s, box-shadow .4s;
+    }
+
+    .web-step.on {
+      opacity: 1;
+      transform: translateY(0);
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(14, 58, 71, .1);
+    }
+
+    .web-step .ic {
+      width: 44px;
+      height: 44px;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .web-step.s1 .ic {
+      background: var(--red-bg);
+      color: var(--red);
+    }
+
+    .web-step.s2 .ic {
+      background: #e4f0f4;
+      color: var(--teal);
+    }
+
+    .web-step.s3 .ic {
+      background: var(--green-bg);
+      color: var(--green);
+    }
+
+    .web-step .tt {
+      font-family: "Montserrat";
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--ink);
+    }
+
+    .web-step .ds {
+      font-family: "JetBrains Mono";
+      font-size: 14.5px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .web-step-arrow {
+      display: flex;
+      align-items: center;
+      color: var(--teal);
+      font-size: 22px;
+      flex: 0 0 auto;
+    }
+
+    /* ===== Slide 6 — Automatización ===== */
+    .auto-layout {
+      display: flex;
+      gap: 36px;
+      width: 100%;
+      margin-top: 28px;
+      align-items: flex-start;
+    }
+
+    /* Panel izquierdo: lista de acciones */
+    .auto-panel {
+      flex: 0 0 480px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      overflow: hidden;
+      box-shadow: 0 14px 40px rgba(14, 58, 71, .12);
+    }
+
+    .auto-panel-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 18px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .auto-panel-title {
+      font-family: "JetBrains Mono";
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    .auto-panel-sub {
+      margin-left: auto;
+      font-family: "JetBrains Mono";
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .auto-rule {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 15px 18px;
+      border-bottom: 1px solid var(--line);
+      opacity: .35;
+      transform: translateX(-10px);
+      transition: opacity .45s, transform .45s, background .3s;
+      cursor: default;
+    }
+
+    .auto-rule:last-child {
+      border-bottom: none;
+    }
+
+    .auto-rule.on {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .auto-rule.active {
+      background: #f0f9f3;
+    }
+
+    .auto-rule .rule-ic {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      flex: 0 0 auto;
+    }
+
+    .auto-rule .rule-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .auto-rule .rule-cond {
+      font-family: "JetBrains Mono";
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .auto-rule .rule-badge {
+      margin-left: auto;
+      font-family: "JetBrains Mono";
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    /* Panel derecho: log de ejecucion en vivo */
+    .auto-log {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .auto-log-header {
+      font-family: "JetBrains Mono";
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+    }
+
+    .auto-log-box {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #0e1c22;
+      overflow: hidden;
+      flex: 1 1 auto;
+      padding: 0;
+    }
+
+    .auto-log-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: #162730;
+      border-bottom: 1px solid rgba(255, 255, 255, .07);
+    }
+
+    .auto-log-bar-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .auto-log-bar-title {
+      font-family: "JetBrains Mono";
+      font-size: 14px;
+      color: #7fe0a3;
+      font-weight: 700;
+    }
+
+    .auto-log-entries {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      min-height: 220px;
+    }
+
+    .auto-entry {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity .3s, transform .3s;
+    }
+
+    .auto-entry.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .auto-entry .ts {
+      font-family: "JetBrains Mono";
+      font-size: 14px;
+      color: #4a7a8a;
+      flex: 0 0 auto;
+    }
+
+    .auto-entry .ev {
+      font-family: "JetBrains Mono";
+      font-size: 15px;
+    }
+
+    .auto-entry.ev-trigger .ev {
+      color: #f0a560;
+    }
+
+    .auto-entry.ev-action .ev {
+      color: #7fe0a3;
+    }
+
+    .auto-entry.ev-ok .ev {
+      color: #5ddba8;
+    }
+
+    .auto-entry.ev-info .ev {
+      color: #8ab4c2;
+    }
+
+    /* Caja inferior: reporte */
+    .auto-report {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 8px 22px rgba(14, 58, 71, .08);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .4s, transform .4s;
+    }
+
+    .auto-report.on {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .auto-report .rep-ic {
+      width: 50px;
+      height: 50px;
+      border-radius: 13px;
+      background: var(--teal);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex: 0 0 auto;
+    }
+
+    .auto-report .rep-t {
+      font-family: "Montserrat";
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--ink);
+    }
+
+    .auto-report .rep-s {
+      font-family: "JetBrains Mono";
+      font-size: 15px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .auto-report .rep-kpis {
+      display: flex;
+      gap: 22px;
+      margin-left: auto;
+    }
+
+    .auto-report .kpi {
+      text-align: center;
+    }
+
+    .auto-report .kv {
+      font-family: "Montserrat";
+      font-weight: 800;
+      font-size: 26px;
+      color: var(--teal);
+    }
+
+    .auto-report .kl {
+      font-family: "JetBrains Mono";
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-top: 1px;
+    }
+
+    /* ===== Slide 6 — Reporte automático (timeline 24 h) ===== */
+    .rpt-stage { position:relative; width:100%; flex:1 1 auto; margin-top:24px; min-height:660px; }
+
+    /* --- Escena A: el día --- */
+    .rpt-day { position:absolute; inset:0; display:flex; flex-direction:column; gap:16px; transition:opacity .5s; }
+    .rpt-day-top { display:flex; gap:30px; align-items:stretch; flex:1 1 auto; min-height:0; }
+    .rpt-clockwrap { flex:0 0 300px; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 12px 32px rgba(14,58,71,.1); padding:26px 24px; display:flex; flex-direction:column; align-items:center; text-align:center; }
+    .rpt-live { font-family:"JetBrains Mono"; font-size:14px; font-weight:700; letter-spacing:.06em; color:var(--green); display:flex; align-items:center; gap:8px; margin-bottom:22px; }
+    .rpt-livedot { width:9px; height:9px; border-radius:50%; background:var(--green); box-shadow:0 0 0 0 rgba(47,158,94,.5); animation:rptpulse 1.6s infinite; }
+    @keyframes rptpulse { 0%{box-shadow:0 0 0 0 rgba(47,158,94,.5);} 70%{box-shadow:0 0 0 10px rgba(47,158,94,0);} 100%{box-shadow:0 0 0 0 rgba(47,158,94,0);} }
+    .rpt-aclock { width:208px; height:208px; display:block; margin:2px auto 0; }
+    .rpt-date { font-family:"JetBrains Mono"; font-size:15px; font-weight:700; color:var(--ink); margin-top:14px; }
+    .rpt-counter { margin-top:26px; padding-top:20px; border-top:1px solid var(--line); width:100%; font-family:"JetBrains Mono"; font-size:15px; color:var(--muted); display:flex; flex-direction:column; gap:6px; }
+    .rpt-counter b { font-family:"Montserrat"; font-weight:800; font-size:40px; color:var(--teal); line-height:1; }
+    .rpt-srvs { margin-top:22px; width:100%; display:flex; justify-content:space-between; gap:8px; }
+    .rpt-srv { font-family:"JetBrains Mono"; font-size:14.5px; color:var(--ink); display:flex; align-items:center; gap:6px; }
+    .rpt-dot { width:9px; height:9px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); transition:background .3s, box-shadow .3s; }
+    .rpt-dot.warn { background:var(--amber); box-shadow:0 0 6px var(--amber); }
+
+    /* Rejilla de 4 gráficos */
+    .rpt-grid4 { flex:1 1 auto; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:18px; }
+    .rpt-mini { border:1px solid var(--line); border-radius:14px; background:#fff; box-shadow:0 8px 22px rgba(14,58,71,.08); overflow:hidden; display:flex; flex-direction:column; }
+    .rpt-mini-head { display:flex; align-items:center; gap:8px; padding:11px 16px; background:var(--panel); border-bottom:1px solid var(--line); font-family:"JetBrains Mono"; font-size:15px; font-weight:700; color:var(--ink); }
+    .rpt-mini-dot { width:9px; height:9px; border-radius:2px; display:inline-block; flex:0 0 auto; }
+    .rpt-mini-val { margin-left:auto; font-family:"Montserrat"; font-weight:800; font-size:20px; }
+    .rpt-mini-svg { flex:1 1 auto; padding:6px 8px; min-height:0; }
+    .rpt-mini-svg svg { width:100%; height:100%; display:block; }
+
+    /* Bitácora de eventos del día (se van listando) */
+    .rpt-evlog { flex:0 0 auto; height:172px; border:1px solid var(--line); border-radius:14px; background:#fff; box-shadow:0 8px 22px rgba(14,58,71,.07); padding:12px 20px 14px; display:flex; flex-direction:column; }
+    .rpt-evlog-head { font-family:"JetBrains Mono"; font-size:14px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:9px; display:flex; align-items:center; gap:9px; flex:0 0 auto; }
+    .rpt-evlog-head .lvd { width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 0 0 rgba(47,158,94,.5); animation:rptpulse 1.6s infinite; }
+    .rpt-evlist { flex:1 1 auto; display:flex; flex-wrap:wrap; gap:9px 11px; align-content:flex-start; overflow:hidden; }
+    .rpt-ev { display:flex; align-items:center; gap:9px; padding:6px 13px 6px 8px; border:1px solid var(--line); border-left:3px solid var(--teal); border-radius:10px; background:var(--panel); transition:background .7s ease, box-shadow .7s ease, border-color .7s ease; }
+    .rpt-ev.fresh { background:#e4f0f4; border-left-color:var(--teal); box-shadow:0 6px 18px rgba(28,108,135,.16); }
+    .rpt-ev.enter { animation:rptEvIn .72s cubic-bezier(.18,.7,.2,1) both; }
+    @keyframes rptEvIn {
+      0%   { opacity:0; transform:translateY(-36px) scale(1.14); }
+      55%  { opacity:1; transform:translateY(3px) scale(1.05); }
+      100% { opacity:1; transform:translateY(0) scale(1); }
+    }
+    .rpt-ev-ic { width:30px; height:30px; border-radius:8px; background:#fff; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:16px; flex:0 0 auto; }
+    .rpt-ev-tm { font-family:"JetBrains Mono"; font-size:12.5px; font-weight:700; color:var(--teal); }
+    .rpt-ev-tx { font-family:"Open Sans"; font-size:14.5px; font-weight:600; color:var(--ink); margin-top:1px; line-height:1.2; white-space:nowrap; }
+
+    /* --- Escena B: el correo --- */
+    .rpt-mail { position:absolute; inset:0; opacity:0; pointer-events:none; transition:opacity .5s; }
+    .rpt-fly { position:absolute; top:46%; left:50%; transform:translate(-50%,-50%); display:flex; align-items:center; gap:12px; padding:16px 26px; background:var(--teal); color:#fff; border-radius:30px; font-family:"Montserrat"; font-weight:700; font-size:18px; box-shadow:0 16px 44px rgba(28,108,135,.4); opacity:0; white-space:nowrap; }
+
+    .rpt-inbox { position:absolute; left:0; top:0; width:430px; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 16px 44px rgba(14,58,71,.16); overflow:hidden; opacity:0; transform:translateX(-24px); transition:opacity .5s, transform .5s; }
+    .rpt-inbox-head { display:flex; align-items:center; gap:9px; padding:14px 18px; background:var(--panel); border-bottom:1px solid var(--line); font-family:"JetBrains Mono"; font-size:15px; font-weight:700; color:var(--ink); }
+    .rpt-mailrow { display:flex; align-items:center; gap:12px; padding:15px 18px; border-bottom:1px solid var(--line); }
+    .rpt-mailrow:last-child { border-bottom:none; }
+    .rpt-mailrow.muted { opacity:.5; }
+    .rpt-mailrow.new { background:#eef7fb; }
+    .rpt-mdot { width:9px; height:9px; border-radius:50%; background:transparent; border:1.5px solid var(--line); flex:0 0 auto; }
+    .rpt-mdot.on { background:var(--teal); border-color:var(--teal); box-shadow:0 0 0 3px rgba(28,108,135,.18); }
+    .rpt-mfrom { font-family:"JetBrains Mono"; font-size:14.5px; color:var(--muted); flex:0 0 150px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .rpt-msubj { font-size:16px; color:var(--ink); flex:1 1 auto; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .rpt-msubj b { font-weight:700; color:var(--teal); }
+    .rpt-mtime { font-family:"JetBrains Mono"; font-size:14px; color:var(--muted); flex:0 0 auto; }
+
+    .rpt-open { position:absolute; right:0; top:0; width:1090px; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 24px 60px rgba(14,58,71,.22); overflow:hidden; opacity:0; transform:translateY(20px) scale(.98); transition:opacity .5s, transform .5s; }
+    .rpt-open-head { display:flex; align-items:center; gap:16px; padding:20px 26px; border-bottom:1px solid var(--line); background:var(--panel); }
+    .rpt-mailbadge { width:50px; height:50px; border-radius:13px; background:var(--teal); color:#fff; display:flex; align-items:center; justify-content:center; font-size:24px; flex:0 0 auto; }
+    .rpt-open-subj { font-family:"Montserrat"; font-weight:800; font-size:21px; color:var(--ink); }
+    .rpt-open-meta { font-family:"JetBrains Mono"; font-size:15px; color:var(--muted); margin-top:4px; }
+    .rpt-open-meta b { color:var(--teal); }
+    .rpt-open-auto { margin-left:auto; font-family:"JetBrains Mono"; font-size:14px; font-weight:700; color:var(--green); background:var(--green-bg); border:1px solid var(--green); padding:6px 14px; border-radius:20px; flex:0 0 auto; }
+    .rpt-open-kpis { display:flex; gap:18px; padding:22px 26px 6px; }
+    .rpt-kpi { flex:1 1 0; border:1px solid var(--line); border-radius:13px; background:#fff; box-shadow:0 6px 16px rgba(14,58,71,.06); padding:16px 18px; }
+    .rpt-kpi-v { font-family:"Montserrat"; font-weight:800; font-size:34px; color:var(--ink); line-height:1; }
+    .rpt-kpi-l { font-family:"JetBrains Mono"; font-size:14px; color:var(--muted); margin-top:8px; text-transform:uppercase; letter-spacing:.04em; }
+    .rpt-open-body { display:flex; gap:26px; padding:18px 26px 26px; }
+    .rpt-open-section { flex:1 1 auto; }
+    .rpt-open-stitle { font-family:"Montserrat"; font-weight:700; font-size:16px; color:var(--ink); margin-bottom:12px; }
+    .rpt-open-list { list-style:none; display:flex; flex-direction:column; gap:11px; }
+    .rpt-open-list li { font-size:15.5px; color:var(--ink-soft); display:flex; align-items:flex-start; gap:11px; line-height:1.4; }
+    .rpt-open-list .li-ok { color:var(--green); font-weight:800; flex:0 0 auto; }
+    .rpt-open-mini { flex:0 0 290px; border-left:1px solid var(--line); padding-left:26px; display:flex; flex-direction:column; }
+    .rpt-mini-l { font-family:"JetBrains Mono"; font-size:14px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; }
+    .rpt-open-mini svg { width:100%; height:auto; }
+    .rpt-mini-foot { font-family:"JetBrains Mono"; font-size:14px; color:var(--teal); font-weight:600; margin-top:10px; }
+
+    /* Reporte abierto — 4 sparklines + disponibilidad por host */
+    .rpt-rep-stitle { font-family:"Montserrat"; font-weight:700; font-size:15px; color:var(--ink); margin-bottom:14px; }
+    .rpt-rep-charts { flex:1 1 auto; }
+    .rpt-spark-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .rpt-spark { border:1px solid var(--line); border-radius:11px; background:#fff; padding:11px 14px; box-shadow:0 4px 12px rgba(14,58,71,.05); }
+    .rpt-spark-head { display:flex; align-items:center; gap:7px; font-family:"JetBrains Mono"; font-size:14.5px; font-weight:700; color:var(--ink); margin-bottom:6px; }
+    .rpt-spark-dot { width:8px; height:8px; border-radius:2px; display:inline-block; flex:0 0 auto; }
+    .rpt-spark-val { margin-left:auto; font-family:"JetBrains Mono"; font-weight:700; font-size:14px; color:var(--muted); }
+    .rpt-spark svg { width:100%; height:42px; display:block; }
+
+    .rpt-rep-hosts { flex:0 0 400px; border-left:1px solid var(--line); padding-left:28px; display:flex; flex-direction:column; }
+    .rpt-host { margin-bottom:17px; }
+    .rpt-host-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+    .rpt-host-name { font-size:16.5px; color:var(--ink); font-weight:600; display:flex; align-items:center; gap:9px; }
+    .rpt-host-ic { font-size:16px; }
+    .rpt-host-pct { font-family:"JetBrains Mono"; font-weight:700; font-size:16px; color:var(--green); }
+    .rpt-host-bar { height:8px; border-radius:5px; background:var(--panel-2); overflow:hidden; }
+    .rpt-host-fill { height:100%; border-radius:5px; background:linear-gradient(90deg,#2f9e5e,#46b878); }
+    .rpt-host-foot { margin-top:auto; padding-top:14px; border-top:1px solid var(--line); font-family:"JetBrains Mono"; font-size:14px; color:var(--teal); font-weight:600; display:flex; align-items:center; gap:8px; }
+    .rpt-host-foot .li-ok { color:var(--green); font-weight:800; }
+
+    /* ===== Slide de cierre ===== */
+    .slide-cierre { background:var(--bg); }
+    .slide-cierre::before { content:""; position:absolute; top:0; left:0; right:0; height:10px; background:var(--teal); }
+    .slide-cierre::after { content:""; position:absolute; bottom:0; left:0; right:0; height:6px; background:linear-gradient(90deg, var(--teal), var(--teal-light)); opacity:.4; }
+    .cierre-logo { margin-bottom:30px; }
+    .cierre-logo img { height:118px; display:block; }
+    .slide-cierre h2 { font-family:"Montserrat"; font-weight:800; font-size:58px; color:var(--ink); text-align:center; letter-spacing:-0.01em; max-width:1180px; line-height:1.1; }
+    .slide-cierre .accent-rule { width:90px; height:4px; background:var(--teal); border-radius:2px; margin:30px 0; }
+    .cierre-sub { font-size:25px; color:var(--ink-soft); text-align:center; max-width:920px; line-height:1.5; margin-bottom:46px; }
+    .cierre-sub b { color:var(--teal); font-weight:600; }
+
+    .cierre-demo { display:flex; align-items:center; gap:18px; padding:18px 36px; background:var(--teal); border-radius:14px; text-decoration:none; box-shadow:0 16px 40px rgba(28,108,135,.32); margin-bottom:50px; }
+    .cierre-demo .demo-ic { width:48px; height:48px; border-radius:50%; background:rgba(255,255,255,.18); color:#fff; display:flex; align-items:center; justify-content:center; font-size:18px; flex:0 0 auto; }
+    .cierre-demo .demo-l { font-family:"Montserrat"; font-weight:700; font-size:20px; color:#fff; }
+    .cierre-demo .demo-u { font-family:"JetBrains Mono"; font-size:15px; color:#cfe9f1; margin-top:3px; }
+
+    .cierre-contacts { display:flex; gap:90px; align-items:flex-start; }
+    .cc-title { font-family:"JetBrains Mono"; font-size:15px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:16px; }
+    .cc-web { display:flex; align-items:center; gap:11px; font-size:22px; color:var(--ink); font-weight:600; text-decoration:none; }
+    .cc-ic { color:var(--teal); font-size:19px; flex:0 0 auto; }
+    .cc-grid { display:grid; grid-template-columns:1fr 1fr; gap:13px 44px; }
+    .cc-mail { display:flex; align-items:center; gap:11px; font-size:18px; color:var(--ink-soft); text-decoration:none; font-family:"JetBrains Mono"; }
+    .cc-mail:hover, .cc-web:hover { color:var(--teal); }
+
+    .cierre-foot { position:absolute; bottom:30px; font-family:"JetBrains Mono"; font-size:15px; color:var(--muted); letter-spacing:.06em; }
+  </style>
+</head>
+
+<body>
+
+  <div class="slides-container">
+
+    <!-- Slide 1: Portada -->
+    <div class="slide slide-portada active">
+      <div class="logo-card"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+      <h2>Monitoreo de Infraestructura Tecnológica</h2>
+      <div class="accent-rule"></div>
+      <div class="tagline">
+        <div class="lead">Cumple con las exigencias de los entes de control</div>
+        <div style="margin-top: 18px;">Infraestructura bajo vigilancia 24/7. Decisiones basadas en datos.</div>
+      </div>
+    </div>
+
+    <!-- Slide 2: Capacidad -->
+    <div class="slide slide-cap2" style="justify-content: flex-start; padding-top: 96px;">
+      <div style="align-self: flex-start;">
+        <h3 style="margin-bottom: 0;">Monitoreo de capacidad instalada</h3>
+        <div class="cap-claim">Toma de decisiones en base a datos reales y precisos</div>
+      </div>
+
+      <!-- Panel Zabbix Problems (ancho completo) -->
+      <div class="zbx-problems" id="zbx-problems" style="margin-top: 18px; width: 100%; max-width: 100%;">
+        <div class="zbx-problems-head">Moniteo TecnoLTS · Monitoring › Problems</div>
+        <div class="zbx-prob-row">
+          <span class="sev-badge" id="sev-badge" style="background:var(--red); color:#fff;">HIGH</span>
+          <span class="prob-time">10:42:18</span>
+          <span class="prob-host">srv-app-A</span>
+          <span class="prob-text" id="prob-text">Memoria RAM utilizada &gt; 90% (98%)</span>
+          <span class="prob-status" id="prob-status" style="color:var(--red);">● PROBLEM</span>
+        </div>
+      </div>
+
+      <!-- Layout dos columnas -->
+      <div style="display:flex; gap:24px; width:100%; align-items:flex-start; margin-top:18px; flex:1 1 auto;">
+
+        <!-- COLUMNA IZQUIERDA: graficas RAM (35%) -->
+        <div style="flex:0 0 34%; display:flex; flex-direction:column; gap:14px;">
+
+          <!-- Grafica srv-app-A -->
+          <div class="zbx-chart-card">
+            <div class="zbx-chart-head">
+              <span class="zbx-status-dot" id="dot-a" style="background:#d64545; box-shadow:0 0 6px #d64545;"></span>
+              <span style="font-weight:700;">srv-app-A</span>
+              <span style="color:var(--muted); margin-left:6px; font-size:13px;">192.168.1.10</span>
+              <span style="margin-left:auto; font-size:13px; color:var(--muted);">Memoria RAM %</span>
+            </div>
+            <div style="padding:10px 12px 8px;">
+              <svg viewBox="0 0 310 150" xmlns="http://www.w3.org/2000/svg"
+                style="display:block;width:100%;height:auto;">
+                <defs>
+                  <clipPath id="chart-a-clip">
+                    <rect id="chart-a-reveal" x="0" y="0" width="0" height="150" />
+                  </clipPath>
+                  <linearGradient id="chartAGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" id="chart-a-grad-top" stop-color="rgba(214,69,69,0.20)" />
+                    <stop offset="1" stop-color="rgba(214,69,69,0.02)" />
+                  </linearGradient>
+                </defs>
+                <g font-family="JetBrains Mono" font-size="8" fill="#9aa7b2">
+                  <line x1="36" y1="10" x2="304" y2="10" stroke="#eef2f5" />
+                  <text x="32" y="13" text-anchor="end">100</text>
+                  <line x1="36" y1="28" x2="304" y2="28" stroke="#fde0e0" stroke-dasharray="3 3" />
+                  <text x="32" y="31" text-anchor="end" fill="#d64545">85</text>
+                  <line x1="36" y1="72.5" x2="304" y2="72.5" stroke="#eef2f5" />
+                  <text x="32" y="75" text-anchor="end">50</text>
+                  <line x1="36" y1="130" x2="304" y2="130" stroke="#e8eef2" />
+                  <text x="32" y="133" text-anchor="end">0</text>
+                  <text x="36" y="145" text-anchor="middle">10:38</text>
+                  <text x="125" y="145" text-anchor="middle">10:42</text>
+                  <text x="215" y="145" text-anchor="middle">10:46</text>
+                  <text x="304" y="145" text-anchor="end">10:50</text>
+                </g>
+                <g id="chart-a-mig" opacity="0">
+                  <line x1="215" y1="10" x2="215" y2="130" stroke="#1c6c87" stroke-width="1.2" stroke-dasharray="4 3" />
+                  <rect x="163" y="1" width="104" height="13" rx="3" fill="#0e3a47" />
+                  <text x="215" y="10.5" text-anchor="middle" font-family="JetBrains Mono" font-size="7.5"
+                    fill="#7fe0a3" font-weight="700">MIGRACION B</text>
+                </g>
+                <g clip-path="url(#chart-a-clip)">
+                  <path d="M36,16 L81,14.8 L125,12.4 L170,13.6 L215,14.8 L259,52 L304,58 L304,130 L36,130 Z"
+                    fill="url(#chartAGrad)" />
+                  <polyline id="chart-a-line" points="36,16 81,14.8 125,12.4 170,13.6 215,14.8 259,52 304,58"
+                    fill="none" stroke="#d64545" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+                </g>
+                <circle id="chart-a-cursor" cx="36" cy="16" r="3.5" fill="#d64545" />
+              </svg>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:5px;">
+                <span style="font-family:'JetBrains Mono';font-size:12px;color:var(--muted);">RAM utilizada</span>
+                <span class="metric-val" id="ram-a-val" style="color:var(--red);font-size:17px;">98%</span>
+              </div>
+              <div class="gauge" style="height:12px;margin-top:4px;">
+                <div class="gauge-fill" id="ram-a-bar" style="width:98%;background:#d64545;"></div>
+                <div class="gauge-threshold"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grafica srv-app-B -->
+          <div class="zbx-chart-card">
+            <div class="zbx-chart-head">
+              <span class="zbx-status-dot" id="dot-b" style="background:#2f9e5e; box-shadow:0 0 6px #2f9e5e;"></span>
+              <span style="font-weight:700;">srv-app-B</span>
+              <span style="color:var(--muted); margin-left:6px; font-size:13px;">192.168.1.11</span>
+              <span style="margin-left:auto; font-size:13px; color:var(--muted);">Memoria RAM %</span>
+            </div>
+            <div style="padding:10px 12px 8px;">
+              <svg viewBox="0 0 310 150" xmlns="http://www.w3.org/2000/svg"
+                style="display:block;width:100%;height:auto;">
+                <defs>
+                  <clipPath id="chart-b-clip">
+                    <rect id="chart-b-reveal" x="0" y="0" width="0" height="150" />
+                  </clipPath>
+                  <linearGradient id="chartBGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="rgba(47,158,94,0.20)" />
+                    <stop offset="1" stop-color="rgba(47,158,94,0.02)" />
+                  </linearGradient>
+                </defs>
+                <g font-family="JetBrains Mono" font-size="8" fill="#9aa7b2">
+                  <line x1="36" y1="10" x2="304" y2="10" stroke="#eef2f5" />
+                  <text x="32" y="13" text-anchor="end">100</text>
+                  <line x1="36" y1="28" x2="304" y2="28" stroke="#fde0e0" stroke-dasharray="3 3" />
+                  <text x="32" y="31" text-anchor="end" fill="#d64545">85</text>
+                  <line x1="36" y1="72.5" x2="304" y2="72.5" stroke="#eef2f5" />
+                  <text x="32" y="75" text-anchor="end">50</text>
+                  <line x1="36" y1="130" x2="304" y2="130" stroke="#e8eef2" />
+                  <text x="32" y="133" text-anchor="end">0</text>
+                  <text x="36" y="145" text-anchor="middle">10:38</text>
+                  <text x="125" y="145" text-anchor="middle">10:42</text>
+                  <text x="215" y="145" text-anchor="middle">10:46</text>
+                  <text x="304" y="145" text-anchor="end">10:50</text>
+                </g>
+                <g id="chart-b-mig" opacity="0">
+                  <line x1="215" y1="10" x2="215" y2="130" stroke="#1c6c87" stroke-width="1.2" stroke-dasharray="4 3" />
+                  <rect x="163" y="1" width="104" height="13" rx="3" fill="#0e3a47" />
+                  <text x="215" y="10.5" text-anchor="middle" font-family="JetBrains Mono" font-size="7.5"
+                    fill="#7fe0a3" font-weight="700">MIGRACION B</text>
+                </g>
+                <g clip-path="url(#chart-b-clip)">
+                  <path d="M36,90.4 L81,89.2 L125,90.4 L170,89.2 L215,88 L259,70 L304,60.4 L304,130 L36,130 Z"
+                    fill="url(#chartBGrad)" />
+                  <polyline id="chart-b-line" points="36,90.4 81,89.2 125,90.4 170,89.2 215,88 259,70 304,60.4"
+                    fill="none" stroke="#2f9e5e" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+                </g>
+                <circle id="chart-b-cursor" cx="36" cy="90.4" r="3.5" fill="#2f9e5e" />
+              </svg>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:5px;">
+                <span style="font-family:'JetBrains Mono';font-size:12px;color:var(--muted);">RAM utilizada</span>
+                <span class="metric-val" id="ram-b-val" style="color:var(--green);font-size:17px;">33%</span>
+              </div>
+              <div class="gauge" style="height:12px;margin-top:4px;">
+                <div class="gauge-fill" id="ram-b-bar" style="width:33%;background:#2f9e5e;"></div>
+                <div class="gauge-threshold"></div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- fin columna izquierda -->
+
+        <!-- COLUMNA DERECHA: Servidores + migracion (60%) -->
+        <div
+          style="flex:1 1 0; display:flex; flex-direction:column; justify-content:center; gap:18px; padding-top:8px;">
+
+          <!-- Callout servicio culpable -->
+          <div id="culprit"
+            style="border:1px solid var(--amber);border-radius:10px;background:var(--amber-bg);padding:14px 16px;opacity:0;box-shadow:0 12px 28px rgba(14,58,71,0.18);">
+            <div class="culprit-title">Top proceso por RAM · srv-app-A</div>
+            <div class="culprit-row"><span>app-reportes</span><span style="color:var(--amber);font-weight:700;">2.4
+                GB</span></div>
+            <div class="culprit-decision">&#8594; Decision: migrar a srv-app-B</div>
+          </div>
+
+          <!-- Servidor A  flecha  Servidor B -->
+          <div style="display:flex; gap:24px; align-items:center; justify-content:center; position:relative;">
+
+            <!-- Paquete volador de migracion A -> B -->
+            <div id="migrate-packet"
+              style="position:absolute; top:50%; left:0; transform:translate(-50%,-50%) scale(0.6); display:flex; align-items:center; gap:9px; padding:11px 18px; background:var(--teal); color:#fff; border-radius:26px; font-family:'JetBrains Mono'; font-size:15px; font-weight:700; white-space:nowrap; box-shadow:0 12px 30px rgba(28,108,135,0.45); opacity:0; z-index:8; pointer-events:none;">
+              <span style="font-size:18px;">&#128230;</span> svc: app-reportes
+            </div>
+
+            <!-- Servidor A -->
+            <div class="zbx-host" id="srv-card-a"
+              style="flex:0 0 auto; width:350px; transition:box-shadow .3s, border-color .3s;">
+              <div class="zbx-head">
+                <span class="zbx-status-dot" id="dot-a-card"
+                  style="background:#d64545; box-shadow:0 0 6px #d64545;"></span>
+                <span class="zbx-hostname">srv-app-A</span>
+                <span class="zbx-ip">192.168.1.10</span>
+              </div>
+              <div class="zbx-body" style="align-items:center;">
+                <div class="server-icon">
+                  <svg width="100" height="148" viewBox="0 0 84 104" fill="none">
+                    <rect x="10" y="6" width="64" height="26" rx="4" fill="#1c6c87" stroke="#0e3a47"
+                      stroke-width="1.5" />
+                    <circle cx="20" cy="19" r="3" fill="#7fe0a3" />
+                    <line x1="30" y1="14" x2="30" y2="24" stroke="#ffffff" stroke-opacity="0.5" />
+                    <line x1="35" y1="14" x2="35" y2="24" stroke="#ffffff" stroke-opacity="0.5" />
+                    <rect x="56" y="14" width="12" height="10" rx="1" fill="#0e3a47" />
+                    <rect x="10" y="39" width="64" height="26" rx="4" fill="#1c6c87" stroke="#0e3a47"
+                      stroke-width="1.5" />
+                    <circle cx="20" cy="52" r="3" fill="#7fe0a3" />
+                    <line x1="30" y1="47" x2="30" y2="57" stroke="#ffffff" stroke-opacity="0.5" />
+                    <line x1="35" y1="47" x2="35" y2="57" stroke="#ffffff" stroke-opacity="0.5" />
+                    <rect x="56" y="47" width="12" height="10" rx="1" fill="#0e3a47" />
+                    <rect x="10" y="72" width="64" height="26" rx="4" fill="#1c6c87" stroke="#0e3a47"
+                      stroke-width="1.5" />
+                    <circle cx="20" cy="85" r="3" fill="#7fe0a3" />
+                    <line x1="30" y1="80" x2="30" y2="90" stroke="#ffffff" stroke-opacity="0.5" />
+                    <line x1="35" y1="80" x2="35" y2="90" stroke="#ffffff" stroke-opacity="0.5" />
+                    <rect x="56" y="80" width="12" height="10" rx="1" fill="#0e3a47" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Flecha de migracion -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:0 0 auto;">
+              <div id="migrate-chip"
+                style="display:flex;align-items:center;gap:7px;padding:7px 14px;background:#e4f0f4;border:1px solid var(--teal);border-radius:20px;font-family:'JetBrains Mono';font-size:14px;color:var(--teal);white-space:nowrap;opacity:0;box-shadow:0 6px 18px rgba(28,108,135,0.2);">
+                <span
+                  style="width:7px;height:7px;border-radius:50%;background:var(--teal);display:inline-block;flex-shrink:0;"></span>
+                svc: app-reportes
+              </div>
+              <svg width="110" height="22" viewBox="0 0 110 22">
+                <line x1="0" y1="11" x2="88" y2="11" stroke="var(--teal)" stroke-width="2.5" stroke-dasharray="6 4" />
+                <polygon points="88,5 110,11 88,17" fill="var(--teal)" />
+              </svg>
+            </div>
+
+            <!-- Servidor B -->
+            <div class="zbx-host" id="srv-card-b"
+              style="flex:0 0 auto; width:350px; transition:box-shadow .3s, border-color .3s;">
+              <div class="zbx-head">
+                <span class="zbx-status-dot" id="dot-b-card"
+                  style="background:#2f9e5e; box-shadow:0 0 6px #2f9e5e;"></span>
+                <span class="zbx-hostname">srv-app-B</span>
+                <span class="zbx-ip">192.168.1.11</span>
+              </div>
+              <div class="zbx-body" style="align-items:center;">
+                <div class="server-icon">
+                  <svg width="100" height="148" viewBox="0 0 84 104" fill="none">
+                    <rect x="10" y="6" width="64" height="26" rx="4" fill="#1c6c87" stroke="#0e3a47"
+                      stroke-width="1.5" />
+                    <circle cx="20" cy="19" r="3" fill="#7fe0a3" />
+                    <line x1="30" y1="14" x2="30" y2="24" stroke="#ffffff" stroke-opacity="0.5" />
+                    <line x1="35" y1="14" x2="35" y2="24" stroke="#ffffff" stroke-opacity="0.5" />
+                    <rect x="56" y="14" width="12" height="10" rx="1" fill="#0e3a47" />
+                    <rect x="10" y="39" width="64" height="26" rx="4" fill="#1c6c87" stroke="#0e3a47"
+                      stroke-width="1.5" />
+                    <circle cx="20" cy="52" r="3" fill="#7fe0a3" />
+                    <line x1="30" y1="47" x2="30" y2="57" stroke="#ffffff" stroke-opacity="0.5" />
+                    <line x1="35" y1="47" x2="35" y2="57" stroke="#ffffff" stroke-opacity="0.5" />
+                    <rect x="56" y="47" width="12" height="10" rx="1" fill="#0e3a47" />
+                    <rect x="10" y="72" width="64" height="26" rx="4" fill="#1c6c87" stroke="#0e3a47"
+                      stroke-width="1.5" />
+                    <circle cx="20" cy="85" r="3" fill="#7fe0a3" />
+                    <line x1="30" y1="80" x2="30" y2="90" stroke="#ffffff" stroke-opacity="0.5" />
+                    <line x1="35" y1="80" x2="35" y2="90" stroke="#ffffff" stroke-opacity="0.5" />
+                    <rect x="56" y="80" width="12" height="10" rx="1" fill="#0e3a47" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- fin fila servidores -->
+
+          <div class="cap-conclusion" id="cap-conclusion" style="opacity:0;">Mediante la lectura de datos se
+            determino rapidamente que no era necesaria la inversion en hardware para srv-app-A. Estos datos contribuyen
+            de forma tangible al crecimiento y facilitan la toma de decisiones importantes.</div>
+
+        </div><!-- fin columna derecha -->
+      </div><!-- fin layout dos columnas -->
+
+    </div>
+
+    <!-- Slide 3: Alertas -->
+    <div class="slide" style="justify-content: flex-start; padding-top: 104px;">
+      <div style="align-self: flex-start;">
+        <h3 style="margin-bottom: 0;">Notificación de eventos disruptivos</h3>
+        <div class="cap-claim">Te avisamos al instante cuando algo deja de funcionar como debería</div>
+      </div>
+
+      <!-- Ejemplos de eventos disruptivos (lenguaje simple) -->
+      <div class="ev-examples">
+        <div class="ev-chip"><span class="ev-ic">▲</span> Un equipo al límite de su capacidad</div>
+        <div class="ev-chip"><span class="ev-ic">✕</span> Un sistema clave deja de funcionar</div>
+        <div class="ev-chip"><span class="ev-ic">⇆</span> Se pierde la conexión a la red</div>
+        <div class="ev-chip"><span class="ev-ic">⚡</span> Actividad sospechosa o posible ataque</div>
+      </div>
+
+      <div class="ev-stage">
+        <!-- Sobre volando: Zabbix envía la notificación -->
+        <div class="ev-fly" id="ev-fly"><span class="ev-fly-ic">✉</span> Enviando alerta…</div>
+        <!-- Monitor en vivo -->
+        <div class="ev-monitor">
+          <div class="ev-mon-head">
+            <span class="ev-dot" id="ev-status-dot"></span>
+            <span class="ev-host">prod-app-01</span>
+            <span class="ev-meta">192.168.1.100 · 2× CPU</span>
+            <span class="ev-status" id="ev-status">● NORMAL</span>
+          </div>
+          <div class="ev-mon-body">
+            <div class="ev-readout">
+              <div class="ev-read-label">CPU utilization</div>
+              <div class="ev-read-val" id="ev-cpu">19%</div>
+              <div class="ev-read-sub" id="ev-sustain">estable</div>
+            </div>
+            <svg class="ev-chart" viewBox="0 0 820 280" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="evGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="rgba(28,108,135,0.26)" id="ev-grad-top"></stop>
+                  <stop offset="1" stop-color="rgba(28,108,135,0.02)"></stop>
+                </linearGradient>
+              </defs>
+              <g font-family="JetBrains Mono" font-size="11" fill="#9aa7b2">
+                <line x1="50" y1="20" x2="800" y2="20" stroke="#eef2f5"></line><text x="44" y="24"
+                  text-anchor="end">100</text>
+                <line x1="50" y1="80" x2="800" y2="80" stroke="#eef2f5"></line><text x="44" y="84"
+                  text-anchor="end">75</text>
+                <line x1="50" y1="140" x2="800" y2="140" stroke="#eef2f5"></line><text x="44" y="144"
+                  text-anchor="end">50</text>
+                <line x1="50" y1="200" x2="800" y2="200" stroke="#eef2f5"></line><text x="44" y="204"
+                  text-anchor="end">25</text>
+                <line x1="50" y1="260" x2="800" y2="260" stroke="#dfe6eb"></line><text x="44" y="264"
+                  text-anchor="end">0</text>
+              </g>
+              <line x1="50" y1="56" x2="800" y2="56" stroke="#d64545" stroke-width="1.3" stroke-dasharray="5 4"
+                opacity="0.7"></line>
+              <text x="796" y="50" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#d64545">umbral
+                85%</text>
+              <path id="ev-area" d="" fill="url(#evGrad)"></path>
+              <polyline id="ev-line" points="" fill="none" stroke="#1c6c87" stroke-width="2.4" stroke-linejoin="round">
+              </polyline>
+              <circle id="ev-cursor" cx="50" cy="260" r="5" fill="#1c6c87"></circle>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Email de alerta -->
+        <div class="ev-email" id="ev-email">
+          <div class="ev-email-head">
+            <span class="ev-mailbadge">⚠</span>
+            <div>
+              <div class="ev-from">monitoreo@tecnolts.com</div>
+              <div class="ev-to">para: noc@empresa.com</div>
+            </div>
+            <span class="ev-time">ahora</span>
+          </div>
+          <div class="ev-subject">Alerta: uso de CPU excesivo y anómalo</div>
+          <div class="ev-body">
+            <div class="ev-row"><span>Host</span><b>prod-app-01 · 192.168.1.100</b></div>
+            <div class="ev-row"><span>Métrica</span><b style="color:var(--red);">CPU 98% · 2× CPU saturados</b></div>
+            <div class="ev-row"><span>Duración</span><b>sostenido &gt; 2 min</b></div>
+            <div class="ev-row"><span>Severidad</span><b style="color:var(--red);">Alta</b></div>
+          </div>
+          <div class="ev-detected">Detectado por Monitoreo TecnoLTS en &lt; 1 s</div>
+        </div>
+      </div>
+
+      <!-- Causas de un pico anómalo de CPU -->
+      <div class="ev-causes">
+        <div class="ev-causes-title">¿Por qué un servidor se dispara<br>de forma anómala?</div>
+        <div class="ev-causes-list">
+          <span class="ev-cause"><i class="red"></i>Un ataque o intrusión externa</span>
+          <span class="ev-cause"><i class="red"></i>Un secuestro de datos (ransomware)</span>
+          <span class="ev-cause"><i class="amber"></i>Una falla en un sistema o aplicación</span>
+          <span class="ev-cause"><i class="amber"></i>Un problema de hardware del equipo</span>
+        </div>
+        <div class="ev-causes-note">Verlo a tiempo permite actuar <b>antes</b> de una caída, una pérdida de datos o un
+          costo mayor.</div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Red -->
+    <div class="slide" style="justify-content: flex-start; padding-top: 92px;">
+      <div style="align-self: flex-start;">
+        <h3 style="margin-bottom: 0;">Monitoreo preciso de red</h3>
+        <div class="cap-claim">Vemos toda la red en un mapa y ubicamos al instante dónde está el problema</div>
+      </div>
+
+      <div class="net-map">
+        <div class="net-scan" id="net-scan"><span>◌</span> Zabbix diagnosticando la ruta…</div>
+        <svg class="net-links" viewBox="0 0 1500 430" xmlns="http://www.w3.org/2000/svg">
+          <line id="l1b" x1="95" y1="190" x2="340" y2="190" stroke="#2f9e5e" stroke-width="3.5" stroke-linecap="round">
+          </line>
+          <line id="l2b" x1="340" y1="190" x2="660" y2="190" stroke="#2f9e5e" stroke-width="3.5" stroke-linecap="round">
+          </line>
+          <line id="l3b" x1="660" y1="190" x2="1120" y2="90" stroke="#2f9e5e" stroke-width="3.5" stroke-linecap="round">
+          </line>
+          <line id="l4b" x1="660" y1="190" x2="1120" y2="190" stroke="#2f9e5e" stroke-width="3.5"
+            stroke-linecap="round"></line>
+          <line id="l5b" x1="660" y1="190" x2="1120" y2="350" stroke="#2f9e5e" stroke-width="3.5"
+            stroke-linecap="round"></line>
+          <line class="net-flow" id="l1f" x1="95" y1="190" x2="340" y2="190" stroke="#ffffff" stroke-opacity="0.85"
+            stroke-width="3" stroke-dasharray="5 40"></line>
+          <line class="net-flow" id="l2f" x1="340" y1="190" x2="660" y2="190" stroke="#ffffff" stroke-opacity="0.85"
+            stroke-width="3" stroke-dasharray="5 40"></line>
+          <line class="net-flow" id="l3f" x1="660" y1="190" x2="1120" y2="90" stroke="#ffffff" stroke-opacity="0.85"
+            stroke-width="3" stroke-dasharray="5 40"></line>
+          <line class="net-flow" id="l4f" x1="660" y1="190" x2="1120" y2="190" stroke="#ffffff" stroke-opacity="0.85"
+            stroke-width="3" stroke-dasharray="5 40"></line>
+          <line class="net-flow" id="l5f" x1="660" y1="190" x2="1120" y2="350" stroke="#ffffff" stroke-opacity="0.85"
+            stroke-width="3" stroke-dasharray="5 40"></line>
+        </svg>
+
+        <div class="net-node" id="net-isp" style="left:95px; top:215px;">
+          <div class="net-ico"><svg width="50" height="36" viewBox="0 0 50 36">
+              <path d="M14 31 a9 9 0 0 1 0-18 a12 12 0 0 1 23 3 a8 8 0 0 1 -2 15 z" fill="#cfe0e6" stroke="#1c6c87"
+                stroke-width="1.5"></path>
+            </svg></div>
+          <div class="net-label">Internet</div>
+          <div class="net-sub">ISP</div>
+        </div>
+        <div class="net-node" id="net-router" style="left:340px; top:215px;">
+          <div class="net-ico"><svg width="56" height="40" viewBox="0 0 56 40">
+              <line x1="18" y1="22" x2="13" y2="7" stroke="#0e3a47" stroke-width="2"></line>
+              <line x1="38" y1="22" x2="43" y2="7" stroke="#0e3a47" stroke-width="2"></line>
+              <circle cx="13" cy="7" r="2.5" fill="#1c6c87"></circle>
+              <circle cx="43" cy="7" r="2.5" fill="#1c6c87"></circle>
+              <rect x="7" y="21" width="42" height="14" rx="3" fill="#1c6c87"></rect>
+              <circle cx="15" cy="28" r="2" fill="#7fe0a3"></circle>
+              <circle cx="23" cy="28" r="2" fill="#7fe0a3"></circle>
+            </svg></div>
+          <div class="net-label">Router</div>
+          <div class="net-sub">gateway</div>
+        </div>
+        <div class="net-node" id="net-switch" style="left:660px; top:215px;">
+          <div class="net-ico"><svg width="60" height="34" viewBox="0 0 60 34">
+              <rect x="5" y="10" width="50" height="16" rx="3" fill="#7a8a96"></rect>
+              <rect x="10" y="18" width="5" height="4" fill="#0e3a47"></rect>
+              <rect x="18" y="18" width="5" height="4" fill="#0e3a47"></rect>
+              <rect x="26" y="18" width="5" height="4" fill="#0e3a47"></rect>
+              <rect x="34" y="18" width="5" height="4" fill="#0e3a47"></rect>
+              <rect x="42" y="18" width="5" height="4" fill="#0e3a47"></rect>
+              <circle cx="50" cy="14" r="1.8" fill="#7fe0a3"></circle>
+            </svg></div>
+          <div class="net-label">Switch</div>
+          <div class="net-sub">LAN</div>
+        </div>
+        <div class="net-node" id="net-pc1" style="left:1120px; top:90px;">
+          <div class="net-ico"><svg width="44" height="40" viewBox="0 0 44 40">
+              <rect x="4" y="4" width="36" height="24" rx="2" fill="#1c6c87"></rect>
+              <rect x="8" y="8" width="28" height="16" fill="#cfe0e6"></rect>
+              <rect x="18" y="28" width="8" height="5" fill="#0e3a47"></rect>
+              <rect x="12" y="33" width="20" height="3" rx="1" fill="#0e3a47"></rect>
+            </svg></div>
+          <div class="net-label">PC-01</div>
+          <div class="net-sub">en línea</div>
+        </div>
+        <div class="net-node" id="net-pc2" style="left:1120px; top:215px;">
+          <div class="net-ico"><svg width="44" height="40" viewBox="0 0 44 40">
+              <rect x="4" y="4" width="36" height="24" rx="2" fill="#1c6c87"></rect>
+              <rect x="8" y="8" width="28" height="16" fill="#cfe0e6"></rect>
+              <rect x="18" y="28" width="8" height="5" fill="#0e3a47"></rect>
+              <rect x="12" y="33" width="20" height="3" rx="1" fill="#0e3a47"></rect>
+            </svg></div>
+          <div class="net-label">PC-02</div>
+          <div class="net-sub">en línea</div>
+        </div>
+        <div class="net-node" id="net-pc3" style="left:1120px; top:350px;">
+          <div class="net-ico"><svg width="44" height="40" viewBox="0 0 44 40">
+              <rect x="4" y="4" width="36" height="24" rx="2" fill="#1c6c87"></rect>
+              <rect x="8" y="8" width="28" height="16" fill="#cfe0e6"></rect>
+              <rect x="18" y="28" width="8" height="5" fill="#0e3a47"></rect>
+              <rect x="12" y="33" width="20" height="3" rx="1" fill="#0e3a47"></rect>
+            </svg></div>
+          <div class="net-label">PC-03</div>
+          <div class="net-sub" id="net-pc3-sub">en línea</div>
+        </div>
+
+        <div class="net-badge ok" id="net-isp-ok" style="left:150px; top:300px;">✓ Internet (ISP): OK</div>
+        <div class="net-badge ok" id="net-sw-ok" style="left:660px; top:328px;">✓ Switch: activo</div>
+        <div class="net-badge bad" id="net-link-bad" style="left:905px; top:300px;">✗ Enlace switch → equipo</div>
+      </div>
+
+      <div class="net-conclusion" id="net-conclusion">
+        <div class="nc-ic">✓</div>
+        <div class="nc-text"><b>Diagnóstico inmediato:</b> el <b>Internet del proveedor funciona</b> y el switch está
+          activo. La falla está en la <span class="bad">conexión del switch al equipo</span> (cable o puerto) — no en el
+          ISP. Se resuelve en minutos, sin llamadas innecesarias al proveedor.</div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Servicios Web -->
+    <div class="slide slide-web" style="justify-content:flex-start; padding:90px 50px;">
+      <div style="align-self:flex-start;">
+        <h3 style="margin-bottom:0;">Monitoreo de servicios web</h3>
+        <div class="cap-claim">Si tu tienda online deja de responder, lo detectamos al instante y actuamos</div>
+      </div>
+
+      <div class="web-stage">
+
+        <!-- ZONA TIENDA: lo que ve el cliente -->
+        <div class="web-side">
+
+          <!-- Clientes -->
+          <div class="web-clients">
+            <div class="web-clients-title">Clientes</div>
+            <div class="web-client"><span class="av">&#128717;</span>
+              <div>
+                <div class="nm">Compra en curso</div>
+                <div class="sub">POST /checkout</div>
+              </div>
+            </div>
+            <div class="web-client"><span class="av">&#128100;</span>
+              <div>
+                <div class="nm">Visitante</div>
+                <div class="sub">GET /producto/42</div>
+              </div>
+            </div>
+            <div class="web-client"><span class="av">&#128179;</span>
+              <div>
+                <div class="nm">Pago</div>
+                <div class="sub">POST /pago</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Carril de trafico -->
+          <div class="web-lane">
+            <svg viewBox="0 0 92 140" width="92" height="140" xmlns="http://www.w3.org/2000/svg">
+              <line x1="4" y1="70" x2="84" y2="70" stroke="#dfe6eb" stroke-width="6" stroke-linecap="round" />
+              <line id="web-flow" x1="4" y1="70" x2="84" y2="70" stroke="#2f9e5e" stroke-width="6"
+                stroke-linecap="round" stroke-dasharray="6 12" />
+              <polygon id="web-flow-arrow" points="80,62 92,70 80,78" fill="#2f9e5e" />
+            </svg>
+            <div class="web-lane-label" id="web-lane-label">compras</div>
+          </div>
+
+          <!-- Navegador / sitio ecommerce -->
+          <div class="web-browser" id="web-browser">
+            <div class="web-bar">
+
+              <div class="web-url">https://shop.tecnolts.com</div>
+              <div class="web-status" id="web-status">&#9679; EN L&Iacute;NEA</div>
+            </div>
+            <div class="web-viewport">
+              <!-- Tienda activa -->
+              <div class="store" id="web-store">
+                <div class="store-head">
+                  <div class="store-brand">TecnoShop</div>
+                  <div class="store-cart" id="web-cart"><span>&#128722;</span> 3 items</div>
+                </div>
+                <div class="store-grid">
+                  <div class="store-prod">
+                    <div class="ph">&#128241;</div>
+                    <div class="pi"><span class="pn">Smartphone</span><span class="pp">$499</span></div>
+                  </div>
+                  <div class="store-prod">
+                    <div class="ph">&#127911;</div>
+                    <div class="pi"><span class="pn">Auriculares</span><span class="pp">$89</span></div>
+                  </div>
+                  <div class="store-prod">
+                    <div class="ph">&#8986;</div>
+                    <div class="pi"><span class="pn">Smartwatch</span><span class="pp">$199</span></div>
+                  </div>
+                </div>
+              </div>
+              <!-- Overlay de caida -->
+              <div class="web-down" id="web-down">
+                <div class="code">503</div>
+                <div class="msg">Service Unavailable</div>
+                <div class="sub">El servidor no responde a las peticiones</div>
+              </div>
+              <!-- Pulso 200 OK -->
+              <div class="web-pulse" id="web-pulse">200 OK &#10003;</div>
+            </div>
+            <div class="web-metrics">
+              <div class="web-metric"><span class="ml">Respuesta HTTP</span><span class="mv" id="web-resp"
+                  style="color:var(--green);">118 ms</span></div>
+              <div class="web-metric"><span class="ml">Compras procesadas</span><span class="mv" id="web-count">0</span>
+              </div>
+              <div class="web-metric"><span class="ml">Disponibilidad</span><span class="mv" id="web-uptime"
+                  style="color:var(--green);">100%</span></div>
+            </div>
+          </div>
+
+        </div><!-- fin ZONA TIENDA -->
+
+        <!-- Separador visual -->
+        <div class="web-divider"><span>Mapa de red Monitoreo TecnoLTS</span></div>
+
+        <!-- ZONA ZABBIX: cómo se ve en el monitoreo -->
+        <div class="web-map">
+          <div class="web-map-head">
+
+            <span class="web-map-name">TecnoLTS Infraestructura</span>
+            <span style="margin-left:auto;font-size:12px;color:var(--muted);" id="web-map-clock">00:00:00</span>
+          </div>
+          <div class="web-map-canvas">
+            <!-- SVG líneas entre nodos — viewBox ajustado a 700x260 -->
+            <svg class="web-map-links" viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+              <!-- Internet → Nginx (horizontal centro-izquierda) -->
+              <line id="wml-1b" x1="70" y1="110" x2="190" y2="110" stroke="#2f9e5e" stroke-width="3.5"
+                stroke-linecap="round" />
+              <line id="wml-1f" x1="70" y1="110" x2="190" y2="110" stroke="#7fe0a3" stroke-opacity=".9"
+                stroke-width="2.5" stroke-dasharray="5 40" />
+
+              <!-- Switch → server tienda -->
+              <line id="wml-1b2" x1="190" y1="110" x2="360" y2="110" stroke="#2f9e5e" stroke-width="3.5"
+                stroke-linecap="round" />
+              <line id="wml-1f2" x1="190" y1="110" x2="360" y2="110" stroke="#7fe0a3" stroke-opacity=".9"
+                stroke-width="2.5" stroke-dasharray="5 40" />
+              <!-- Nginx → shop-web (diagonal arriba) -->
+              <line id="wml-2b" x1="410" y1="110" x2="540" y2="5" stroke="#2f9e5e" stroke-width="3.5"
+                stroke-linecap="round" />
+              <line id="wml-2f" x1="410" y1="110" x2="540" y2="5" stroke="#7fe0a3" stroke-opacity=".9"
+                stroke-width="2.5" stroke-dasharray="5 40" />
+              <!-- Nginx → srv-host (diagonal abajo) -->
+              <line id="wml-3b" x1="410" y1="110" x2="540" y2="180" stroke="#2f9e5e" stroke-width="3.5"
+                stroke-linecap="round" />
+              <line id="wml-3f" x1="410" y1="110" x2="540" y2="180" stroke="#7fe0a3" stroke-opacity=".9"
+                stroke-width="2.5" stroke-dasharray="5 40" />
+
+            </svg>
+
+            <!-- Nodo: Internet -->
+            <div class="web-mnode ok" style="left:70px; top:180px;">
+              <div class="web-mico" style="font-size:28px; width:75px; height:69px;">&#9729;</div>
+              <div class="web-mlabel">Internet</div>
+              <div class="web-mstatus ok">OK</div>
+            </div>
+
+            <!-- Nodo: Nginx Gateway (centro) -->
+            <div class="web-mnode ok" style="left:240px; top:175px;">
+              <div class="web-mico" style="width:75px; height:69px;">
+                <svg width="40" height="38" viewBox="0 0 40 38" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Muro de ladrillos -->
+                  <g stroke="#fff" stroke-width="1">
+                    <!-- fila 1 -->
+                    <rect x="2" y="14" width="11" height="7" rx="1" fill="#c0392b" />
+                    <rect x="14" y="14" width="12" height="7" rx="1" fill="#e74c3c" />
+                    <rect x="27" y="14" width="11" height="7" rx="1" fill="#c0392b" />
+                    <!-- fila 2 (escalonada) -->
+                    <rect x="2" y="22" width="6" height="7" rx="1" fill="#e74c3c" />
+                    <rect x="9" y="22" width="12" height="7" rx="1" fill="#c0392b" />
+                    <rect x="22" y="22" width="12" height="7" rx="1" fill="#e74c3c" />
+                    <rect x="35" y="22" width="3" height="7" rx="1" fill="#c0392b" />
+                    <!-- fila 3 -->
+                    <rect x="2" y="30" width="11" height="6" rx="1" fill="#c0392b" />
+                    <rect x="14" y="30" width="12" height="6" rx="1" fill="#e74c3c" />
+                    <rect x="27" y="30" width="11" height="6" rx="1" fill="#c0392b" />
+                  </g>
+                  <!-- Llama -->
+                  <path d="M20 0 C24 5, 27 7, 25 12 C24 9, 22 9, 22 11 C20 7, 18 9, 19 12 C15 9, 16 4, 20 0 Z"
+                    fill="#f39c12" />
+                  <path d="M20 3 C22 6, 24 8, 22.5 11 C21 8, 19 9, 20 11 C18 9, 18 6, 20 3 Z" fill="#e74c3c" />
+                </svg>
+              </div>
+              <div class="web-mlabel">Firewall principal</div>
+              <div class="web-mstatus ok">&#123;HOST.STATUS&#125; OK</div>
+            </div>
+
+
+            <!-- Nodo: switch-->
+            <div class="web-mnode ok" style="left:400px; top:175px;">
+              <div class="web-mico" style="width:75px; height:69px;">
+         <svg width="60" height="34" viewBox="0 0 60 34">
+              <rect x="5" y="10" width="50" height="16" rx="3" fill="#7a8a96"></rect>
+              <rect x="10" y="18" width="5" height="4" fill="#0e3a47"></rect>
+              <rect x="18" y="18" width="5" height="4" fill="#0e3a47"></rect>
+              <rect x="26" y="18" width="5" height="4" fill="#0e3a47"></rect>
+              <rect x="34" y="18" width="5" height="4" fill="#0e3a47"></rect>
+              <rect x="42" y="18" width="5" height="4" fill="#0e3a47"></rect>
+              <circle cx="50" cy="14" r="1.8" fill="#7fe0a3"></circle>
+            </svg>
+              </div>
+              <div class="web-mlabel">Switch red 80</div>
+              <div class="web-mstatus ok">&#123;HOST.STATUS&#125; OK</div>
+            </div>
+
+            <!-- Nodo: shop.tecnolts.com (arriba derecha) -->
+            <div class="web-mnode ok" id="web-map-node" style="left:600px; top:80px;">
+              <div class="web-mico" id="web-map-ico" style="font-size:26px; width:75px; height:69px;">&#127760;</div>
+              <div class="web-mlabel">shop.tecnolts.com</div>
+              <div class="web-mstatus ok" id="web-map-node-status">&#123;HOST.STATUS&#125; OK</div>
+            </div>
+
+            <!-- Nodo: Servidor Host (abajo derecha) -->
+            <div class="web-mnode ok" style="left:600px; top:250px;">
+              <div class="web-mico" style="width:75px; height:69px;">
+                <svg width="34" height="40" viewBox="0 0 34 40">
+                  <rect x="3" y="2" width="28" height="11" rx="2" fill="#1c6c87" stroke="#2d86a0" stroke-width="1" />
+                  <circle cx="8" cy="7.5" r="2" fill="#7fe0a3" />
+                  <rect x="3" y="15" width="28" height="11" rx="2" fill="#1c6c87" stroke="#2d86a0" stroke-width="1" />
+                  <circle cx="8" cy="20.5" r="2" fill="#7fe0a3" />
+                  <rect x="3" y="28" width="28" height="11" rx="2" fill="#1c6c87" stroke="#2d86a0" stroke-width="1" />
+                  <circle cx="8" cy="33.5" r="2" fill="#7fe0a3" />
+                </svg>
+              </div>
+              <div class="web-mlabel">Servidor Host</div>
+              <div class="web-mstatus ok">&#123;HOST.STATUS&#125; OK</div>
+            </div>
+
+
+            <!-- Badge de caída flotante -->
+            <div class="web-map-badge" id="web-map-badge" style="left:585px; top:130px;">&#10007; HTTP 503 &middot; sin
+              respuesta</div>
+          </div>
+          <div class="web-map-status" id="web-map-status">&#9679;&nbsp; Todos los servicios operativos</div>
+        </div>
+
+      </div>
+
+      <!-- Barra de acciones automaticas -->
+      <div class="web-action">
+        <div class="web-step s1" id="web-step-1">
+          <div class="ic">&#9888;</div>
+          <div>
+            <div class="tt">Evento detectado</div>
+            <div class="ds">Chequeo HTTP &middot; respuesta 503</div>
+          </div>
+        </div>
+        <div class="web-step-arrow">&#8594;</div>
+        <div class="web-step s2" id="web-step-2">
+          <div class="ic">&#9881;</div>
+          <div>
+            <div class="tt">Acci&oacute;n autom&aacute;tica</div>
+            <div class="ds" id="web-step-2-sub">systemctl restart nginx</div>
+          </div>
+        </div>
+        <div class="web-step-arrow">&#8594;</div>
+        <div class="web-step s3" id="web-step-3">
+          <div class="ic">&#10003;</div>
+          <div>
+            <div class="tt">Servicio restablecido</div>
+            <div class="ds">Sitio activo &middot; sin intervenci&oacute;n manual</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumen ejecutivo: las 2 funcionalidades en lenguaje de negocio -->
+      <div class="web-summary">
+        <div class="ws-lead">En pocas palabras, este servicio hace <b>2 cosas</b> por tu empresa:</div>
+        <div>
+          <div class="ws-item" style="margin-bottom: 1%;">
+            <span class="ws-num">1</span>
+            <div>
+              <span class="ws-h">Vigila tus servicios las 24 horas</span>
+              <span class="ws-tx">Sabemos al instante si tu sitio, correo o sistema deja de funcionar &mdash; lo detectamos nosotros, antes de que lo note un cliente.</span>
+            </div>
+          </div>
+          <div class="ws-item">
+            <span class="ws-num">2</span>
+            <div>
+              <span class="ws-h">Resuelve solo, sin esperar a nadie</span>
+              <span class="ws-tx">Ante una falla, el sistema reacciona autom&aacute;ticamente (reinicia el servicio y avisa al equipo). Menos tiempo ca&iacute;do y menos dependencia de que alguien est&eacute; mirando.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: Reporte automático (timeline 24h) -->
+    <div class="slide" style="justify-content:flex-start; padding:80px 70px;">
+      <div style="align-self:flex-start;">
+        <h3 style="margin-bottom:0;">Reporte ejecutivo automatizado</h3>
+        <div class="cap-claim">El sistema vigila la red todo el día y, cada mañana, envía solo un resumen claro a la gerencia</div>
+      </div>
+
+      <div class="rpt-stage">
+
+        <!-- ===== ESCENA A: el día (timeline 24 h) ===== -->
+        <div class="rpt-day" id="rpt-day">
+
+          <div class="rpt-day-top">
+
+          <!-- Reloj analógico -->
+          <div class="rpt-clockwrap">
+            <div class="rpt-live"><span class="rpt-livedot"></span> SISTEMA REGISTRANDO 24/7</div>
+            <svg class="rpt-aclock" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="100" r="94" fill="#fff" stroke="var(--line)" stroke-width="2"/>
+              <circle cx="100" cy="100" r="94" fill="none" stroke="var(--teal)" stroke-width="3" opacity="0.18"/>
+              <g id="rpt-ticks"></g>
+              <line id="rpt-hand-h" x1="100" y1="108" x2="100" y2="58" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/>
+              <line id="rpt-hand-m" x1="100" y1="110" x2="100" y2="34" stroke="var(--teal)" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="100" cy="100" r="7" fill="var(--ink)"/>
+              <circle cx="100" cy="100" r="3" fill="#fff"/>
+            </svg>
+            <div class="rpt-date" id="rpt-date">Día 1 · 09:00 a.m.</div>
+            <div class="rpt-counter">Eventos registrados<b id="rpt-evcount">0</b></div>
+            <div class="rpt-srvs">
+              <div class="rpt-srv"><span class="rpt-dot" id="rpt-d1"></span> srv-web</div>
+              <div class="rpt-srv"><span class="rpt-dot" id="rpt-d2"></span> srv-app</div>
+              <div class="rpt-srv"><span class="rpt-dot" id="rpt-d3"></span> srv-db</div>
+            </div>
+          </div>
+
+          <!-- 4 gráficos: CPU · RAM · Red · Disponibilidad -->
+          <div class="rpt-grid4">
+            <div class="rpt-mini">
+              <div class="rpt-mini-head"><span class="rpt-mini-dot" style="background:#1c6c87;"></span> CPU<span class="rpt-mini-val" id="rpt-cpu-val" style="color:#1c6c87;">—</span></div>
+              <div class="rpt-mini-svg">
+                <svg viewBox="0 0 440 200" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="34" y1="20" x2="430" y2="20" stroke="#eef2f5"/><line x1="34" y1="95" x2="430" y2="95" stroke="#eef2f5"/><line x1="34" y1="170" x2="430" y2="170" stroke="#dfe6eb"/>
+                  <line x1="34" y1="42.5" x2="430" y2="42.5" stroke="#d64545" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+                  <clipPath id="rpt-cpu-clip"><rect id="rpt-cpu-rev" x="0" y="0" width="0" height="200"/></clipPath>
+                  <g clip-path="url(#rpt-cpu-clip)"><path id="rpt-cpu-area" d="" fill="rgba(28,108,135,0.15)"/><polyline id="rpt-cpu-line" points="" fill="none" stroke="#1c6c87" stroke-width="2.2" stroke-linejoin="round"/></g>
+                  <circle id="rpt-cpu-cur" cx="34" cy="170" r="4.5" fill="#1c6c87"/>
+                </svg>
+              </div>
+            </div>
+            <div class="rpt-mini">
+              <div class="rpt-mini-head"><span class="rpt-mini-dot" style="background:#7a5cc4;"></span> RAM<span class="rpt-mini-val" id="rpt-ram-val" style="color:#7a5cc4;">—</span></div>
+              <div class="rpt-mini-svg">
+                <svg viewBox="0 0 440 200" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="34" y1="20" x2="430" y2="20" stroke="#eef2f5"/><line x1="34" y1="95" x2="430" y2="95" stroke="#eef2f5"/><line x1="34" y1="170" x2="430" y2="170" stroke="#dfe6eb"/>
+                  <line x1="34" y1="42.5" x2="430" y2="42.5" stroke="#d64545" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+                  <clipPath id="rpt-ram-clip"><rect id="rpt-ram-rev" x="0" y="0" width="0" height="200"/></clipPath>
+                  <g clip-path="url(#rpt-ram-clip)"><path id="rpt-ram-area" d="" fill="rgba(122,92,196,0.15)"/><polyline id="rpt-ram-line" points="" fill="none" stroke="#7a5cc4" stroke-width="2.2" stroke-linejoin="round"/></g>
+                  <circle id="rpt-ram-cur" cx="34" cy="170" r="4.5" fill="#7a5cc4"/>
+                </svg>
+              </div>
+            </div>
+            <div class="rpt-mini">
+              <div class="rpt-mini-head"><span class="rpt-mini-dot" style="background:#2f9e5e;"></span> Red<span class="rpt-mini-val" id="rpt-net-val" style="color:#2f9e5e;">—</span></div>
+              <div class="rpt-mini-svg">
+                <svg viewBox="0 0 440 200" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="34" y1="20" x2="430" y2="20" stroke="#eef2f5"/><line x1="34" y1="95" x2="430" y2="95" stroke="#eef2f5"/><line x1="34" y1="170" x2="430" y2="170" stroke="#dfe6eb"/>
+                  <line x1="34" y1="42.5" x2="430" y2="42.5" stroke="#d64545" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+                  <clipPath id="rpt-net-clip"><rect id="rpt-net-rev" x="0" y="0" width="0" height="200"/></clipPath>
+                  <g clip-path="url(#rpt-net-clip)"><path id="rpt-net-area" d="" fill="rgba(47,158,94,0.15)"/><polyline id="rpt-net-line" points="" fill="none" stroke="#2f9e5e" stroke-width="2.2" stroke-linejoin="round"/></g>
+                  <circle id="rpt-net-cur" cx="34" cy="170" r="4.5" fill="#2f9e5e"/>
+                </svg>
+              </div>
+            </div>
+            <div class="rpt-mini">
+              <div class="rpt-mini-head"><span class="rpt-mini-dot" style="background:#2d869f;"></span> Disponibilidad<span class="rpt-mini-val" id="rpt-av-val" style="color:#2d869f;">—</span></div>
+              <div class="rpt-mini-svg">
+                <svg viewBox="0 0 440 200" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="34" y1="20" x2="430" y2="20" stroke="#eef2f5"/><line x1="34" y1="95" x2="430" y2="95" stroke="#eef2f5"/><line x1="34" y1="170" x2="430" y2="170" stroke="#dfe6eb"/>
+                  <clipPath id="rpt-av-clip"><rect id="rpt-av-rev" x="0" y="0" width="0" height="200"/></clipPath>
+                  <g clip-path="url(#rpt-av-clip)"><path id="rpt-av-area" d="" fill="rgba(45,134,159,0.15)"/><polyline id="rpt-av-line" points="" fill="none" stroke="#2d869f" stroke-width="2.2" stroke-linejoin="round"/></g>
+                  <circle id="rpt-av-cur" cx="34" cy="170" r="4.5" fill="#2d869f"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          </div><!-- /rpt-day-top -->
+
+          <!-- Bitácora: los eventos del día se van listando aquí -->
+          <div class="rpt-evlog">
+            <div class="rpt-evlog-head"><span class="lvd"></span> Eventos registrados durante el día</div>
+            <div class="rpt-evlist" id="rpt-evlist"></div>
+          </div>
+        </div>
+
+        <!-- ===== ESCENA B: el correo ===== -->
+        <div class="rpt-mail" id="rpt-mail">
+
+          <!-- Sobre volando (envío 08:00) -->
+          <div class="rpt-fly" id="rpt-fly"><span style="font-size:20px;">&#9993;</span> Generando y enviando reporte de las últimas 24 h…</div>
+
+          <!-- Bandeja de entrada -->
+          <div class="rpt-inbox" id="rpt-inbox">
+            <div class="rpt-inbox-head"><span style="font-size:18px;">&#128231;</span> Bandeja de entrada · gerencia@empresa.com</div>
+            <div class="rpt-mailrow muted"><span class="rpt-mdot"></span><div class="rpt-mfrom">facturacion@proveedor.com</div><div class="rpt-msubj">Factura mensual de servicios</div><div class="rpt-mtime">07:12</div></div>
+            <div class="rpt-mailrow new" id="rpt-newmail"><span class="rpt-mdot on"></span><div class="rpt-mfrom">monitoreo@tecnolts.com</div><div class="rpt-msubj"><b>Reporte ejecutivo · Infraestructura — últimas 24 h</b></div><div class="rpt-mtime">08:00</div></div>
+            <div class="rpt-mailrow muted"><span class="rpt-mdot"></span><div class="rpt-mfrom">rrhh@empresa.com</div><div class="rpt-msubj">Recordatorio reunión semanal</div><div class="rpt-mtime">06:40</div></div>
+          </div>
+
+          <!-- Correo abierto: el reporte -->
+          <div class="rpt-open" id="rpt-open">
+            <div class="rpt-open-head">
+              <div class="rpt-mailbadge">&#128202;</div>
+              <div>
+                <div class="rpt-open-subj">Reporte ejecutivo · Infraestructura — últimas 24 h</div>
+                <div class="rpt-open-meta">de <b>monitoreo@tecnolts.com</b> · para gerencia@empresa.com · hoy 08:00</div>
+              </div>
+              <div class="rpt-open-auto">Automático</div>
+            </div>
+
+            <div class="rpt-open-kpis">
+              <div class="rpt-kpi"><div class="rpt-kpi-v" style="color:var(--green);">99.98%</div><div class="rpt-kpi-l">Disponibilidad global</div></div>
+              <div class="rpt-kpi"><div class="rpt-kpi-v">142.3k</div><div class="rpt-kpi-l">Peticiones atendidas</div></div>
+              <div class="rpt-kpi"><div class="rpt-kpi-v" style="color:var(--amber);">88%</div><div class="rpt-kpi-l">Pico máx. de consumo</div></div>
+              <div class="rpt-kpi"><div class="rpt-kpi-v" style="color:var(--teal);">2</div><div class="rpt-kpi-l">Incidentes · auto-resueltos</div></div>
+            </div>
+
+            <div class="rpt-open-body">
+              <!-- Columna izquierda: 4 gráficas del día (pequeñas) -->
+              <div class="rpt-rep-charts">
+                <div class="rpt-rep-stitle">Comportamiento &middot; últimas 24 h</div>
+                <div class="rpt-spark-grid">
+                  <div class="rpt-spark">
+                    <div class="rpt-spark-head"><span class="rpt-spark-dot" style="background:#1c6c87;"></span> CPU <span class="rpt-spark-val">pico 90%</span></div>
+                    <svg viewBox="0 0 200 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><polyline points="4,38 24,34 44,28 64,31 84,24 104,8 124,28 144,36 164,40 184,42 196,38" fill="none" stroke="#1c6c87" stroke-width="2" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="rpt-spark">
+                    <div class="rpt-spark-head"><span class="rpt-spark-dot" style="background:#7a5cc4;"></span> RAM <span class="rpt-spark-val">prom 70%</span></div>
+                    <svg viewBox="0 0 200 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><polyline points="4,22 24,20 44,18 64,16 84,15 104,16 124,15 144,17 164,16 184,18 196,17" fill="none" stroke="#7a5cc4" stroke-width="2" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="rpt-spark">
+                    <div class="rpt-spark-head"><span class="rpt-spark-dot" style="background:#2f9e5e;"></span> Red <span class="rpt-spark-val">pico 85%</span></div>
+                    <svg viewBox="0 0 200 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><polyline points="4,32 24,26 44,20 64,28 84,24 104,12 124,22 144,30 164,36 184,40 196,34" fill="none" stroke="#2f9e5e" stroke-width="2" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="rpt-spark">
+                    <div class="rpt-spark-head"><span class="rpt-spark-dot" style="background:#2d869f;"></span> Disponibilidad <span class="rpt-spark-val">99.9%</span></div>
+                    <svg viewBox="0 0 200 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><polyline points="4,10 24,10 44,10 64,11 84,10 104,15 124,11 144,10 164,10 184,10 196,10" fill="none" stroke="#2d869f" stroke-width="2" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Columna derecha: disponibilidad por servicio -->
+              <div class="rpt-rep-hosts">
+                <div class="rpt-rep-stitle">Disponibilidad por servicio</div>
+                <div class="rpt-host">
+                  <div class="rpt-host-top"><span class="rpt-host-name"><span class="rpt-host-ic">&#128451;</span> Base de datos</span><span class="rpt-host-pct">99.98%</span></div>
+                  <div class="rpt-host-bar"><div class="rpt-host-fill" style="width:99.98%;"></div></div>
+                </div>
+                <div class="rpt-host">
+                  <div class="rpt-host-top"><span class="rpt-host-name"><span class="rpt-host-ic">&#128230;</span> Contenedor app tienda</span><span class="rpt-host-pct">100%</span></div>
+                  <div class="rpt-host-bar"><div class="rpt-host-fill" style="width:100%;"></div></div>
+                </div>
+                <div class="rpt-host">
+                  <div class="rpt-host-top"><span class="rpt-host-name"><span class="rpt-host-ic">&#127760;</span> Página web</span><span class="rpt-host-pct">100%</span></div>
+                  <div class="rpt-host-bar"><div class="rpt-host-fill" style="width:100%;"></div></div>
+                </div>
+                <div class="rpt-host">
+                  <div class="rpt-host-top"><span class="rpt-host-name"><span class="rpt-host-ic">&#9993;</span> Servicio de correo</span><span class="rpt-host-pct">99.97%</span></div>
+                  <div class="rpt-host-bar"><div class="rpt-host-fill" style="width:99.97%;"></div></div>
+                </div>
+                <div class="rpt-host-foot"><span class="li-ok">&#10003;</span> Generado por Monitoreo TecnoLTS · sin intervención humana</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Slide 7: Cierre -->
+    <div class="slide slide-cierre">
+      <div class="cierre-logo"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+      <h2>Llevemos tu infraestructura al siguiente nivel</h2>
+      <div class="accent-rule"></div>
+      <div class="cierre-sub">Visibilidad total, <b>respuesta automática</b> y decisiones basadas en datos — las 24 horas del día.</div>
+
+      <!-- CTA Demo -->
+      <a class="cierre-demo" href="https://tecnolts.com/MonitorDeInfraestructura/" target="_blank" rel="noopener">
+        <span class="demo-ic">&#9658;</span>
+        <div>
+          <div class="demo-l">Explora la demo en vivo</div>
+          <div class="demo-u">tecnolts.com/MonitorDeInfraestructura</div>
+        </div>
+      </a>
+
+      <!-- Contactos -->
+      <div class="cierre-contacts">
+        <div class="cc-col">
+          <div class="cc-title">Nuestra web</div>
+          <a class="cc-web" href="https://tecnolts.com/" target="_blank" rel="noopener"><span class="cc-ic">&#127760;</span> tecnolts.com</a>
+        </div>
+        <div class="cc-col">
+          <div class="cc-title">Escríbenos</div>
+          <div class="cc-grid">
+            <a class="cc-mail" href="mailto:dnavas@tecnolts.com"><span class="cc-ic">&#9993;</span> dnavas@tecnolts.com</a>
+            <a class="cc-mail" href="mailto:evasquez@tecnolts.com"><span class="cc-ic">&#9993;</span> evasquez@tecnolts.com</a>
+            <a class="cc-mail" href="mailto:gvasquez@tecnolts.com"><span class="cc-ic">&#9993;</span> gvasquez@tecnolts.com</a>
+            <a class="cc-mail" href="mailto:comercial@tecnolts.com"><span class="cc-ic">&#9993;</span> comercial@tecnolts.com</a>
+          </div>
+        </div>
+      </div>
+
+      <a class="cierre-volver" href="Portafolio TecnoLTS.html#servicios" style="margin-top:42px; display:inline-flex; align-items:center; gap:10px; padding:14px 30px; border:1.5px solid var(--teal); border-radius:12px; color:var(--teal); text-decoration:none; font-family:'Montserrat'; font-weight:700; font-size:18px; transition:all .2s;" onmouseover="this.style.background='var(--teal)';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='var(--teal)';">&#8592; Volver a Nuestros servicios</a>
+
+      <div class="cierre-foot">TecnoLTS · Monitoreo de Infraestructura Tecnológica</div>
+    </div>
+
+  <div class="ui-label" id="slide-label">01 — Portada</div>
+  <div class="ui-logo"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+
+  <div class="nav-buttons">
+    <a href="Portafolio TecnoLTS.html#servicios" style="padding:10px 18px; border:1px solid var(--line); background:#fff; color:var(--ink-soft); border-radius:6px; font-size:15px; font-weight:600; text-decoration:none; display:inline-flex; align-items:center;">&#8962; Servicios</a>
+    <button id="btn-prev">← Anterior</button>
+    <button id="btn-next">Siguiente →</button>
+  </div>
+
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    let playhead = 0;
+    let lastTime = Date.now();
+
+    const slides = [
+      { name: 'Portada', duration: 3 },
+      { name: 'Capacidad', duration: 9 },
+      { name: 'Alertas', duration: 12 },
+      { name: 'Red', duration: 11 },
+      { name: 'Servicios', duration: 20 },
+      { name: 'Reporte', duration: 26 },
+      { name: 'Cierre', duration: 6 }
+    ];
+
+    function goToSlide(n) {
+      if (n < 0 || n >= slides.length) return;
+      document.querySelectorAll('.slide').forEach((s, i) => s.classList.toggle('active', i === n));
+      currentSlide = n;
+      playhead = 0;
+      document.getElementById('slide-label').textContent = `${String(n + 1).padStart(2, '0')} — ${slides[n].name}`;
+      updateButtons();
+    }
+
+    function updateButtons() {
+      document.getElementById('btn-prev').disabled = currentSlide === 0;
+      document.getElementById('btn-next').disabled = currentSlide === slides.length - 1;
+    }
+
+    document.getElementById('btn-prev').addEventListener('click', () => goToSlide(currentSlide - 1));
+    document.getElementById('btn-next').addEventListener('click', () => goToSlide(currentSlide + 1));
+
+    function animate() {
+      const now = Date.now();
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      playhead += dt;
+      if (playhead > slides[currentSlide].duration) playhead = slides[currentSlide].duration;
+
+      const t = Math.min(1, playhead / slides[currentSlide].duration);
+
+      // Animar RAM + migración en Capacidad (slide 1)
+      if (currentSlide === 1) {
+        const clamp = (x) => Math.max(0, Math.min(1, x));
+        const colorFor = (v) => v >= 85 ? '#d64545' : (v >= 70 ? '#c9821a' : '#2f9e5e');
+
+        // RAM gauges: A 98->60, B 33->58 (migración en t 0.48-0.82)
+        const p = clamp((t - 0.48) / 0.34);
+        const ramA = Math.round(98 - 38 * p);
+        const ramB = Math.round(33 + 25 * p);
+
+        const barA = document.getElementById('ram-a-bar');
+        const valA = document.getElementById('ram-a-val');
+        if (barA) { barA.style.width = ramA + '%'; barA.style.background = colorFor(ramA); }
+        if (valA) { valA.textContent = ramA + '%'; valA.style.color = colorFor(ramA); }
+
+        const barB = document.getElementById('ram-b-bar');
+        const valB = document.getElementById('ram-b-val');
+        if (barB) { barB.style.width = ramB + '%'; barB.style.background = colorFor(ramB); }
+        if (valB) { valB.textContent = ramB + '%'; valB.style.color = colorFor(ramB); }
+
+        // Status dots: columna izquierda (chart headers)
+        const dotA = document.getElementById('dot-a');
+        const dotB = document.getElementById('dot-b');
+        if (dotA) { dotA.style.background = colorFor(ramA); dotA.style.boxShadow = '0 0 6px ' + colorFor(ramA); }
+        if (dotB) { dotB.style.background = colorFor(ramB); dotB.style.boxShadow = '0 0 6px ' + colorFor(ramB); }
+        // Status dots: columna derecha (server cards)
+        const dotACard = document.getElementById('dot-a-card');
+        const dotBCard = document.getElementById('dot-b-card');
+        if (dotACard) { dotACard.style.background = colorFor(ramA); dotACard.style.boxShadow = '0 0 6px ' + colorFor(ramA); }
+        if (dotBCard) { dotBCard.style.background = colorFor(ramB); dotBCard.style.boxShadow = '0 0 6px ' + colorFor(ramB); }
+
+        // Panel Zabbix Problems
+        document.getElementById('zbx-problems').style.opacity = clamp((t - 0.05) / 0.08);
+        const resolved = t > 0.80;
+        const sev = document.getElementById('sev-badge');
+        const status = document.getElementById('prob-status');
+        const probText = document.getElementById('prob-text');
+        if (resolved) {
+          sev.style.background = '#2f9e5e'; sev.style.color = '#fff'; sev.textContent = 'OK';
+          status.style.color = '#2f9e5e'; status.textContent = '● RESOLVED';
+          probText.innerHTML = 'Memoria RAM normalizada (60%) tras migracion';
+        } else {
+          sev.style.background = '#d64545'; sev.style.color = '#fff'; sev.textContent = 'HIGH';
+          status.style.color = '#d64545'; status.textContent = '● PROBLEM';
+          probText.innerHTML = 'Memoria RAM utilizada &gt; 90% (' + ramA + '%)';
+        }
+
+        // Callout servicio culpable (0.20 -> 0.62)
+        const culprit = document.getElementById('culprit');
+        if (culprit) {
+          const cIn = clamp((t - 0.20) / 0.06);
+          const cOut = 1 - clamp((t - 0.58) / 0.06);
+          culprit.style.opacity = Math.min(cIn, cOut);
+        }
+
+        // ---- Migracion del servicio A -> B: paquete que viaja 3s (t 0.42 -> 0.75) ----
+        // Con duracion de slide 9s, 0.33 de t = 3 segundos.
+        const MIG_START = 0.42, MIG_END = 0.75;
+        const packet = document.getElementById('migrate-packet');
+        const cardA = document.getElementById('srv-card-a');
+        const cardB = document.getElementById('srv-card-b');
+        if (packet) {
+          if (t >= MIG_START && t <= MIG_END) {
+            const mp = clamp((t - MIG_START) / (MIG_END - MIG_START));
+            // Trayecto horizontal de A (20%) a B (80%) con easing suave
+            const ease = mp < 0.5 ? 2 * mp * mp : 1 - Math.pow(-2 * mp + 2, 2) / 2;
+            const leftPct = 20 + ease * 60;
+            // Arco vertical leve (sube y baja) para dar sensacion de "vuelo"
+            const lift = -Math.sin(mp * Math.PI) * 34;
+            // Pop de entrada y salida
+            const fadeIn = clamp(mp / 0.12);
+            const fadeOut = 1 - clamp((mp - 0.88) / 0.12);
+            const op = Math.min(fadeIn, fadeOut);
+            const scale = 0.6 + op * 0.5;
+            packet.style.left = leftPct + '%';
+            packet.style.transform = 'translate(-50%, calc(-50% + ' + lift + 'px)) scale(' + scale + ')';
+            packet.style.opacity = op;
+          } else {
+            packet.style.opacity = 0;
+          }
+          // Resaltar tarjeta origen (A) mientras prepara, destino (B) al recibir
+          if (cardA) {
+            const onA = (t >= MIG_START - 0.04 && t < (MIG_START + MIG_END) / 2);
+            cardA.style.boxShadow = onA ? '0 0 0 2px var(--teal), 0 12px 30px rgba(28,108,135,0.25)' : '';
+          }
+          if (cardB) {
+            const onB = (t >= (MIG_START + MIG_END) / 2 && t <= MIG_END + 0.06);
+            cardB.style.boxShadow = onB ? '0 0 0 2px var(--green), 0 12px 30px rgba(47,158,94,0.28)' : '';
+          }
+        }
+
+        // Graficas lado izquierdo: clip reveal + cursor sincronizado
+        const chartRevP = clamp((t - 0.05) / 0.90);
+        const revealW = 36 + chartRevP * 268;
+        const chartAR = document.getElementById('chart-a-reveal');
+        const chartBR = document.getElementById('chart-b-reveal');
+        if (chartAR) chartAR.setAttribute('width', revealW);
+        if (chartBR) chartBR.setAttribute('width', revealW);
+
+        // Interpolacion del cursor sobre los puntos de datos
+        const cxPts = [36, 81, 125, 170, 215, 259, 304];
+        const cyA = [16, 14.8, 12.4, 13.6, 14.8, 52, 58];
+        const cyB = [90.4, 89.2, 90.4, 89.2, 88, 70, 60.4];
+        const cx = Math.min(304, revealW);
+        let curAY = cyA[0], curBY = cyB[0];
+        for (let i = 0; i < cxPts.length - 1; i++) {
+          if (cx >= cxPts[i] && cx <= cxPts[i + 1]) {
+            const lp = (cx - cxPts[i]) / (cxPts[i + 1] - cxPts[i]);
+            curAY = cyA[i] + lp * (cyA[i + 1] - cyA[i]);
+            curBY = cyB[i] + lp * (cyB[i + 1] - cyB[i]);
+            break;
+          }
+        }
+        const cursorA = document.getElementById('chart-a-cursor');
+        const cursorB = document.getElementById('chart-b-cursor');
+        if (cursorA) { cursorA.setAttribute('cx', cx.toFixed(1)); cursorA.setAttribute('cy', curAY.toFixed(1)); cursorA.setAttribute('fill', colorFor(ramA)); }
+        if (cursorB) { cursorB.setAttribute('cx', cx.toFixed(1)); cursorB.setAttribute('cy', curBY.toFixed(1)); cursorB.setAttribute('fill', colorFor(ramB)); }
+
+        // Linea de migracion en graficas: aparece cuando el cursor pasa x=215
+        const migOp = cx >= 213 ? clamp((cx - 213) / 4) : 0;
+        const chartAMig = document.getElementById('chart-a-mig');
+        const chartBMig = document.getElementById('chart-b-mig');
+        if (chartAMig) chartAMig.setAttribute('opacity', migOp);
+        if (chartBMig) chartBMig.setAttribute('opacity', migOp);
+
+        // Color de linea A cambia a verde tras la migracion
+        const chartALine = document.getElementById('chart-a-line');
+        const chartAGrad = document.getElementById('chart-a-grad-top');
+        if (chartALine && t > 0.82) {
+          chartALine.setAttribute('stroke', '#2f9e5e');
+          if (chartAGrad) chartAGrad.setAttribute('stop-color', 'rgba(47,158,94,0.20)');
+        } else if (chartALine) {
+          chartALine.setAttribute('stroke', '#d64545');
+          if (chartAGrad) chartAGrad.setAttribute('stop-color', 'rgba(214,69,69,0.20)');
+        }
+
+        // Conclusion
+        document.getElementById('cap-conclusion').style.opacity = clamp((t - 0.86) / 0.1);
+      }
+
+      // Animar monitor de CPU en Eventos disruptivos (slide index 2)
+      if (currentSlide === 2) {
+        const clamp = (x) => Math.max(0, Math.min(1, x));
+        const N = 120;
+        if (!window.__evPts) {
+          const pts = [];
+          for (let i = 0; i < N; i++) {
+            const f = i / (N - 1);
+            const r = Math.sin(i * 12.9898) * 43758.5453;
+            const n = (r - Math.floor(r)) - 0.5;
+            let v;
+            if (f < 0.45) v = 19 + n * 6;
+            else if (f < 0.50) v = 19 + (f - 0.45) / 0.05 * 79;
+            else v = 97 + n * 3;
+            pts.push(Math.max(2, Math.min(99, v)));
+          }
+          window.__evPts = pts;
+        }
+        const pts = window.__evPts;
+        const X = (i) => 50 + (i / (N - 1)) * 750;
+        const Y = (v) => 260 - (v / 100) * 240;
+        const cursorIdx = Math.floor(clamp(t) * (N - 1));
+
+        let poly = '';
+        for (let i = 0; i <= cursorIdx; i++) poly += X(i).toFixed(1) + ',' + Y(pts[i]).toFixed(1) + ' ';
+        document.getElementById('ev-line').setAttribute('points', poly.trim());
+        let area = 'M' + X(0).toFixed(1) + ',260 ';
+        for (let i = 0; i <= cursorIdx; i++) area += 'L' + X(i).toFixed(1) + ',' + Y(pts[i]).toFixed(1) + ' ';
+        area += 'L' + X(cursorIdx).toFixed(1) + ',260 Z';
+        document.getElementById('ev-area').setAttribute('d', area);
+
+        const cur = pts[cursorIdx];
+        const cursor = document.getElementById('ev-cursor');
+        cursor.setAttribute('cx', X(cursorIdx).toFixed(1));
+        cursor.setAttribute('cy', Y(cur).toFixed(1));
+
+        const cpuEl = document.getElementById('ev-cpu');
+        cpuEl.textContent = Math.round(cur) + '%';
+
+        const critical = cur >= 85;
+        const red = '#d64545', green = '#2f9e5e', teal = '#1c6c87';
+        cpuEl.style.color = critical ? red : '#0e3a47';
+        cursor.setAttribute('fill', critical ? red : teal);
+        document.getElementById('ev-line').setAttribute('stroke', critical ? red : teal);
+        document.getElementById('ev-grad-top').setAttribute('stop-color', critical ? 'rgba(214,69,69,0.26)' : 'rgba(28,108,135,0.26)');
+
+        const statusEl = document.getElementById('ev-status');
+        const dot = document.getElementById('ev-status-dot');
+        const monitor = document.querySelector('.ev-monitor');
+        if (critical) {
+          statusEl.textContent = '● CRÍTICO'; statusEl.style.color = red;
+          dot.style.background = red; dot.style.boxShadow = '0 0 8px ' + red;
+          monitor.classList.add('alarm');
+        } else {
+          statusEl.textContent = '● NORMAL'; statusEl.style.color = green;
+          dot.style.background = green; dot.style.boxShadow = '0 0 8px ' + green;
+          monitor.classList.remove('alarm');
+        }
+
+        const sustainEl = document.getElementById('ev-sustain');
+        if (t > 0.50) {
+          const secs = Math.round(clamp((t - 0.50) / 0.50) * 125);
+          const mm = String(Math.floor(secs / 60)).padStart(2, '0');
+          const ss = String(secs % 60).padStart(2, '0');
+          sustainEl.textContent = 'sostenido ' + mm + ':' + ss;
+          sustainEl.style.color = red;
+        } else {
+          sustainEl.textContent = 'estable';
+          sustainEl.style.color = '#9aa7b2';
+        }
+
+        // Zabbix envía la notificación: el sobre vuela hacia la derecha (~3 s)
+        const fly = document.getElementById('ev-fly');
+        const fp = clamp((t - 0.55) / 0.25);
+        fly.style.left = (46 + fp * 34) + '%';
+        fly.style.opacity = (t > 0.55 && t < 0.80) ? Math.min(1, clamp(fp / 0.12), clamp((1 - fp) / 0.15)) : 0;
+
+        // El recuadro del correo aparece después de “enviarse”
+        const em = document.getElementById('ev-email');
+        const sh = clamp((t - 0.80) / 0.06);
+        em.style.opacity = sh;
+        em.style.transform = 'translateX(' + (30 * (1 - sh)) + 'px)';
+      }
+
+      // Animar mapa de red en Monitoreo de red (slide index 3)
+      if (currentSlide === 3) {
+        const clamp = (x) => Math.max(0, Math.min(1, x));
+        window.__netOff = (window.__netOff || 0) - 0.30;
+        const down = t > 0.22;
+        document.querySelectorAll('.net-flow').forEach((f) => {
+          if (f.id === 'l5f') { f.style.opacity = down ? '0' : '1'; }
+          f.setAttribute('stroke-dashoffset', window.__netOff);
+        });
+
+        const pc3 = document.getElementById('net-pc3');
+        pc3.classList.toggle('down', down);
+        document.getElementById('net-pc3-sub').textContent = down ? 'sin internet' : 'en línea';
+
+        const l5 = document.getElementById('l5b');
+        l5.setAttribute('stroke', down ? '#d64545' : '#2f9e5e');
+        l5.setAttribute('stroke-dasharray', down ? '9 8' : '0');
+
+        const scanOp = (t > 0.30 && t < 0.70) ? Math.min(clamp((t - 0.30) / 0.03), clamp((0.70 - t) / 0.03)) : 0;
+        document.getElementById('net-scan').style.opacity = scanOp;
+        document.getElementById('net-isp-ok').style.opacity = clamp((t - 0.44) / 0.04);
+        document.getElementById('net-sw-ok').style.opacity = clamp((t - 0.56) / 0.04);
+        document.getElementById('net-link-bad').style.opacity = clamp((t - 0.68) / 0.04);
+
+        const conc = document.getElementById('net-conclusion');
+        const cc = clamp((t - 0.80) / 0.08);
+        conc.style.opacity = cc;
+        conc.style.transform = 'translateY(' + (12 * (1 - cc)) + 'px)';
+      }
+
+      // Animar monitoreo de servicios web (slide index 4) — 20 s
+      if (currentSlide === 4) {
+        const clamp = (x) => Math.max(0, Math.min(1, x));
+        const green = '#2f9e5e', red = '#d64545';
+
+        // Fases (sobre 20 s): activo 0-7s, caida 7-9s, detecta 9-11s, reinicio 11-14s, recuperado 14-20s
+        const DOWN_AT = 0.35;
+        const DETECT_AT = 0.44;
+        const ACTION_AT = 0.54;
+        const RECOVER_AT = 0.68;
+        const isDown = (t >= DOWN_AT && t < RECOVER_AT);
+        const detected = (t >= DETECT_AT && t < RECOVER_AT);
+
+        // ---- Reloj del mapa ----
+        const nowMs = Date.now();
+        const d = new Date(nowMs);
+        const mapClock = document.getElementById('web-map-clock');
+        if (mapClock) mapClock.textContent =
+          String(d.getHours()).padStart(2, '0') + ':' +
+          String(d.getMinutes()).padStart(2, '0') + ':' +
+          String(d.getSeconds()).padStart(2, '0');
+
+        // ---- Flujo del carril de tráfico ----
+        window.__webOff = (window.__webOff || 0) - 0.22;
+        const flow = document.getElementById('web-flow');
+        const flowArrow = document.getElementById('web-flow-arrow');
+        const laneLabel = document.getElementById('web-lane-label');
+        if (flow) {
+          flow.setAttribute('stroke-dashoffset', window.__webOff);
+          flow.setAttribute('stroke', isDown ? red : green);
+          flow.setAttribute('stroke-opacity', isDown ? '0.25' : '1');
+          if (flowArrow) flowArrow.setAttribute('fill', isDown ? red : green);
+          if (laneLabel) { laneLabel.textContent = isDown ? 'sin respuesta' : 'compras'; laneLabel.style.color = isDown ? red : green; }
+        }
+
+        // ---- Navegador ----
+        const browser = document.getElementById('web-browser');
+        const status = document.getElementById('web-status');
+        const downOv = document.getElementById('web-down');
+        const store = document.getElementById('web-store');
+        const pulse = document.getElementById('web-pulse');
+        if (browser) {
+          if (isDown) {
+            browser.classList.add('down');
+            if (status) { status.innerHTML = '● NO RESPONDE'; status.style.color = red; }
+            if (downOv) downOv.style.opacity = clamp((t - DOWN_AT) / 0.025);
+            if (store) { store.style.opacity = 1 - clamp((t - DOWN_AT) / 0.025); store.style.filter = 'grayscale(0.5)'; }
+            if (pulse) pulse.style.opacity = 0;
+          } else {
+            browser.classList.remove('down');
+            if (status) { status.innerHTML = '● EN LÍNEA'; status.style.color = green; }
+            if (downOv) downOv.style.opacity = 0;
+            if (store) { store.style.opacity = 1; store.style.filter = 'none'; }
+            if (pulse) { const ph = playhead % 1.6; pulse.style.opacity = ph < 0.6 ? (1 - ph / 0.6) : 0; }
+          }
+        }
+
+        // ---- Métricas ----
+        const respEl = document.getElementById('web-resp');
+        const countEl = document.getElementById('web-count');
+        const uptimeEl = document.getElementById('web-uptime');
+        if (respEl) {
+          if (isDown) { respEl.textContent = 'timeout'; respEl.style.color = red; }
+          else { const j = 96 + Math.round((Math.sin(playhead * 5.1) * .5 + .5) * 38); respEl.textContent = j + ' ms'; respEl.style.color = green; }
+        }
+        if (countEl) {
+          // Sube lento hasta 68 antes de la caída, se congela en caída, llega a 100 al recuperarse
+          let c;
+          if (t < DOWN_AT) c = Math.round((t / DOWN_AT) * 68);
+          else if (t < RECOVER_AT) c = 68;
+          else c = 68 + Math.round(((t - RECOVER_AT) / (1 - RECOVER_AT)) * 32);
+          countEl.textContent = c;
+          countEl.style.color = isDown ? red : '#0e3a47';
+        }
+        if (uptimeEl) { uptimeEl.textContent = detected ? '99.1%' : '100%'; uptimeEl.style.color = detected ? red : green; }
+
+        // ---- Mapa Zabbix — múltiples líneas ----
+        window.__webMapOff = (window.__webMapOff || 0) - 0.30;
+        const mapOff = window.__webMapOff;
+        // líneas de flujo (Internet→Nginx→nodos)
+        ['wml-1f', 'wml-1f2', 'wml-2f', 'wml-3f', 'wml-4f', 'wml-1b2', 'wml-1f2'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) { el.setAttribute('stroke-dashoffset', mapOff); el.style.opacity = (id === 'wml-2f' && detected) ? '0' : (id === 'wml-4f' ? '0.5' : '0.9'); }
+        });
+        // línea nginx→shop-web: color cambia a rojo cuando caída
+        const ml2b = document.getElementById('wml-2b');
+        if (ml2b) {
+          ml2b.setAttribute('stroke', detected ? red : green);
+          ml2b.setAttribute('stroke-dasharray', detected ? '9 7' : '0');
+        }
+        // nodo shop-web: clases ok/down
+        const mnode = document.getElementById('web-map-node');
+        if (mnode) { mnode.classList.toggle('down', detected); mnode.classList.toggle('ok', !detected); }
+        const mico = document.getElementById('web-map-ico');
+        if (mico) mico.style.filter = detected ? 'grayscale(1) opacity(0.5)' : 'none';
+        const mnodeStatus = document.getElementById('web-map-node-status');
+        if (mnodeStatus) {
+          if (detected) { mnodeStatus.innerHTML = '2 problemas'; mnodeStatus.className = 'web-mstatus bad'; }
+          else if (t >= RECOVER_AT) { mnodeStatus.innerHTML = '&#123;HOST.STATUS&#125; OK'; mnodeStatus.className = 'web-mstatus ok'; }
+          else { mnodeStatus.innerHTML = '&#123;HOST.STATUS&#125; OK'; mnodeStatus.className = 'web-mstatus ok'; }
+        }
+        const mbadge = document.getElementById('web-map-badge');
+        if (mbadge) mbadge.style.opacity = detected ? clamp((t - DETECT_AT) / 0.025) : 0;
+        const mstatus = document.getElementById('web-map-status');
+        if (mstatus) {
+          if (detected) { mstatus.innerHTML = '&#9679;&nbsp; shop.tecnolts.com NO DISPONIBLE'; mstatus.style.color = red; }
+          else if (t >= RECOVER_AT) { mstatus.innerHTML = '&#9679;&nbsp; Servicio restablecido · HTTP 200'; mstatus.style.color = green; }
+          else { mstatus.innerHTML = '&#9679;&nbsp; Todos los servicios operativos'; mstatus.style.color = green; }
+        }
+
+        // ---- Barra de 3 pasos ----
+        const s1 = document.getElementById('web-step-1');
+        const s2 = document.getElementById('web-step-2');
+        const s3 = document.getElementById('web-step-3');
+        if (s1) s1.classList.toggle('on', t >= DETECT_AT);
+        if (s2) s2.classList.toggle('on', t >= ACTION_AT);
+        if (s3) s3.classList.toggle('on', t >= RECOVER_AT);
+        const s2sub = document.getElementById('web-step-2-sub');
+        if (s2sub) {
+          if (t >= ACTION_AT && t < RECOVER_AT) { const dots = '.'.repeat(1 + (Math.floor(playhead * 3) % 3)); s2sub.textContent = 'systemctl restart nginx ' + dots; }
+          else if (t >= RECOVER_AT) s2sub.textContent = 'systemctl restart nginx · OK';
+          else s2sub.textContent = 'systemctl restart nginx';
+        }
+      }
+
+      // Animar automatización (slide index 5)
+      // Animar reporte automático — timeline 24 h (slide index 5)
+      if (currentSlide === 5) {
+        const clamp = (x) => Math.max(0, Math.min(1, x));
+
+        // El día transcurre de t=0 a DAY_END; en DAY_END son las 08:00 → se envía el correo
+        const DAY_END = 0.62;
+        const dayT = clamp(t / DAY_END);          // progreso del día (0..1)
+
+        // ---- Hora simulada: 09:00 → 08:00 del día siguiente (23 horas) ----
+        const totalMin = dayT * 23 * 60;          // minutos transcurridos desde 09:00
+        const absMin = (9 * 60 + totalMin) % (24 * 60);
+        const hh = Math.floor(absMin / 60);
+        const mm = Math.floor(absMin % 60);
+        const hhmm = String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0');
+        const dateEl = document.getElementById('rpt-date');
+        const isDay2 = totalMin >= (24 * 60 - 9 * 60);   // cruzó medianoche
+        if (dateEl) {
+          const dispHH = (t >= DAY_END) ? 8 : hh;
+          const ampm = (dispHH < 12) ? 'a.m.' : 'p.m.';
+          dateEl.textContent = (isDay2 || t >= DAY_END ? 'Día 2 · ' : 'Día 1 · ') + (t >= DAY_END ? '08:00' : hhmm) + ' ' + ampm;
+        }
+
+        // ---- Reloj analógico: marcas (una vez) + agujas ----
+        const ticks = document.getElementById('rpt-ticks');
+        if (ticks && !ticks.hasChildNodes()) {
+          const NS = 'http://www.w3.org/2000/svg';
+          for (let i = 0; i < 12; i++) {
+            const a = (i / 12) * Math.PI * 2;
+            const big = (i % 3 === 0);
+            const r2 = big ? 74 : 80;
+            const ln = document.createElementNS(NS, 'line');
+            ln.setAttribute('x1', (100 + Math.sin(a) * 86).toFixed(1));
+            ln.setAttribute('y1', (100 - Math.cos(a) * 86).toFixed(1));
+            ln.setAttribute('x2', (100 + Math.sin(a) * r2).toFixed(1));
+            ln.setAttribute('y2', (100 - Math.cos(a) * r2).toFixed(1));
+            ln.setAttribute('stroke', big ? '#0e3a47' : '#b9c6cd');
+            ln.setAttribute('stroke-width', big ? 3 : 1.5);
+            ln.setAttribute('stroke-linecap', 'round');
+            ticks.appendChild(ln);
+          }
+        }
+        const dispH = (t >= DAY_END) ? 8 : hh;
+        const dispM = (t >= DAY_END) ? 0 : mm;
+        const angM = (dispM / 60) * 360;
+        const angH = ((dispH % 12) / 12) * 360 + (dispM / 60) * 30;
+        const handM = document.getElementById('rpt-hand-m');
+        const handH = document.getElementById('rpt-hand-h');
+        if (handM) handM.setAttribute('transform', 'rotate(' + angM.toFixed(1) + ' 100 100)');
+        if (handH) handH.setAttribute('transform', 'rotate(' + angH.toFixed(1) + ' 100 100)');
+
+        // ---- 4 gráficos: CPU · RAM · Red · Disponibilidad ----
+        const N = 96;
+        if (!window.__rptM) {
+          const mk = (key, seed) => {
+            const arr = [];
+            for (let i = 0; i < N; i++) {
+              const f = i / (N - 1) * (key.length - 1);
+              const a = Math.floor(f), b = Math.min(key.length - 1, a + 1), fr = f - a;
+              const base = key[a] + (key[b] - key[a]) * fr;
+              const r = Math.sin(i * 7.13 + seed) * 43758.5453;
+              const noise = ((r - Math.floor(r)) - 0.5) * 3;
+              arr.push(Math.max(2, Math.min(99.9, base + noise)));
+            }
+            return arr;
+          };
+          window.__rptM = {
+            cpu: mk([30,38,46,55,48,40,42,50,58,90,70,55,60,48,40,32,26,20,16,14,15,20,28,40,46], 11),
+            ram: mk([62,64,66,68,70,69,68,70,72,78,80,76,74,70,66,64,62,60,60,61,62,63,64,66,68], 23),
+            net: mk([45,55,62,70,60,52,50,54,60,85,72,60,64,52,44,36,30,24,19,15,14,18,24,34,42], 37),
+            av:  mk([100,100,100,100,100,100,100,99.9,100,99.2,99.8,100,100,100,100,100,100,100,100,100,100,100,100,100,100], 53),
+          };
+        }
+        const NX = (i) => 34 + (i / (N - 1)) * 396;
+        const NY = (v) => 170 - (v / 100) * 150;
+        const ci = Math.floor(dayT * (N - 1));
+        [['cpu', '%'], ['ram', '%'], ['net', '%'], ['av', '%']].forEach(([k, unit]) => {
+          const arr = window.__rptM[k];
+          let pl = '';
+          for (let i = 0; i <= ci; i++) pl += NX(i).toFixed(1) + ',' + NY(arr[i]).toFixed(1) + ' ';
+          const line = document.getElementById('rpt-' + k + '-line');
+          const area = document.getElementById('rpt-' + k + '-area');
+          const cur = document.getElementById('rpt-' + k + '-cur');
+          const rev = document.getElementById('rpt-' + k + '-rev');
+          const val = document.getElementById('rpt-' + k + '-val');
+          if (line) line.setAttribute('points', pl.trim());
+          if (area) {
+            let d = 'M' + NX(0).toFixed(1) + ',170 ';
+            for (let i = 0; i <= ci; i++) d += 'L' + NX(i).toFixed(1) + ',' + NY(arr[i]).toFixed(1) + ' ';
+            d += 'L' + NX(ci).toFixed(1) + ',170 Z';
+            area.setAttribute('d', d);
+          }
+          if (cur) { cur.setAttribute('cx', NX(ci).toFixed(1)); cur.setAttribute('cy', NY(arr[ci]).toFixed(1)); }
+          if (rev) rev.setAttribute('width', NX(ci).toFixed(1));
+          if (val) { const v = arr[ci]; val.textContent = (k === 'av' ? v.toFixed(1) : Math.round(v)) + unit; }
+        });
+
+        // ---- Eventos del día que aparecen/desaparecen ----
+        const dayEvents = [
+          { at: 0.04, ic: '📈', tm: '09:15', tx: 'Pico de peticiones entrantes' },
+          { at: 0.13, ic: '🟢', tm: '11:30', tx: 'Servidores 100% disponibles' },
+          { at: 0.24, ic: '📊', tm: '14:00', tx: 'Consumo estable durante la tarde' },
+          { at: 0.34, ic: '⚠️', tm: '16:45', tx: 'Pico de CPU en srv-app · auto-mitigado' },
+          { at: 0.44, ic: '💾', tm: '19:00', tx: 'Backup automático completado' },
+          { at: 0.54, ic: '🌙', tm: '23:00', tx: 'Tráfico bajo · horario nocturno' },
+          { at: 0.78, ic: '🟢', tm: '03:00', tx: 'Consumo mínimo · todo estable' },
+          { at: 0.92, ic: '🌅', tm: '06:30', tx: 'Repunte de tráfico matutino' },
+        ];
+        let fired = 0;
+        for (const e of dayEvents) if (dayT >= e.at) fired++;
+
+        // Los eventos se van listando (y quedan) en la bitácora, con entrada animada
+        const list = document.getElementById('rpt-evlist');
+        if (list) {
+          // Si se rebobinó el slide, reconstruir la lista desde cero
+          if (list.children.length > fired) {
+            while (list.firstChild) list.removeChild(list.firstChild);
+          }
+          // Agregar los eventos que falten (normalmente uno a uno)
+          for (let k = list.children.length; k < fired; k++) {
+            const e = dayEvents[k];
+            const chip = document.createElement('div');
+            chip.className = 'rpt-ev enter';
+            chip.innerHTML = '<span class="rpt-ev-ic">' + e.ic + '</span>'
+              + '<div><div class="rpt-ev-tm">' + e.tm + '</div>'
+              + '<div class="rpt-ev-tx">' + e.tx + '</div></div>';
+            list.appendChild(chip);
+            setTimeout((el) => el && el.classList.remove('enter'), 760, chip);
+          }
+          // Solo el más reciente queda resaltado
+          for (const c of list.children) c.classList.remove('fresh');
+          if (list.lastChild && fired > 0 && t < DAY_END) list.lastChild.classList.add('fresh');
+        }
+
+        const cntEl = document.getElementById('rpt-evcount');
+        if (cntEl) cntEl.textContent = fired;
+
+        // Estado de los servidores (parpadeo ámbar en el pico)
+        const warn = (dayT >= 0.34 && dayT < 0.40);
+        const d2 = document.getElementById('rpt-d2');
+        if (d2) d2.classList.toggle('warn', warn);
+
+        // ---- Transición día → correo ----
+        const dayScene = document.getElementById('rpt-day');
+        const mailScene = document.getElementById('rpt-mail');
+        if (dayScene && mailScene) {
+          const toMail = t >= DAY_END;
+          dayScene.style.opacity = toMail ? '0' : '1';
+          dayScene.style.pointerEvents = toMail ? 'none' : 'auto';
+          mailScene.style.opacity = toMail ? '1' : '0';
+        }
+
+        // ---- Escena correo: envío → bandeja → abrir ----
+        const fly = document.getElementById('rpt-fly');
+        const inbox = document.getElementById('rpt-inbox');
+        const open = document.getElementById('rpt-open');
+        // sobre volando (0.62 → 0.70)
+        if (fly) {
+          const fp = clamp((t - 0.62) / 0.08);
+          fly.style.opacity = (t > 0.62 && t < 0.74) ? Math.min(1, clamp(fp / 0.2), clamp((1 - fp) / 0.25)) : '0';
+          fly.style.transform = 'translate(-50%,-50%) translateY(' + (-30 * fp) + 'px)';
+        }
+        // bandeja entra (0.72 → 0.80)
+        if (inbox) {
+          const ip = clamp((t - 0.72) / 0.06);
+          inbox.style.opacity = ip;
+          inbox.style.transform = 'translateX(' + (-24 * (1 - ip)) + 'px)';
+        }
+        // correo nuevo destaca
+        const nm = document.getElementById('rpt-newmail');
+        if (nm) nm.style.boxShadow = (t > 0.78 && t < 0.86) ? 'inset 0 0 0 2px var(--teal)' : 'none';
+        // correo se abre (0.84 → 0.94)
+        if (open) {
+          const op = clamp((t - 0.84) / 0.08);
+          open.style.opacity = op;
+          open.style.transform = 'translateY(' + (20 * (1 - op)) + 'px) scale(' + (0.98 + 0.02 * op) + ')';
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    updateButtons();
+    requestAnimationFrame(animate);
+
+    // Escalar lienzo 1920x1080 para que entre en cualquier viewport
+    function fitStage() {
+      const stage = document.querySelector('.slides-container');
+      const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      stage.style.transform = 'scale(' + scale + ')';
+    }
+    window.addEventListener('resize', fitStage);
+    fitStage();
+  </script>
+
+  <template id="__bundler_thumbnail" data-bg-color="#ffffff">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" fill="#ffffff" />
+      <rect x="0" y="0" width="100" height="8" fill="#1c6c87" />
+      <circle cx="50" cy="46" r="16" fill="none" stroke="#1c6c87" stroke-width="3.5" />
+      <circle cx="50" cy="46" r="4.5" fill="#1c6c87" />
+      <text x="50" y="82" font-family="monospace" font-size="12" font-weight="700" fill="#0e3a47"
+        text-anchor="middle">TecnoLTS</text>
+    </svg>
+  </template>
+
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var n = e.target;
+    while (n && n.nodeName !== 'A') { n = n.parentNode; }
+    if (!n || !n.getAttribute) return;
+    var href = n.getAttribute('href');
+    if (!href) return;
+    if (href.charAt(0) === '#') return;
+    if (/^(https?:|mailto:|tel:|data:)/i.test(href)) return;
+    e.preventDefault();
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ tlNav: href }, '*');
+    }
+  }, true);
+})();
+</script>
+</body>
+
+</html>

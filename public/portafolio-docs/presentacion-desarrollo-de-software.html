@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Desarrollo de Software · TecnoLTS</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --panel: #f3f7f9;
+  --panel-2: #eaf1f4;
+  --ink: #0e3a47;
+  --ink-soft: #3c4f57;
+  --muted: #6b7c84;
+  --teal: #1c6c87;
+  --teal-light: #2d869f;
+  --line: rgba(14,58,71,0.14);
+  --red: #d64545; --red-bg: #fbeaea;
+  --green: #2f9e5e; --green-bg: #e7f6ee;
+  --amber: #c9821a; --amber-bg: #fbf1e0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M5 2 L5 24 L11 18 L15 27 L19 25 L15 16 L23 16 Z' fill='%23c9821a' stroke='white' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 5 2, auto; }
+body { font-family: "Open Sans", sans-serif; display: flex; align-items: center; justify-content: center; }
+
+.slides-container { position: relative; width: 1920px; height: 1080px; background: var(--bg); flex: 0 0 auto; transform-origin: center center; }
+.slide { position: absolute; top: 0; left: 0; width: 1920px; height: 1080px; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 90px 110px; opacity: 0; transition: opacity 0.5s ease-in-out; }
+.slide.active { display: flex; opacity: 1; }
+
+/* Portada */
+.slide-portada::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: var(--teal); }
+.slide-portada .logo-card { margin-bottom: 50px; }
+.slide-portada .logo-card img { height: 150px; display: block; }
+.slide-portada h2 { font-size: 64px; font-weight: 800; color: var(--ink); font-family: "Montserrat"; margin-bottom: 26px; text-align: center; letter-spacing: -0.015em; }
+.slide-portada .accent-rule { width: 90px; height: 4px; background: var(--teal); border-radius: 2px; margin-bottom: 38px; }
+.slide-portada .tagline { font-size: 27px; color: var(--ink-soft); max-width: 1020px; text-align: center; line-height: 1.6; }
+.slide-portada .tagline .lead { color: var(--teal); font-weight: 600; }
+
+/* Slide genérico */
+.slide h3 { font-size: 52px; font-weight: 700; color: var(--ink); font-family: "Montserrat"; margin-bottom: 4px; align-self: flex-start; position: relative; padding-bottom: 16px; letter-spacing: -0.01em; }
+.slide h3::after { content: ""; position: absolute; left: 0; bottom: 0; width: 64px; height: 4px; background: var(--teal); border-radius: 2px; }
+.cap-claim { font-size: 22px; font-weight: 600; color: var(--teal); margin-top: 14px; }
+
+/* ===== Panorama: 3 pilares ===== */
+.dv-grid { display: flex; gap: 28px; width: 100%; margin-top: 40px; align-items: stretch; }
+.dv-pillar { flex: 1 1 0; border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: 0 12px 32px rgba(14,58,71,.09); padding: 30px 28px; display: flex; flex-direction: column; }
+.dv-p-head { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+.dv-p-ic { width: 60px; height: 60px; border-radius: 15px; background: var(--panel-2); color: var(--teal); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.dv-p-ic svg { width: 32px; height: 32px; }
+.dv-p-title { font-family: "Montserrat"; font-weight: 800; font-size: 24px; color: var(--ink); line-height: 1.1; }
+.dv-p-sub { font-size: 15px; color: var(--muted); margin: 4px 0 22px; }
+.dv-p-list { display: flex; flex-direction: column; gap: 15px; }
+.dv-item { display: flex; align-items: flex-start; gap: 13px; }
+.dv-check { width: 24px; height: 24px; border-radius: 7px; background: var(--green-bg); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex: 0 0 auto; margin-top: 1px; }
+.dv-it-t { font-family: "Montserrat"; font-weight: 700; font-size: 16px; color: var(--ink); line-height: 1.2; }
+.dv-it-d { font-size: 15.5px; color: var(--ink-soft); line-height: 1.35; margin-top: 2px; }
+
+/* Entrada animada (al activarse el slide) */
+@keyframes dvUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.slide-dev.active .dv-pillar { animation: dvUp .6s both; }
+.slide-dev.active .dv-pillar:nth-child(1) { animation-delay: .08s; }
+.slide-dev.active .dv-pillar:nth-child(2) { animation-delay: .26s; }
+.slide-dev.active .dv-pillar:nth-child(3) { animation-delay: .44s; }
+.slide-dev.active .dv-p-list .dv-item { animation: dvUp .5s both; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(1) { animation-delay: .55s; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(2) { animation-delay: .64s; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(3) { animation-delay: .73s; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(4) { animation-delay: .82s; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(5) { animation-delay: .91s; }
+
+/* ===== Franja: valor para el negocio ===== */
+.dv-benefits { width:100%; margin-top:28px; border:1px solid rgba(28,108,135,.25); border-radius:18px; background:linear-gradient(180deg,#f2f8fb,#e9f2f6); padding:22px 30px; }
+.dv-ben-head { display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:18px; }
+.dv-ben-h { font-family:"Montserrat"; font-weight:800; font-size:22px; color:var(--ink); }
+.dv-ben-h b { color:var(--teal); }
+.dv-ben-sub { font-size:15px; color:var(--ink-soft); }
+.dv-ben-grid { display:flex; gap:26px; }
+.dv-ben { flex:1 1 0; display:flex; gap:13px; align-items:flex-start; }
+.dv-ben-ic { width:42px; height:42px; border-radius:11px; background:var(--teal); color:#fff; display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+.dv-ben-ic svg { width:23px; height:23px; }
+.dv-ben-t { font-family:"Montserrat"; font-weight:700; font-size:16px; color:var(--ink); line-height:1.2; }
+.dv-ben-d { font-size:14.5px; color:var(--ink-soft); line-height:1.4; margin-top:3px; }
+.slide-dev.active .dv-benefits { animation: dvUp .6s both; animation-delay: .64s; }
+
+/* ===== Slide: Escala automática (flujo) ===== */
+.sc-bar { display:flex; align-items:center; gap:26px; width:100%; margin-top:24px; border:1px solid var(--line); border-radius:14px; background:var(--panel); padding:16px 28px; }
+.sc-users-metric { display:flex; align-items:baseline; gap:12px; flex:0 0 auto; }
+.sc-users-v { font-family:"Montserrat"; font-weight:800; font-size:44px; color:var(--ink); line-height:1; transition:color .3s; }
+.sc-users-v.hot { color:var(--amber); }
+.sc-users-l { font-family:"JetBrains Mono"; font-size:15px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+.sc-bar-spacer { flex:1 1 auto; }
+.sc-metric { text-align:right; flex:0 0 auto; }
+.sc-metric .v { font-family:"Montserrat"; font-weight:800; font-size:24px; color:var(--ink); transition:color .3s; }
+.sc-metric .v.warn { color:var(--amber); }
+.sc-metric .l { font-family:"JetBrains Mono"; font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-top:3px; }
+.sc-state { font-family:"JetBrains Mono"; font-size:15px; font-weight:700; padding:9px 16px; border-radius:20px; background:var(--green-bg); color:var(--green); white-space:nowrap; transition:all .3s; flex:0 0 auto; }
+.sc-state.warn { background:var(--amber-bg); color:var(--amber); }
+
+/* Leyenda peticiones / respuestas */
+.sc-legend { align-self:flex-start; display:flex; gap:30px; margin-top:12px; font-family:"JetBrains Mono"; font-size:14px; color:var(--muted); }
+.sc-legend i { display:inline-block; width:28px; height:0; border-top:3px dashed; vertical-align:middle; margin-right:8px; }
+.sc-legend .lg-req { border-color:var(--teal); }
+.sc-legend .lg-res { border-color:var(--green); }
+
+.sc-flow { display:flex; align-items:stretch; width:100%; margin-top:14px; height:560px; }
+/* Nodos extremos: usuarios y base de datos */
+.sc-users, .sc-db { align-self:center; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 28px rgba(14,58,71,.09); padding:24px 14px; text-align:center; }
+.sc-users { flex:0 0 210px; }
+.sc-db { flex:0 0 190px; }
+.sc-users-ic { width:76px; height:76px; border-radius:19px; background:#e4f0f4; color:var(--teal); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; }
+.sc-users-ic svg { width:42px; height:42px; }
+.sc-users-title { font-family:"Montserrat"; font-weight:700; font-size:18px; color:var(--ink); }
+.sc-users-sub { font-family:"JetBrains Mono"; font-size:14px; color:var(--muted); margin-top:6px; }
+
+/* Carriles de flujo */
+.sc-lane { align-self:stretch; flex:0 0 80px; }
+.sc-lane-c { flex-basis:90px; }
+.sc-lane svg { width:100%; height:100%; display:block; }
+
+/* Distribuidor */
+.sc-gateway { flex:0 0 210px; align-self:center; border:2px solid var(--teal); border-radius:16px; background:#fff; box-shadow:0 12px 30px rgba(28,108,135,.16); padding:20px 14px; text-align:center; }
+.sc-gw-ic { width:62px; height:62px; border-radius:16px; background:var(--teal); color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; }
+.sc-gw-ic svg { width:34px; height:34px; }
+.sc-gw-title { font-family:"Montserrat"; font-weight:800; font-size:17px; color:var(--ink); line-height:1.15; }
+.sc-gw-sub { font-family:"Open Sans"; font-size:14.5px; color:var(--ink-soft); margin-top:8px; line-height:1.35; }
+
+/* Columnas de contenedores (frontend / backend) */
+.sc-tier { flex:0 0 380px; align-self:stretch; display:flex; flex-direction:column; }
+.sc-tier-head { display:flex; align-items:center; justify-content:center; gap:12px; height:30px; font-family:"JetBrains Mono"; font-size:14.5px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+.sc-tier-count { font-family:"JetBrains Mono"; font-size:14px; font-weight:700; padding:2px 11px; border-radius:12px; background:var(--panel-2); color:var(--teal); transition:all .3s; }
+.sc-tier-count.grow { background:var(--green-bg); color:var(--green); }
+.sc-tier-cards { flex:1 1 auto; display:flex; flex-direction:column; justify-content:space-around; }
+.sc-inst { display:flex; align-items:center; gap:13px; border:1.5px dashed var(--line); border-radius:12px; background:transparent; padding:11px 16px; opacity:.4; transition:opacity .45s, border-color .35s, box-shadow .35s, background .35s; }
+.sc-inst.on { border-style:solid; border-color:var(--line); background:#fff; box-shadow:0 6px 16px rgba(14,58,71,.07); opacity:1; animation:none; }
+.sc-inst.warn { border-color:var(--amber); box-shadow:0 0 0 1px var(--amber); }
+.sc-inst.boot { border-style:solid; border-color:var(--amber); background:#fff; opacity:1; animation:scBoot 1.1s ease-in-out infinite; }
+@keyframes scBoot { 0%,100% { box-shadow:0 0 0 0 rgba(201,130,26,0); } 50% { box-shadow:0 0 0 6px rgba(201,130,26,.22); } }
+.sc-inst-ic { width:42px; height:42px; border-radius:11px; background:var(--panel-2); color:var(--muted); display:flex; align-items:center; justify-content:center; flex:0 0 auto; transition:background .35s, color .35s; }
+.sc-inst.on .sc-inst-ic { background:var(--green-bg); color:var(--green); }
+.sc-inst.boot .sc-inst-ic { background:var(--amber-bg); color:var(--amber); }
+.sc-inst.warn .sc-inst-ic { background:var(--amber-bg); color:var(--amber); }
+.sc-inst-ic svg { width:24px; height:24px; }
+.sc-inst-name { font-family:"Montserrat"; font-weight:700; font-size:15.5px; color:var(--ink); }
+.sc-inst-sub { font-family:"JetBrains Mono"; font-size:13.5px; color:var(--muted); margin-top:2px; }
+.sc-inst-tag { margin-left:auto; font-family:"JetBrains Mono"; font-size:13.5px; font-weight:700; color:var(--muted); transition:color .3s; }
+.sc-inst.on .sc-inst-tag { color:var(--green); }
+.sc-inst.boot .sc-inst-tag { color:var(--amber); }
+.sc-inst.warn .sc-inst-tag { color:var(--amber); }
+
+/* Conclusión */
+.sc-concl { width:100%; margin-top:22px; display:flex; align-items:center; gap:18px; border:1px solid var(--green); border-radius:14px; background:var(--green-bg); padding:18px 26px; opacity:0; transform:translateY(10px); transition:opacity .5s, transform .5s; }
+.sc-concl.on { opacity:1; transform:translateY(0); }
+.sc-concl-ic { width:48px; height:48px; border-radius:13px; background:#fff; color:var(--green); display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; flex:0 0 auto; }
+.sc-concl-t { font-family:"Montserrat"; font-weight:700; font-size:18px; color:var(--ink); }
+.sc-concl-t b { color:var(--green); }
+.sc-concl-d { font-size:16px; color:var(--ink-soft); margin-top:3px; line-height:1.4; }
+.sc-concl-d b { color:var(--teal); font-weight:700; }
+
+/* ===== Slide: Calidad de código (pipeline) ===== */
+.sc-state.bad { background:var(--red-bg); color:var(--red); }
+.qa-flow { display:flex; align-items:center; width:100%; margin-top:64px; position:relative; }
+.qa-node { flex:0 0 240px; border:1.5px solid var(--line); border-radius:14px; background:#fff; box-shadow:0 8px 22px rgba(14,58,71,.07); padding:18px 14px; text-align:center; opacity:.45; transition:opacity .35s, border-color .3s, box-shadow .3s; }
+.qa-node.wide { flex-basis:270px; }
+.qa-node.run { opacity:1; border-color:var(--amber); box-shadow:0 0 0 1px var(--amber); }
+.qa-node.ok { opacity:1; border-color:var(--green); }
+.qa-node.bad { opacity:1; border-color:var(--red); box-shadow:0 0 0 1px var(--red); }
+.qa-ic { width:54px; height:54px; border-radius:14px; background:var(--panel-2); color:var(--teal); display:flex; align-items:center; justify-content:center; margin:0 auto 10px; }
+.qa-ic svg { width:30px; height:30px; }
+.qa-t { font-family:"Montserrat"; font-weight:800; font-size:16.5px; color:var(--ink); line-height:1.15; }
+.qa-s { font-family:"JetBrains Mono"; font-size:14px; color:var(--muted); margin-top:7px; min-height:32px; line-height:1.35; transition:color .3s; }
+.qa-node.run .qa-s { color:var(--amber); }
+.qa-node.ok .qa-s { color:var(--green); }
+.qa-node.bad .qa-s { color:var(--red); }
+.qa-lane { flex:1 1 60px; height:3px; margin:0 12px; background:#e2e9ed; position:relative; }
+.qa-lane::after { content:""; position:absolute; inset:-1px 0; background:repeating-linear-gradient(90deg, var(--teal) 0 7px, transparent 7px 19px); opacity:0; transition:opacity .3s; animation:qaDash 1s linear infinite; }
+.qa-lane.live::after { opacity:.9; }
+@keyframes qaDash { to { background-position:19px 0; } }
+.qa-return { position:absolute; left:0; top:-58px; width:100%; height:60px; opacity:0; transition:opacity .35s; pointer-events:none; }
+.qa-return.live { opacity:1; }
+.qa-return path { stroke:var(--red); stroke-width:2.5; fill:none; stroke-dasharray:6 12; animation:qaBack 1.1s linear infinite; }
+@keyframes qaBack { to { stroke-dashoffset:-180; } }
+.qa-return text { font-family:"JetBrains Mono"; font-size:15px; font-weight:700; fill:var(--red); }
+.qa-envs { flex:0 0 280px; display:flex; flex-direction:column; gap:10px; margin-left:14px; }
+.qa-env { display:flex; align-items:center; gap:11px; border:1.5px dashed var(--line); border-radius:11px; padding:10px 14px; opacity:.45; background:transparent; transition:all .35s; }
+.qa-env.on { border-style:solid; border-color:var(--line); background:#fff; opacity:1; box-shadow:0 5px 14px rgba(14,58,71,.06); }
+.qa-env svg { width:19px; height:19px; color:var(--muted); flex:0 0 auto; transition:color .3s; }
+.qa-env.on svg { color:var(--green); }
+.qa-env-t { font-family:"Montserrat"; font-weight:700; font-size:16.5px; color:var(--ink); }
+.qa-env-s { font-family:"JetBrains Mono"; font-size:13px; color:var(--muted); margin-top:1px; }
+.qa-env .tg { margin-left:auto; font-family:"JetBrains Mono"; font-size:13px; font-weight:700; color:var(--muted); transition:color .3s; }
+.qa-env.on .tg { color:var(--green); }
+.qa-log { width:100%; margin-top:20px; background:#0c2832; border-radius:12px; padding:16px 24px; font-family:"JetBrains Mono"; font-size:16.5px; line-height:1.8; box-shadow:0 12px 30px rgba(14,58,71,.2); }
+.qa-log > div { opacity:0; transition:opacity .4s; }
+.qa-log > div.on { opacity:1; }
+.qa-log .lg { color:#7fb6c6; }
+.qa-log .er { color:#f28080; }
+.qa-log .okl { color:#7cd6a0; }
+
+/* ===== Slide: Seguridad por diseño ===== */
+.sg-flow { display:flex; align-items:center; width:100%; margin-top:168px; position:relative; }
+.sg-card { flex:0 0 250px; border:1.5px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 26px rgba(14,58,71,.08); padding:20px 16px; text-align:center; }
+.sg-card.sg-app { flex-basis:280px; border:2px solid var(--teal); box-shadow:0 12px 30px rgba(28,108,135,.16); }
+.sg-app.hit { animation:sgHit .5s ease-out; }
+@keyframes sgHit { 0% { box-shadow:0 0 0 0 rgba(214,69,69,.5); } 100% { box-shadow:0 0 0 22px rgba(214,69,69,0); } }
+.sg-ic { width:62px; height:62px; border-radius:16px; background:#e4f0f4; color:var(--teal); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; }
+.sg-app .sg-ic { background:var(--teal); color:#fff; }
+.sg-ic svg { width:34px; height:34px; }
+.sg-t { font-family:"Montserrat"; font-weight:800; font-size:17px; color:var(--ink); }
+.sg-s { font-family:"JetBrains Mono"; font-size:14px; color:var(--muted); margin-top:5px; line-height:1.4; }
+.sg-data { margin-top:11px; font-family:"JetBrains Mono"; font-size:14.5px; background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:6px 9px; color:var(--ink-soft); white-space:nowrap; overflow:hidden; }
+.sg-tunnel { flex:1 1 auto; margin:0 16px; height:72px; border:2px dashed rgba(28,108,135,.45); border-radius:36px; background:rgba(228,240,244,.5); position:relative; display:flex; align-items:center; justify-content:center; }
+.sg-cipher { font-family:"JetBrains Mono"; font-size:16.5px; color:var(--teal); letter-spacing:1.5px; white-space:nowrap; opacity:.9; }
+.sg-lock { position:absolute; top:-15px; left:50%; transform:translateX(-50%); background:var(--teal); color:#fff; border-radius:10px; padding:4px 12px; font-family:"JetBrains Mono"; font-size:13.5px; font-weight:700; white-space:nowrap; }
+.sg-atk { position:absolute; width:170px; text-align:center; opacity:0; transition:opacity .4s; }
+.sg-atk.live { opacity:1; }
+.sg-atk-l { font-family:"JetBrains Mono"; font-size:14.5px; font-weight:700; color:var(--red); background:var(--red-bg); border-radius:9px; padding:5px 11px; display:inline-block; }
+.sg-atk svg { display:block; margin:3px auto 0; }
+.sg-atk line { stroke:var(--red); stroke-width:2.5; stroke-dasharray:5 9; animation:sgAtk .7s linear infinite; }
+@keyframes sgAtk { to { stroke-dashoffset:-56; } }
+.sg-atk-b { font-family:"JetBrains Mono"; font-size:14px; font-weight:800; color:var(--red); opacity:0; transition:opacity .3s; }
+.sg-atk.blocked .sg-atk-b { opacity:1; }
+.sg-atk.blocked line { animation:none; opacity:.3; }
+.sg-chips { display:flex; gap:16px; width:100%; margin-top:28px; }
+.sg-chip { flex:1 1 0; display:flex; gap:12px; align-items:flex-start; border:1px solid var(--line); border-radius:13px; background:#fff; padding:14px 16px; box-shadow:0 6px 16px rgba(14,58,71,.06); opacity:0; transform:translateY(12px); transition:opacity .45s, transform .45s; }
+.sg-chip.on { opacity:1; transform:none; }
+.sg-chip-t { font-family:"Montserrat"; font-weight:700; font-size:15px; color:var(--ink); }
+.sg-chip-d { font-size:14.5px; color:var(--ink-soft); margin-top:2px; line-height:1.35; }
+
+/* ===== Slide: Integraciones (hub de APIs) ===== */
+.in-stage { position:relative; width:100%; height:540px; margin-top:18px; }
+.in-svg { position:absolute; inset:0; width:100%; height:100%; }
+.in-hub { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:320px; border:2px solid var(--teal); border-radius:18px; background:#fff; box-shadow:0 14px 36px rgba(28,108,135,.18); padding:24px 18px; text-align:center; }
+.in-hub-ic { width:64px; height:64px; border-radius:16px; background:var(--teal); color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; }
+.in-hub-ic svg { width:36px; height:36px; }
+.in-sat { position:absolute; width:300px; }
+.in-sat .sc-inst { padding:13px 16px; }
+
+/* Cierre */
+.slide-cierre::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: var(--teal); }
+.cierre-logo { margin-bottom: 30px; }
+.cierre-logo img { height: 110px; display: block; }
+.slide-cierre h2 { font-family: "Montserrat"; font-weight: 800; font-size: 54px; color: var(--ink); text-align: center; max-width: 1100px; line-height: 1.1; }
+.slide-cierre .accent-rule { width: 90px; height: 4px; background: var(--teal); border-radius: 2px; margin: 30px 0; }
+.cierre-sub { font-size: 24px; color: var(--ink-soft); text-align: center; max-width: 940px; line-height: 1.5; margin-bottom: 46px; }
+.cierre-sub b { color: var(--teal); font-weight: 600; }
+.cierre-back { display: flex; align-items: center; gap: 12px; padding: 17px 34px; background: var(--teal); border-radius: 14px; text-decoration: none; box-shadow: 0 16px 40px rgba(28,108,135,.3); font-family: "Montserrat"; font-weight: 700; font-size: 20px; color: #fff; }
+
+/* UI */
+.ui-label { position: absolute; top: 22px; left: 40px; font-family: "JetBrains Mono"; font-size: 14px; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; z-index: 50; font-weight: 700; }
+.ui-logo { position: absolute; top: 20px; right: 40px; z-index: 50; }
+.ui-logo img { height: 32px; display: block; }
+.nav-buttons { position: absolute; bottom: 24px; right: 40px; display: flex; gap: 12px; z-index: 50; }
+.nav-buttons .back-link { padding: 10px 18px; border: 1px solid var(--line); background: #fff; color: var(--ink-soft); border-radius: 6px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; }
+.nav-buttons .back-link:hover { border-color: var(--teal); color: var(--teal); }
+button { padding: 10px 18px; border: 1px solid var(--teal); background: #fff; color: var(--teal); cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: 600; transition: all 0.2s; font-family: "Open Sans"; box-shadow: 0 2px 8px rgba(14,58,71,0.08); }
+button:hover:not(:disabled) { background: var(--teal); color: #fff; }
+button:disabled { opacity: 0.35; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<div class="slides-container">
+
+  <!-- Slide 1: Portada -->
+  <div class="slide slide-portada active">
+    <div class="logo-card"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+    <h2>Desarrollo de software</h2>
+    <div class="accent-rule"></div>
+    <div class="tagline">
+      <div class="lead">Software a la medida de tu negocio</div>
+      <div style="margin-top: 16px;">Automatiza procesos, integra sistemas y escala tu negocio con soluciones de software a medida.</div>
+    </div>
+  </div>
+
+  <!-- Slide 2: Panorama (3 pilares) -->
+  <div class="slide slide-dev" style="justify-content:flex-start; padding-top:84px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Cómo construimos tu software</h3>
+      <div class="cap-claim">Calidad, seguridad y arquitectura preparada para crecer — en cada proyecto</div>
+    </div>
+
+    <div class="dv-grid">
+
+      <!-- Pilar 1: Código de calidad -->
+      <div class="dv-pillar">
+        <div class="dv-p-head">
+          <div class="dv-p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4"/><path d="M16 8l4 4-4 4"/><path d="M13.5 6l-3 12"/></svg></div>
+          <div><div class="dv-p-title">Código de calidad</div></div>
+        </div>
+        <div class="dv-p-sub">Ordenado, mantenible y escalable</div>
+        <div class="dv-p-list">
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Altos estándares de la industria</div><div class="dv-it-d">Código ordenado, mantenible y escalable.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Evaluación de código estático</div><div class="dv-it-d">Detecta errores, vulnerabilidades y malas prácticas a tiempo.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Control de versiones</div><div class="dv-it-d">Gestión profesional y trazabilidad total de los cambios.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Desarrollo ágil</div><div class="dv-it-d">Entregas incrementales adaptadas al negocio.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Lenguajes actuales</div><div class="dv-it-d">Tecnologías modernas según el tipo de proyecto.</div></div></div>
+        </div>
+      </div>
+
+      <!-- Pilar 2: Seguridad por diseño -->
+      <div class="dv-pillar">
+        <div class="dv-p-head">
+          <div class="dv-p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <div><div class="dv-p-title">Seguridad por diseño</div></div>
+        </div>
+        <div class="dv-p-sub">Protección desde el primer commit</div>
+        <div class="dv-p-list">
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Ciclo de vida seguro (SSDLC)</div><div class="dv-it-d">Control desde el diseño hasta la producción.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Evaluaciones OWASP y CWE</div><div class="dv-it-d">Revisión de riesgos comunes en aplicaciones.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Cifrado de información</div><div class="dv-it-d">Datos sensibles protegidos en tránsito y en reposo.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Buenas prácticas en bases de datos</div><div class="dv-it-d">Manejo seguro, ordenado y eficiente de la información.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Segregación de ambientes</div><div class="dv-it-d">Desarrollo, pruebas y producción separados.</div></div></div>
+        </div>
+      </div>
+
+      <!-- Pilar 3: Arquitectura e integración -->
+      <div class="dv-pillar">
+        <div class="dv-p-head">
+          <div class="dv-p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+          <div><div class="dv-p-title">Arquitectura e integración</div></div>
+        </div>
+        <div class="dv-p-sub">Preparada para crecer y conectarse</div>
+        <div class="dv-p-list">
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Arquitecturas modernas</div><div class="dv-it-d">Soluciones preparadas para crecer y perdurar.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Microservicios</div><div class="dv-it-d">Componentes independientes, flexibles y escalables.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Integración con APIs</div><div class="dv-it-d">Conecta sistemas internos, externos y de terceros.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Desarrollo de APIs personalizadas</div><div class="dv-it-d">Servicios a medida para conectar procesos y apps.</div></div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Valor para el negocio: ¿para qué sirve todo lo anterior? -->
+    <div class="dv-benefits">
+      <div class="dv-ben-head">
+        <div class="dv-ben-h">¿Como ayuda a tu empresa <b>todo esto</b>?</div>
+        <div class="dv-ben-sub">No es tecnología por moda — cada práctica se traduce en beneficios concretos para tu negocio:</div>
+      </div>
+      <div class="dv-ben-grid">
+        <div class="dv-ben">
+          <div class="dv-ben-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M16 7h5v5"/></svg></div>
+          <div><div class="dv-ben-t">Crece de forma ordenada</div><div class="dv-ben-d">Tu aplicación crece con tu negocio en el tiempo, sin volverse lenta ni cara de mantener.</div></div>
+        </div>
+        <div class="dv-ben">
+          <div class="dv-ben-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15l6-6"/><path d="M11.5 6.5l1-1a4 4 0 015.66 5.66l-2 2"/><path d="M12.5 17.5l-1 1a4 4 0 01-5.66-5.66l2-2"/></svg></div>
+          <div><div class="dv-ben-t">Se conecta con todo</div><div class="dv-ben-d">Se integra con otras aplicaciones y servicios del mercado — los de hoy y los que aparezcan mañana.</div></div>
+        </div>
+        <div class="dv-ben">
+          <div class="dv-ben-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5"/><path d="M9 14l2 2 4-4"/></svg></div>
+          <div><div class="dv-ben-t">Cumple con la ley de datos</div><div class="dv-ben-d">Protege los datos personales de tus clientes y cumple la normativa de protección de datos.</div></div>
+        </div>
+        <div class="dv-ben">
+          <div class="dv-ben-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M9 13l2 2 4-4"/></svg></div>
+          <div><div class="dv-ben-t">Menos fallos y sorpresas</div><div class="dv-ben-d">Pruebas, estándares y ambientes separados: entregas estables y predecibles, con menos errores.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Calidad de código (pipeline) -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Calidad de código</h3>
+      <div class="cap-claim">Cada cambio pasa controles automáticos de calidad y seguridad antes de tocar producción — los errores se corrigen en minutos</div>
+    </div>
+
+    <!-- Barra de métricas -->
+    <div class="sc-bar">
+      <div class="sc-users-metric"><div class="sc-users-v" id="qa-commits">12</div><div class="sc-users-l">cambios enviados hoy</div></div>
+      <div class="sc-bar-spacer"></div>
+      <div class="sc-metric"><div class="v" id="qa-find">0</div><div class="l">hallazgos corregidos</div></div>
+      <div class="sc-metric"><div class="v" id="qa-tests">—</div><div class="l">pruebas automáticas</div></div>
+      <div class="sc-state" id="qa-state">● en desarrollo</div>
+    </div>
+
+    <!-- Pipeline: desarrollo → versiones → análisis → pruebas → ambientes -->
+    <div class="qa-flow">
+      <svg class="qa-return" id="qa-return" viewBox="0 0 1700 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 829 56 C 640 -8, 320 -8, 130 56"/>
+        <text x="355" y="35">&#8678; se devuelve para corrección inmediata</text>
+      </svg>
+
+      <div class="qa-node run" id="qa-dev">
+        <div class="qa-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4"/><path d="M16 8l4 4-4 4"/><path d="M13.5 6l-3 12"/></svg></div>
+        <div class="qa-t">Desarrollo</div>
+        <div class="qa-s">escribiendo código…</div>
+      </div>
+      <div class="qa-lane" id="qa-l1"></div>
+      <div class="qa-node" id="qa-git">
+        <div class="qa-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="5" r="2.3"/><circle cx="6" cy="19" r="2.3"/><circle cx="18" cy="9" r="2.3"/><path d="M6 7.3v9.4M18 11.3c0 4-4 4.5-9 4.7"/></svg></div>
+        <div class="qa-t">Control de versiones</div>
+        <div class="qa-s">esperando cambios</div>
+      </div>
+      <div class="qa-lane" id="qa-l2"></div>
+      <div class="qa-node wide" id="qa-scan">
+        <div class="qa-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/><path d="M8.5 11l1.8 1.8 3.2-3.6"/></svg></div>
+        <div class="qa-t">Análisis estático</div>
+        <div class="qa-s">en espera</div>
+      </div>
+      <div class="qa-lane" id="qa-l3"></div>
+      <div class="qa-node" id="qa-test">
+        <div class="qa-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h12M9 12h12M9 19h12"/><path d="M3.5 5l1 1 2-2M3.5 12l1 1 2-2M3.5 19l1 1 2-2"/></svg></div>
+        <div class="qa-t">Pruebas automáticas</div>
+        <div class="qa-s">en espera</div>
+      </div>
+      <div class="qa-lane" id="qa-l4"></div>
+
+      <div class="qa-envs">
+        <div class="qa-env" id="qa-env1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><div><div class="qa-env-t">Desarrollo</div><div class="qa-env-s">ambiente aislado</div></div><span class="tg">—</span></div>
+        <div class="qa-env" id="qa-env2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><div><div class="qa-env-t">Pruebas</div><div class="qa-env-s">validación previa</div></div><span class="tg">—</span></div>
+        <div class="qa-env" id="qa-env3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg><div><div class="qa-env-t">Producción</div><div class="qa-env-s">solo código aprobado</div></div><span class="tg">—</span></div>
+      </div>
+    </div>
+
+    <!-- Bitácora -->
+    <div class="qa-log">
+      <div class="lg" id="qa-log1">&gt; analizando 142 archivos · estándares de la industria + seguridad (OWASP / CWE)…</div>
+      <div class="er" id="qa-log2">&#9888; CWE-89 · posible inyección SQL en pedidos.ts:87 — entrega bloqueada</div>
+      <div class="okl" id="qa-log3">&#10003; hallazgo corregido y verificado — re-escaneo limpio (0 hallazgos)</div>
+      <div class="okl" id="qa-log4">&#10003; 128/128 pruebas superadas · cobertura 87%</div>
+      <div class="okl" id="qa-log5">&#10003; aprobado y desplegado a producción — trazabilidad completa del cambio</div>
+    </div>
+
+    <!-- Conclusión -->
+    <div class="sc-concl" id="qa-concl">
+      <div class="sc-concl-ic">&#10003;</div>
+      <div>
+        <div class="sc-concl-t">La vulnerabilidad se detectó y corrigió <b>antes de llegar a tus clientes</b></div>
+        <div class="sc-concl-d">Análisis estático, pruebas automáticas y control de versiones en cada entrega. <b>Tu software evoluciona cada semana sin romperse.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Seguridad por diseño -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start; width:100%; display:flex; align-items:flex-end; gap:30px;">
+      <div style="flex:1 1 auto;">
+        <h3 style="margin-bottom:0;">Seguridad por diseño</h3>
+        <div class="cap-claim">Tus datos viajan y se guardan cifrados; cada entrega se revisa contra los riesgos OWASP y CWE</div>
+      </div>
+      <div class="sc-state" id="sg-state" style="margin-bottom:6px;">● tráfico cifrado</div>
+    </div>
+
+    <!-- Flujo: usuario → túnel TLS → aplicación (escudo) → datos cifrados -->
+    <div class="sg-flow">
+      <div class="sg-atk" id="sg-atk1" style="left:34%; top:-114px;">
+        <div class="sg-atk-l">Inyección SQL</div>
+        <svg width="120" height="68" viewBox="0 0 120 68"><line x1="40" y1="4" x2="105" y2="64"/></svg>
+        <div class="sg-atk-b">&#10007; bloqueado</div>
+      </div>
+      <div class="sg-atk" id="sg-atk2" style="left:calc(50% - 85px); top:-122px;">
+        <div class="sg-atk-l">XSS · scripts maliciosos</div>
+        <svg width="120" height="72" viewBox="0 0 120 72"><line x1="60" y1="4" x2="60" y2="68"/></svg>
+        <div class="sg-atk-b">&#10007; bloqueado</div>
+      </div>
+      <div class="sg-atk" id="sg-atk3" style="left:56%; top:-114px;">
+        <div class="sg-atk-l">Fuerza bruta</div>
+        <svg width="120" height="68" viewBox="0 0 120 68"><line x1="80" y1="4" x2="15" y2="64"/></svg>
+        <div class="sg-atk-b">&#10007; bloqueado</div>
+      </div>
+
+      <div class="sg-card">
+        <div class="sg-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17.5" cy="8.5" r="2.3"/><path d="M16 14.7c2.7.2 5 1.8 5 5.3"/></svg></div>
+        <div class="sg-t">Usuario</div>
+        <div class="sg-s">envía datos sensibles</div>
+        <div class="sg-data">tarjeta · 4111 1111 1111 1111</div>
+      </div>
+      <div class="sg-tunnel">
+        <div class="sg-lock">&#128274; TLS 1.3 · cifrado en tránsito</div>
+        <div class="sg-cipher" id="sg-cipher1">f3a9 c1d8 4b27 90ee 51ac 7d</div>
+      </div>
+      <div class="sg-card sg-app" id="sg-app">
+        <div class="sg-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div class="sg-t">Tu aplicación</div>
+        <div class="sg-s">valida y filtra cada petición<br/>controles OWASP · CWE</div>
+      </div>
+      <div class="sg-tunnel">
+        <div class="sg-lock">&#128274; conexión segura a datos</div>
+        <div class="sg-cipher" id="sg-cipher2">7d51 ac90 ee4b 27c1 d8f3 a9</div>
+      </div>
+      <div class="sg-card">
+        <div class="sg-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
+        <div class="sg-t">Base de datos</div>
+        <div class="sg-s">cifrado en reposo · AES-256</div>
+        <div class="sg-data" id="sg-dbdata">— recibiendo —</div>
+      </div>
+    </div>
+
+    <!-- Prácticas -->
+    <div class="sg-chips">
+      <div class="sg-chip" id="sg-chip1"><span class="dv-check">&#10003;</span><div><div class="sg-chip-t">Ciclo de vida seguro (SSDLC)</div><div class="sg-chip-d">Seguridad desde el diseño hasta producción.</div></div></div>
+      <div class="sg-chip" id="sg-chip2"><span class="dv-check">&#10003;</span><div><div class="sg-chip-t">Evaluaciones OWASP y CWE</div><div class="sg-chip-d">Revisión de los riesgos más comunes en cada entrega.</div></div></div>
+      <div class="sg-chip" id="sg-chip3"><span class="dv-check">&#10003;</span><div><div class="sg-chip-t">Cifrado extremo a extremo</div><div class="sg-chip-d">TLS 1.3 en tránsito · AES-256 en reposo.</div></div></div>
+      <div class="sg-chip" id="sg-chip4"><span class="dv-check">&#10003;</span><div><div class="sg-chip-t">Buenas prácticas en BD</div><div class="sg-chip-d">Accesos mínimos, datos ordenados y auditables.</div></div></div>
+    </div>
+
+    <!-- Conclusión -->
+    <div class="sc-concl" id="sg-concl">
+      <div class="sc-concl-ic">&#10003;</div>
+      <div>
+        <div class="sc-concl-t">3 ataques comunes, <b>0 datos comprometidos</b></div>
+        <div class="sc-concl-d">La seguridad no se agrega al final: <b>se diseña desde el primer commit</b> y se verifica en cada entrega.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Integraciones y APIs (hub) -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Integraciones y APIs</h3>
+      <div class="cap-claim">Conectamos tu aplicación con los sistemas que ya usas: la información fluye sola, sin doble digitación</div>
+    </div>
+
+    <!-- Barra de métricas -->
+    <div class="sc-bar">
+      <div class="sc-users-metric"><div class="sc-users-v" id="in-count">0</div><div class="sc-users-l">sistemas conectados</div></div>
+      <div class="sc-bar-spacer"></div>
+      <div class="sc-metric"><div class="v" id="in-sync">0</div><div class="l">registros sincronizados / min</div></div>
+      <div class="sc-state warn" id="in-state">● conectando sistemas…</div>
+    </div>
+
+    <!-- Hub central con satélites -->
+    <div class="in-stage">
+      <svg class="in-svg" viewBox="0 0 1700 540" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="300" y1="55"  x2="690"  y2="270" stroke="#e2e9ed" stroke-width="3"/>
+        <line x1="300" y1="270" x2="690"  y2="270" stroke="#e2e9ed" stroke-width="3"/>
+        <line x1="300" y1="485" x2="690"  y2="270" stroke="#e2e9ed" stroke-width="3"/>
+        <line x1="1010" y1="270" x2="1400" y2="55"  stroke="#e2e9ed" stroke-width="3"/>
+        <line x1="1010" y1="270" x2="1400" y2="270" stroke="#e2e9ed" stroke-width="3"/>
+        <line x1="1010" y1="270" x2="1400" y2="485" stroke="#e2e9ed" stroke-width="3"/>
+        <line class="sc-req in-c1" x1="300" y1="55"  x2="690"  y2="270" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13" opacity="0"/>
+        <line class="sc-req in-c2" x1="300" y1="270" x2="690"  y2="270" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13" opacity="0"/>
+        <line class="sc-req in-c3" x1="300" y1="485" x2="690"  y2="270" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13" opacity="0"/>
+        <line class="sc-req in-c4" x1="1010" y1="270" x2="1400" y2="55"  stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13" opacity="0"/>
+        <line class="sc-req in-c5" x1="1010" y1="270" x2="1400" y2="270" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13" opacity="0"/>
+        <line class="sc-req in-c6" x1="1010" y1="270" x2="1400" y2="485" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13" opacity="0"/>
+        <line class="sc-res in-c1" x1="300" y1="63"  x2="690"  y2="278" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14" opacity="0"/>
+        <line class="sc-res in-c2" x1="300" y1="278" x2="690"  y2="278" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14" opacity="0"/>
+        <line class="sc-res in-c3" x1="300" y1="493" x2="690"  y2="278" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14" opacity="0"/>
+        <line class="sc-res in-c4" x1="1010" y1="278" x2="1400" y2="63"  stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14" opacity="0"/>
+        <line class="sc-res in-c5" x1="1010" y1="278" x2="1400" y2="278" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14" opacity="0"/>
+        <line class="sc-res in-c6" x1="1010" y1="278" x2="1400" y2="493" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14" opacity="0"/>
+      </svg>
+
+      <div class="in-sat" style="left:0; top:20px;"><div class="sc-inst" id="in-sat1"><div class="sc-inst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19"/><path d="M6 15h4"/></svg></div><div><div class="sc-inst-name">Pasarela de pagos</div><div class="sc-inst-sub">API de terceros</div></div><span class="sc-inst-tag">sin conexión</span></div></div>
+      <div class="in-sat" style="left:0; top:235px;"><div class="sc-inst" id="in-sat2"><div class="sc-inst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2M3 13h18"/></svg></div><div><div class="sc-inst-name">ERP / contabilidad</div><div class="sc-inst-sub">sistema interno</div></div><span class="sc-inst-tag">sin conexión</span></div></div>
+      <div class="in-sat" style="left:0; top:450px;"><div class="sc-inst" id="in-sat3"><div class="sc-inst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/></svg></div><div><div class="sc-inst-name">Facturación electrónica</div><div class="sc-inst-sub">entidad externa</div></div><span class="sc-inst-tag">sin conexión</span></div></div>
+      <div class="in-sat" style="right:0; top:20px;"><div class="sc-inst" id="in-sat4"><div class="sc-inst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 01-12.4 7.6L3 21l1.9-5.6A8.5 8.5 0 1121 11.5z"/></svg></div><div><div class="sc-inst-name">WhatsApp / notificaciones</div><div class="sc-inst-sub">API de terceros</div></div><span class="sc-inst-tag">sin conexión</span></div></div>
+      <div class="in-sat" style="right:0; top:235px;"><div class="sc-inst" id="in-sat5"><div class="sc-inst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 6h13v11h-13z"/><path d="M14.5 10h4l3 3v4h-7"/><circle cx="6" cy="17" r="2"/><circle cx="18" cy="17" r="2"/></svg></div><div><div class="sc-inst-name">Logística y envíos</div><div class="sc-inst-sub">API de terceros</div></div><span class="sc-inst-tag">sin conexión</span></div></div>
+      <div class="in-sat" style="right:0; top:450px;"><div class="sc-inst" id="in-sat6"><div class="sc-inst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg></div><div><div class="sc-inst-name">Reportes / BI</div><div class="sc-inst-sub">sistema interno</div></div><span class="sc-inst-tag">sin conexión</span></div></div>
+
+      <div class="in-hub">
+        <div class="in-hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.9 2.9M15.5 15.5l2.9 2.9M18.4 5.6l-2.9 2.9M8.5 15.5l-2.9 2.9"/></svg></div>
+        <div class="sc-gw-title">Tu aplicación</div>
+        <div class="sc-gw-sub" id="in-hubsub">API central · lista para conectar</div>
+      </div>
+    </div>
+
+    <!-- Conclusión -->
+    <div class="sc-concl" id="in-concl">
+      <div class="sc-concl-ic">&#10003;</div>
+      <div>
+        <div class="sc-concl-t">6 sistemas conectados, <b>cero islas de información</b></div>
+        <div class="sc-concl-d">APIs propias y de terceros, sobre microservicios independientes. <b>Tu operación completa, sincronizada en tiempo real.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Escala automática (flujo) -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Arquitectura escalable</h3>
+      <div class="cap-claim">Pico real de visitas y compras: la aplicación lo detecta y crea réplicas de sí misma — sin esperas ni caídas</div>
+    </div>
+
+    <!-- Barra de métricas -->
+    <div class="sc-bar">
+      <div class="sc-users-metric"><div class="sc-users-v" id="sc-users">140</div><div class="sc-users-l">usuarios conectados</div></div>
+      <div class="sc-bar-spacer"></div>
+      <div class="sc-metric"><div class="v" id="sc-buys">6</div><div class="l">compras por minuto</div></div>
+      <div class="sc-metric"><div class="v" id="sc-resp">110 ms</div><div class="l">tiempo de respuesta</div></div>
+      <div class="sc-state" id="sc-state">● operación normal</div>
+    </div>
+
+    <!-- Leyenda de líneas -->
+    <div class="sc-legend">
+      <span><i class="lg-req"></i>peticiones (visitas / compras)</span>
+      <span><i class="lg-res"></i>respuestas a tiempo</span>
+    </div>
+
+    <!-- Flujo: usuarios → distribuidor → frontend → backend → datos -->
+    <div class="sc-flow">
+
+      <!-- Usuarios -->
+      <div class="sc-users">
+        <div class="sc-users-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17.5" cy="8.5" r="2.3"/><path d="M16 14.7c2.7.2 5 1.8 5 5.3"/></svg></div>
+        <div class="sc-users-title">Usuarios</div>
+        <div class="sc-users-sub">visitan y compran</div>
+      </div>
+
+      <!-- Carril usuarios ⇄ distribuidor -->
+      <div class="sc-lane">
+        <svg viewBox="0 0 80 560" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="2" y1="225" x2="78" y2="272" stroke="#e2e9ed" stroke-width="3"/>
+          <line x1="2" y1="280" x2="78" y2="280" stroke="#e2e9ed" stroke-width="3"/>
+          <line x1="2" y1="335" x2="78" y2="288" stroke="#e2e9ed" stroke-width="3"/>
+          <line class="sc-req" x1="2" y1="225" x2="78" y2="272" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13"/>
+          <line class="sc-req" x1="2" y1="280" x2="78" y2="280" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13"/>
+          <line class="sc-req" x1="2" y1="335" x2="78" y2="288" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13"/>
+          <line class="sc-res" x1="2" y1="233" x2="78" y2="280" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14"/>
+          <line class="sc-res" x1="2" y1="288" x2="78" y2="288" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14"/>
+          <line class="sc-res" x1="2" y1="343" x2="78" y2="296" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14"/>
+        </svg>
+      </div>
+
+      <!-- Distribuidor de tráfico -->
+      <div class="sc-gateway">
+        <div class="sc-gw-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2.2"/><circle cx="19" cy="5" r="2.2"/><circle cx="19" cy="12" r="2.2"/><circle cx="19" cy="19" r="2.2"/><path d="M7.1 12h2.4M9.5 12l7.4-6.4M9.5 12h7.4M9.5 12l7.4 6.4"/></svg></div>
+        <div class="sc-gw-title">Balanceador de carga</div>
+        <div class="sc-gw-sub" id="sc-gw-sub">Reparte cada petición a un contenedor libre</div>
+      </div>
+
+      <!-- Carril distribuidor ⇄ frontend -->
+      <div class="sc-lane">
+        <svg viewBox="0 0 80 560" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="2" y1="280" x2="78" y2="96"  stroke="#e2e9ed" stroke-width="3"/>
+          <line x1="2" y1="280" x2="78" y2="229" stroke="#e2e9ed" stroke-width="3"/>
+          <line x1="2" y1="280" x2="78" y2="361" stroke="#e2e9ed" stroke-width="3"/>
+          <line x1="2" y1="280" x2="78" y2="494" stroke="#e2e9ed" stroke-width="3"/>
+          <line class="sc-req" x1="2" y1="280" x2="78" y2="96"  stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13"/>
+          <line class="sc-req" x1="2" y1="280" x2="78" y2="229" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13"/>
+          <line class="sc-req sc-dyn-f3" x1="2" y1="280" x2="78" y2="361" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13" opacity="0"/>
+          <line class="sc-req sc-dyn-f4" x1="2" y1="280" x2="78" y2="494" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13" opacity="0"/>
+          <line class="sc-res" x1="2" y1="288" x2="78" y2="104" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14"/>
+          <line class="sc-res" x1="2" y1="288" x2="78" y2="237" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14"/>
+          <line class="sc-res sc-dyn-f3" x1="2" y1="288" x2="78" y2="369" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14" opacity="0"/>
+          <line class="sc-res sc-dyn-f4" x1="2" y1="288" x2="78" y2="502" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14" opacity="0"/>
+        </svg>
+      </div>
+
+      <!-- Contenedores frontend -->
+      <div class="sc-tier">
+        <div class="sc-tier-head">Frontend · web <span class="sc-tier-count" id="sc-fcount">&times;2</span></div>
+        <div class="sc-tier-cards">
+          <div class="sc-inst on" id="sc-f1"><div class="sc-inst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 13.5l-2 2 2 2M14 13.5l2 2-2 2"/></svg></div><div><div class="sc-inst-name">Frontend #1</div><div class="sc-inst-sub">contenedor web</div></div><span class="sc-inst-tag">activa</span></div>
+          <div class="sc-inst on" id="sc-f2"><div class="sc-inst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 13.5l-2 2 2 2M14 13.5l2 2-2 2"/></svg></div><div><div class="sc-inst-name">Frontend #2</div><div class="sc-inst-sub">contenedor web</div></div><span class="sc-inst-tag">activa</span></div>
+          <div class="sc-inst" id="sc-f3"><div class="sc-inst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 13.5l-2 2 2 2M14 13.5l2 2-2 2"/></svg></div><div><div class="sc-inst-name">Frontend #3</div><div class="sc-inst-sub">réplica automática</div></div><span class="sc-inst-tag">en reposo</span></div>
+          <div class="sc-inst" id="sc-f4"><div class="sc-inst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 13.5l-2 2 2 2M14 13.5l2 2-2 2"/></svg></div><div><div class="sc-inst-name">Frontend #4</div><div class="sc-inst-sub">réplica automática</div></div><span class="sc-inst-tag">en reposo</span></div>
+        </div>
+      </div>
+
+      <!-- Carril frontend ⇄ backend -->
+      <div class="sc-lane sc-lane-c">
+        <svg viewBox="0 0 90 560" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="2" y1="96"  x2="88" y2="96"  stroke="#e2e9ed" stroke-width="3"/>
+          <line x1="2" y1="229" x2="88" y2="229" stroke="#e2e9ed" stroke-width="3"/>
+          <line x1="2" y1="361" x2="88" y2="361" stroke="#e2e9ed" stroke-width="3"/>
+          <line x1="2" y1="494" x2="88" y2="494" stroke="#e2e9ed" stroke-width="3"/>
+          <line class="sc-req" x1="2" y1="92"  x2="88" y2="92"  stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13"/>
+          <line class="sc-req" x1="2" y1="225" x2="88" y2="225" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13"/>
+          <line class="sc-req sc-dyn-b3" x1="2" y1="357" x2="88" y2="357" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13" opacity="0"/>
+          <line class="sc-req sc-dyn-b4" x1="2" y1="490" x2="88" y2="490" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13" opacity="0"/>
+          <line class="sc-res" x1="2" y1="100" x2="88" y2="100" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14"/>
+          <line class="sc-res" x1="2" y1="233" x2="88" y2="233" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14"/>
+          <line class="sc-res sc-dyn-b3" x1="2" y1="365" x2="88" y2="365" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14" opacity="0"/>
+          <line class="sc-res sc-dyn-b4" x1="2" y1="498" x2="88" y2="498" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14" opacity="0"/>
+        </svg>
+      </div>
+
+      <!-- Contenedores backend -->
+      <div class="sc-tier">
+        <div class="sc-tier-head">Backend · API <span class="sc-tier-count" id="sc-bcount">&times;2</span></div>
+        <div class="sc-tier-cards">
+          <div class="sc-inst on" id="sc-b1"><div class="sc-inst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></div><div><div class="sc-inst-name">Backend #1</div><div class="sc-inst-sub">contenedor API</div></div><span class="sc-inst-tag">activa</span></div>
+          <div class="sc-inst on" id="sc-b2"><div class="sc-inst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></div><div><div class="sc-inst-name">Backend #2</div><div class="sc-inst-sub">contenedor API</div></div><span class="sc-inst-tag">activa</span></div>
+          <div class="sc-inst" id="sc-b3"><div class="sc-inst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></div><div><div class="sc-inst-name">Backend #3</div><div class="sc-inst-sub">réplica automática</div></div><span class="sc-inst-tag">en reposo</span></div>
+          <div class="sc-inst" id="sc-b4"><div class="sc-inst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></div><div><div class="sc-inst-name">Backend #4</div><div class="sc-inst-sub">réplica automática</div></div><span class="sc-inst-tag">en reposo</span></div>
+        </div>
+      </div>
+
+      <!-- Carril backend ⇄ base de datos -->
+      <div class="sc-lane">
+        <svg viewBox="0 0 80 560" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="2" y1="96"  x2="78" y2="272" stroke="#e2e9ed" stroke-width="3"/>
+          <line x1="2" y1="229" x2="78" y2="277" stroke="#e2e9ed" stroke-width="3"/>
+          <line x1="2" y1="361" x2="78" y2="283" stroke="#e2e9ed" stroke-width="3"/>
+          <line x1="2" y1="494" x2="78" y2="288" stroke="#e2e9ed" stroke-width="3"/>
+          <line class="sc-req" x1="2" y1="96"  x2="78" y2="272" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13"/>
+          <line class="sc-req" x1="2" y1="229" x2="78" y2="277" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13"/>
+          <line class="sc-req sc-dyn-b3" x1="2" y1="361" x2="78" y2="283" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13" opacity="0"/>
+          <line class="sc-req sc-dyn-b4" x1="2" y1="494" x2="78" y2="288" stroke="#1c6c87" stroke-width="3" stroke-dasharray="5 13" opacity="0"/>
+          <line class="sc-res" x1="2" y1="104" x2="78" y2="280" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14"/>
+          <line class="sc-res" x1="2" y1="237" x2="78" y2="285" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14"/>
+          <line class="sc-res sc-dyn-b3" x1="2" y1="369" x2="78" y2="291" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14" opacity="0"/>
+          <line class="sc-res sc-dyn-b4" x1="2" y1="502" x2="78" y2="296" stroke="#2f9e5e" stroke-width="2.5" stroke-dasharray="4 14" opacity="0"/>
+        </svg>
+      </div>
+
+      <!-- Base de datos -->
+      <div class="sc-db">
+        <div class="sc-users-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
+        <div class="sc-users-title">Base de datos</div>
+        <div class="sc-users-sub">pedidos y stock</div>
+      </div>
+
+    </div>
+
+    <!-- Conclusión -->
+    <div class="sc-concl" id="sc-concl">
+      <div class="sc-concl-ic">&#10003;</div>
+      <div>
+        <div class="sc-concl-t">12.400 usuarios y 340 compras por minuto atendidos <b>sin caídas ni esperas</b></div>
+        <div class="sc-concl-d">El sistema creó réplicas frontend y backend por sí solo, y las cerrará cuando baje la demanda. <b>Una arquitectura diseñada a la medida de tu operación define la vida útil de tu software.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Cierre -->
+  <div class="slide slide-cierre">
+    <div class="cierre-logo"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+    <h2>Software a tu medida, listo para crecer</h2>
+    <div class="accent-rule"></div>
+    <div class="cierre-sub">Construimos con <b>calidad</b>, <b>seguridad</b> y <b>arquitectura moderna</b> para automatizar procesos, integrar tus sistemas y escalar tu negocio.</div>
+    <a class="cierre-back" href="Portafolio TecnoLTS.html#servicios">&#8592; Volver a Nuestros servicios</a>
+  </div>
+
+
+
+<div class="ui-label" id="slide-label">01 — Portada</div>
+<div class="ui-logo"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+
+<div class="nav-buttons">
+  <a class="back-link" href="Portafolio TecnoLTS.html#servicios">&#8962; Servicios</a>
+  <button id="btn-prev">← Anterior</button>
+  <button id="btn-next">Siguiente →</button>
+</div>
+
+</div>
+
+<script>
+let currentSlide = 0;
+let playhead = 0;
+let lastTime = Date.now();
+const slides = [
+  { name: 'Portada', duration: 3 },
+  { name: 'Panorama', duration: 10 },
+  { name: 'Calidad de código', duration: 30 },
+  { name: 'Seguridad', duration: 30 },
+  { name: 'Integraciones', duration: 26 },
+  { name: 'Escala automática', duration: 38 },
+  { name: 'Cierre', duration: 5 }
+];
+
+function goToSlide(n) {
+  if (n < 0 || n >= slides.length) return;
+  document.querySelectorAll('.slide').forEach((s, i) => s.classList.toggle('active', i === n));
+  currentSlide = n;
+  playhead = 0;
+  document.getElementById('slide-label').textContent = String(n + 1).padStart(2, '0') + ' — ' + slides[n].name;
+  document.getElementById('btn-prev').disabled = currentSlide === 0;
+  document.getElementById('btn-next').disabled = currentSlide === slides.length - 1;
+}
+document.getElementById('btn-prev').addEventListener('click', () => goToSlide(currentSlide - 1));
+document.getElementById('btn-next').addEventListener('click', () => goToSlide(currentSlide + 1));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+  if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+});
+
+function animate() {
+  const now = Date.now();
+  const dt = (now - lastTime) / 1000;
+  lastTime = now;
+  playhead += dt;
+  if (playhead > slides[currentSlide].duration) playhead = slides[currentSlide].duration;
+  const t = Math.min(1, playhead / slides[currentSlide].duration);
+
+  // Slide calidad de código — pipeline de entrega (index 2)
+  if (currentSlide === 2) {
+    const qn = (id, st, msg) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('run', 'ok', 'bad');
+      if (st) el.classList.add(st);
+      const s = el.querySelector('.qa-s');
+      if (s) s.textContent = msg;
+    };
+    if (t < 0.08) { qn('qa-dev', 'run', 'escribiendo código…'); qn('qa-git', '', 'esperando cambios'); qn('qa-scan', '', 'en espera'); qn('qa-test', '', 'en espera'); }
+    else if (t < 0.14) { qn('qa-dev', 'ok', 'cambio enviado ✓'); qn('qa-git', 'run', 'registrando v1.4.2…'); }
+    else if (t < 0.24) { qn('qa-git', 'ok', 'v1.4.2 · trazable'); qn('qa-scan', 'run', 'escaneando 142 archivos…'); }
+    else if (t < 0.38) { qn('qa-scan', 'bad', '1 hallazgo crítico'); qn('qa-dev', 'run', 'corrigiendo hallazgo…'); }
+    else if (t < 0.46) { qn('qa-dev', 'ok', 'corrección enviada ✓'); qn('qa-scan', 'run', 're-escaneando…'); }
+    else if (t < 0.50) { qn('qa-scan', 'ok', '0 hallazgos ✓'); }
+    else if (t < 0.60) { qn('qa-test', 'run', 'ejecutando 128 pruebas…'); }
+    else { qn('qa-test', 'ok', '128/128 pruebas ✓'); }
+
+    const lanes = { 'qa-l1': 0.08, 'qa-l2': 0.14, 'qa-l3': 0.50, 'qa-l4': 0.60 };
+    Object.keys(lanes).forEach(id => { const el = document.getElementById(id); if (el) el.classList.toggle('live', t >= lanes[id]); });
+    const ret = document.getElementById('qa-return');
+    if (ret) ret.classList.toggle('live', t >= 0.24 && t < 0.46);
+
+    const envs = [['qa-env1', 0.64, '✓ desplegado'], ['qa-env2', 0.72, '✓ validado'], ['qa-env3', 0.82, '✓ en vivo']];
+    envs.forEach(([id, ts, tag]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const on = t >= ts;
+      el.classList.toggle('on', on);
+      const tg = el.querySelector('.tg');
+      if (tg) tg.textContent = on ? tag : '—';
+    });
+
+    const logs = { 'qa-log1': 0.16, 'qa-log2': 0.26, 'qa-log3': 0.48, 'qa-log4': 0.62, 'qa-log5': 0.84 };
+    Object.keys(logs).forEach(id => { const el = document.getElementById(id); if (el) el.classList.toggle('on', t >= logs[id]); });
+
+    const cEl = document.getElementById('qa-commits');
+    if (cEl) cEl.textContent = 12 + Math.floor(t * 14);
+    const fEl = document.getElementById('qa-find');
+    if (fEl) { fEl.textContent = t >= 0.46 ? '1 ✓' : (t >= 0.24 ? '1 ⚠' : '0'); fEl.classList.toggle('warn', t >= 0.24 && t < 0.46); }
+    const tEl = document.getElementById('qa-tests');
+    if (tEl) tEl.textContent = t >= 0.60 ? '128 ✓' : '—';
+
+    const qaSt = document.getElementById('qa-state');
+    if (qaSt) {
+      if (t >= 0.82) { qaSt.textContent = '● en producción'; qaSt.className = 'sc-state'; }
+      else if (t >= 0.46) { qaSt.textContent = '● validando entrega'; qaSt.className = 'sc-state warn'; }
+      else if (t >= 0.24) { qaSt.textContent = '● hallazgo en corrección'; qaSt.className = 'sc-state bad'; }
+      else if (t >= 0.14) { qaSt.textContent = '● análisis estático'; qaSt.className = 'sc-state warn'; }
+      else { qaSt.textContent = '● en desarrollo'; qaSt.className = 'sc-state'; }
+    }
+    const qaConcl = document.getElementById('qa-concl');
+    if (qaConcl) qaConcl.classList.toggle('on', t >= 0.86);
+  }
+
+  // Slide seguridad — cifrado y ataques bloqueados (index 3)
+  if (currentSlide === 3) {
+    if (!window.__sgC || now - window.__sgC > 90) {
+      window.__sgC = now;
+      const h = '0123456789abcdef';
+      const gen = n => { let s = ''; for (let i = 0; i < n; i++) { s += h[(Math.random() * 16) | 0]; if (i % 4 === 3) s += ' '; } return s; };
+      const c1 = document.getElementById('sg-cipher1');
+      if (c1) c1.textContent = gen(24);
+      const c2 = document.getElementById('sg-cipher2');
+      if (c2) c2.textContent = gen(24);
+    }
+    const atks = [{ l: 0.16, b: 0.26 }, { l: 0.34, b: 0.44 }, { l: 0.52, b: 0.62 }];
+    let attacking = false, hit = false, blocked = 0;
+    atks.forEach((a, i) => {
+      const el = document.getElementById('sg-atk' + (i + 1));
+      if (!el) return;
+      el.classList.toggle('live', t >= a.l);
+      el.classList.toggle('blocked', t >= a.b);
+      if (t >= a.l && t < a.b) attacking = true;
+      if (t >= a.b && t < a.b + 0.03) hit = true;
+      if (t >= a.b) blocked++;
+    });
+    const app = document.getElementById('sg-app');
+    if (app) app.classList.toggle('hit', hit);
+    const chips = { 'sg-chip1': 0.22, 'sg-chip2': 0.40, 'sg-chip3': 0.58, 'sg-chip4': 0.72 };
+    Object.keys(chips).forEach(id => { const el = document.getElementById(id); if (el) el.classList.toggle('on', t >= chips[id]); });
+    const db = document.getElementById('sg-dbdata');
+    if (db) db.textContent = t >= 0.08 ? '🔒 9f2e 77c4 1ab8 e03d' : '— recibiendo —';
+    const sgSt = document.getElementById('sg-state');
+    if (sgSt) {
+      if (attacking) { sgSt.textContent = '● ataque detectado — bloqueando'; sgSt.className = 'sc-state bad'; }
+      else if (t >= 0.72) { sgSt.textContent = '● protegido · 3 ataques bloqueados'; sgSt.className = 'sc-state'; }
+      else if (blocked > 0) { sgSt.textContent = '● ' + blocked + (blocked > 1 ? ' ataques bloqueados' : ' ataque bloqueado'); sgSt.className = 'sc-state'; }
+      else { sgSt.textContent = '● tráfico cifrado extremo a extremo'; sgSt.className = 'sc-state'; }
+    }
+    const sgConcl = document.getElementById('sg-concl');
+    if (sgConcl) sgConcl.classList.toggle('on', t >= 0.84);
+  }
+
+  // Slide integraciones — hub de APIs (index 4)
+  if (currentSlide === 4) {
+    const times = [0.10, 0.22, 0.34, 0.46, 0.58, 0.70];
+    let conn = 0;
+    for (let i = 1; i <= 6; i++) {
+      const on = t >= times[i - 1];
+      if (on) conn++;
+      const el = document.getElementById('in-sat' + i);
+      if (el) {
+        el.classList.toggle('on', on);
+        const tag = el.querySelector('.sc-inst-tag');
+        if (tag) tag.textContent = on ? 'conectado ✓' : 'sin conexión';
+      }
+      document.querySelectorAll('.in-c' + i).forEach(ln => ln.style.opacity = on ? '0.95' : '0');
+    }
+    window.__scReq = (window.__scReq || 0) - 34 * dt;
+    window.__scRes = (window.__scRes || 0) + 27 * dt;
+    document.querySelectorAll('.sc-req').forEach(f => f.setAttribute('stroke-dashoffset', window.__scReq));
+    document.querySelectorAll('.sc-res').forEach(f => f.setAttribute('stroke-dashoffset', window.__scRes));
+    const inC = document.getElementById('in-count');
+    if (inC) inC.textContent = conn;
+    const inS = document.getElementById('in-sync');
+    if (inS) inS.textContent = conn === 0 ? '0' : (conn * 120 + Math.round(Math.sin(playhead * 2.1) * 14)).toLocaleString('es-ES');
+    const inSt = document.getElementById('in-state');
+    if (inSt) {
+      if (conn >= 6) { inSt.textContent = '● ecosistema integrado'; inSt.className = 'sc-state'; }
+      else { inSt.textContent = '● conectando sistemas… ' + conn + '/6'; inSt.className = 'sc-state warn'; }
+    }
+    const hubSub = document.getElementById('in-hubsub');
+    if (hubSub) hubSub.textContent = conn === 0 ? 'API central · lista para conectar' : (conn + ' sistemas sincronizados en tiempo real');
+    const inConcl = document.getElementById('in-concl');
+    if (inConcl) inConcl.classList.toggle('on', t >= 0.82);
+  }
+
+  // Slide escala automática — flujo de usuarios (index 5)
+  if (currentSlide === 5) {
+    const clamp = (x) => Math.max(0, Math.min(1, x));
+    const SURGE = 0.16;             // arranca el pico de visitas/compras (~6 s)
+    const surge = t >= SURGE;
+    const ramp = clamp((t - SURGE) / 0.16);
+
+    // ---- Usuarios y compras: 140 → 12.400 · 6 → 340/min ----
+    const users = Math.round(140 + ramp * 12260);
+    const buys = Math.round(6 + ramp * 334);
+    const uEl = document.getElementById('sc-users');
+    if (uEl) { uEl.textContent = users.toLocaleString('es-ES'); uEl.classList.toggle('hot', users >= 2500); }
+    const bEl = document.getElementById('sc-buys');
+    if (bEl) { bEl.textContent = buys; bEl.classList.toggle('warn', buys >= 60); }
+
+    // ---- Réplicas: cada una se "crea" (amber pulsante) y luego queda activa ----
+    const evts = { f3: { c: 0.30, a: 0.36 }, b3: { c: 0.33, a: 0.39 }, f4: { c: 0.40, a: 0.46 }, b4: { c: 0.43, a: 0.49 } };
+    const overloaded = (t >= 0.20 && t < 0.44);   // los contenedores base, al límite
+    ['f1', 'f2', 'b1', 'b2'].forEach(id => {
+      const el = document.getElementById('sc-' + id);
+      if (!el) return;
+      el.classList.toggle('warn', overloaded);
+      const tag = el.querySelector('.sc-inst-tag');
+      if (tag) tag.textContent = overloaded ? 'al límite' : 'activa';
+    });
+    Object.keys(evts).forEach(id => {
+      const el = document.getElementById('sc-' + id);
+      if (!el) return;
+      const boot = t >= evts[id].c && t < evts[id].a;
+      const on = t >= evts[id].a;
+      el.classList.toggle('boot', boot);
+      el.classList.toggle('on', on);
+      const tag = el.querySelector('.sc-inst-tag');
+      if (tag) tag.textContent = on ? 'activa' : (boot ? 'creando réplica…' : 'en reposo');
+      // líneas de petición/respuesta hacia la réplica nueva
+      document.querySelectorAll('.sc-dyn-' + id).forEach(ln => ln.style.opacity = on ? '0.95' : '0');
+    });
+
+    // ---- Contadores de réplicas por capa ----
+    const fCount = 2 + (t >= evts.f3.a ? 1 : 0) + (t >= evts.f4.a ? 1 : 0);
+    const bCount = 2 + (t >= evts.b3.a ? 1 : 0) + (t >= evts.b4.a ? 1 : 0);
+    const fcEl = document.getElementById('sc-fcount');
+    if (fcEl) { fcEl.textContent = '×' + fCount; fcEl.classList.toggle('grow', fCount > 2); }
+    const bcEl = document.getElementById('sc-bcount');
+    if (bcEl) { bcEl.textContent = '×' + bCount; bcEl.classList.toggle('grow', bCount > 2); }
+
+    // ---- Flujo animado: peticiones → y respuestas ← (más rápido en el pico) ----
+    const speed = !surge ? 0.4 : (t < 0.62 ? 1.4 : 0.8);
+    window.__scReq = (window.__scReq || 0) - 46 * speed * dt;
+    window.__scRes = (window.__scRes || 0) + 36 * speed * dt;
+    document.querySelectorAll('.sc-req').forEach(f => f.setAttribute('stroke-dashoffset', window.__scReq));
+    document.querySelectorAll('.sc-res').forEach(f => f.setAttribute('stroke-dashoffset', window.__scRes));
+
+    // ---- Tiempo de respuesta: sube con la demanda, baja al escalar ----
+    let resp;
+    if (!surge) resp = 110;
+    else if (t < 0.34) resp = Math.round(110 + clamp((t - SURGE) / 0.18) * 160);
+    else resp = Math.round(270 - clamp((t - 0.34) / 0.28) * 175);
+    const respEl = document.getElementById('sc-resp');
+    if (respEl) { respEl.textContent = resp + ' ms'; respEl.classList.toggle('warn', resp >= 180); }
+
+    // ---- Estado global ----
+    const stEl = document.getElementById('sc-state');
+    if (stEl) {
+      if (t >= 0.62) { stEl.textContent = '● estable · sin caídas'; stEl.className = 'sc-state'; }
+      else if (t >= 0.30) { stEl.textContent = '● auto-escalado: creando réplicas'; stEl.className = 'sc-state warn'; }
+      else if (surge) { stEl.textContent = '● pico de tráfico detectado'; stEl.className = 'sc-state warn'; }
+      else { stEl.textContent = '● operación normal'; stEl.className = 'sc-state'; }
+    }
+
+    // ---- Distribuidor: cuántos contenedores reparte ----
+    const gwSub = document.getElementById('sc-gw-sub');
+    if (gwSub) gwSub.textContent = (fCount + bCount > 4)
+      ? ('Reparte la carga entre ' + (fCount + bCount) + ' contenedores activos')
+      : 'Reparte cada petición a un contenedor libre';
+
+    // ---- Conclusión ----
+    const concl = document.getElementById('sc-concl');
+    if (concl) concl.classList.toggle('on', t >= 0.66);
+  }
+
+  requestAnimationFrame(animate);
+}
+
+goToSlide(0);
+requestAnimationFrame(animate);
+
+function fitStage() {
+  const stage = document.querySelector('.slides-container');
+  const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  stage.style.transform = 'scale(' + scale + ')';
+}
+window.addEventListener('resize', fitStage);
+fitStage();
+</script>
+
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var n = e.target;
+    while (n && n.nodeName !== 'A') { n = n.parentNode; }
+    if (!n || !n.getAttribute) return;
+    var href = n.getAttribute('href');
+    if (!href) return;
+    if (href.charAt(0) === '#') return;
+    if (/^(https?:|mailto:|tel:|data:)/i.test(href)) return;
+    e.preventDefault();
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ tlNav: href }, '*');
+    }
+  }, true);
+})();
+</script>
+</body>
+</html>

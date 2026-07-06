@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Licenciamiento y cumplimiento · TecnoLTS</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --panel: #f3f7f9;
+  --panel-2: #eaf1f4;
+  --ink: #0e3a47;
+  --ink-soft: #3c4f57;
+  --muted: #6b7c84;
+  --teal: #1c6c87;
+  --teal-light: #2d869f;
+  --line: rgba(14,58,71,0.14);
+  --red: #d64545; --red-bg: #fbeaea;
+  --green: #2f9e5e; --green-bg: #e7f6ee;
+  --amber: #c9821a; --amber-bg: #fbf1e0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M5 2 L5 24 L11 18 L15 27 L19 25 L15 16 L23 16 Z' fill='%23c9821a' stroke='white' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 5 2, auto; }
+body { font-family: "Open Sans", sans-serif; display: flex; align-items: center; justify-content: center; }
+
+.slides-container { position: relative; width: 1920px; height: 1080px; background: var(--bg); flex: 0 0 auto; transform-origin: center center; }
+.slide { position: absolute; top: 0; left: 0; width: 1920px; height: 1080px; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 90px 110px; opacity: 0; transition: opacity 0.5s ease-in-out; }
+.slide.active { display: flex; opacity: 1; }
+
+/* Portada */
+.slide-portada::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: var(--teal); }
+.slide-portada .logo-card { margin-bottom: 50px; }
+.slide-portada .logo-card img { height: 150px; display: block; }
+.slide-portada h2 { font-size: 58px; font-weight: 800; color: var(--ink); font-family: "Montserrat"; margin-bottom: 26px; text-align: center; letter-spacing: -0.015em; }
+.slide-portada .accent-rule { width: 90px; height: 4px; background: var(--teal); border-radius: 2px; margin-bottom: 38px; }
+.slide-portada .tagline { font-size: 27px; color: var(--ink-soft); max-width: 1080px; text-align: center; line-height: 1.6; }
+.slide-portada .tagline .lead { color: var(--teal); font-weight: 600; }
+
+/* Slide genérico */
+.slide h3 { font-size: 50px; font-weight: 700; color: var(--ink); font-family: "Montserrat"; margin-bottom: 4px; align-self: flex-start; position: relative; padding-bottom: 16px; letter-spacing: -0.01em; }
+.slide h3::after { content: ""; position: absolute; left: 0; bottom: 0; width: 64px; height: 4px; background: var(--teal); border-radius: 2px; }
+.cap-claim { font-size: 22px; font-weight: 600; color: var(--teal); margin-top: 14px; }
+
+/* ===== Panorama: 3 pilares ===== */
+.dv-grid { display: flex; gap: 28px; width: 100%; margin-top: 40px; align-items: stretch; }
+.dv-pillar { flex: 1 1 0; border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: 0 12px 32px rgba(14,58,71,.09); padding: 30px 28px; display: flex; flex-direction: column; }
+.dv-p-head { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+.dv-p-ic { width: 60px; height: 60px; border-radius: 15px; background: var(--panel-2); color: var(--teal); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.dv-p-ic svg { width: 32px; height: 32px; }
+.dv-p-title { font-family: "Montserrat"; font-weight: 800; font-size: 23px; color: var(--ink); line-height: 1.1; }
+.dv-p-sub { font-size: 15px; color: var(--muted); margin: 4px 0 22px; }
+.dv-p-list { display: flex; flex-direction: column; gap: 15px; }
+.dv-item { display: flex; align-items: flex-start; gap: 13px; }
+.dv-check { width: 24px; height: 24px; border-radius: 7px; background: var(--green-bg); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex: 0 0 auto; margin-top: 1px; }
+.dv-it-t { font-family: "Montserrat"; font-weight: 700; font-size: 16px; color: var(--ink); line-height: 1.2; }
+.dv-it-d { font-size: 15.5px; color: var(--ink-soft); line-height: 1.35; margin-top: 2px; }
+
+@keyframes dvUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.slide-dev.active .dv-pillar { animation: dvUp .6s both; }
+.slide-dev.active .dv-pillar:nth-child(1) { animation-delay: .08s; }
+.slide-dev.active .dv-pillar:nth-child(2) { animation-delay: .26s; }
+.slide-dev.active .dv-pillar:nth-child(3) { animation-delay: .44s; }
+.slide-dev.active .dv-p-list .dv-item { animation: dvUp .5s both; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(1) { animation-delay: .55s; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(2) { animation-delay: .64s; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(3) { animation-delay: .73s; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(4) { animation-delay: .82s; }
+
+/* ===== Barra de métricas (compartida) ===== */
+.sc-bar { display:flex; align-items:center; gap:26px; width:100%; margin-top:22px; border:1px solid var(--line); border-radius:14px; background:var(--panel); padding:16px 28px; }
+.sc-users-metric { display:flex; align-items:baseline; gap:12px; flex:0 0 auto; }
+.sc-users-v { font-family:"Montserrat"; font-weight:800; font-size:44px; color:var(--ink); line-height:1; transition:color .3s; }
+.sc-users-v.hot { color:var(--amber); }
+.sc-users-l { font-family:"JetBrains Mono"; font-size:15px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; max-width:200px; line-height:1.3; }
+.sc-bar-spacer { flex:1 1 auto; }
+.sc-metric { text-align:right; flex:0 0 auto; }
+.sc-metric .v { font-family:"Montserrat"; font-weight:800; font-size:24px; color:var(--ink); transition:color .3s; }
+.sc-metric .v.warn { color:var(--amber); }
+.sc-metric .v.bad { color:var(--red); }
+.sc-metric .v.ok { color:var(--green); }
+.sc-metric .l { font-family:"JetBrains Mono"; font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-top:3px; }
+.sc-state { font-family:"JetBrains Mono"; font-size:15px; font-weight:700; padding:9px 16px; border-radius:20px; background:var(--green-bg); color:var(--green); white-space:nowrap; transition:all .3s; flex:0 0 auto; }
+.sc-state.warn { background:var(--amber-bg); color:var(--amber); }
+.sc-state.bad { background:var(--red-bg); color:var(--red); }
+
+/* ===== Conclusión (compartida) ===== */
+.sc-concl { width:100%; margin-top:20px; display:flex; align-items:center; gap:18px; border:1px solid var(--green); border-radius:14px; background:var(--green-bg); padding:18px 26px; opacity:0; transform:translateY(10px); transition:opacity .5s, transform .5s; }
+.sc-concl.on { opacity:1; transform:translateY(0); }
+.sc-concl-ic { width:48px; height:48px; border-radius:13px; background:#fff; color:var(--green); display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; flex:0 0 auto; }
+.sc-concl-t { font-family:"Montserrat"; font-weight:700; font-size:18px; color:var(--ink); }
+.sc-concl-t b { color:var(--green); }
+.sc-concl-d { font-size:16px; color:var(--ink-soft); margin-top:3px; line-height:1.4; }
+.sc-concl-d b { color:var(--teal); font-weight:700; }
+
+/* ===== Inventario (tabla) ===== */
+.lic-table { width:100%; margin-top:16px; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 26px rgba(14,58,71,.08); overflow:hidden; }
+.lic-row { display:grid; grid-template-columns:1.8fr 1fr 0.6fr 0.95fr; align-items:center; gap:18px; padding:11px 26px; border-bottom:1px solid var(--line); }
+.lic-row:last-child { border-bottom:none; }
+.lic-row.head { background:var(--panel); font-family:"JetBrains Mono"; font-size:13.5px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; padding:13px 26px; }
+.lic-row.item { opacity:0; transform:translateX(-14px); transition:opacity .4s, transform .4s; }
+.lic-row.item.on { opacity:1; transform:none; }
+.lic-sw { display:flex; align-items:center; gap:13px; }
+.lic-sw-ic { width:36px; height:36px; border-radius:9px; background:var(--panel-2); color:var(--teal); display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+.lic-sw-ic svg { width:20px; height:20px; }
+.lic-sw-t { font-family:"Montserrat"; font-weight:700; font-size:15.5px; color:var(--ink); }
+.lic-cat { font-size:15.5px; color:var(--ink-soft); }
+.lic-users { font-family:"JetBrains Mono"; font-size:16px; color:var(--ink); font-weight:700; }
+.lic-status { justify-self:start; font-family:"JetBrains Mono"; font-size:14px; font-weight:700; padding:5px 13px; border-radius:14px; background:var(--green-bg); color:var(--green); transition:all .4s; white-space:nowrap; }
+.lic-status.warn { background:var(--amber-bg); color:var(--amber); }
+.lic-status.bad { background:var(--red-bg); color:var(--red); }
+
+/* ===== Cumplimiento + auditoría ===== */
+.cmp-row { display:flex; gap:22px; width:100%; margin-top:18px; align-items:stretch; }
+.cmp-panel { flex:1.25 1 0; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 26px rgba(14,58,71,.08); padding:16px 24px; }
+.cmp-h { display:flex; align-items:center; gap:11px; font-family:"JetBrains Mono"; font-size:15px; font-weight:700; color:var(--ink); text-transform:uppercase; letter-spacing:.04em; margin-bottom:6px; }
+.cmp-h svg { width:21px; height:21px; color:var(--teal); }
+.cmp-item { display:flex; align-items:center; gap:14px; padding:13.5px 0; border-bottom:1px solid var(--line); }
+.cmp-item:last-child { border-bottom:none; }
+.cmp-ic { width:30px; height:30px; border-radius:8px; border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:"JetBrains Mono"; font-weight:800; font-size:16px; color:var(--muted); flex:0 0 auto; transition:border-color .35s, background .35s, color .35s; }
+.cmp-item.scan .cmp-ic { border-color:var(--teal); color:var(--teal); animation:licBoot 1s ease-in-out infinite; }
+@keyframes licBoot { 0%,100% { box-shadow:0 0 0 0 rgba(28,108,135,0); } 50% { box-shadow:0 0 0 5px rgba(28,108,135,.18); } }
+.cmp-item.bad .cmp-ic { border-color:var(--red); background:var(--red-bg); color:var(--red); }
+.cmp-item.ok .cmp-ic { border-color:var(--green); background:var(--green); color:#fff; }
+.cmp-t { font-family:"Open Sans"; font-size:15px; font-weight:600; color:var(--ink); }
+.cmp-d { font-family:"JetBrains Mono"; font-size:13.5px; color:var(--muted); margin-top:2px; }
+.cmp-item.bad .cmp-d { color:var(--red); }
+.cmp-item.ok .cmp-d { color:var(--green); }
+.cmp-tag { margin-left:auto; font-family:"JetBrains Mono"; font-size:13.5px; font-weight:700; color:var(--muted); white-space:nowrap; }
+.cmp-item.bad .cmp-tag { color:var(--red); }
+.cmp-item.ok .cmp-tag { color:var(--green); }
+.aud-panel { flex:1 1 0; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 26px rgba(14,58,71,.08); padding:16px 24px; display:flex; flex-direction:column; }
+.aud-item { display:flex; align-items:center; gap:12px; padding:11px 14px; border:1px solid var(--line); border-radius:11px; margin-bottom:11px; background:var(--panel); opacity:.4; transition:opacity .4s, border-color .4s, background .4s; }
+.aud-item.on { opacity:1; border-color:var(--green); background:#fff; }
+.aud-ic { width:34px; height:34px; border-radius:9px; background:var(--panel-2); color:var(--muted); display:flex; align-items:center; justify-content:center; flex:0 0 auto; transition:background .4s, color .4s; }
+.aud-item.on .aud-ic { background:var(--green-bg); color:var(--green); }
+.aud-ic svg { width:18px; height:18px; }
+.aud-t { font-family:"Montserrat"; font-weight:700; font-size:16.5px; color:var(--ink); }
+.aud-s { font-family:"JetBrains Mono"; font-size:13px; color:var(--muted); margin-top:1px; }
+.aud-chk { margin-left:auto; color:var(--green); font-weight:800; font-size:17px; opacity:0; transition:opacity .4s; }
+.aud-item.on .aud-chk { opacity:1; }
+
+/* ===== Optimización de costos ===== */
+.cst-row { display:flex; gap:22px; width:100%; margin-top:18px; align-items:stretch; }
+.cst-opps { flex:1.4 1 0; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 26px rgba(14,58,71,.08); padding:16px 24px; }
+.cst-h { display:flex; align-items:center; gap:11px; font-family:"JetBrains Mono"; font-size:15px; font-weight:700; color:var(--ink); text-transform:uppercase; letter-spacing:.04em; margin-bottom:6px; }
+.cst-h svg { width:21px; height:21px; color:var(--teal); }
+.cst-opp { display:flex; align-items:center; gap:14px; padding:13px 0; border-bottom:1px solid var(--line); opacity:.4; transition:opacity .4s; }
+.cst-opp:last-child { border-bottom:none; }
+.cst-opp.found { opacity:1; }
+.cst-opp-ic { width:40px; height:40px; border-radius:10px; background:var(--amber-bg); color:var(--amber); display:flex; align-items:center; justify-content:center; flex:0 0 auto; transition:background .4s, color .4s; }
+.cst-opp.applied .cst-opp-ic { background:var(--green-bg); color:var(--green); }
+.cst-opp-ic svg { width:22px; height:22px; }
+.cst-opp-t { font-family:"Montserrat"; font-weight:700; font-size:15px; color:var(--ink); }
+.cst-opp-d { font-family:"JetBrains Mono"; font-size:13.5px; color:var(--muted); margin-top:2px; }
+.cst-opp-save { margin-left:auto; text-align:right; }
+.cst-opp-save .amt { font-family:"Montserrat"; font-weight:800; font-size:16px; color:var(--muted); transition:color .4s; }
+.cst-opp.applied .cst-opp-save .amt { color:var(--green); }
+.cst-opp-save .stt { font-family:"JetBrains Mono"; font-size:12.5px; font-weight:700; color:var(--muted); }
+.cst-opp.applied .cst-opp-save .stt { color:var(--green); }
+.cst-impact { flex:1 1 0; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 26px rgba(14,58,71,.08); padding:18px 24px; display:flex; flex-direction:column; }
+.cst-bars { display:flex; align-items:flex-end; gap:34px; justify-content:center; flex:1 1 auto; padding-top:10px; }
+.cst-bar { width:96px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; }
+.cst-bar-v { font-family:"Montserrat"; font-weight:800; font-size:17px; color:var(--ink); margin-bottom:8px; }
+.cst-bar-fill { width:100%; border-radius:10px 10px 0 0; transition:height .4s; }
+.cst-bar.before .cst-bar-fill { background:var(--panel-2); }
+.cst-bar.after .cst-bar-fill { background:var(--teal); }
+.cst-bar-l { font-family:"JetBrains Mono"; font-size:13px; color:var(--muted); margin-top:9px; }
+.cst-rec { margin-top:14px; display:flex; align-items:center; gap:11px; border:1px solid var(--teal); border-radius:11px; background:#e4f0f4; padding:11px 15px; opacity:0; transform:translateY(8px); transition:opacity .45s, transform .45s; }
+.cst-rec.on { opacity:1; transform:none; }
+.cst-rec-ic { width:36px; height:36px; border-radius:9px; background:#fff; color:var(--teal); display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+.cst-rec-ic svg { width:20px; height:20px; }
+.cst-rec-t { font-family:"Open Sans"; font-size:14.5px; font-weight:600; color:var(--ink); line-height:1.35; }
+.cst-rec-t b { color:var(--teal); }
+
+/* Cierre */
+.slide-cierre::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: var(--teal); }
+.cierre-logo { margin-bottom: 30px; }
+.cierre-logo img { height: 110px; display: block; }
+.slide-cierre h2 { font-family: "Montserrat"; font-weight: 800; font-size: 52px; color: var(--ink); text-align: center; max-width: 1180px; line-height: 1.12; }
+.slide-cierre .accent-rule { width: 90px; height: 4px; background: var(--teal); border-radius: 2px; margin: 30px 0; }
+.cierre-sub { font-size: 24px; color: var(--ink-soft); text-align: center; max-width: 980px; line-height: 1.5; margin-bottom: 46px; }
+.cierre-sub b { color: var(--teal); font-weight: 600; }
+.cierre-back { display: flex; align-items: center; gap: 12px; padding: 17px 34px; background: var(--teal); border-radius: 14px; text-decoration: none; box-shadow: 0 16px 40px rgba(28,108,135,.3); font-family: "Montserrat"; font-weight: 700; font-size: 20px; color: #fff; }
+
+/* UI */
+.ui-label { position: absolute; top: 22px; left: 40px; font-family: "JetBrains Mono"; font-size: 14px; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; z-index: 50; font-weight: 700; }
+.ui-logo { position: absolute; top: 20px; right: 40px; z-index: 50; }
+.ui-logo img { height: 32px; display: block; }
+.nav-buttons { position: absolute; bottom: 24px; right: 40px; display: flex; gap: 12px; z-index: 50; }
+.nav-buttons .back-link { padding: 10px 18px; border: 1px solid var(--line); background: #fff; color: var(--ink-soft); border-radius: 6px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; }
+.nav-buttons .back-link:hover { border-color: var(--teal); color: var(--teal); }
+button { padding: 10px 18px; border: 1px solid var(--teal); background: #fff; color: var(--teal); cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: 600; transition: all 0.2s; font-family: "Open Sans"; box-shadow: 0 2px 8px rgba(14,58,71,0.08); }
+button:hover:not(:disabled) { background: var(--teal); color: #fff; }
+button:disabled { opacity: 0.35; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<div class="slides-container">
+
+  <!-- Slide 1: Portada -->
+  <div class="slide slide-portada active">
+    <div class="logo-card"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+    <h2>Licenciamiento de software y cumplimiento</h2>
+    <div class="accent-rule"></div>
+    <div class="tagline">
+      <div class="lead">Tus licencias bajo control, legales y al mejor costo</div>
+      <div style="margin-top: 16px;">Comercializamos, gestionamos y controlamos tus licencias para mantener tu empresa operativa, segura y en cumplimiento.</div>
+    </div>
+  </div>
+
+  <!-- Slide 2: Panorama (3 pilares) -->
+  <div class="slide slide-dev" style="justify-content:flex-start; padding-top:84px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Cómo gestionamos tu software</h3>
+      <div class="cap-claim">Te vendemos lo correcto, lo mantenemos al día y te dejamos siempre listo para una auditoría</div>
+    </div>
+
+    <div class="dv-grid">
+
+      <!-- Pilar 1: Venta y asesoría -->
+      <div class="dv-pillar">
+        <div class="dv-p-head">
+          <div class="dv-p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l2.4 12.5a2 2 0 002 1.5h7.7a2 2 0 002-1.6L21 7H6"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg></div>
+          <div><div class="dv-p-title">Venta y asesoría</div></div>
+        </div>
+        <div class="dv-p-sub">El software correcto, bien adquirido</div>
+        <div class="dv-p-list">
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Venta de licencias de software</div><div class="dv-it-d">Herramientas empresariales, productividad e infraestructura.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Antivirus y seguridad</div><div class="dv-it-d">Licencias de protección empresarial administradas.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Sistemas operativos y herramientas</div><div class="dv-it-d">Servidores, estaciones, virtualización, colaboración y desarrollo.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Acompañamiento en adquisición</div><div class="dv-it-d">Asesoría para elegir el modelo de licenciamiento ideal.</div></div></div>
+        </div>
+      </div>
+
+      <!-- Pilar 2: Gestión y control -->
+      <div class="dv-pillar">
+        <div class="dv-p-head">
+          <div class="dv-p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 13h5M7 16.5h8"/></svg></div>
+          <div><div class="dv-p-title">Gestión y control</div></div>
+        </div>
+        <div class="dv-p-sub">Todo registrado y al día</div>
+        <div class="dv-p-list">
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Inventario de software</div><div class="dv-it-d">Programas, versiones, usuarios y responsables de uso.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Control de licencias activas</div><div class="dv-it-d">Disponibles, asignadas, vencidas o próximas a renovar.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Renovación de licencias</div><div class="dv-it-d">Gestión oportuna para evitar interrupciones de servicio.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Optimización de costos</div><div class="dv-it-d">Detecta licencias subutilizadas, duplicadas o innecesarias.</div></div></div>
+        </div>
+      </div>
+
+      <!-- Pilar 3: Cumplimiento y auditoría -->
+      <div class="dv-pillar">
+        <div class="dv-p-head">
+          <div class="dv-p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l2 2 4-4"/><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/></svg></div>
+          <div><div class="dv-p-title">Cumplimiento y auditoría</div></div>
+        </div>
+        <div class="dv-p-sub">Legal, auditable y sin sorpresas</div>
+        <div class="dv-p-list">
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Cumplimiento de licenciamiento</div><div class="dv-it-d">Sin software no autorizado, vencido o fuera de contrato.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Documentación para auditoría</div><div class="dv-it-d">Evidencias organizadas para revisiones internas o externas.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Hardware y soporte</div><div class="dv-it-d">Control de garantías, contratos y vigencia de equipos críticos.</div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Slide 3: Inventario y control de licencias -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Inventario y control de licencias</h3>
+      <div class="cap-claim">Descubrimos todo el software instalado y su estado — y renovamos antes de que algo se venza</div>
+    </div>
+
+    <div class="sc-bar">
+      <div class="sc-users-metric"><div class="sc-users-v" id="lic-total">0</div><div class="sc-users-l">aplicaciones inventariadas</div></div>
+      <div class="sc-bar-spacer"></div>
+      <div class="sc-metric"><div class="v" id="lic-exp">0</div><div class="l">por vencer (≤30 días)</div></div>
+      <div class="sc-metric"><div class="v" id="lic-risk">0</div><div class="l">vencidas / en riesgo</div></div>
+      <div class="sc-state warn" id="lic-state">● inventariando software instalado…</div>
+    </div>
+
+    <div class="lic-table">
+      <div class="lic-row head"><div>Software</div><div>Categoría</div><div>Usuarios</div><div>Estado</div></div>
+      <div class="lic-row item" id="lic1"><div class="lic-sw"><span class="lic-sw-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/></svg></span><span class="lic-sw-t">Windows Server 2022</span></div><div class="lic-cat">Sistemas operativos</div><div class="lic-users">12</div><div><span class="lic-status">activa</span></div></div>
+      <div class="lic-row item" id="lic2"><div class="lic-sw"><span class="lic-sw-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18"/></svg></span><span class="lic-sw-t">Microsoft 365</span></div><div class="lic-cat">Productividad</div><div class="lic-users">85</div><div><span class="lic-status">activa</span></div></div>
+      <div class="lic-row item" id="lic3"><div class="lic-sw"><span class="lic-sw-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/></svg></span><span class="lic-sw-t">Antivirus / EDR</span></div><div class="lic-cat">Seguridad</div><div class="lic-users">120</div><div><span class="lic-status warn">por vencer</span></div></div>
+      <div class="lic-row item" id="lic4"><div class="lic-sw"><span class="lic-sw-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/></svg></span><span class="lic-sw-t">SQL Server 2022</span></div><div class="lic-cat">Bases de datos</div><div class="lic-users">4</div><div><span class="lic-status">activa</span></div></div>
+      <div class="lic-row item" id="lic5"><div class="lic-sw"><span class="lic-sw-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l9 16H3z"/></svg></span><span class="lic-sw-t">AutoCAD</span></div><div class="lic-cat">Ingeniería</div><div class="lic-users">3</div><div><span class="lic-status bad">vencida</span></div></div>
+      <div class="lic-row item" id="lic6"><div class="lic-sw"><span class="lic-sw-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h16v6H4zM4 13h16v6H4z"/></svg></span><span class="lic-sw-t">Veeam Backup</span></div><div class="lic-cat">Infraestructura</div><div class="lic-users">6</div><div><span class="lic-status">activa</span></div></div>
+      <div class="lic-row item" id="lic7"><div class="lic-sw"><span class="lic-sw-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span class="lic-sw-t">VMware vSphere</span></div><div class="lic-cat">Virtualización</div><div class="lic-users">8</div><div><span class="lic-status warn">por vencer</span></div></div>
+    </div>
+
+    <div class="sc-concl" id="lic-concl">
+      <div class="sc-concl-ic">&#10003;</div>
+      <div>
+        <div class="sc-concl-t">3 licencias estaban por vencer o vencidas — <b>renovadas a tiempo</b></div>
+        <div class="sc-concl-d">Inventario completo, con usuarios y estado de cada licencia. <b>Ningún servicio crítico se detiene por un vencimiento olvidado.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Cumplimiento y auditoría -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Cumplimiento y auditoría</h3>
+      <div class="cap-claim">Revisamos que todo esté licenciado y en contrato, corregimos lo que falte y dejamos el expediente listo</div>
+    </div>
+
+    <div class="sc-bar">
+      <div class="sc-users-metric"><div class="sc-users-v hot" id="cmp-pct">0%</div><div class="sc-users-l">cumplimiento de licenciamiento</div></div>
+      <div class="sc-bar-spacer"></div>
+      <div class="sc-metric"><div class="v bad" id="cmp-find">0</div><div class="l">hallazgos</div></div>
+      <div class="sc-metric"><div class="v" id="cmp-ev">0/4</div><div class="l">evidencias para auditoría</div></div>
+      <div class="sc-state warn" id="cmp-state">● iniciando revisión de cumplimiento</div>
+    </div>
+
+    <div class="cmp-row">
+      <!-- Revisión -->
+      <div class="cmp-panel">
+        <div class="cmp-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/></svg> Revisión por categoría</div>
+        <div class="cmp-item" id="cmp1"><div class="cmp-ic">&#8226;</div><div><div class="cmp-t">Sistemas operativos</div><div class="cmp-d">licencias vs. instalaciones</div></div><span class="cmp-tag">en espera</span></div>
+        <div class="cmp-item" id="cmp2"><div class="cmp-ic">&#8226;</div><div><div class="cmp-t">Productividad (Microsoft 365)</div><div class="cmp-d">3 instalaciones sin licencia (over-deployment)</div></div><span class="cmp-tag">en espera</span></div>
+        <div class="cmp-item" id="cmp3"><div class="cmp-ic">&#8226;</div><div><div class="cmp-t">Antivirus y seguridad</div><div class="cmp-d">cobertura de equipos</div></div><span class="cmp-tag">en espera</span></div>
+        <div class="cmp-item" id="cmp4"><div class="cmp-ic">&#8226;</div><div><div class="cmp-t">Software no autorizado</div><div class="cmp-d">1 programa fuera de contrato detectado</div></div><span class="cmp-tag">en espera</span></div>
+        <div class="cmp-item" id="cmp5"><div class="cmp-ic">&#8226;</div><div><div class="cmp-t">Garantías y soporte de hardware</div><div class="cmp-d">soporte de 2 servidores vencido</div></div><span class="cmp-tag">en espera</span></div>
+      </div>
+
+      <!-- Expediente -->
+      <div class="aud-panel">
+        <div class="cmp-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg> Expediente de auditoría</div>
+        <div class="aud-item" id="aud1"><div class="aud-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h10v18H7z"/><path d="M10 8h4M10 12h4"/></svg></div><div><div class="aud-t">Contratos y facturas</div><div class="aud-s">respaldo de cada compra</div></div><span class="aud-chk">&#10003;</span></div>
+        <div class="aud-item" id="aud2"><div class="aud-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="9" r="5"/><path d="M9 13l-1 8 4-2 4 2-1-8"/></svg></div><div><div class="aud-t">Certificados de licencia</div><div class="aud-s">titularidad y vigencia</div></div><span class="aud-chk">&#10003;</span></div>
+        <div class="aud-item" id="aud3"><div class="aud-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 13h8"/></svg></div><div><div class="aud-t">Inventario conciliado</div><div class="aud-s">instalado vs. adquirido</div></div><span class="aud-chk">&#10003;</span></div>
+        <div class="aud-item" id="aud4"><div class="aud-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg></div><div><div class="aud-t">Reporte de cumplimiento</div><div class="aud-s">informe ejecutivo final</div></div><span class="aud-chk">&#10003;</span></div>
+      </div>
+    </div>
+
+    <div class="sc-concl" id="cmp-concl">
+      <div class="sc-concl-ic">&#10003;</div>
+      <div>
+        <div class="sc-concl-t">De hallazgos a <b>100% en cumplimiento</b>, con evidencias listas</div>
+        <div class="sc-concl-d">Sin software pirata, vencido o fuera de contrato. <b>Si llega una auditoría, ya tienes todo documentado y conciliado.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Optimización de costos -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Optimización de costos</h3>
+      <div class="cap-claim">Detectamos lo que pagas y no usas — y lo convertimos en ahorro real, sin perder capacidad</div>
+    </div>
+
+    <div class="sc-bar">
+      <div class="sc-users-metric"><div class="sc-users-v" id="cst-saved" style="color:var(--green);">$0</div><div class="sc-users-l">ahorro anual identificado</div></div>
+      <div class="sc-bar-spacer"></div>
+      <div class="sc-metric"><div class="v" id="cst-after">$48.000</div><div class="l">gasto anual optimizado</div></div>
+      <div class="sc-metric"><div class="v" id="cst-recovered">0</div><div class="l">licencias recuperadas</div></div>
+      <div class="sc-state warn" id="cst-state">● analizando uso real de licencias</div>
+    </div>
+
+    <div class="cst-row">
+      <!-- Oportunidades -->
+      <div class="cst-opps">
+        <div class="cst-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/></svg> Oportunidades de optimización</div>
+        <div class="cst-opp" id="cst1"><div class="cst-opp-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/></svg></div><div><div class="cst-opp-t">18 licencias de productividad sin uso</div><div class="cst-opp-d">subutilizadas · liberar asignación</div></div><div class="cst-opp-save"><div class="amt">$7.560</div><div class="stt">detectado</div></div></div>
+        <div class="cst-opp" id="cst2"><div class="cst-opp-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="13" height="13" rx="2"/><rect x="8" y="8" width="13" height="13" rx="2"/></svg></div><div><div class="cst-opp-t">2 suites de diseño duplicadas</div><div class="cst-opp-d">funciones solapadas · consolidar</div></div><div class="cst-opp-save"><div class="amt">$2.880</div><div class="stt">detectado</div></div></div>
+        <div class="cst-opp" id="cst3"><div class="cst-opp-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.3 3-6 7-6"/><path d="M16 16l5 5M21 16l-5 5"/></svg></div><div><div class="cst-opp-t">5 licencias de usuarios inactivos</div><div class="cst-opp-d">personal que ya no está · recuperar</div></div><div class="cst-opp-save"><div class="amt">$1.500</div><div class="stt">detectado</div></div></div>
+        <div class="cst-opp" id="cst4"><div class="cst-opp-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 7-7"/><path d="M14 7h7v7"/></svg></div><div><div class="cst-opp-t">Edición sobredimensionada</div><div class="cst-opp-d">plan superior al uso real · ajustar</div></div><div class="cst-opp-save"><div class="amt">$1.260</div><div class="stt">detectado</div></div></div>
+      </div>
+
+      <!-- Impacto -->
+      <div class="cst-impact">
+        <div class="cst-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg> Gasto anual en licencias</div>
+        <div class="cst-bars">
+          <div class="cst-bar before"><div class="cst-bar-v">$48.0k</div><div class="cst-bar-fill" id="cst-bar-before" style="height:230px;"></div><div class="cst-bar-l">antes</div></div>
+          <div class="cst-bar after"><div class="cst-bar-v" id="cst-after-v">$48.0k</div><div class="cst-bar-fill" id="cst-bar-after" style="height:230px;"></div><div class="cst-bar-l">después</div></div>
+        </div>
+        <div class="cst-rec" id="cst-rec">
+          <div class="cst-rec-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-4 10.5c.7.7 1 1.2 1 2.5h6c0-1.3.3-1.8 1-2.5A6 6 0 0012 3z"/></svg></div>
+          <div class="cst-rec-t"><b>Acompañamiento en adquisición:</b> migramos al modelo de licenciamiento que mejor se ajusta a tu operación.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sc-concl" id="cst-concl">
+      <div class="sc-concl-ic">&#10003;</div>
+      <div>
+        <div class="sc-concl-t">$13.200 al año de ahorro — <b>27% menos</b>, sin perder capacidad</div>
+        <div class="sc-concl-d">Pagas solo por lo que usas, en el modelo correcto. <b>El control de licencias se paga solo.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Cierre -->
+  <div class="slide slide-cierre">
+    <div class="cierre-logo"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+    <h2>Software legal, controlado y al mejor costo</h2>
+    <div class="accent-rule"></div>
+    <div class="cierre-sub">Te <b>vendemos y asesoramos</b>, <b>gestionamos cada licencia</b> y te mantenemos en <b>cumplimiento</b> — operativo, seguro y listo para auditar.</div>
+    <a class="cierre-back" href="Portafolio TecnoLTS.html#servicios">&#8592; Volver a Nuestros servicios</a>
+  </div>
+
+
+
+<div class="ui-label" id="slide-label">01 — Portada</div>
+<div class="ui-logo"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+
+<div class="nav-buttons">
+  <a class="back-link" href="Portafolio TecnoLTS.html#servicios">&#8962; Servicios</a>
+  <button id="btn-prev">← Anterior</button>
+  <button id="btn-next">Siguiente →</button>
+</div>
+
+</div>
+
+<script>
+let currentSlide = 0;
+let playhead = 0;
+let lastTime = Date.now();
+const slides = [
+  { name: 'Portada', duration: 3 },
+  { name: 'Panorama', duration: 10 },
+  { name: 'Inventario y control', duration: 28 },
+  { name: 'Cumplimiento', duration: 28 },
+  { name: 'Optimización de costos', duration: 26 },
+  { name: 'Cierre', duration: 5 }
+];
+
+function goToSlide(n) {
+  if (n < 0 || n >= slides.length) return;
+  document.querySelectorAll('.slide').forEach((s, i) => s.classList.toggle('active', i === n));
+  currentSlide = n;
+  playhead = 0;
+  document.getElementById('slide-label').textContent = String(n + 1).padStart(2, '0') + ' — ' + slides[n].name;
+  document.getElementById('btn-prev').disabled = currentSlide === 0;
+  document.getElementById('btn-next').disabled = currentSlide === slides.length - 1;
+}
+document.getElementById('btn-prev').addEventListener('click', () => goToSlide(currentSlide - 1));
+document.getElementById('btn-next').addEventListener('click', () => goToSlide(currentSlide + 1));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+  if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+});
+
+function animate() {
+  const now = Date.now();
+  const dt = (now - lastTime) / 1000;
+  lastTime = now;
+  playhead += dt;
+  if (playhead > slides[currentSlide].duration) playhead = slides[currentSlide].duration;
+  const t = Math.min(1, playhead / slides[currentSlide].duration);
+  const clamp = (x) => Math.max(0, Math.min(1, x));
+
+  // Slide inventario y control (index 2)
+  if (currentSlide === 2) {
+    const rows = [
+      { id: 'lic1', appear: 0.04 },
+      { id: 'lic2', appear: 0.10 },
+      { id: 'lic3', appear: 0.16, fix: 0.58, kind: 'exp' },
+      { id: 'lic4', appear: 0.22 },
+      { id: 'lic5', appear: 0.28, fix: 0.66, kind: 'risk' },
+      { id: 'lic6', appear: 0.34 },
+      { id: 'lic7', appear: 0.40, fix: 0.74, kind: 'exp' }
+    ];
+    let total = 0, expiring = 0, risk = 0;
+    rows.forEach(r => {
+      const el = document.getElementById(r.id); if (!el) return;
+      const on = t >= r.appear; el.classList.toggle('on', on); if (on) total++;
+      if (r.fix && on) {
+        const status = el.querySelector('.lic-status');
+        if (t >= r.fix) { if (status) { status.textContent = 'renovada ✓'; status.className = 'lic-status'; } }
+        else if (r.kind === 'exp') { if (status) { status.textContent = 'por vencer'; status.className = 'lic-status warn'; } expiring++; }
+        else { if (status) { status.textContent = 'vencida'; status.className = 'lic-status bad'; } risk++; }
+      }
+    });
+    const tEl = document.getElementById('lic-total'); if (tEl) tEl.textContent = total;
+    const eEl = document.getElementById('lic-exp'); if (eEl) { eEl.textContent = expiring; eEl.className = 'v' + (expiring > 0 ? ' warn' : ' ok'); }
+    const rEl = document.getElementById('lic-risk'); if (rEl) { rEl.textContent = risk; rEl.className = 'v' + (risk > 0 ? ' bad' : ' ok'); }
+
+    const st = document.getElementById('lic-state');
+    if (st) {
+      if (t < 0.44) { st.textContent = '● inventariando software instalado…'; st.className = 'sc-state warn'; }
+      else if (risk > 0) { st.textContent = '● ' + risk + ' vencida(s) · ' + expiring + ' por vencer'; st.className = 'sc-state bad'; }
+      else if (expiring > 0) { st.textContent = '● ' + expiring + ' licencia(s) por renovar'; st.className = 'sc-state warn'; }
+      else { st.textContent = '● inventario al día · 0 en riesgo'; st.className = 'sc-state'; }
+    }
+    const concl = document.getElementById('lic-concl');
+    if (concl) concl.classList.toggle('on', t >= 0.80);
+  }
+
+  // Slide cumplimiento y auditoría (index 3)
+  if (currentSlide === 3) {
+    const checks = [
+      { id: 'cmp1', scan: 0.06, res: 0.16, bad: false },
+      { id: 'cmp2', scan: 0.12, res: 0.22, bad: true, fix: 0.44 },
+      { id: 'cmp3', scan: 0.18, res: 0.28, bad: false },
+      { id: 'cmp4', scan: 0.24, res: 0.34, bad: true, fix: 0.52 },
+      { id: 'cmp5', scan: 0.30, res: 0.40, bad: true, fix: 0.60 }
+    ];
+    let findings = 0, okCount = 0;
+    checks.forEach(c => {
+      const el = document.getElementById(c.id); if (!el) return;
+      el.classList.remove('scan', 'bad', 'ok');
+      const ic = el.querySelector('.cmp-ic'); const tag = el.querySelector('.cmp-tag');
+      if (c.bad) {
+        if (t >= c.fix) { el.classList.add('ok'); if (ic) ic.innerHTML = '&#10003;'; if (tag) tag.textContent = 'corregido ✓'; okCount++; }
+        else if (t >= c.res) { el.classList.add('bad'); findings++; if (ic) ic.textContent = '!'; if (tag) tag.textContent = 'hallazgo'; }
+        else if (t >= c.scan) { el.classList.add('scan'); if (tag) tag.textContent = 'revisando…'; }
+        else { if (tag) tag.textContent = 'en espera'; }
+      } else {
+        if (t >= c.res) { el.classList.add('ok'); if (ic) ic.innerHTML = '&#10003;'; if (tag) tag.textContent = 'en cumplimiento'; okCount++; }
+        else if (t >= c.scan) { el.classList.add('scan'); if (tag) tag.textContent = 'revisando…'; }
+        else { if (tag) tag.textContent = 'en espera'; }
+      }
+    });
+    const comp = Math.round((okCount / 5) * 100);
+    const cEl = document.getElementById('cmp-pct'); if (cEl) { cEl.textContent = comp + '%'; cEl.className = 'sc-users-v' + (comp >= 100 ? '' : ' hot'); }
+    const fEl = document.getElementById('cmp-find'); if (fEl) { fEl.textContent = findings; fEl.className = 'v' + (findings > 0 ? ' bad' : ' ok'); }
+
+    const aud = { 'aud1': 0.62, 'aud2': 0.68, 'aud3': 0.74, 'aud4': 0.80 };
+    let ev = 0;
+    Object.keys(aud).forEach(id => { const el = document.getElementById(id); const on = t >= aud[id]; if (el) el.classList.toggle('on', on); if (on) ev++; });
+    const evEl = document.getElementById('cmp-ev'); if (evEl) { evEl.textContent = ev + '/4'; evEl.className = 'v' + (ev === 4 ? ' ok' : ''); }
+
+    const st = document.getElementById('cmp-state');
+    if (st) {
+      if (t >= 0.80) { st.textContent = '● 100% en cumplimiento · listo para auditoría'; st.className = 'sc-state'; }
+      else if (t >= 0.62) { st.textContent = '● generando expediente de auditoría…'; st.className = 'sc-state warn'; }
+      else if (findings > 0) { st.textContent = '● ' + findings + ' hallazgo(s) · remediando'; st.className = 'sc-state bad'; }
+      else if (t >= 0.06) { st.textContent = '● revisando cumplimiento por categoría…'; st.className = 'sc-state warn'; }
+      else { st.textContent = '● iniciando revisión de cumplimiento'; st.className = 'sc-state'; }
+    }
+    const concl = document.getElementById('cmp-concl');
+    if (concl) concl.classList.toggle('on', t >= 0.86);
+  }
+
+  // Slide optimización de costos (index 4)
+  if (currentSlide === 4) {
+    const opps = [
+      { id: 'cst1', found: 0.10, applied: 0.30, save: 7560, lic: 18 },
+      { id: 'cst2', found: 0.18, applied: 0.42, save: 2880, lic: 2 },
+      { id: 'cst3', found: 0.26, applied: 0.54, save: 1500, lic: 5 },
+      { id: 'cst4', found: 0.34, applied: 0.66, save: 1260, lic: 1 }
+    ];
+    const BASE = 48000;
+    let saved = 0, recovered = 0;
+    opps.forEach(o => {
+      const el = document.getElementById(o.id); if (!el) return;
+      el.classList.toggle('found', t >= o.found);
+      const ap = t >= o.applied;
+      el.classList.toggle('applied', ap);
+      if (ap) { saved += o.save; recovered += o.lic; }
+      const stt = el.querySelector('.stt');
+      if (stt) stt.textContent = ap ? 'aplicado ✓' : (t >= o.found ? 'detectado' : '');
+    });
+    const after = BASE - saved;
+    const sEl = document.getElementById('cst-saved'); if (sEl) sEl.textContent = '$' + saved.toLocaleString('es-ES');
+    const aEl = document.getElementById('cst-after'); if (aEl) aEl.textContent = '$' + after.toLocaleString('es-ES');
+    const rEl = document.getElementById('cst-recovered'); if (rEl) rEl.textContent = recovered;
+
+    const maxH = 230;
+    const af = document.getElementById('cst-bar-after'); if (af) af.style.height = (maxH * after / BASE) + 'px';
+    const av = document.getElementById('cst-after-v'); if (av) av.textContent = '$' + (after / 1000).toFixed(1) + 'k';
+
+    const rec = document.getElementById('cst-rec'); if (rec) rec.classList.toggle('on', t >= 0.72);
+
+    const pct = Math.round(saved / BASE * 100);
+    const st = document.getElementById('cst-state');
+    if (st) {
+      if (t >= 0.70) { st.textContent = '● ' + pct + '% de ahorro · gasto optimizado'; st.className = 'sc-state'; }
+      else if (saved > 0) { st.textContent = '● aplicando optimizaciones…'; st.className = 'sc-state warn'; }
+      else { st.textContent = '● analizando uso real de licencias'; st.className = 'sc-state warn'; }
+    }
+    const concl = document.getElementById('cst-concl');
+    if (concl) concl.classList.toggle('on', t >= 0.80);
+  }
+
+  requestAnimationFrame(animate);
+}
+
+goToSlide(0);
+requestAnimationFrame(animate);
+
+function fitStage() {
+  const stage = document.querySelector('.slides-container');
+  const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  stage.style.transform = 'scale(' + scale + ')';
+}
+window.addEventListener('resize', fitStage);
+fitStage();
+</script>
+
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var n = e.target;
+    while (n && n.nodeName !== 'A') { n = n.parentNode; }
+    if (!n || !n.getAttribute) return;
+    var href = n.getAttribute('href');
+    if (!href) return;
+    if (href.charAt(0) === '#') return;
+    if (/^(https?:|mailto:|tel:|data:)/i.test(href)) return;
+    e.preventDefault();
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ tlNav: href }, '*');
+    }
+  }, true);
+})();
+</script>
+</body>
+</html>
