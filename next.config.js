@@ -1,3 +1,4 @@
+
 /** @type {import('next').NextConfig} */
 const isDevelopment = process.env.NODE_ENV === 'development' || process.env.APP_ENV === 'development';
 
@@ -19,7 +20,7 @@ function toOriginHostname(value) {
 
 const allowedDevOrigins = Array.from(
   new Set(
-    (process.env.NEXT_ALLOWED_DEV_ORIGINS || 'localhost,127.0.0.1,192.168.100.229')
+    (process.env.NEXT_ALLOWED_DEV_ORIGINS || 'localhost,127.0.0.1,192.168.100.51')
       .split(',')
       .map(toOriginHostname)
       .filter(Boolean)

@@ -55,6 +55,11 @@ services:
       EMAIL_TO: ${EMAIL_TO:-}
       UPSTASH_REDIS_REST_URL: ${UPSTASH_REDIS_REST_URL:-}
       UPSTASH_REDIS_REST_TOKEN: ${UPSTASH_REDIS_REST_TOKEN:-}
+      DATA_ENCRYPTION_KEY: ${DATA_ENCRYPTION_KEY:-}
+      SESSION_DURATION_HOURS: ${SESSION_DURATION_HOURS:-8}
+      ADMIN_API_KEY: ${ADMIN_API_KEY:-}
+    volumes:
+      - tecnolts_data:/app/data
     ports:
       - "${HOST_PORT:-3008}:3000"
     container_name: tecnolts-app
@@ -115,7 +120,7 @@ services:
       PORT: 3000
       HOSTNAME: 0.0.0.0
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3009}
-      NEXT_ALLOWED_DEV_ORIGINS: ${NEXT_ALLOWED_DEV_ORIGINS:-localhost,127.0.0.1,192.168.100.229}
+      NEXT_ALLOWED_DEV_ORIGINS: ${NEXT_ALLOWED_DEV_ORIGINS:-localhost,127.0.0.1,192.168.100.51}
       SMTP_HOST: ${SMTP_HOST:-}
       SMTP_PORT: ${SMTP_PORT:-587}
       SMTP_SECURE: ${SMTP_SECURE:-false}
@@ -129,6 +134,9 @@ services:
       EMAIL_TO: ${EMAIL_TO:-}
       UPSTASH_REDIS_REST_URL: ${UPSTASH_REDIS_REST_URL:-}
       UPSTASH_REDIS_REST_TOKEN: ${UPSTASH_REDIS_REST_TOKEN:-}
+      DATA_ENCRYPTION_KEY: ${DATA_ENCRYPTION_KEY:-}
+      SESSION_DURATION_HOURS: ${SESSION_DURATION_HOURS:-8}
+      ADMIN_API_KEY: ${ADMIN_API_KEY:-}
     command: >
       sh -lc '
         runtime="$${FRONTEND_DEV_RUNTIME:-hot}";
@@ -173,3 +181,4 @@ networks:
 volumes:
   tecnolts_node_modules:
   tecnolts_next_build:
+  tecnolts_data:

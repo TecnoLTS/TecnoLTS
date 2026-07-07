@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-/**
- * Lógica de proxy para manejar el SEO y la localización.
- * - Redirige /es/* a /* (evita duplicados y conserva autoridad SEO)
- * - Reescribe /* a /es/* internamente para servir el idioma predeterminado
- */
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Portafolio routes: skip i18n rewrite, let the page/API handle auth
+  if (pathname === '/portafolio' || pathname.startsWith('/api/portafolio/')) {
+    return NextResponse.next();
+  }
 
   // Nunca reescribir recursos estáticos ni endpoints técnicos.
   if (
@@ -59,14 +59,6 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public assets (files with extensions)
-     */
     '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|manifest.webmanifest).*)',
   ],
 };
