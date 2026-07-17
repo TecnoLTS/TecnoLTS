@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Consultorías ISO 27001 · TecnoLTS</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --panel: #f3f7f9;
+  --panel-2: #eaf1f4;
+  --ink: #0e3a47;
+  --ink-soft: #3c4f57;
+  --muted: #6b7c84;
+  --teal: #1c6c87;
+  --teal-light: #2d869f;
+  --line: rgba(14,58,71,0.14);
+  --red: #d64545; --red-bg: #fbeaea;
+  --green: #2f9e5e; --green-bg: #e7f6ee;
+  --amber: #c9821a; --amber-bg: #fbf1e0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M5 2 L5 24 L11 18 L15 27 L19 25 L15 16 L23 16 Z' fill='%23c9821a' stroke='white' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 5 2, auto; }
+body { font-family: "Open Sans", sans-serif; display: flex; align-items: center; justify-content: center; }
+
+.slides-container { position: relative; width: 1920px; height: 1080px; background: var(--bg); flex: 0 0 auto; transform-origin: center center; }
+.slide { position: absolute; top: 0; left: 0; width: 1920px; height: 1080px; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 90px 110px; opacity: 0; transition: opacity 0.5s ease-in-out; }
+.slide.active { display: flex; opacity: 1; }
+
+/* Portada */
+.slide-portada::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: var(--teal); }
+.slide-portada .logo-card { margin-bottom: 50px; }
+.slide-portada .logo-card img { height: 150px; display: block; }
+.slide-portada h2 { font-size: 60px; font-weight: 800; color: var(--ink); font-family: "Montserrat"; margin-bottom: 26px; text-align: center; letter-spacing: -0.015em; }
+.slide-portada .accent-rule { width: 90px; height: 4px; background: var(--teal); border-radius: 2px; margin-bottom: 38px; }
+.slide-portada .tagline { font-size: 27px; color: var(--ink-soft); max-width: 1060px; text-align: center; line-height: 1.6; }
+.slide-portada .tagline .lead { color: var(--teal); font-weight: 600; }
+
+/* Slide genérico */
+.slide h3 { font-size: 50px; font-weight: 700; color: var(--ink); font-family: "Montserrat"; margin-bottom: 4px; align-self: flex-start; position: relative; padding-bottom: 16px; letter-spacing: -0.01em; }
+.slide h3::after { content: ""; position: absolute; left: 0; bottom: 0; width: 64px; height: 4px; background: var(--teal); border-radius: 2px; }
+.cap-claim { font-size: 22px; font-weight: 600; color: var(--teal); margin-top: 14px; }
+
+/* ===== Panorama: 3 pilares ===== */
+.dv-grid { display: flex; gap: 28px; width: 100%; margin-top: 40px; align-items: stretch; }
+.dv-pillar { flex: 1 1 0; border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: 0 12px 32px rgba(14,58,71,.09); padding: 30px 28px; display: flex; flex-direction: column; }
+.dv-p-head { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+.dv-p-ic { width: 60px; height: 60px; border-radius: 15px; background: var(--panel-2); color: var(--teal); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.dv-p-ic svg { width: 32px; height: 32px; }
+.dv-p-title { font-family: "Montserrat"; font-weight: 800; font-size: 23px; color: var(--ink); line-height: 1.1; }
+.dv-p-sub { font-size: 15px; color: var(--muted); margin: 4px 0 22px; }
+.dv-p-list { display: flex; flex-direction: column; gap: 15px; }
+.dv-item { display: flex; align-items: flex-start; gap: 13px; }
+.dv-check { width: 24px; height: 24px; border-radius: 7px; background: var(--green-bg); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex: 0 0 auto; margin-top: 1px; }
+.dv-it-t { font-family: "Montserrat"; font-weight: 700; font-size: 16px; color: var(--ink); line-height: 1.2; }
+.dv-it-d { font-size: 15.5px; color: var(--ink-soft); line-height: 1.35; margin-top: 2px; }
+
+@keyframes dvUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.slide-dev.active .dv-pillar { animation: dvUp .6s both; }
+.slide-dev.active .dv-pillar:nth-child(1) { animation-delay: .08s; }
+.slide-dev.active .dv-pillar:nth-child(2) { animation-delay: .26s; }
+.slide-dev.active .dv-pillar:nth-child(3) { animation-delay: .44s; }
+.slide-dev.active .dv-p-list .dv-item { animation: dvUp .5s both; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(1) { animation-delay: .55s; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(2) { animation-delay: .64s; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(3) { animation-delay: .73s; }
+.slide-dev.active .dv-p-list .dv-item:nth-child(4) { animation-delay: .82s; }
+
+/* ===== Barra de métricas (compartida) ===== */
+.sc-bar { display:flex; align-items:center; gap:26px; width:100%; margin-top:22px; border:1px solid var(--line); border-radius:14px; background:var(--panel); padding:16px 28px; }
+.sc-users-metric { display:flex; align-items:baseline; gap:12px; flex:0 0 auto; }
+.sc-users-v { font-family:"Montserrat"; font-weight:800; font-size:44px; color:var(--ink); line-height:1; transition:color .3s; }
+.sc-users-v.hot { color:var(--amber); }
+.sc-users-l { font-family:"JetBrains Mono"; font-size:15px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; max-width:200px; line-height:1.3; }
+.sc-bar-spacer { flex:1 1 auto; }
+.sc-metric { text-align:right; flex:0 0 auto; }
+.sc-metric .v { font-family:"Montserrat"; font-weight:800; font-size:24px; color:var(--ink); transition:color .3s; }
+.sc-metric .v.warn { color:var(--amber); }
+.sc-metric .v.bad { color:var(--red); }
+.sc-metric .v.ok { color:var(--green); }
+.sc-metric .l { font-family:"JetBrains Mono"; font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-top:3px; }
+.sc-state { font-family:"JetBrains Mono"; font-size:15px; font-weight:700; padding:9px 16px; border-radius:20px; background:var(--green-bg); color:var(--green); white-space:nowrap; transition:all .3s; flex:0 0 auto; }
+.sc-state.warn { background:var(--amber-bg); color:var(--amber); }
+.sc-state.bad { background:var(--red-bg); color:var(--red); }
+
+/* ===== Conclusión (compartida) ===== */
+.sc-concl { width:100%; margin-top:20px; display:flex; align-items:center; gap:18px; border:1px solid var(--green); border-radius:14px; background:var(--green-bg); padding:18px 26px; opacity:0; transform:translateY(10px); transition:opacity .5s, transform .5s; }
+.sc-concl.on { opacity:1; transform:translateY(0); }
+.sc-concl-ic { width:48px; height:48px; border-radius:13px; background:#fff; color:var(--green); display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; flex:0 0 auto; }
+.sc-concl-t { font-family:"Montserrat"; font-weight:700; font-size:18px; color:var(--ink); }
+.sc-concl-t b { color:var(--green); }
+.sc-concl-d { font-size:16px; color:var(--ink-soft); margin-top:3px; line-height:1.4; }
+.sc-concl-d b { color:var(--teal); font-weight:700; }
+
+/* ===== Triada CIA ===== */
+.cia-grid { display:flex; gap:24px; width:100%; margin-top:26px; align-items:stretch; }
+.cia-card { flex:1 1 0; position:relative; border:1.5px solid var(--line); border-radius:18px; background:#fff; box-shadow:0 12px 30px rgba(14,58,71,.09); padding:28px 26px; display:flex; flex-direction:column; align-items:center; text-align:center; opacity:.5; transition:opacity .5s, border-color .5s, box-shadow .5s; }
+.cia-card.on { opacity:1; border-color:var(--teal); box-shadow:0 16px 36px rgba(28,108,135,.16); }
+.cia-badge { position:absolute; top:18px; right:20px; font-family:"Montserrat"; font-weight:800; font-size:30px; color:var(--panel-2); transition:color .5s; }
+.cia-card.on .cia-badge { color:var(--teal-light); }
+.cia-ic { width:84px; height:84px; border-radius:21px; background:var(--panel-2); color:var(--teal); display:flex; align-items:center; justify-content:center; margin-bottom:16px; transition:background .5s, color .5s; }
+.cia-card.on .cia-ic { background:var(--teal); color:#fff; }
+.cia-ic svg { width:44px; height:44px; }
+.cia-t { font-family:"Montserrat"; font-weight:800; font-size:23px; color:var(--ink); }
+.cia-sub { font-size:16.5px; color:var(--muted); margin-top:6px; line-height:1.4; }
+.cia-demo { margin-top:18px; width:100%; border-top:1px solid var(--line); padding-top:16px; display:flex; flex-direction:column; gap:10px; align-items:stretch; min-height:104px; }
+.cia-chip { display:flex; align-items:center; gap:9px; padding:9px 14px; border-radius:10px; font-family:"JetBrains Mono"; font-size:14.5px; font-weight:700; opacity:0; transform:translateY(8px); transition:opacity .4s, transform .4s; text-align:left; }
+.cia-chip.show { opacity:1; transform:none; }
+.cia-chip.bad { background:var(--red-bg); color:var(--red); }
+.cia-chip.ok { background:var(--green-bg); color:var(--green); }
+
+/* ===== Matriz de riesgos ===== */
+.rsk-row { display:flex; gap:22px; width:100%; margin-top:16px; align-items:stretch; }
+.rsk-matrix { flex:0 0 540px; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 26px rgba(14,58,71,.08); padding:16px 22px; }
+.rsk-matrix .cmp-h, .rsk-list .cmp-h { font-family:"JetBrains Mono"; font-size:14.5px; font-weight:700; color:var(--ink); text-transform:uppercase; letter-spacing:.04em; margin-bottom:8px; }
+.rsk-matrix svg { width:100%; height:360px; display:block; }
+.rsk-list { flex:1 1 auto; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 26px rgba(14,58,71,.08); padding:16px 22px; }
+.rsk-class { font-family:"JetBrains Mono"; font-size:13px; color:var(--muted); margin-bottom:6px; }
+.rsk-item { display:flex; align-items:center; gap:14px; padding:12.5px 0; border-bottom:1px solid var(--line); opacity:0; transform:translateX(-10px); transition:opacity .4s, transform .4s; }
+.rsk-item:last-child { border-bottom:none; }
+.rsk-item.on { opacity:1; transform:none; }
+.rsk-tagn { width:30px; height:30px; border-radius:8px; background:var(--panel-2); color:var(--teal); font-family:"JetBrains Mono"; font-weight:800; font-size:15px; display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+.rsk-name { font-family:"Open Sans"; font-weight:600; font-size:16.5px; color:var(--ink); }
+.rsk-asset { font-family:"JetBrains Mono"; font-size:13px; color:var(--muted); margin-top:1px; }
+.rsk-sev { margin-left:auto; font-family:"JetBrains Mono"; font-size:13px; font-weight:800; padding:5px 11px; border-radius:13px; transition:all .5s; white-space:nowrap; }
+.sev-crit { background:var(--red); color:#fff; }
+.sev-high { background:var(--amber); color:#fff; }
+.sev-med { background:var(--amber-bg); color:var(--amber); }
+.sev-low { background:var(--green-bg); color:var(--green); }
+
+/* ===== SGSI: accesos + incidentes ===== */
+.sgs-row { display:flex; gap:22px; width:100%; margin-top:16px; align-items:stretch; }
+.sgs-panel { border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 26px rgba(14,58,71,.08); padding:16px 24px; }
+.sgs-acc { flex:0 0 600px; }
+.sgs-inc { flex:1 1 auto; }
+.sgs-h { display:flex; align-items:center; gap:11px; font-family:"JetBrains Mono"; font-size:15px; font-weight:700; color:var(--ink); text-transform:uppercase; letter-spacing:.04em; margin-bottom:8px; }
+.sgs-h svg { width:21px; height:21px; color:var(--teal); }
+.acc-item { display:flex; align-items:center; gap:13px; padding:11px 0; border-bottom:1px solid var(--line); }
+.acc-item:last-child { border-bottom:none; }
+.acc-ic { width:36px; height:36px; border-radius:50%; background:var(--panel-2); color:var(--muted); display:flex; align-items:center; justify-content:center; flex:0 0 auto; transition:all .35s; }
+.acc-item.ok .acc-ic { background:var(--green-bg); color:var(--green); }
+.acc-item.warn .acc-ic { background:var(--amber-bg); color:var(--amber); }
+.acc-item.fixed .acc-ic { background:var(--green-bg); color:var(--green); }
+.acc-ic svg { width:19px; height:19px; }
+.acc-name { font-family:"Montserrat"; font-weight:700; font-size:16.5px; color:var(--ink); }
+.acc-role { font-family:"JetBrains Mono"; font-size:13px; color:var(--muted); margin-top:1px; }
+.acc-tag { margin-left:auto; font-family:"JetBrains Mono"; font-size:13px; font-weight:700; color:var(--green); white-space:nowrap; transition:color .35s; }
+.acc-item.warn .acc-tag { color:var(--amber); }
+.acc-item.fixed .acc-tag { color:var(--green); }
+.inc-step { display:flex; align-items:center; gap:14px; padding:10.5px 0; border-bottom:1px solid var(--line); opacity:.45; transition:opacity .35s; }
+.inc-step:last-child { border-bottom:none; }
+.inc-step.act, .inc-step.done { opacity:1; }
+.inc-n { width:32px; height:32px; border-radius:50%; border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:"JetBrains Mono"; font-weight:700; font-size:15px; color:var(--muted); flex:0 0 auto; transition:all .35s; }
+.inc-step.act .inc-n { border-color:var(--amber); color:var(--amber); animation:isoBoot 1s ease-in-out infinite; }
+.inc-step.done .inc-n { border-color:var(--green); background:var(--green); color:#fff; }
+@keyframes isoBoot { 0%,100% { box-shadow:0 0 0 0 rgba(201,130,26,0); } 50% { box-shadow:0 0 0 5px rgba(201,130,26,.2); } }
+.inc-t { font-family:"Open Sans"; font-size:15px; font-weight:600; color:var(--ink); }
+.inc-d { font-family:"JetBrains Mono"; font-size:13px; color:var(--muted); margin-top:1px; }
+.inc-tag { margin-left:auto; font-family:"JetBrains Mono"; font-size:13px; font-weight:700; color:var(--muted); }
+.inc-step.act .inc-tag { color:var(--amber); }
+.inc-step.done .inc-tag { color:var(--green); }
+
+/* ===== Certificación ===== */
+.cert-row { display:flex; gap:22px; width:100%; margin-top:16px; align-items:stretch; }
+.cert-panel { flex:1 1 0; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 26px rgba(14,58,71,.08); padding:16px 24px; display:flex; flex-direction:column; }
+.cert-h { display:flex; align-items:center; gap:11px; font-family:"JetBrains Mono"; font-size:15px; font-weight:700; color:var(--ink); text-transform:uppercase; letter-spacing:.04em; margin-bottom:10px; }
+.cert-h svg { width:21px; height:21px; color:var(--teal); }
+.dl-item { display:flex; align-items:center; gap:12px; padding:11px 14px; border:1px solid var(--line); border-radius:11px; margin-bottom:10px; background:var(--panel); opacity:.4; transition:opacity .4s, border-color .4s, background .4s; }
+.dl-item.on { opacity:1; border-color:var(--green); background:#fff; }
+.dl-ic { width:34px; height:34px; border-radius:9px; background:var(--panel-2); color:var(--muted); display:flex; align-items:center; justify-content:center; flex:0 0 auto; transition:all .4s; }
+.dl-item.on .dl-ic { background:var(--green-bg); color:var(--green); }
+.dl-ic svg { width:18px; height:18px; }
+.dl-t { font-family:"Montserrat"; font-weight:700; font-size:16.5px; color:var(--ink); }
+.dl-s { font-family:"JetBrains Mono"; font-size:13px; color:var(--muted); margin-top:1px; }
+.dl-chk { margin-left:auto; color:var(--green); font-weight:800; font-size:17px; opacity:0; transition:opacity .4s; }
+.dl-item.on .dl-chk { opacity:1; }
+.cul-metric { margin-bottom:18px; }
+.cul-top { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:8px; }
+.cul-label { font-family:"Montserrat"; font-weight:700; font-size:15px; color:var(--ink); }
+.cul-val { font-family:"Montserrat"; font-weight:800; font-size:22px; color:var(--teal); }
+.bar-track { height:12px; border-radius:6px; background:var(--panel-2); overflow:hidden; }
+.bar-fill { height:100%; border-radius:6px; background:var(--teal); width:0; transition:width .3s; }
+.bar-fill.green { background:var(--green); }
+.cert-badge { margin-top:auto; display:flex; align-items:center; gap:14px; border:1.5px solid var(--green); background:var(--green-bg); border-radius:13px; padding:16px 18px; opacity:0; transform:translateY(8px); transition:opacity .5s, transform .5s; }
+.cert-badge.on { opacity:1; transform:none; }
+.cert-badge-ic { width:50px; height:50px; border-radius:13px; background:#fff; color:var(--green); display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+.cert-badge-ic svg { width:30px; height:30px; }
+.cert-badge-t { font-family:"Montserrat"; font-weight:800; font-size:17px; color:var(--ink); }
+.cert-badge-d { font-size:14.5px; color:var(--ink-soft); margin-top:2px; }
+
+/* Cierre */
+.slide-cierre::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: var(--teal); }
+.cierre-logo { margin-bottom: 30px; }
+.cierre-logo img { height: 110px; display: block; }
+.slide-cierre h2 { font-family: "Montserrat"; font-weight: 800; font-size: 52px; color: var(--ink); text-align: center; max-width: 1180px; line-height: 1.12; }
+.slide-cierre .accent-rule { width: 90px; height: 4px; background: var(--teal); border-radius: 2px; margin: 30px 0; }
+.cierre-sub { font-size: 24px; color: var(--ink-soft); text-align: center; max-width: 980px; line-height: 1.5; margin-bottom: 46px; }
+.cierre-sub b { color: var(--teal); font-weight: 600; }
+.cierre-back { display: flex; align-items: center; gap: 12px; padding: 17px 34px; background: var(--teal); border-radius: 14px; text-decoration: none; box-shadow: 0 16px 40px rgba(28,108,135,.3); font-family: "Montserrat"; font-weight: 700; font-size: 20px; color: #fff; }
+
+/* UI */
+.ui-label { position: absolute; top: 22px; left: 40px; font-family: "JetBrains Mono"; font-size: 14px; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; z-index: 50; font-weight: 700; }
+.ui-logo { position: absolute; top: 20px; right: 40px; z-index: 50; }
+.ui-logo img { height: 32px; display: block; }
+.nav-buttons { position: absolute; bottom: 24px; right: 40px; display: flex; gap: 12px; z-index: 50; }
+.nav-buttons .back-link { padding: 10px 18px; border: 1px solid var(--line); background: #fff; color: var(--ink-soft); border-radius: 6px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; }
+.nav-buttons .back-link:hover { border-color: var(--teal); color: var(--teal); }
+button { padding: 10px 18px; border: 1px solid var(--teal); background: #fff; color: var(--teal); cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: 600; transition: all 0.2s; font-family: "Open Sans"; box-shadow: 0 2px 8px rgba(14,58,71,0.08); }
+button:hover:not(:disabled) { background: var(--teal); color: #fff; }
+button:disabled { opacity: 0.35; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<div class="slides-container">
+
+  <!-- Slide 1: Portada -->
+  <div class="slide slide-portada active">
+    <div class="logo-card"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+    <h2>Consultorías para ISO 27001</h2>
+    <div class="accent-rule"></div>
+    <div class="tagline">
+      <div class="lead">Seguridad de la información, ordenada y certificable</div>
+      <div style="margin-top: 16px;">Te acompañamos a gobernar la seguridad de tu información con controles claros, medibles y auditables.</div>
+    </div>
+  </div>
+
+  <!-- Slide 2: Panorama (3 pilares) -->
+  <div class="slide slide-dev" style="justify-content:flex-start; padding-top:84px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Cómo gobernamos tu seguridad</h3>
+      <div class="cap-claim">De los principios a la operación diaria — hasta dejarte listo para certificar</div>
+    </div>
+
+    <div class="dv-grid">
+
+      <!-- Pilar 1: Fundamentos -->
+      <div class="dv-pillar">
+        <div class="dv-p-head">
+          <div class="dv-p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <div><div class="dv-p-title">Fundamentos</div></div>
+        </div>
+        <div class="dv-p-sub">La triada que sostiene todo</div>
+        <div class="dv-p-list">
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Confidencialidad</div><div class="dv-it-d">Solo accede quien está autorizado.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Integridad</div><div class="dv-it-d">Información correcta, completa y confiable.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Disponibilidad</div><div class="dv-it-d">Accesible cuando se necesita.</div></div></div>
+        </div>
+      </div>
+
+      <!-- Pilar 2: Análisis y controles -->
+      <div class="dv-pillar">
+        <div class="dv-p-head">
+          <div class="dv-p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg></div>
+          <div><div class="dv-p-title">Análisis y controles</div></div>
+        </div>
+        <div class="dv-p-sub">Decidir con base en el riesgo</div>
+        <div class="dv-p-list">
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Diagnóstico de madurez</div><div class="dv-it-d">Punto de partida real de tu seguridad.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Análisis de riesgos</div><div class="dv-it-d">Amenazas, vulnerabilidades e impactos.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Clasificación de la información</div><div class="dv-it-d">Datos organizados por sensibilidad.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Políticas de seguridad</div><div class="dv-it-d">Reglas claras para datos y procesos.</div></div></div>
+        </div>
+      </div>
+
+      <!-- Pilar 3: Operación y cumplimiento -->
+      <div class="dv-pillar">
+        <div class="dv-p-head">
+          <div class="dv-p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.2-8.5"/><path d="M21 4l-9 9-3-3"/></svg></div>
+          <div><div class="dv-p-title">Operación y cumplimiento</div></div>
+        </div>
+        <div class="dv-p-sub">El sistema vivo, listo para auditar</div>
+        <div class="dv-p-list">
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Gestión de accesos</div><div class="dv-it-d">Usuarios, roles y privilegios bajo control.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Gestión de incidentes</div><div class="dv-it-d">Reportar, atender y documentar eventos.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Preparación para auditorías</div><div class="dv-it-d">Evidencias, controles y documentación.</div></div></div>
+          <div class="dv-item"><span class="dv-check">&#10003;</span><div><div class="dv-it-t">Cultura de seguridad</div><div class="dv-it-d">Capacitación contra el error humano.</div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Slide 3: Triada CIA -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">La base: confidencialidad, integridad y disponibilidad</h3>
+      <div class="cap-claim">Toda la seguridad de la información se sostiene sobre estos tres principios</div>
+    </div>
+
+    <div class="sc-bar">
+      <div class="sc-users-metric"><div class="sc-users-v" id="cia-count">0/3</div><div class="sc-users-l">principios garantizados</div></div>
+      <div class="sc-bar-spacer"></div>
+      <div class="sc-metric"><div class="v" id="cia-active">—</div><div class="l">activando</div></div>
+      <div class="sc-state warn" id="cia-state">● definiendo el alcance del SGSI</div>
+    </div>
+
+    <div class="cia-grid">
+      <div class="cia-card" id="cia1">
+        <div class="cia-badge">C</div>
+        <div class="cia-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></div>
+        <div class="cia-t">Confidencialidad</div>
+        <div class="cia-sub">Solo accede quien está autorizado</div>
+        <div class="cia-demo">
+          <div class="cia-chip bad" id="cia1a">&#10007; acceso no autorizado: bloqueado</div>
+          <div class="cia-chip ok" id="cia1b">&#10003; datos cifrados · acceso por rol</div>
+        </div>
+      </div>
+      <div class="cia-card" id="cia2">
+        <div class="cia-badge">I</div>
+        <div class="cia-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M9.5 14.5l2 2 3.5-3.5"/></svg></div>
+        <div class="cia-t">Integridad</div>
+        <div class="cia-sub">Información correcta, completa y confiable</div>
+        <div class="cia-demo">
+          <div class="cia-chip bad" id="cia2a">&#10007; alteración detectada en el registro</div>
+          <div class="cia-chip ok" id="cia2b">&#10003; hash verificado · sin cambios no autorizados</div>
+        </div>
+      </div>
+      <div class="cia-card" id="cia3">
+        <div class="cia-badge">A</div>
+        <div class="cia-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <div class="cia-t">Disponibilidad</div>
+        <div class="cia-sub">Accesible cuando se necesita</div>
+        <div class="cia-demo">
+          <div class="cia-chip ok" id="cia3a">&#10003; servicios disponibles 99.99%</div>
+          <div class="cia-chip ok" id="cia3b">&#10003; respaldos y continuidad asegurados</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sc-concl" id="cia-concl">
+      <div class="sc-concl-ic">&#10003;</div>
+      <div>
+        <div class="sc-concl-t">Confidencialidad + Integridad + Disponibilidad = <b>información protegida</b></div>
+        <div class="sc-concl-d">Cada control de ISO 27001 existe para sostener uno de estos tres principios. <b>Esa es la brújula de todo el sistema.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Análisis de riesgos -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Diagnóstico y análisis de riesgos</h3>
+      <div class="cap-claim">Medimos dónde estás hoy, ubicamos cada riesgo y lo tratamos hasta un nivel aceptable</div>
+    </div>
+
+    <div class="sc-bar">
+      <div class="sc-users-metric"><div class="sc-users-v hot" id="rsk-mat">42%</div><div class="sc-users-l">madurez de seguridad</div></div>
+      <div class="sc-bar-spacer"></div>
+      <div class="sc-metric"><div class="v bad" id="rsk-high">0</div><div class="l">riesgos altos / críticos</div></div>
+      <div class="sc-metric"><div class="v" id="rsk-treated">0</div><div class="l">riesgos tratados</div></div>
+      <div class="sc-state warn" id="rsk-state">● levantando el estado actual…</div>
+    </div>
+
+    <div class="rsk-row">
+      <div class="rsk-matrix">
+        <div class="cmp-h">Matriz de riesgos · impacto × probabilidad</div>
+        <svg id="rsk-svg" viewBox="0 0 460 360" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <div class="rsk-list">
+        <div class="cmp-h">Riesgos sobre activos de información</div>
+        <div class="rsk-class">Activos clasificados: Pública · Interna · Confidencial · Restringida</div>
+        <div class="rsk-item" id="rk1"><div class="rsk-tagn">R1</div><div><div class="rsk-name">Fuga de datos de clientes</div><div class="rsk-asset">activo: base de datos · Restringida</div></div><span class="rsk-sev sev-crit">CRÍTICO</span></div>
+        <div class="rsk-item" id="rk2"><div class="rsk-tagn">R2</div><div><div class="rsk-name">Ransomware en servidores</div><div class="rsk-asset">activo: servidores · Confidencial</div></div><span class="rsk-sev sev-high">ALTO</span></div>
+        <div class="rsk-item" id="rk3"><div class="rsk-tagn">R3</div><div><div class="rsk-name">Accesos sin control</div><div class="rsk-asset">activo: sistemas críticos · Confidencial</div></div><span class="rsk-sev sev-high">ALTO</span></div>
+        <div class="rsk-item" id="rk4"><div class="rsk-tagn">R4</div><div><div class="rsk-name">Caída de servicios críticos</div><div class="rsk-asset">activo: plataforma · Interna</div></div><span class="rsk-sev sev-med">MEDIO</span></div>
+        <div class="rsk-item" id="rk5"><div class="rsk-tagn">R5</div><div><div class="rsk-name">Error humano / phishing</div><div class="rsk-asset">activo: usuarios · Interna</div></div><span class="rsk-sev sev-med">MEDIO</span></div>
+      </div>
+    </div>
+
+    <div class="sc-concl" id="rsk-concl">
+      <div class="sc-concl-ic">&#10003;</div>
+      <div>
+        <div class="sc-concl-t">De 4 riesgos altos a <b>0 fuera de lo aceptable</b> · madurez 42% → 88%</div>
+        <div class="sc-concl-d">Cada riesgo se trata con controles concretos y un responsable. <b>La seguridad deja de ser intuición y pasa a ser medible.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: SGSI operando (accesos + incidentes) -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">El sistema de gestión, operando</h3>
+      <div class="cap-claim">Políticas que se cumplen: accesos bajo control e incidentes atendidos con procedimiento</div>
+    </div>
+
+    <div class="sc-bar">
+      <div class="sc-users-metric"><div class="sc-users-v" id="sgs-resp">0:00</div><div class="sc-users-l">tiempo de respuesta del incidente</div></div>
+      <div class="sc-bar-spacer"></div>
+      <div class="sc-metric"><div class="v" id="sgs-acc">3/5</div><div class="l">accesos en regla</div></div>
+      <div class="sc-metric"><div class="v ok">14</div><div class="l">políticas aprobadas</div></div>
+      <div class="sc-state warn" id="sgs-state">● revisando accesos y vigilando eventos…</div>
+    </div>
+
+    <div class="sgs-row">
+      <!-- Accesos -->
+      <div class="sgs-panel sgs-acc">
+        <div class="sgs-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M16 11l2 2 4-4"/></svg> Gestión de accesos · menor privilegio</div>
+        <div class="acc-item ok" id="ac1"><div class="acc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.6 3-6 7-6s7 2.4 7 6"/></svg></div><div><div class="acc-name">Ana · Finanzas</div><div class="acc-role">rol: consulta de facturación</div></div><span class="acc-tag">acceso correcto</span></div>
+        <div class="acc-item ok" id="ac2"><div class="acc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.6 3-6 7-6s7 2.4 7 6"/></svg></div><div><div class="acc-name">Carlos · TI</div><div class="acc-role">rol: administrador (justificado)</div></div><span class="acc-tag">acceso correcto</span></div>
+        <div class="acc-item warn" id="ac3"><div class="acc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.6 3-6 7-6s7 2.4 7 6"/></svg></div><div><div class="acc-name">Usuario ex-empleado</div><div class="acc-role">cuenta activa tras la salida</div></div><span class="acc-tag">acceso vigente</span></div>
+        <div class="acc-item warn" id="ac4"><div class="acc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.6 3-6 7-6s7 2.4 7 6"/></svg></div><div><div class="acc-name">Proveedor externo</div><div class="acc-role">permisos por encima de lo necesario</div></div><span class="acc-tag">exceso de privilegios</span></div>
+        <div class="acc-item ok" id="ac5"><div class="acc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.6 3-6 7-6s7 2.4 7 6"/></svg></div><div><div class="acc-name">María · RRHH</div><div class="acc-role">rol: gestión de personal</div></div><span class="acc-tag">acceso correcto</span></div>
+      </div>
+
+      <!-- Incidentes -->
+      <div class="sgs-panel sgs-inc">
+        <div class="sgs-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5L22 20H2z"/><path d="M12 10v4.5M12 17.5h.01"/></svg> Gestión de incidentes · procedimiento</div>
+        <div class="inc-step" id="in1"><div class="inc-n">1</div><div><div class="inc-t">Detección</div><div class="inc-d">alerta de actividad sospechosa</div></div><span class="inc-tag">en espera</span></div>
+        <div class="inc-step" id="in2"><div class="inc-n">2</div><div><div class="inc-t">Registro</div><div class="inc-d">se abre el ticket del evento</div></div><span class="inc-tag">en espera</span></div>
+        <div class="inc-step" id="in3"><div class="inc-n">3</div><div><div class="inc-t">Clasificación</div><div class="inc-d">severidad e impacto evaluados</div></div><span class="inc-tag">en espera</span></div>
+        <div class="inc-step" id="in4"><div class="inc-n">4</div><div><div class="inc-t">Contención y respuesta</div><div class="inc-d">se aísla y se mitiga</div></div><span class="inc-tag">en espera</span></div>
+        <div class="inc-step" id="in5"><div class="inc-n">5</div><div><div class="inc-t">Documentación</div><div class="inc-d">evidencia y lección aprendida</div></div><span class="inc-tag">en espera</span></div>
+        <div class="inc-step" id="in6"><div class="inc-n">6</div><div><div class="inc-t">Cierre</div><div class="inc-d">incidente resuelto y registrado</div></div><span class="inc-tag">en espera</span></div>
+      </div>
+    </div>
+
+    <div class="sc-concl" id="sgs-concl">
+      <div class="sc-concl-ic">&#10003;</div>
+      <div>
+        <div class="sc-concl-t">Accesos depurados e incidente resuelto <b>con procedimiento, no improvisando</b></div>
+        <div class="sc-concl-d">Cada usuario tiene solo lo que necesita y cada evento deja evidencia. <b>El SGSI funciona todos los días, no solo en la auditoría.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Camino a la certificación -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Camino a la certificación</h3>
+      <div class="cap-claim">Implementamos los controles, formamos a tu gente y dejamos las evidencias listas para el auditor</div>
+    </div>
+
+    <div class="sc-bar">
+      <div class="sc-users-metric"><div class="sc-users-v hot" id="cert-ctrl">62%</div><div class="sc-users-l">controles implementados</div></div>
+      <div class="sc-bar-spacer"></div>
+      <div class="sc-metric"><div class="v" id="cert-train">0%</div><div class="l">personal capacitado</div></div>
+      <div class="sc-state warn" id="cert-state">● preparando evidencias y controles…</div>
+    </div>
+
+    <div class="cert-row">
+      <!-- Preparación para auditoría -->
+      <div class="cert-panel">
+        <div class="cert-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l2 2 4-4"/><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/></svg> Preparación para auditoría</div>
+        <div class="dl-item" id="cd1"><div class="dl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h10v18H7z"/><path d="M10 8h4M10 12h4"/></svg></div><div><div class="dl-t">Declaración de aplicabilidad (SoA)</div><div class="dl-s">controles aplicables justificados</div></div><span class="dl-chk">&#10003;</span></div>
+        <div class="dl-item" id="cd2"><div class="dl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 13h6"/></svg></div><div><div class="dl-t">Controles del Anexo A</div><div class="dl-s">implementados y evidenciados</div></div><span class="dl-chk">&#10003;</span></div>
+        <div class="dl-item" id="cd3"><div class="dl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg></div><div><div class="dl-t">Políticas y procedimientos</div><div class="dl-s">aprobados y difundidos</div></div><span class="dl-chk">&#10003;</span></div>
+        <div class="dl-item" id="cd4"><div class="dl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v4H4zM4 10h16v10H4z"/></svg></div><div><div class="dl-t">Evidencias y registros</div><div class="dl-s">incidentes, accesos y revisiones</div></div><span class="dl-chk">&#10003;</span></div>
+      </div>
+
+      <!-- Cultura + veredicto -->
+      <div class="cert-panel">
+        <div class="cert-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17.5" cy="8.5" r="2.3"/><path d="M16 14.7c2.7.2 5 1.8 5 5.3"/></svg> Cultura de seguridad</div>
+        <div class="cul-metric">
+          <div class="cul-top"><span class="cul-label">Personal capacitado</span><span class="cul-val" id="cul-train-v">0%</span></div>
+          <div class="bar-track"><div class="bar-fill" id="cul-train-bar"></div></div>
+        </div>
+        <div class="cul-metric">
+          <div class="cul-top"><span class="cul-label">Simulacro de phishing · reportado a tiempo</span><span class="cul-val" id="cul-phish-v">0%</span></div>
+          <div class="bar-track"><div class="bar-fill" id="cul-phish-bar"></div></div>
+        </div>
+        <div class="cert-badge" id="cert-badge">
+          <div class="cert-badge-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M9.2 9l2 2 3.6-3.6"/><path d="M8 14l-1.5 7 5.5-2.7L17.5 21 16 14"/></svg></div>
+          <div>
+            <div class="cert-badge-t">Listo para certificación ISO/IEC 27001</div>
+            <div class="cert-badge-d">controles implementados, gente formada y evidencias completas.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sc-concl" id="cert-concl">
+      <div class="sc-concl-ic">&#10003;</div>
+      <div>
+        <div class="sc-concl-t">No solo aprobar la auditoría: <b>operar seguro de verdad</b></div>
+        <div class="sc-concl-d">Te acompañamos desde el diagnóstico hasta la certificación, con controles que tu equipo entiende y usa. <b>Seguridad sostenible, no de papel.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: Cierre -->
+  <div class="slide slide-cierre">
+    <div class="cierre-logo"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+    <h2>Seguridad de la información, ordenada y certificable</h2>
+    <div class="accent-rule"></div>
+    <div class="cierre-sub">Te llevamos de los <b>principios</b> al <b>análisis de riesgos</b>, a la <b>operación diaria</b> y hasta la <b>certificación</b> — con controles claros, medibles y auditables.</div>
+    <a class="cierre-back" href="Portafolio TecnoLTS.html#servicios">&#8592; Volver a Nuestros servicios</a>
+  </div>
+
+
+
+<div class="ui-label" id="slide-label">01 — Portada</div>
+<div class="ui-logo"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+
+<div class="nav-buttons">
+  <a class="back-link" href="Portafolio TecnoLTS.html#servicios">&#8962; Servicios</a>
+  <button id="btn-prev">← Anterior</button>
+  <button id="btn-next">Siguiente →</button>
+</div>
+
+</div>
+
+<script>
+let currentSlide = 0;
+let playhead = 0;
+let lastTime = Date.now();
+const slides = [
+  { name: 'Portada', duration: 3 },
+  { name: 'Panorama', duration: 10 },
+  { name: 'Triada CIA', duration: 24 },
+  { name: 'Análisis de riesgos', duration: 28 },
+  { name: 'SGSI operando', duration: 28 },
+  { name: 'Certificación', duration: 26 },
+  { name: 'Cierre', duration: 5 }
+];
+
+// ===== Construcción de la matriz de riesgos (slide 4) =====
+const RSK_OX = 64, RSK_OY = 12, RSK_CELL = 60;
+function rskCenter(col, row) { return [RSK_OX + col * RSK_CELL + RSK_CELL / 2, RSK_OY + row * RSK_CELL + RSK_CELL / 2]; }
+// before/after en (col=impacto 0..4, row=fila desde arriba 0..4; prob = 5-row)
+const RSK_PTS = [
+  { id: 'R1', b: [4, 0], a: [4, 3] },
+  { id: 'R2', b: [3, 1], a: [1, 4] },
+  { id: 'R3', b: [2, 0], a: [0, 4] },
+  { id: 'R4', b: [2, 2], a: [1, 3] },
+  { id: 'R5', b: [1, 1], a: [0, 3] }
+];
+(function buildRiskMatrix() {
+  const svg = document.getElementById('rsk-svg');
+  if (!svg) return;
+  const NS = 'http://www.w3.org/2000/svg';
+  for (let r = 0; r < 5; r++) {
+    for (let c = 0; c < 5; c++) {
+      const prob = 5 - r, imp = c + 1, score = prob * imp;
+      const fill = score >= 15 ? '#f7dcdc' : (score >= 8 ? '#fbeedd' : '#e3f3ea');
+      const rect = document.createElementNS(NS, 'rect');
+      rect.setAttribute('x', RSK_OX + c * RSK_CELL); rect.setAttribute('y', RSK_OY + r * RSK_CELL);
+      rect.setAttribute('width', RSK_CELL - 3); rect.setAttribute('height', RSK_CELL - 3); rect.setAttribute('rx', 5);
+      rect.setAttribute('fill', fill);
+      svg.appendChild(rect);
+    }
+  }
+  // Ejes
+  const mk = (x, y, txt, anchor, size) => { const t = document.createElementNS(NS, 'text'); t.setAttribute('x', x); t.setAttribute('y', y); t.setAttribute('text-anchor', anchor); t.setAttribute('fill', '#6b7c84'); t.setAttribute('font-family', 'JetBrains Mono, monospace'); t.setAttribute('font-size', size || 12); t.setAttribute('font-weight', '700'); t.textContent = txt; svg.appendChild(t); };
+  mk(RSK_OX + 150, 345, 'Impacto →', 'middle', 13);
+  const yl = document.createElementNS(NS, 'text'); yl.setAttribute('x', 18); yl.setAttribute('y', RSK_OY + 150); yl.setAttribute('fill', '#6b7c84'); yl.setAttribute('font-family', 'JetBrains Mono, monospace'); yl.setAttribute('font-size', 13); yl.setAttribute('font-weight', '700'); yl.setAttribute('transform', 'rotate(-90 18 ' + (RSK_OY + 150) + ')'); yl.setAttribute('text-anchor', 'middle'); yl.textContent = 'Probabilidad →'; svg.appendChild(yl);
+  // Marcadores de riesgo
+  RSK_PTS.forEach(p => {
+    const g = document.createElementNS(NS, 'g'); g.setAttribute('id', 'rm-' + p.id);
+    const ci = document.createElementNS(NS, 'circle'); ci.setAttribute('r', 15); ci.setAttribute('fill', '#1c6c87'); ci.setAttribute('stroke', '#fff'); ci.setAttribute('stroke-width', 2.5);
+    const tx = document.createElementNS(NS, 'text'); tx.setAttribute('text-anchor', 'middle'); tx.setAttribute('dy', 4.5); tx.setAttribute('fill', '#fff'); tx.setAttribute('font-family', 'JetBrains Mono, monospace'); tx.setAttribute('font-size', 12); tx.setAttribute('font-weight', '700'); tx.textContent = p.id;
+    g.appendChild(ci); g.appendChild(tx);
+    g.style.transition = 'opacity .4s';
+    svg.appendChild(g);
+  });
+})();
+
+function goToSlide(n) {
+  if (n < 0 || n >= slides.length) return;
+  document.querySelectorAll('.slide').forEach((s, i) => s.classList.toggle('active', i === n));
+  currentSlide = n;
+  playhead = 0;
+  document.getElementById('slide-label').textContent = String(n + 1).padStart(2, '0') + ' — ' + slides[n].name;
+  document.getElementById('btn-prev').disabled = currentSlide === 0;
+  document.getElementById('btn-next').disabled = currentSlide === slides.length - 1;
+}
+document.getElementById('btn-prev').addEventListener('click', () => goToSlide(currentSlide - 1));
+document.getElementById('btn-next').addEventListener('click', () => goToSlide(currentSlide + 1));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+  if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+});
+
+function animate() {
+  const now = Date.now();
+  const dt = (now - lastTime) / 1000;
+  lastTime = now;
+  playhead += dt;
+  if (playhead > slides[currentSlide].duration) playhead = slides[currentSlide].duration;
+  const t = Math.min(1, playhead / slides[currentSlide].duration);
+  const clamp = (x) => Math.max(0, Math.min(1, x));
+  const lerp = (a, b, x) => a + (b - a) * x;
+
+  // Slide triada CIA (index 2)
+  if (currentSlide === 2) {
+    const cards = [
+      { card: 'cia1', a: 'cia1a', b: 'cia1b', on: 0.12, c1: 0.20, c2: 0.30 },
+      { card: 'cia2', a: 'cia2a', b: 'cia2b', on: 0.40, c1: 0.48, c2: 0.58 },
+      { card: 'cia3', a: 'cia3a', b: 'cia3b', on: 0.66, c1: 0.74, c2: 0.82 }
+    ];
+    let count = 0; let activeName = '—';
+    const names = ['Confidencialidad', 'Integridad', 'Disponibilidad'];
+    cards.forEach((c, i) => {
+      const card = document.getElementById(c.card);
+      const on = t >= c.on;
+      if (card) card.classList.toggle('on', on);
+      const a = document.getElementById(c.a); if (a) a.classList.toggle('show', t >= c.c1);
+      const b = document.getElementById(c.b); if (b) b.classList.toggle('show', t >= c.c2);
+      if (t >= c.c2) count++;
+      if (on && t < c.c2 + 0.06) activeName = names[i];
+    });
+    const cEl = document.getElementById('cia-count'); if (cEl) { cEl.textContent = count + '/3'; cEl.classList.toggle('hot', count < 3); }
+    const aEl = document.getElementById('cia-active'); if (aEl) aEl.textContent = count >= 3 ? 'completo' : activeName;
+    const st = document.getElementById('cia-state');
+    if (st) {
+      if (count >= 3) { st.textContent = '● los tres principios garantizados'; st.className = 'sc-state'; }
+      else if (count > 0 || t >= 0.12) { st.textContent = '● aplicando controles por principio…'; st.className = 'sc-state warn'; }
+      else { st.textContent = '● definiendo el alcance del SGSI'; st.className = 'sc-state warn'; }
+    }
+    const concl = document.getElementById('cia-concl'); if (concl) concl.classList.toggle('on', t >= 0.88);
+  }
+
+  // Slide análisis de riesgos (index 3)
+  if (currentSlide === 3) {
+    const appear = clamp(t / 0.32);
+    const treat = clamp((t - 0.40) / 0.34);
+    // marcadores
+    RSK_PTS.forEach((p, i) => {
+      const g = document.getElementById('rm-' + p.id);
+      if (!g) return;
+      g.style.opacity = (t >= 0.06 + i * 0.05) ? '1' : '0';
+      const col = lerp(p.b[0], p.a[0], treat), row = lerp(p.b[1], p.a[1], treat);
+      const [cx, cy] = rskCenter(col, row);
+      g.setAttribute('transform', 'translate(' + cx.toFixed(1) + ',' + cy.toFixed(1) + ')');
+      const ci = g.querySelector('circle');
+      const prob = 5 - row, imp = col + 1, score = prob * imp;
+      if (ci) ci.setAttribute('fill', score >= 15 ? '#d64545' : (score >= 8 ? '#c9821a' : '#2f9e5e'));
+    });
+    // lista
+    const sev = [
+      { id: 'rk1', appear: 0.10, b: ['CRÍTICO', 'sev-crit'], a: ['MEDIO', 'sev-med'], tr: 0.56 },
+      { id: 'rk2', appear: 0.16, b: ['ALTO', 'sev-high'], a: ['BAJO', 'sev-low'], tr: 0.50 },
+      { id: 'rk3', appear: 0.22, b: ['ALTO', 'sev-high'], a: ['BAJO', 'sev-low'], tr: 0.62 },
+      { id: 'rk4', appear: 0.28, b: ['MEDIO', 'sev-med'], a: ['BAJO', 'sev-low'], tr: 0.68 },
+      { id: 'rk5', appear: 0.34, b: ['MEDIO', 'sev-med'], a: ['BAJO', 'sev-low'], tr: 0.74 }
+    ];
+    let treated = 0;
+    sev.forEach(s => {
+      const el = document.getElementById(s.id); if (!el) return;
+      el.classList.toggle('on', t >= s.appear);
+      const tag = el.querySelector('.rsk-sev');
+      const done = t >= s.tr;
+      if (done) treated++;
+      const val = done ? s.a : s.b;
+      if (tag) { tag.textContent = val[0]; tag.className = 'rsk-sev ' + val[1]; }
+    });
+    const mat = Math.round(lerp(42, 88, clamp((t - 0.38) / 0.4)));
+    const mEl = document.getElementById('rsk-mat'); if (mEl) { mEl.textContent = mat + '%'; mEl.classList.toggle('hot', mat < 70); }
+    const highNow = Math.max(0, 4 - Math.round(treat * 4));
+    const hEl = document.getElementById('rsk-high'); if (hEl) { hEl.textContent = highNow; hEl.className = 'v' + (highNow > 0 ? ' bad' : ' ok'); }
+    const tEl = document.getElementById('rsk-treated'); if (tEl) { tEl.textContent = treated + '/5'; tEl.className = 'v' + (treated === 5 ? ' ok' : ''); }
+    const st = document.getElementById('rsk-state');
+    if (st) {
+      if (t >= 0.78) { st.textContent = '● riesgo residual aceptable'; st.className = 'sc-state'; }
+      else if (t >= 0.40) { st.textContent = '● tratando riesgos con controles…'; st.className = 'sc-state warn'; }
+      else if (t >= 0.32) { st.textContent = '● 4 riesgos altos/críticos identificados'; st.className = 'sc-state bad'; }
+      else { st.textContent = '● levantando el estado actual…'; st.className = 'sc-state warn'; }
+    }
+    const concl = document.getElementById('rsk-concl'); if (concl) concl.classList.toggle('on', t >= 0.82);
+  }
+
+  // Slide SGSI operando (index 4)
+  if (currentSlide === 4) {
+    // accesos
+    const ac3 = document.getElementById('ac3');
+    if (ac3) { const fixed = t >= 0.30; ac3.classList.toggle('warn', !fixed); ac3.classList.toggle('fixed', fixed); const tg = ac3.querySelector('.acc-tag'); if (tg) tg.textContent = fixed ? 'cuenta desactivada ✓' : 'acceso vigente'; }
+    const ac4 = document.getElementById('ac4');
+    if (ac4) { const fixed = t >= 0.42; ac4.classList.toggle('warn', !fixed); ac4.classList.toggle('fixed', fixed); const tg = ac4.querySelector('.acc-tag'); if (tg) tg.textContent = fixed ? 'privilegios ajustados ✓' : 'exceso de privilegios'; }
+    const inRegla = 3 + (t >= 0.30 ? 1 : 0) + (t >= 0.42 ? 1 : 0);
+    const acEl = document.getElementById('sgs-acc'); if (acEl) { acEl.textContent = inRegla + '/5'; acEl.className = 'v' + (inRegla === 5 ? ' ok' : ' warn'); }
+    // incidentes
+    const steps = [['in1', 0.12, 0.20], ['in2', 0.22, 0.30], ['in3', 0.32, 0.40], ['in4', 0.42, 0.52], ['in5', 0.54, 0.62], ['in6', 0.64, 0.72]];
+    steps.forEach(([id, s, d]) => {
+      const el = document.getElementById(id); if (!el) return;
+      el.classList.remove('act', 'done');
+      const tag = el.querySelector('.inc-tag'); const n = el.querySelector('.inc-n'); const idx = id.slice(-1);
+      if (t >= d) { el.classList.add('done'); if (tag) tag.textContent = 'hecho ✓'; if (n) n.innerHTML = '&#10003;'; }
+      else if (t >= s) { el.classList.add('act'); if (tag) tag.textContent = 'en curso…'; if (n) n.textContent = idx; }
+      else { if (tag) tag.textContent = 'en espera'; if (n) n.textContent = idx; }
+    });
+    const respEl = document.getElementById('sgs-resp');
+    if (respEl) {
+      let secs;
+      if (t < 0.12) secs = 0;
+      else if (t < 0.72) secs = Math.round(clamp((t - 0.12) / 0.60) * 480);
+      else secs = 480;
+      respEl.textContent = Math.floor(secs / 60) + ':' + String(secs % 60).padStart(2, '0');
+    }
+    const st = document.getElementById('sgs-state');
+    if (st) {
+      if (t >= 0.72) { st.textContent = '● incidente cerrado · accesos en regla'; st.className = 'sc-state'; }
+      else if (t >= 0.12) { st.textContent = '● atendiendo incidente según procedimiento…'; st.className = 'sc-state bad'; }
+      else { st.textContent = '● revisando accesos y vigilando eventos…'; st.className = 'sc-state warn'; }
+    }
+    const concl = document.getElementById('sgs-concl'); if (concl) concl.classList.toggle('on', t >= 0.80);
+  }
+
+  // Slide certificación (index 5)
+  if (currentSlide === 5) {
+    const ctrl = Math.round(lerp(62, 100, clamp(t / 0.7)));
+    const cEl = document.getElementById('cert-ctrl'); if (cEl) { cEl.textContent = ctrl + '%'; cEl.classList.toggle('hot', ctrl < 90); }
+    const docs = [['cd1', 0.12], ['cd2', 0.26], ['cd3', 0.40], ['cd4', 0.54]];
+    docs.forEach(([id, ts]) => { const el = document.getElementById(id); if (el) el.classList.toggle('on', t >= ts); });
+    const train = Math.round(clamp((t - 0.1) / 0.6) * 96);
+    const phish = Math.round(clamp((t - 0.2) / 0.6) * 91);
+    const tv = document.getElementById('cul-train-v'); if (tv) tv.textContent = train + '%';
+    const tb = document.getElementById('cul-train-bar'); if (tb) { tb.style.width = train + '%'; tb.classList.toggle('green', train >= 90); }
+    const pv = document.getElementById('cul-phish-v'); if (pv) pv.textContent = phish + '%';
+    const pb = document.getElementById('cul-phish-bar'); if (pb) { pb.style.width = phish + '%'; pb.classList.toggle('green', phish >= 85); }
+    const trEl = document.getElementById('cert-train'); if (trEl) { trEl.textContent = train + '%'; trEl.className = 'v' + (train >= 90 ? ' ok' : ''); }
+    const badge = document.getElementById('cert-badge'); if (badge) badge.classList.toggle('on', t >= 0.82);
+    const st = document.getElementById('cert-state');
+    if (st) {
+      if (t >= 0.82) { st.textContent = '● certificable · listo para el auditor'; st.className = 'sc-state'; }
+      else if (t >= 0.1) { st.textContent = '● implementando controles y capacitando…'; st.className = 'sc-state warn'; }
+      else { st.textContent = '● preparando evidencias y controles…'; st.className = 'sc-state warn'; }
+    }
+    const concl = document.getElementById('cert-concl'); if (concl) concl.classList.toggle('on', t >= 0.88);
+  }
+
+  requestAnimationFrame(animate);
+}
+
+goToSlide(0);
+requestAnimationFrame(animate);
+
+function fitStage() {
+  const stage = document.querySelector('.slides-container');
+  const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  stage.style.transform = 'scale(' + scale + ')';
+}
+window.addEventListener('resize', fitStage);
+fitStage();
+</script>
+
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var n = e.target;
+    while (n && n.nodeName !== 'A') { n = n.parentNode; }
+    if (!n || !n.getAttribute) return;
+    var href = n.getAttribute('href');
+    if (!href) return;
+    if (href.charAt(0) === '#') return;
+    if (/^(https?:|mailto:|tel:|data:)/i.test(href)) return;
+    e.preventDefault();
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ tlNav: href }, '*');
+    }
+  }, true);
+})();
+</script>
+</body>
+</html>

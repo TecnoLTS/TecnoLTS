@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TecnoLTS · Portafolio de Servicios</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --panel: #f3f7f9;
+  --panel-2: #eaf1f4;
+  --ink: #0e3a47;
+  --ink-soft: #3c4f57;
+  --muted: #6b7c84;
+  --teal: #1c6c87;
+  --teal-light: #2d869f;
+  --line: rgba(14,58,71,0.14);
+  --green: #2f9e5e; --green-bg: #e7f6ee;
+  --amber: #c9821a;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M5 2 L5 24 L11 18 L15 27 L19 25 L15 16 L23 16 Z' fill='%23c9821a' stroke='white' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 5 2, auto; }
+body { font-family: "Open Sans", sans-serif; display: flex; align-items: center; justify-content: center; }
+
+.slides-container { position: relative; width: 1920px; height: 1080px; background: var(--bg); flex: 0 0 auto; transform-origin: center center; }
+.slide { position: absolute; top: 0; left: 0; width: 1920px; height: 1080px; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 90px 120px; opacity: 0; transition: opacity 0.5s ease-in-out; }
+.slide.active { display: flex; opacity: 1; }
+
+/* ===== Pantalla 1: Quiénes somos ===== */
+.slide-intro::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: var(--teal); }
+.intro-logo { margin-bottom: 34px; }
+.intro-logo img { height: 120px; display: block; }
+.intro-eslogan { font-family: "Montserrat"; font-weight: 800; font-size: 64px; color: var(--ink); text-align: center; letter-spacing: -0.015em; line-height: 1.05; }
+.intro-eslogan .em { color: var(--teal); }
+.accent-rule { width: 90px; height: 4px; background: var(--teal); border-radius: 2px; margin: 34px 0; }
+.intro-desc { font-size: 26px; color: var(--ink-soft); text-align: center; max-width: 1020px; line-height: 1.6; }
+.intro-desc b { color: var(--teal); font-weight: 600; }
+.intro-stats { display: flex; gap: 70px; margin-top: 54px; }
+.intro-stat { text-align: center; }
+.intro-stat .v { font-family: "Montserrat"; font-weight: 800; font-size: 46px; color: var(--teal); line-height: 1; }
+.intro-stat .l { font-family: "JetBrains Mono"; font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 10px; }
+.intro-hint { position: absolute; bottom: 48px; display: flex; align-items: center; gap: 12px; font-size: 18px; color: var(--ink-soft); }
+.intro-hint b { color: var(--teal); font-weight: 700; }
+.intro-hint .pill { font-family: "JetBrains Mono"; font-size: 13px; font-weight: 700; color: #fff; background: var(--teal); padding: 7px 14px; border-radius: 8px; }
+
+/* ===== Pantalla 2: Servicios ===== */
+.slide-servicios { justify-content: flex-start; padding-top: 70px; }
+.slide-servicios::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: var(--teal); }
+.svc-header { align-self: flex-start; margin-bottom: 6px; }
+.svc-header h2 { font-family: "Montserrat"; font-weight: 800; font-size: 52px; color: var(--ink); letter-spacing: -0.01em; }
+.svc-header .sub { font-size: 24px; color: var(--ink-soft); margin-top: 8px; }
+.svc-header .sub b { color: var(--teal); font-weight: 600; }
+
+.svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; width: 100%; margin-top: 24px; }
+.svc-card { position: relative; border: 1px solid var(--line); border-radius: 18px; background: #fff; padding: 22px 26px 20px; box-shadow: 0 8px 24px rgba(14,58,71,0.07); text-decoration: none; display: flex; flex-direction: column; transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s; overflow: hidden; }
+.svc-card .svc-ic { width: 54px; height: 54px; border-radius: 14px; background: var(--panel-2); color: var(--teal); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; transition: background 0.22s, color 0.22s; flex: 0 0 auto; }
+.svc-card .svc-ic svg { width: 28px; height: 28px; }
+.svc-card .svc-name { font-family: "Montserrat"; font-weight: 700; font-size: 22px; color: var(--ink); line-height: 1.2; }
+.svc-card .svc-desc { font-size: 17.5px; color: var(--ink-soft); line-height: 1.45; margin-top: 10px; flex: 1 1 auto; }
+.svc-card .svc-cta { font-family: "JetBrains Mono"; font-size: 15px; font-weight: 700; margin-top: 14px; display: flex; align-items: center; gap: 8px; }
+
+/* Tarjeta activa (con presentación) */
+.svc-card.active { cursor: pointer; }
+.svc-card.active .svc-cta { color: var(--teal); }
+.svc-card.active:hover { transform: translateY(-7px); box-shadow: 0 22px 50px rgba(28,108,135,0.22); border-color: var(--teal); }
+.svc-card.active:hover .svc-ic { background: var(--teal); color: #fff; }
+.svc-card .svc-badge { position: absolute; top: 18px; right: 18px; font-family: "JetBrains Mono"; font-size: 12.5px; font-weight: 700; padding: 5px 11px; border-radius: 20px; letter-spacing: 0.04em; }
+.svc-card.active .svc-badge { background: var(--green-bg); color: var(--green); }
+
+/* Tarjeta "próximamente" */
+.svc-card.soon { cursor: default; }
+.svc-card.soon .svc-ic { background: var(--panel); color: var(--muted); }
+.svc-card.soon .svc-name { color: var(--ink-soft); }
+.svc-card.soon .svc-cta { color: var(--muted); }
+.svc-card.soon .svc-badge { background: var(--panel-2); color: var(--muted); }
+
+/* ===== UI ===== */
+.ui-logo { position: absolute; top: 22px; right: 44px; z-index: 50; display: flex; align-items: center; }
+.ui-logo img { height: 34px; display: block; }
+.nav-buttons { position: absolute; bottom: 28px; right: 44px; display: flex; gap: 12px; z-index: 50; }
+button { padding: 12px 22px; border: 1px solid var(--teal); background: #fff; color: var(--teal); cursor: pointer; border-radius: 8px; font-size: 14px; font-weight: 600; transition: all 0.2s; font-family: "Open Sans"; box-shadow: 0 2px 8px rgba(14,58,71,0.08); }
+button:hover:not(:disabled) { background: var(--teal); color: #fff; }
+button:disabled { opacity: 0.32; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<div class="slides-container">
+
+  <!-- Pantalla 1: Quiénes somos -->
+  <div class="slide slide-intro active">
+    <div class="intro-logo"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+    <div class="intro-eslogan">Con tecnología, <span class="em">todo se puede</span></div>
+    <div class="accent-rule"></div>
+    <div class="intro-desc">
+      En <b>TecnoLTS</b> transformamos negocios con tecnología. Acompañamos a las empresas en cada etapa de su evolución digital — desde la <b>infraestructura</b> y la <b>seguridad</b> hasta el <b>desarrollo de software</b> a medida.
+    </div>
+    <div class="intro-stats">
+      <div class="intro-stat"><div class="v">15 años</div><div class="l">de experiencia</div></div>
+      <div class="intro-stat"><div class="v">Internacional</div><div class="l">cobertura</div></div>
+      <div class="intro-stat"><div class="v">9</div><div class="l">servicios integrales</div></div>
+    </div>
+    <div class="intro-hint">Este es nuestro <b>portafolio de servicios</b> &nbsp;·&nbsp; pulsa <span class="pill">Siguiente →</span> para conocerlos</div>
+  </div>
+
+  <!-- Pantalla 2: Servicios -->
+  <div class="slide slide-servicios">
+    <div class="svc-header">
+      <h2>Nuestros servicios</h2>
+      <div class="sub">Soluciones integrales de tecnología · <b>haz clic en un servicio para ver su presentación</b></div>
+    </div>
+
+    <div class="svc-grid">
+
+      <!-- 1. Monitoreo (ACTIVO) -->
+      <a class="svc-card active" href="Presentación Monitoreo.html">
+        <span class="svc-badge">Disponible</span>
+        <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M3 13h4l2-5 3 8 2-4h6"/><path d="M9 21h6"/><path d="M12 17v4"/></svg></div>
+        <div class="svc-name">Monitoreo de infraestructura tecnológica</div>
+        <div class="svc-desc">Vigilancia 24/7 de servidores, redes y servicios, con detección temprana, alertas y respuesta automática.</div>
+        <div class="svc-cta">Ver presentación &#8594;</div>
+      </a>
+
+      <!-- 2. Backups (ACTIVO) -->
+      <a class="svc-card active" href="Presentación Backups.html">
+        <span class="svc-badge">Disponible</span>
+        <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="7.5" ry="2.6"/><path d="M4.5 5v5c0 1.4 3.4 2.6 7.5 2.6s7.5-1.2 7.5-2.6V5"/><path d="M4.5 10v5c0 1.4 3.4 2.6 7.5 2.6s7.5-1.2 7.5-2.6v-5"/></svg></div>
+        <div class="svc-name">Backups</div>
+        <div class="svc-desc">Copias de seguridad automáticas y verificadas para que tu información esté siempre protegida y recuperable.</div>
+        <div class="svc-cta">Ver presentación &#8594;</div>
+      </a>
+
+      <!-- 3. Ciberseguridad (ACTIVO) -->
+      <a class="svc-card active" href="Presentación Ciberseguridad.html">
+        <span class="svc-badge">Disponible</span>
+        <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div class="svc-name">Ciberseguridad y protección</div>
+        <div class="svc-desc">Defensa frente a amenazas, intrusiones y ataques, protegiendo tu infraestructura y tus datos críticos.</div>
+        <div class="svc-cta">Ver presentación &#8594;</div>
+      </a>
+
+      <!-- 4. Redes (ACTIVO) -->
+      <a class="svc-card active" href="Presentación Redes.html">
+        <span class="svc-badge">Disponible</span>
+        <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M12 7.2L6 16M12 7.2L18 16M7 18h10"/></svg></div>
+        <div class="svc-name">Soluciones de redes</div>
+        <div class="svc-desc">Diseño e implementación de redes seguras, estables y de alto rendimiento como base de tu conectividad.</div>
+        <div class="svc-cta">Ver presentación &#8594;</div>
+      </a>
+
+      <!-- 5. Recuperación ante desastres (ACTIVO) -->
+      <a class="svc-card active" href="Presentación Recuperación ante Desastres.html">
+        <span class="svc-badge">Disponible</span>
+        <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 1 1-2.8-6.3"/><path d="M20.5 4v4.2h-4.2"/></svg></div>
+        <div class="svc-name">Planes de recuperación ante desastres</div>
+        <div class="svc-desc">Continuidad operativa y resiliencia garantizadas ante cualquier incidente, falla o contingencia.</div>
+        <div class="svc-cta">Ver presentación &#8594;</div>
+      </a>
+
+      <!-- 6. Desarrollo de software (ACTIVO) -->
+      <a class="svc-card active" href="Presentación Desarrollo de Software.html">
+        <span class="svc-badge">Disponible</span>
+        <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4"/><path d="M16 8l4 4-4 4"/><path d="M13.5 6l-3 12"/></svg></div>
+        <div class="svc-name">Desarrollo de software</div>
+        <div class="svc-desc">Aplicaciones a medida que automatizan procesos, integran sistemas e impulsan el crecimiento del negocio.</div>
+        <div class="svc-cta">Ver presentación &#8594;</div>
+      </a>
+
+      <!-- 7. ISO 27001 (ACTIVO) -->
+      <a class="svc-card active" href="Presentación ISO 27001.html">
+        <span class="svc-badge">Disponible</span>
+        <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M9.2 9l2 2 3.6-3.6"/><path d="M8 14l-1.5 7 5.5-2.7L17.5 21 16 14"/></svg></div>
+        <div class="svc-name">Consultorías para ISO 27001</div>
+        <div class="svc-desc">Te acompañamos a gobernar, ordenar y certificar la seguridad de la información de tu organización.</div>
+        <div class="svc-cta">Ver presentación &#8594;</div>
+      </a>
+
+      <!-- 8. Data center (ACTIVO) -->
+      <a class="svc-card active" href="Presentación Data Center.html">
+        <span class="svc-badge">Disponible</span>
+        <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="17" height="7" rx="1.5"/><path d="M7 7h.01M7 17h.01"/><path d="M11 7h6M11 17h6"/></svg></div>
+        <div class="svc-name">Diseño y organización de data center</div>
+        <div class="svc-desc">Infraestructura física ordenada, eficiente y preparada para escalar con tu operación.</div>
+        <div class="svc-cta">Ver presentación &#8594;</div>
+      </a>
+
+      <!-- 9. Licenciamiento (ACTIVO) -->
+      <a class="svc-card active" href="Presentación Licenciamiento.html">
+        <span class="svc-badge">Disponible</span>
+        <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8.5 15l2 2 3.5-3.5"/></svg></div>
+        <div class="svc-name">Licenciamiento de software y cumplimiento</div>
+        <div class="svc-desc">Administra tus licencias con control, legalidad y optimización de costos de tus activos de software.</div>
+        <div class="svc-cta">Ver presentación &#8594;</div>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="ui-logo"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+
+  <div class="nav-buttons">
+    <button id="btn-prev">← Anterior</button>
+    <button id="btn-next">Siguiente →</button>
+  </div>
+
+</div>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides.forEach((s, i) => s.classList.toggle('active', i === n));
+  current = n;
+  // Mostrar solo los botones de navegación que aplican
+  document.getElementById('btn-prev').style.display = current === 0 ? 'none' : '';
+  document.getElementById('btn-next').style.display = current === slides.length - 1 ? 'none' : '';
+}
+document.getElementById('btn-prev').addEventListener('click', () => go(current - 1));
+document.getElementById('btn-next').addEventListener('click', () => go(current + 1));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') go(current + 1);
+  if (e.key === 'ArrowLeft') go(current - 1);
+});
+// Si se llega con #servicios, abrir directo en la pantalla de servicios
+go(location.hash === '#servicios' ? 1 : 0);
+window.addEventListener('hashchange', () => go(location.hash === '#servicios' ? 1 : 0));
+
+// Escalar lienzo 1920x1080 a cualquier viewport
+function fitStage() {
+  const stage = document.querySelector('.slides-container');
+  const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  stage.style.transform = 'scale(' + scale + ')';
+}
+window.addEventListener('resize', fitStage);
+fitStage();
+</script>
+
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var n = e.target;
+    while (n && n.nodeName !== 'A') { n = n.parentNode; }
+    if (!n || !n.getAttribute) return;
+    var href = n.getAttribute('href');
+    if (!href) return;
+    if (href.charAt(0) === '#') return;
+    if (/^(https?:|mailto:|tel:|data:)/i.test(href)) return;
+    e.preventDefault();
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ tlNav: href }, '*');
+    }
+  }, true);
+})();
+</script>
+</body>
+</html>

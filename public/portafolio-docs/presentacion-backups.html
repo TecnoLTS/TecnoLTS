@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Backups · TecnoLTS</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --panel: #f3f7f9;
+  --panel-2: #eaf1f4;
+  --ink: #0e3a47;
+  --ink-soft: #3c4f57;
+  --muted: #6b7c84;
+  --teal: #1c6c87;
+  --teal-light: #2d869f;
+  --line: rgba(14,58,71,0.14);
+  --red: #d64545; --red-bg: #fbeaea;
+  --green: #2f9e5e; --green-bg: #e7f6ee;
+  --amber: #c9821a; --amber-bg: #fbf1e0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M5 2 L5 24 L11 18 L15 27 L19 25 L15 16 L23 16 Z' fill='%23c9821a' stroke='white' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 5 2, auto; }
+body { font-family: "Open Sans", sans-serif; display: flex; align-items: center; justify-content: center; }
+
+.slides-container { position: relative; width: 1920px; height: 1080px; background: var(--bg); flex: 0 0 auto; transform-origin: center center; }
+.slide { position: absolute; top: 0; left: 0; width: 1920px; height: 1080px; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 90px 110px; opacity: 0; transition: opacity 0.5s ease-in-out; }
+.slide.active { display: flex; opacity: 1; }
+
+/* Portada */
+.slide-portada::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: var(--teal); }
+.slide-portada .logo-card { margin-bottom: 50px; }
+.slide-portada .logo-card img { height: 150px; display: block; }
+.slide-portada h2 { font-size: 64px; font-weight: 800; color: var(--ink); font-family: "Montserrat"; margin-bottom: 26px; text-align: center; letter-spacing: -0.015em; }
+.slide-portada .accent-rule { width: 90px; height: 4px; background: var(--teal); border-radius: 2px; margin-bottom: 38px; }
+.slide-portada .tagline { font-size: 27px; color: var(--ink-soft); max-width: 980px; text-align: center; line-height: 1.6; }
+.slide-portada .tagline .lead { color: var(--teal); font-weight: 600; }
+
+/* Slide genérico */
+.slide h3 { font-size: 52px; font-weight: 700; color: var(--ink); font-family: "Montserrat"; margin-bottom: 4px; align-self: flex-start; position: relative; padding-bottom: 16px; letter-spacing: -0.01em; }
+.slide h3::after { content: ""; position: absolute; left: 0; bottom: 0; width: 64px; height: 4px; background: var(--teal); border-radius: 2px; }
+.cap-claim { font-size: 22px; font-weight: 600; color: var(--teal); margin-top: 14px; }
+
+/* ===== Slide motion: Backups ===== */
+.bk-stage { display: flex; gap: 30px; align-items: stretch; width: 100%; margin-top: 34px; position: relative; }
+
+/* Programador */
+.bk-sched { flex: 0 0 250px; border: 1px solid var(--line); border-radius: 16px; background: #fff; box-shadow: 0 12px 32px rgba(14,58,71,.1); padding: 22px 20px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.bk-sched-title { font-family: "JetBrains Mono"; font-size: 14px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 16px; }
+.bk-clock { font-family: "Montserrat"; font-weight: 800; font-size: 56px; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
+.bk-sched-cron { font-family: "JetBrains Mono"; font-size: 15px; color: var(--muted); margin-top: 10px; }
+.bk-fire { margin-top: 20px; font-family: "JetBrains Mono"; font-size: 15px; font-weight: 700; color: #fff; background: var(--teal); padding: 9px 16px; border-radius: 22px; opacity: .25; transition: opacity .3s, transform .3s; display: flex; align-items: center; gap: 8px; }
+.bk-fire.on { opacity: 1; transform: scale(1.04); box-shadow: 0 8px 22px rgba(28,108,135,.35); }
+.bk-sched-foot { margin-top: auto; padding-top: 18px; font-family: "JetBrains Mono"; font-size: 14px; color: var(--teal); font-weight: 700; line-height: 1.4; }
+
+/* Carril */
+.bk-lane { flex: 0 0 70px; align-self: center; position: relative; }
+
+/* Fuentes */
+.bk-sources { flex: 1 1 auto; display: flex; flex-direction: column; gap: 16px; justify-content: center; }
+.bk-src { border: 1px solid var(--line); border-radius: 14px; background: #fff; box-shadow: 0 8px 22px rgba(14,58,71,.08); padding: 16px 20px; display: flex; align-items: center; gap: 16px; transition: box-shadow .3s, border-color .3s; }
+.bk-src.run { border-color: var(--teal); box-shadow: 0 0 0 1px var(--teal), 0 10px 26px rgba(28,108,135,.16); }
+.bk-src-ic { width: 54px; height: 54px; border-radius: 13px; background: var(--panel-2); color: var(--teal); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.bk-src-ic svg { width: 30px; height: 30px; }
+.bk-src-name { font-family: "Montserrat"; font-weight: 700; font-size: 19px; color: var(--ink); }
+.bk-src-sub { font-family: "JetBrains Mono"; font-size: 15px; color: var(--muted); margin-top: 3px; }
+.bk-src-tag { margin-left: auto; font-family: "JetBrains Mono"; font-size: 14px; font-weight: 700; padding: 6px 12px; border-radius: 20px; background: var(--green-bg); color: var(--green); white-space: nowrap; transition: background .3s, color .3s; }
+.bk-src-tag.hot { background: var(--amber-bg); color: var(--amber); }
+.bk-src-os { font-family: "JetBrains Mono"; font-size: 13px; font-weight: 700; color: var(--teal); background: #e4f0f4; padding: 3px 9px; border-radius: 5px; margin-left: 10px; }
+
+/* Repositorio */
+.bk-vault { flex: 0 0 430px; border: 1px solid var(--line); border-radius: 16px; background: #fff; box-shadow: 0 14px 36px rgba(14,58,71,.12); overflow: hidden; display: flex; flex-direction: column; }
+.bk-vault-head { display: flex; align-items: center; gap: 11px; padding: 15px 20px; background: var(--panel); border-bottom: 1px solid var(--line); font-family: "JetBrains Mono"; font-size: 15px; font-weight: 700; color: var(--ink); }
+.bk-vault-ic { color: var(--teal); display: flex; }
+.bk-vault-body { flex: 1 1 auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 11px; }
+.bk-snap { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border: 1px solid var(--line); border-radius: 10px; background: #fff; opacity: 0; transform: translateX(16px); transition: opacity .4s, transform .4s; }
+.bk-snap.show { opacity: 1; transform: translateX(0); }
+.bk-snap-check { width: 24px; height: 24px; border-radius: 50%; background: var(--green-bg); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; flex: 0 0 auto; }
+.bk-snap-name { font-family: "JetBrains Mono"; font-size: 15.5px; color: var(--ink); font-weight: 700; }
+.bk-snap-meta { font-family: "JetBrains Mono"; font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+.bk-snap-size { margin-left: auto; font-family: "JetBrains Mono"; font-size: 15px; font-weight: 700; color: var(--teal); }
+.bk-vault-foot { padding: 14px 20px; border-top: 1px solid var(--line); background: var(--panel); display: flex; align-items: center; justify-content: space-between; }
+.bk-vault-foot .lbl { font-family: "JetBrains Mono"; font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.bk-vault-foot .val { font-family: "Montserrat"; font-weight: 800; font-size: 26px; color: var(--ink); }
+
+/* Chips de los 3 subítems */
+.bk-feats { display: flex; gap: 20px; width: 100%; margin-top: 30px; }
+.bk-feat { flex: 1 1 0; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); padding: 16px 20px; display: flex; align-items: center; gap: 14px; opacity: .4; transform: translateY(8px); transition: opacity .45s, transform .45s, background .45s, box-shadow .45s; }
+.bk-feat.on { opacity: 1; transform: translateY(0); background: #fff; box-shadow: 0 10px 26px rgba(14,58,71,.1); }
+.bk-feat-ic { width: 42px; height: 42px; border-radius: 11px; background: var(--green-bg); color: var(--green); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.bk-feat-ic svg { width: 22px; height: 22px; }
+.bk-feat-t { font-family: "Montserrat"; font-weight: 700; font-size: 16px; color: var(--ink); }
+.bk-feat-d { font-family: "JetBrains Mono"; font-size: 14px; color: var(--muted); margin-top: 2px; }
+
+/* ===== Slide 2: mini-mapa de respaldos en caliente ===== */
+.map-topbar { display:flex; align-items:center; justify-content:space-between; width:100%; margin-top:26px; }
+.map-clock { display:flex; align-items:center; gap:12px; font-family:"JetBrains Mono"; font-size:15px; color:var(--ink); }
+.map-clock b { font-family:"Montserrat"; font-weight:800; font-size:26px; color:var(--ink); letter-spacing:-0.01em; }
+.map-clock-ic { font-size:20px; }
+.map-clock-sub { font-family:"JetBrains Mono"; font-size:15px; color:var(--muted); font-weight:500; }
+.map-live { display:flex; align-items:center; gap:9px; font-family:"JetBrains Mono"; font-size:15px; font-weight:700; color:var(--green); }
+.map-live-dot { width:9px; height:9px; border-radius:50%; background:var(--green); box-shadow:0 0 0 0 rgba(47,158,94,.5); animation:mlpulse 1.6s infinite; }
+@keyframes mlpulse { 0%{box-shadow:0 0 0 0 rgba(47,158,94,.5);} 70%{box-shadow:0 0 0 9px rgba(47,158,94,0);} 100%{box-shadow:0 0 0 0 rgba(47,158,94,0);} }
+
+.map-row { display:flex; align-items:center; justify-content:center; width:100%; margin-top:28px; }
+.map-node { position:relative; flex:0 0 248px; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 28px rgba(14,58,71,.09); padding:24px 18px 20px; display:flex; flex-direction:column; align-items:center; text-align:center; transition:box-shadow .35s, border-color .35s; }
+.map-node.baking { border-color:var(--teal); box-shadow:0 0 0 2px var(--teal), 0 14px 34px rgba(28,108,135,.2); }
+.map-node.done { border-color:var(--green); box-shadow:0 0 0 1px var(--green), 0 10px 28px rgba(47,158,94,.14); }
+.map-user { background:var(--panel); }
+.map-ic { width:66px; height:66px; border-radius:16px; background:var(--panel-2); color:var(--teal); display:flex; align-items:center; justify-content:center; margin-bottom:14px; transition:background .3s, color .3s; }
+.map-ic svg { width:36px; height:36px; }
+.map-user .map-ic { background:#e4f0f4; }
+.map-node.done .map-ic { background:var(--green-bg); color:var(--green); }
+.map-name { font-family:"Montserrat"; font-weight:700; font-size:18px; color:var(--ink); line-height:1.2; }
+.map-name .os { font-family:"JetBrains Mono"; font-size:13px; font-weight:700; color:var(--teal); background:#e4f0f4; padding:2px 7px; border-radius:5px; margin-left:4px; }
+.map-sub { font-family:"JetBrains Mono"; font-size:15px; color:var(--muted); margin-top:8px; }
+.map-sub.work { color:var(--green); font-weight:700; display:flex; align-items:center; gap:7px; }
+.work-dot { width:8px; height:8px; border-radius:50%; background:var(--green); animation:mlpulse 1.4s infinite; }
+.map-state { font-family:"JetBrains Mono"; font-size:15px; font-weight:700; color:var(--muted); margin-top:8px; transition:color .3s; }
+.map-state.baking { color:var(--teal); }
+.map-state.done { color:var(--green); }
+.map-badge { position:absolute; top:-13px; left:50%; transform:translateX(-50%); font-family:"JetBrains Mono"; font-size:14px; font-weight:700; color:var(--ink); background:#fff; border:1px solid var(--line); padding:5px 13px; border-radius:20px; white-space:nowrap; box-shadow:0 4px 12px rgba(14,58,71,.1); transition:all .3s; }
+.map-badge.baking { background:var(--teal); color:#fff; border-color:var(--teal); }
+.map-badge.done { background:var(--green-bg); color:var(--green); border-color:var(--green); }
+
+.map-link { flex:1 1 auto; min-width:36px; max-width:120px; }
+.map-link svg { width:100%; height:40px; display:block; }
+
+.map-bottom { display:flex; gap:26px; width:100%; margin-top:32px; align-items:stretch; }
+.map-session { flex:1 1 auto; display:flex; align-items:center; gap:20px; border:1px solid var(--green); border-radius:16px; background:var(--green-bg); padding:20px 26px; }
+.ms-ic { width:54px; height:54px; border-radius:14px; background:#fff; color:var(--green); display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+.ms-ic svg { width:32px; height:32px; }
+.ms-text { flex:1 1 auto; }
+.ms-t { font-family:"Montserrat"; font-weight:700; font-size:20px; color:var(--ink); }
+.ms-t b { color:var(--green); }
+.ms-d { font-size:16.5px; color:var(--ink-soft); margin-top:4px; line-height:1.4; }
+.ms-d b { color:var(--green); font-weight:700; }
+.ms-counter { flex:0 0 auto; text-align:center; border-left:1px solid rgba(47,158,94,.3); padding-left:24px; }
+.ms-cv { font-family:"Montserrat"; font-weight:800; font-size:38px; color:var(--green); line-height:1; }
+.ms-cl { font-family:"JetBrains Mono"; font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-top:6px; }
+
+.map-backups { flex:0 0 420px; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 28px rgba(14,58,71,.08); padding:16px 22px; }
+.mb-title { font-family:"JetBrains Mono"; font-size:14px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:10px; }
+.mb-row { display:flex; align-items:center; gap:12px; padding:9px 0; }
+.mb-dot { width:9px; height:9px; border-radius:50%; background:var(--panel-2); border:1px solid var(--line); flex:0 0 auto; transition:background .3s, border-color .3s; }
+.mb-row.baking .mb-dot { background:var(--teal); border-color:var(--teal); }
+.mb-row.done .mb-dot { background:var(--green); border-color:var(--green); }
+.mb-h { font-family:"JetBrains Mono"; font-weight:700; font-size:16px; color:var(--ink); flex:0 0 46px; }
+.mb-n { font-size:16px; color:var(--ink-soft); flex:1 1 auto; }
+.mb-st { font-family:"JetBrains Mono"; font-size:14px; font-weight:700; color:var(--muted); white-space:nowrap; }
+.mb-st.baking { color:var(--teal); }
+.mb-st.done { color:var(--green); }
+
+/* ===== Slide: Restauración garantizada ===== */
+.rs-stage { display:flex; gap:32px; width:100%; margin-top:30px; align-items:stretch; }
+
+/* Máquina del usuario */
+.rs-machine { flex:0 0 740px; border:1px solid var(--line); border-radius:18px; background:#fff; box-shadow:0 14px 38px rgba(14,58,71,.12); overflow:hidden; display:flex; flex-direction:column; transition:box-shadow .4s, border-color .4s; }
+.rs-machine.crash { border-color:var(--red); box-shadow:0 0 0 2px var(--red), 0 14px 38px rgba(214,69,69,.22); }
+.rs-machine.ok { border-color:var(--green); box-shadow:0 0 0 1px var(--green), 0 14px 38px rgba(47,158,94,.18); }
+.rs-mac-head { display:flex; align-items:center; gap:12px; padding:16px 22px; background:var(--panel); border-bottom:1px solid var(--line); }
+.rs-mac-dot { width:12px; height:12px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); transition:all .3s; flex:0 0 auto; }
+.rs-machine.crash .rs-mac-dot { background:var(--red); box-shadow:0 0 8px var(--red); }
+.rs-mac-name { font-family:"JetBrains Mono"; font-weight:700; font-size:18px; color:var(--ink); }
+.rs-mac-os { font-family:"JetBrains Mono"; font-size:13px; font-weight:700; color:var(--teal); background:#e4f0f4; padding:3px 9px; border-radius:5px; }
+.rs-status { margin-left:auto; font-family:"JetBrains Mono"; font-weight:700; font-size:15px; color:var(--green); transition:color .3s; }
+.rs-status.crash { color:var(--red); }
+.rs-status.warn { color:var(--amber); }
+
+.rs-screen { position:relative; height:336px; background:linear-gradient(180deg,#fbfdfe,#eef4f6); }
+.rs-layer { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; opacity:0; transition:opacity .4s; padding:30px; }
+.rs-layer.on { opacity:1; }
+.rs-work { align-items:stretch; justify-content:flex-start; padding:30px 44px; gap:0; }
+.rs-doc-title { font-family:"Montserrat"; font-weight:700; font-size:20px; color:var(--ink); margin-bottom:20px; display:flex; align-items:center; gap:10px; }
+.rs-doc-line { height:13px; border-radius:4px; background:#dde7ec; margin-bottom:14px; }
+.rs-crash .msg { font-family:"Montserrat"; font-weight:800; font-size:30px; color:var(--red); }
+.rs-crash .sub { font-family:"JetBrains Mono"; font-size:16.5px; color:#a4585a; }
+.rs-restoring .msg { font-family:"Montserrat"; font-weight:700; font-size:24px; color:var(--teal); }
+.rs-restoring .sub { font-family:"JetBrains Mono"; font-size:16px; color:var(--muted); }
+.rs-spin { width:54px; height:54px; border:5px solid #d9e6ec; border-top-color:var(--teal); border-radius:50%; animation:rsspin .9s linear infinite; }
+@keyframes rsspin { to { transform:rotate(360deg); } }
+.rs-restored .big { font-size:60px; color:var(--green); font-weight:800; line-height:1; }
+.rs-restored .msg { font-family:"Montserrat"; font-weight:800; font-size:26px; color:var(--green); }
+.rs-restored .sub { font-family:"JetBrains Mono"; font-size:16px; color:var(--ink-soft); }
+
+.rs-mac-foot { display:flex; align-items:center; justify-content:space-between; padding:16px 22px; border-top:1px solid var(--line); background:#fff; }
+.rs-user { font-family:"JetBrains Mono"; font-size:15px; font-weight:700; color:var(--green); }
+.rs-user.bad { color:var(--red); }
+.rs-meeting { display:flex; align-items:center; gap:9px; font-family:"JetBrains Mono"; font-size:16px; font-weight:700; padding:8px 16px; border-radius:22px; background:#e4f0f4; color:var(--teal); transition:all .3s; }
+.rs-meeting.risk { background:var(--red-bg); color:var(--red); }
+.rs-meeting.safe { background:var(--green-bg); color:var(--green); }
+
+/* Servidor de respaldos */
+.rs-server { flex:1 1 auto; border:1px solid var(--line); border-radius:18px; background:#fff; box-shadow:0 14px 38px rgba(14,58,71,.12); overflow:hidden; display:flex; flex-direction:column; }
+.rs-srv-head { display:flex; align-items:center; gap:11px; padding:16px 22px; background:var(--panel); border-bottom:1px solid var(--line); font-family:"JetBrains Mono"; font-size:15.5px; font-weight:700; color:var(--ink); }
+.rs-srv-ic { color:var(--teal); display:flex; }
+.rs-count { padding:13px 22px; font-family:"JetBrains Mono"; font-size:16px; font-weight:700; color:var(--muted); border-bottom:1px solid var(--line); transition:color .3s; }
+.rs-count b { color:var(--teal); font-size:19px; }
+.rs-baklist { flex:1 1 auto; padding:14px 18px; display:flex; flex-direction:column; gap:8px; }
+.rs-bak { display:flex; align-items:center; gap:12px; padding:10px 14px; border:1px solid var(--line); border-radius:10px; background:#fff; opacity:0; transform:translateY(8px); transition:opacity .35s, transform .35s, border-color .3s, background .3s, box-shadow .3s; }
+.rs-bak.show { opacity:1; transform:translateY(0); }
+.rs-bak.pick { border-color:var(--teal); background:#eef7fb; box-shadow:0 0 0 1px var(--teal); }
+.rs-bak-dot { width:9px; height:9px; border-radius:50%; background:var(--green); flex:0 0 auto; }
+.rs-bak-when { font-family:"JetBrains Mono"; font-size:15.5px; font-weight:700; color:var(--ink); flex:0 0 128px; }
+.rs-bak-tag { font-family:"JetBrains Mono"; font-size:12.5px; font-weight:700; color:var(--teal); background:#e4f0f4; padding:3px 9px; border-radius:12px; }
+.rs-bak-size { margin-left:auto; font-family:"JetBrains Mono"; font-size:15px; color:var(--muted); }
+.rs-restore { padding:16px 22px; border-top:1px solid var(--line); background:var(--panel); }
+.rs-restore-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:9px; font-family:"JetBrains Mono"; font-size:15px; font-weight:700; color:var(--ink); }
+.rs-restore-pct { color:var(--teal); }
+.rs-restore-bar { height:12px; border-radius:6px; background:var(--panel-2); overflow:hidden; }
+.rs-restore-fill { height:100%; width:0%; border-radius:6px; background:var(--teal); transition:background .3s; }
+
+/* BSOD (pantallazo azul) */
+.rs-bsod { background:#0078d7; align-items:flex-start; justify-content:center; padding:42px 54px; gap:0; }
+.rs-bsod .bsod-face { font-family:"Segoe UI",Arial,sans-serif; font-size:80px; color:#fff; font-weight:300; line-height:1; margin-bottom:22px; }
+.rs-bsod .bsod-title { font-family:"Segoe UI",Arial,sans-serif; font-size:23px; color:#fff; line-height:1.4; max-width:580px; margin-bottom:16px; }
+.rs-bsod .bsod-sub { font-family:"Segoe UI",Arial,sans-serif; font-size:15px; color:#cfe6fb; margin-bottom:24px; }
+.rs-bsod .bsod-code { font-family:"JetBrains Mono"; font-size:15.5px; color:#9fd4f7; }
+.rs-bsod .bsod-foot { display:flex; align-items:center; gap:16px; margin-top:24px; }
+.rs-bsod .bsod-qr { width:52px; height:52px; flex:0 0 auto; border:3px solid #fff; background-image:repeating-linear-gradient(0deg,#fff 0 4px,#0078d7 4px 8px),repeating-linear-gradient(90deg,#fff 0 4px,#0078d7 4px 8px); background-blend-mode:difference; }
+.rs-bsod .bsod-foot div { font-family:"Segoe UI",Arial,sans-serif; font-size:15px; color:#cfe6fb; line-height:1.4; }
+
+/* Cambio de disco */
+.rs-disk .msg { font-family:"Montserrat"; font-weight:800; font-size:26px; color:var(--teal); }
+.rs-disk .sub { font-family:"JetBrains Mono"; font-size:16px; color:var(--muted); }
+
+/* Software de restauración (wizard) */
+.rs-wizard { flex:1 1 auto; border:1px solid var(--line); border-radius:18px; background:#fff; box-shadow:0 14px 38px rgba(14,58,71,.12); overflow:hidden; display:flex; flex-direction:column; }
+.rs-wiz-head { display:flex; align-items:center; gap:12px; padding:14px 20px; background:#eef3f5; border-bottom:1px solid var(--line); font-family:"JetBrains Mono"; font-size:15.5px; font-weight:700; color:var(--ink); }
+.rs-wiz-dots { display:flex; gap:6px; }
+.rs-wiz-dots i { width:11px; height:11px; border-radius:50%; display:block; }
+.rs-wiz-dots i:nth-child(1){ background:#ff5f57; } .rs-wiz-dots i:nth-child(2){ background:#febc2e; } .rs-wiz-dots i:nth-child(3){ background:#28c840; }
+.rs-wiz-admin { margin-left:auto; font-family:"JetBrains Mono"; font-size:13.5px; font-weight:700; color:var(--muted); background:var(--panel-2); padding:5px 12px; border-radius:20px; transition:all .35s; }
+.rs-wiz-admin.on { color:#fff; background:var(--teal); }
+
+.rs-stepper { display:flex; gap:8px; padding:16px 18px; border-bottom:1px solid var(--line); }
+.rs-step { flex:1 1 0; display:flex; align-items:center; gap:9px; font-family:"Open Sans"; font-size:14.5px; font-weight:600; color:var(--muted); padding:9px 10px; border-radius:9px; background:var(--panel); transition:all .35s; }
+.rs-step-n { width:24px; height:24px; border-radius:50%; background:#fff; border:1.5px solid var(--line); color:var(--muted); display:flex; align-items:center; justify-content:center; font-family:"Montserrat"; font-weight:800; font-size:14px; flex:0 0 auto; transition:all .35s; }
+.rs-step.active { background:#e4f0f4; color:var(--ink); }
+.rs-step.active .rs-step-n { background:var(--teal); border-color:var(--teal); color:#fff; }
+.rs-step.done { color:var(--green); }
+.rs-step.done .rs-step-n { background:var(--green); border-color:var(--green); color:#fff; }
+
+.rs-wiz-body { position:relative; flex:1 1 auto; }
+.rs-panel { position:absolute; inset:0; padding:22px 26px; opacity:0; transition:opacity .35s; pointer-events:none; }
+.rs-panel.on { opacity:1; pointer-events:auto; }
+.rs-panel-title { font-family:"Montserrat"; font-weight:700; font-size:17px; color:var(--ink); margin-bottom:16px; }
+
+.rs-p-list { display:flex; flex-direction:column; gap:9px; }
+.rs-p-bak { display:flex; align-items:center; gap:12px; padding:11px 14px; border:1px solid var(--line); border-radius:10px; }
+.rs-p-bak.sel { border-color:var(--teal); background:#eef7fb; box-shadow:0 0 0 1px var(--teal); }
+.rs-p-bak .rs-bak-dot { width:9px; height:9px; border-radius:50%; background:var(--green); flex:0 0 auto; }
+.rs-p-bak .w { font-family:"JetBrains Mono"; font-weight:700; font-size:15.5px; color:var(--ink); flex:0 0 120px; }
+.rs-p-bak .tag { font-family:"JetBrains Mono"; font-size:12.5px; font-weight:700; color:var(--teal); background:#e4f0f4; padding:3px 9px; border-radius:12px; }
+.rs-p-bak .sz { margin-left:auto; font-family:"JetBrains Mono"; font-size:14.5px; color:var(--muted); }
+.rs-p-note { font-family:"JetBrains Mono"; font-size:14.5px; color:var(--muted); margin-top:14px; }
+
+.rs-opt { display:flex; align-items:flex-start; gap:13px; padding:14px 16px; border:1px solid var(--line); border-radius:11px; margin-bottom:11px; }
+.rs-opt.sel { border-color:var(--teal); background:#eef7fb; }
+.rs-opt .radio { width:20px; height:20px; border-radius:50%; border:2px solid var(--line); flex:0 0 auto; margin-top:1px; position:relative; }
+.rs-opt.sel .radio { border-color:var(--teal); }
+.rs-opt.sel .radio::after { content:""; position:absolute; inset:4px; border-radius:50%; background:var(--teal); }
+.rs-opt .ot { font-family:"Montserrat"; font-weight:700; font-size:15px; color:var(--ink); }
+.rs-opt .od { font-size:15px; color:var(--ink-soft); margin-top:2px; }
+
+.rs-io { display:flex; align-items:center; gap:18px; }
+.rs-io-box { flex:1 1 0; border:1px solid var(--line); border-radius:12px; padding:13px 16px; text-align:center; }
+.rs-io-box.dest { border-color:var(--teal); background:#eef7fb; }
+.rs-io-label { font-family:"JetBrains Mono"; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px; }
+.rs-io-ic { font-size:28px; margin-bottom:5px; }
+.rs-io-name { font-family:"Montserrat"; font-weight:700; font-size:16px; color:var(--ink); }
+.rs-io-sub { font-family:"JetBrains Mono"; font-size:14px; color:var(--muted); margin-top:4px; }
+.rs-io-arrow { font-size:30px; color:var(--teal); flex:0 0 auto; }
+
+.rs-go-btn { display:inline-flex; align-items:center; gap:10px; padding:13px 26px; background:var(--teal); color:#fff; border-radius:10px; font-family:"Montserrat"; font-weight:700; font-size:16px; box-shadow:0 8px 20px rgba(28,108,135,.3); transition:transform .2s; }
+.rs-go-prog { margin-top:22px; transition:opacity .3s; }
+.rs-go-top { display:flex; justify-content:space-between; font-family:"JetBrains Mono"; font-size:15.5px; font-weight:700; color:var(--ink); margin-bottom:9px; }
+.rs-go-pct { color:var(--teal); }
+.rs-go-bar { height:14px; border-radius:7px; background:var(--panel-2); overflow:hidden; }
+.rs-go-fill { height:100%; width:0%; border-radius:7px; background:var(--teal); transition:background .3s; }
+
+/* Wizard interactivo: opciones clicables, resumen y botones de navegación */
+.rs-p-bak { cursor:pointer; transition:border-color .2s, background .2s, box-shadow .2s; }
+.rs-p-bak:hover { border-color:var(--teal); }
+.rs-opt { cursor:pointer; transition:border-color .2s, background .2s; }
+.rs-opt:hover { border-color:var(--teal); }
+.rs-summary { display:flex; flex-direction:column; gap:9px; }
+.rs-sum-row { display:flex; align-items:center; justify-content:space-between; padding:10px 16px; border:1px solid var(--line); border-radius:10px; background:#fbfdfe; font-family:"JetBrains Mono"; font-size:15.5px; }
+.rs-sum-row span { color:var(--muted); }
+.rs-sum-row b { color:var(--ink); }
+.rs-wiz-foot { position:relative; display:flex; align-items:center; gap:16px; padding:15px 22px; border-top:1px solid var(--line); background:var(--panel); }
+.rs-hint { flex:1 1 auto; text-align:center; font-family:"JetBrains Mono"; font-size:14.5px; color:var(--muted); }
+.rs-nav-btn { font-family:"Montserrat"; font-weight:700; font-size:15px; padding:12px 24px; border-radius:10px; cursor:pointer; border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); transition:all .2s; box-shadow:none; }
+.rs-nav-btn.ghost:hover:not(:disabled) { border-color:var(--teal); color:var(--teal); background:#fff; }
+.rs-nav-btn.primary { background:var(--teal); color:#fff; border-color:var(--teal); box-shadow:0 8px 20px rgba(28,108,135,.28); }
+.rs-nav-btn.primary:hover:not(:disabled) { background:var(--teal); color:#fff; filter:brightness(1.07); transform:translateY(-1px); }
+.rs-nav-btn.go { background:var(--green); color:#fff; border-color:var(--green); box-shadow:0 8px 20px rgba(47,158,94,.3); }
+.rs-nav-btn.go:hover:not(:disabled) { background:var(--green); color:#fff; filter:brightness(1.07); transform:translateY(-1px); }
+.rs-nav-btn:disabled { opacity:.4; cursor:not-allowed; }
+/* Guías visuales para el ponente */
+.rs-nav-btn.poke { animation:rsbtnpoke 1.4s ease-in-out infinite; }
+@keyframes rsbtnpoke { 0%{ box-shadow:0 0 0 0 rgba(28,108,135,.55);} 70%{ box-shadow:0 0 0 13px rgba(28,108,135,0);} 100%{ box-shadow:0 0 0 0 rgba(28,108,135,0);} }
+.rs-nav-btn.go.poke { animation-name:rsbtnpokego; }
+@keyframes rsbtnpokego { 0%{ box-shadow:0 0 0 0 rgba(47,158,94,.55);} 70%{ box-shadow:0 0 0 13px rgba(47,158,94,0);} 100%{ box-shadow:0 0 0 0 rgba(47,158,94,0);} }
+.rs-poke-tip { position:absolute; right:22px; bottom:100%; margin-bottom:11px; padding:7px 13px; border-radius:9px; background:var(--teal); color:#fff; font-family:"Montserrat"; font-weight:700; font-size:14.5px; white-space:nowrap; box-shadow:0 8px 18px rgba(28,108,135,.35); animation:rstipbob 1.3s ease-in-out infinite; pointer-events:none; z-index:5; }
+.rs-poke-tip::after { content:''; position:absolute; top:100%; right:36px; border:6px solid transparent; border-top-color:var(--teal); }
+.rs-poke-tip.go { background:var(--green); box-shadow:0 8px 18px rgba(47,158,94,.35); }
+.rs-poke-tip.go::after { border-top-color:var(--green); }
+.rs-poke-tip[hidden] { display:none; }
+@keyframes rstipbob { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-4px);} }
+.rs-ponente-badge { display:inline-flex; align-items:center; gap:8px; margin-top:12px; padding:6px 14px; border-radius:999px; background:rgba(28,108,135,.09); border:1px solid rgba(28,108,135,.3); color:var(--teal); font-family:"JetBrains Mono"; font-size:14px; font-weight:600; letter-spacing:.2px; }
+.rs-ponente-badge .dot { width:8px; height:8px; border-radius:50%; background:var(--teal); animation:rsdot 1.3s ease-in-out infinite; }
+@keyframes rsdot { 0%,100%{ opacity:1; transform:scale(1);} 50%{ opacity:.35; transform:scale(.8);} }
+
+/* ===== Slide: Notificaciones por correo ===== */
+.bn-stage { display:flex; gap:46px; align-items:stretch; width:100%; margin-top:36px; position:relative; }
+.bn-machines { flex:0 0 620px; display:flex; flex-direction:column; gap:28px; justify-content:center; }
+.bn-machine { border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 10px 28px rgba(14,58,71,.09); padding:22px 26px; transition:border-color .35s, box-shadow .35s; }
+.bn-machine.ok { border-color:var(--green); box-shadow:0 0 0 1px var(--green), 0 12px 30px rgba(47,158,94,.16); }
+.bn-machine.err { border-color:var(--red); box-shadow:0 0 0 1px var(--red), 0 12px 30px rgba(214,69,69,.16); }
+.bn-mac-top { display:flex; align-items:center; gap:16px; margin-bottom:18px; }
+.bn-mac-ic { width:56px; height:56px; border-radius:13px; background:var(--panel-2); color:var(--teal); display:flex; align-items:center; justify-content:center; flex:0 0 auto; transition:background .3s, color .3s; }
+.bn-mac-ic svg { width:32px; height:32px; }
+.bn-machine.ok .bn-mac-ic { background:var(--green-bg); color:var(--green); }
+.bn-machine.err .bn-mac-ic { background:var(--red-bg); color:var(--red); }
+.bn-mac-name { font-family:"Montserrat"; font-weight:700; font-size:22px; color:var(--ink); }
+.bn-mac-sub { font-family:"JetBrains Mono"; font-size:15px; color:var(--muted); margin-top:3px; }
+.bn-mac-state { margin-left:auto; font-family:"JetBrains Mono"; font-size:16px; font-weight:700; color:var(--teal); white-space:nowrap; }
+.bn-mac-state.ok { color:var(--green); }
+.bn-mac-state.err { color:var(--red); }
+.bn-bar { height:14px; border-radius:7px; background:var(--panel-2); overflow:hidden; }
+.bn-fill { height:100%; width:0%; border-radius:7px; background:var(--teal); transition:background .3s; }
+.bn-bar-foot { display:flex; justify-content:space-between; margin-top:8px; font-family:"JetBrains Mono"; font-size:14px; color:var(--muted); }
+
+/* Sobres volando */
+.bn-env { position:absolute; width:58px; height:42px; opacity:0; z-index:6; pointer-events:none; }
+.bn-env svg { width:100%; height:100%; display:block; }
+
+/* Bandeja */
+.bn-inbox { flex:1 1 auto; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 16px 44px rgba(14,58,71,.14); overflow:hidden; display:flex; flex-direction:column; }
+.bn-inbox-head { display:flex; align-items:center; gap:11px; padding:17px 22px; background:var(--panel); border-bottom:1px solid var(--line); font-family:"JetBrains Mono"; font-size:16px; font-weight:700; color:var(--ink); }
+.bn-inbox-count { margin-left:auto; font-family:"JetBrains Mono"; font-size:14px; font-weight:700; color:var(--teal); }
+.bn-mail { display:flex; align-items:flex-start; gap:16px; padding:24px; border-bottom:1px solid var(--line); opacity:0; transform:translateX(22px); transition:opacity .45s, transform .45s; }
+.bn-mail:last-child { border-bottom:none; }
+.bn-mail.show { opacity:1; transform:translateX(0); }
+.bn-mail-ic { width:46px; height:46px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; flex:0 0 auto; }
+.bn-mail-ic.ok { background:var(--green-bg); color:var(--green); }
+.bn-mail-ic.err { background:var(--red-bg); color:var(--red); }
+.bn-mail-main { flex:1 1 auto; }
+.bn-mail-from { font-family:"JetBrains Mono"; font-size:14.5px; color:var(--muted); display:flex; }
+.bn-mail-time { margin-left:auto; }
+.bn-mail-subj { font-family:"Montserrat"; font-weight:700; font-size:18.5px; margin:4px 0 7px; }
+.bn-mail-subj.ok { color:var(--green); }
+.bn-mail-subj.err { color:var(--red); }
+.bn-mail-body { font-size:16.5px; color:var(--ink-soft); line-height:1.45; }
+.bn-mail-body b { color:var(--ink); }
+
+/* Cierre */
+.slide-cierre::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: var(--teal); }
+.cierre-logo { margin-bottom: 30px; }
+.cierre-logo img { height: 110px; display: block; }
+.slide-cierre h2 { font-family: "Montserrat"; font-weight: 800; font-size: 54px; color: var(--ink); text-align: center; max-width: 1100px; line-height: 1.1; }
+.slide-cierre .accent-rule { width: 90px; height: 4px; background: var(--teal); border-radius: 2px; margin: 30px 0; }
+.cierre-sub { font-size: 24px; color: var(--ink-soft); text-align: center; max-width: 900px; line-height: 1.5; margin-bottom: 46px; }
+.cierre-sub b { color: var(--teal); font-weight: 600; }
+.cierre-back { display: flex; align-items: center; gap: 12px; padding: 17px 34px; background: var(--teal); border-radius: 14px; text-decoration: none; box-shadow: 0 16px 40px rgba(28,108,135,.3); font-family: "Montserrat"; font-weight: 700; font-size: 20px; color: #fff; }
+
+/* UI */
+.ui-label { position: absolute; top: 22px; left: 40px; font-family: "JetBrains Mono"; font-size: 14px; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; z-index: 50; font-weight: 700; }
+.ui-logo { position: absolute; top: 20px; right: 40px; z-index: 50; }
+.ui-logo img { height: 32px; display: block; }
+.nav-buttons { position: absolute; bottom: 24px; right: 40px; display: flex; gap: 12px; z-index: 50; }
+.nav-buttons .back-link { padding: 10px 18px; border: 1px solid var(--line); background: #fff; color: var(--ink-soft); border-radius: 6px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; }
+.nav-buttons .back-link:hover { border-color: var(--teal); color: var(--teal); }
+button { padding: 10px 18px; border: 1px solid var(--teal); background: #fff; color: var(--teal); cursor: pointer; border-radius: 6px; font-size: 15px; font-weight: 600; transition: all 0.2s; font-family: "Open Sans"; box-shadow: 0 2px 8px rgba(14,58,71,0.08); }
+button:hover:not(:disabled) { background: var(--teal); color: #fff; }
+button:disabled { opacity: 0.35; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<div class="slides-container">
+
+  <!-- Slide 1: Portada -->
+  <div class="slide slide-portada active">
+    <div class="logo-card"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+    <h2>Backups</h2>
+    <div class="accent-rule"></div>
+    <div class="tagline">
+      <div class="lead">Tu información, siempre protegida y recuperable</div>
+      <div style="margin-top: 16px;">Mantén tu información protegida y recuperable sin interrumpir las tareas cotidianas.</div>
+    </div>
+  </div>
+
+  <!-- Slide 2: Mini-mapa · respaldos en caliente sin interrumpir al usuario -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Respaldos en caliente, sin interrumpir tu operación</h3>
+      <div class="cap-claim">El usuario sigue trabajando con total normalidad mientras los respaldos se ejecutan solos</div>
+    </div>
+
+    <!-- Barra superior: reloj del programador -->
+    <div class="map-topbar">
+      <div class="map-clock"><span class="map-clock-ic">&#128340;</span> <b id="bkm-clock">01:58</b><span class="map-clock-sub">programador automático &middot; backups escalonados cada 20 min</span></div>
+      <div class="map-live"><span class="map-live-dot"></span> <b id="bkm-now">sistema en uso</b></div>
+    </div>
+
+    <!-- Mini-mapa: Usuario → PC → Servidor → BD -->
+    <div class="map-row">
+
+      <!-- Usuario -->
+      <div class="map-node map-user" id="bkm-user">
+        <div class="map-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></div>
+        <div class="map-name">Usuario</div>
+        <div class="map-sub work" id="bkm-user-sub"><span class="work-dot"></span> trabajando…</div>
+      </div>
+
+      <div class="map-link"><svg viewBox="0 0 120 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="20" x2="114" y2="20" stroke="#dfe6eb" stroke-width="4" stroke-linecap="round"/><line class="map-flow" x1="6" y1="20" x2="114" y2="20" stroke="#1c6c87" stroke-width="4" stroke-linecap="round" stroke-dasharray="4 12"/></svg></div>
+
+      <!-- PC -->
+      <div class="map-node" id="bkm-pc">
+        <div class="map-badge" id="bkm-pc-badge">backup 02:00</div>
+        <div class="map-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
+        <div class="map-name">PC de trabajo <span class="os">Windows</span></div>
+        <div class="map-state" id="bkm-pc-state">en uso</div>
+      </div>
+
+      <div class="map-link"><svg viewBox="0 0 120 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="20" x2="114" y2="20" stroke="#dfe6eb" stroke-width="4" stroke-linecap="round"/><line class="map-flow" x1="6" y1="20" x2="114" y2="20" stroke="#1c6c87" stroke-width="4" stroke-linecap="round" stroke-dasharray="4 12"/></svg></div>
+
+      <!-- Servidor -->
+      <div class="map-node" id="bkm-srv">
+        <div class="map-badge" id="bkm-srv-badge">backup 02:20</div>
+        <div class="map-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></div>
+        <div class="map-name">Servidor <span class="os">Linux</span></div>
+        <div class="map-state" id="bkm-srv-state">sistema activo</div>
+      </div>
+
+      <div class="map-link"><svg viewBox="0 0 120 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="20" x2="114" y2="20" stroke="#dfe6eb" stroke-width="4" stroke-linecap="round"/><line class="map-flow" x1="6" y1="20" x2="114" y2="20" stroke="#1c6c87" stroke-width="4" stroke-linecap="round" stroke-dasharray="4 12"/></svg></div>
+
+      <!-- Base de datos -->
+      <div class="map-node" id="bkm-db">
+        <div class="map-badge" id="bkm-db-badge">backup 02:40</div>
+        <div class="map-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="2.6"/><path d="M4 5v6c0 1.4 3.6 2.6 8 2.6s8-1.2 8-2.6V5"/><path d="M4 11v6c0 1.4 3.6 2.6 8 2.6s8-1.2 8-2.6v-6"/></svg></div>
+        <div class="map-name">Base de datos</div>
+        <div class="map-state" id="bkm-db-state">en línea</div>
+      </div>
+    </div>
+
+    <!-- Banda inferior: sesión del usuario + resumen de respaldos -->
+    <div class="map-bottom">
+      <div class="map-session">
+        <div class="ms-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l2.5 2.5L16 9"/></svg></div>
+        <div class="ms-text">
+          <div class="ms-t">El usuario sigue trabajando — <b>0 interrupciones</b></div>
+          <div class="ms-d">Los respaldos se ejecutan <b>en caliente</b>: las tareas en curso no se ven afectadas en absoluto.</div>
+        </div>
+        <div class="ms-counter"><div class="ms-cv" id="bkm-actions">0</div><div class="ms-cl">acciones del usuario</div></div>
+      </div>
+      <div class="map-backups">
+        <div class="mb-title">Respaldos programados de hoy</div>
+        <div class="mb-row" id="bkm-b1"><span class="mb-dot"></span><span class="mb-h">02:00</span><span class="mb-n">PC de trabajo</span><span class="mb-st" id="bkm-b1-st">programado</span></div>
+        <div class="mb-row" id="bkm-b2"><span class="mb-dot"></span><span class="mb-h">02:20</span><span class="mb-n">Servidor</span><span class="mb-st" id="bkm-b2-st">programado</span></div>
+        <div class="mb-row" id="bkm-b3"><span class="mb-dot"></span><span class="mb-h">02:40</span><span class="mb-n">Base de datos</span><span class="mb-st" id="bkm-b3-st">programado</span></div>
+      </div>
+    </div>
+
+    <!-- 3 subítems -->
+    <div class="bk-feats">
+      <div class="bk-feat" id="bk-f1">
+        <div class="bk-feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <div><div class="bk-feat-t">Respaldos automatizados</div><div class="bk-feat-d">Copias programadas sin intervención manual</div></div>
+      </div>
+      <div class="bk-feat" id="bk-f2">
+        <div class="bk-feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 6 6 10a6 6 0 0 1-12 0c0-1.4.6-2.6 1.4-3.6"/></svg></div>
+        <div><div class="bk-feat-t">Respaldos en caliente</div><div class="bk-feat-d">Sin detener servicios ni tareas cotidianas</div></div>
+      </div>
+      <div class="bk-feat" id="bk-f3">
+        <div class="bk-feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="11" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
+        <div><div class="bk-feat-t">PC y servidores</div><div class="bk-feat-d">Protección en ambientes Windows y Linux</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Notificaciones por correo -->
+  <div class="slide" style="justify-content:flex-start; padding-top:84px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Notificaciones por correo</h3>
+      <div class="cap-claim">Cada respaldo te avisa su resultado — sabes siempre qué pasó, sin revisar nada manualmente</div>
+    </div>
+
+    <div class="bn-stage">
+
+      <!-- Máquinas respaldando -->
+      <div class="bn-machines">
+        <div class="bn-machine" id="bn-m1">
+          <div class="bn-mac-top">
+            <div class="bn-mac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></div>
+            <div><div class="bn-mac-name">srv-app-01</div><div class="bn-mac-sub">Servidor Linux · producción</div></div>
+            <div class="bn-mac-state" id="bn-st1">iniciando…</div>
+          </div>
+          <div class="bn-bar"><div class="bn-fill" id="bn-fill1"></div></div>
+          <div class="bn-bar-foot"><span id="bn-pct1">0%</span><span>respaldo programado 02:00</span></div>
+        </div>
+
+        <div class="bn-machine" id="bn-m2">
+          <div class="bn-mac-top">
+            <div class="bn-mac-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
+            <div><div class="bn-mac-name">PC-Ventas-07</div><div class="bn-mac-sub">PC Windows · sucursal</div></div>
+            <div class="bn-mac-state" id="bn-st2">iniciando…</div>
+          </div>
+          <div class="bn-bar"><div class="bn-fill" id="bn-fill2"></div></div>
+          <div class="bn-bar-foot"><span id="bn-pct2">0%</span><span>respaldo programado 02:00</span></div>
+        </div>
+      </div>
+
+      <!-- Sobres volando -->
+      <div class="bn-env" id="bn-env1" style="top:118px;">
+        <svg viewBox="0 0 58 42" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="54" height="36" rx="5" fill="#e7f6ee" stroke="#2f9e5e" stroke-width="2"/><path d="M3 6 L29 25 L55 6" fill="none" stroke="#2f9e5e" stroke-width="2"/></svg>
+      </div>
+      <div class="bn-env" id="bn-env2" style="top:300px;">
+        <svg viewBox="0 0 58 42" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="54" height="36" rx="5" fill="#fbeaea" stroke="#d64545" stroke-width="2"/><path d="M3 6 L29 25 L55 6" fill="none" stroke="#d64545" stroke-width="2"/></svg>
+      </div>
+
+      <!-- Bandeja de correo -->
+      <div class="bn-inbox">
+        <div class="bn-inbox-head">
+          <span style="font-size:18px;">&#128229;</span> Bandeja · backup@tecnolts.com
+          <span class="bn-inbox-count" id="bn-count">0 nuevos</span>
+        </div>
+        <div class="bn-mail" id="bn-mail1">
+          <div class="bn-mail-ic ok">&#10003;</div>
+          <div class="bn-mail-main">
+            <div class="bn-mail-from">backup@tecnolts.com <span class="bn-mail-time">ahora</span></div>
+            <div class="bn-mail-subj ok">Backup completado &middot; srv-app-01</div>
+            <div class="bn-mail-body">El respaldo de <b>srv-app-01</b> finalizó <b>correctamente</b>. 42 GB · cifrado y verificado · duración 6 min.</div>
+          </div>
+        </div>
+        <div class="bn-mail" id="bn-mail2">
+          <div class="bn-mail-ic err">&#10007;</div>
+          <div class="bn-mail-main">
+            <div class="bn-mail-from">backup@tecnolts.com <span class="bn-mail-time">ahora</span></div>
+            <div class="bn-mail-subj err">Backup fallido &middot; PC-Ventas-07</div>
+            <div class="bn-mail-body">El respaldo de <b>PC-Ventas-07</b> <b>no se completó</b>. Error: espacio insuficiente en el destino. Requiere atención.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Restauración garantizada -->
+  <div class="slide" style="justify-content:flex-start; padding-top:80px;">
+    <div style="align-self:flex-start;">
+      <h3 style="margin-bottom:0;">Restauración garantizada</h3>
+      <div class="cap-claim">Lo más importante de un backup es poder recuperarlo cuando de verdad lo necesitas</div>
+      <div class="rs-ponente-badge"><span class="dot"></span> Presentación interactiva · requiere intervención del ponente</div>
+    </div>
+
+    <div class="rs-stage">
+
+      <!-- Estación del usuario -->
+      <div class="rs-machine" id="rs-machine">
+        <div class="rs-mac-head">
+          <span class="rs-mac-dot" id="rs-dot"></span>
+          <span class="rs-mac-name">GERENCIA-01</span>
+          <span class="rs-mac-os">Windows</span>
+          <span class="rs-status" id="rs-status">● Operativo</span>
+        </div>
+        <div class="rs-screen">
+          <!-- Trabajando -->
+          <div class="rs-layer rs-work on" id="rs-work">
+            <div class="rs-doc-title"><span>&#128202;</span> Presentación Reunión Q2.pptx</div>
+            <div class="rs-doc-line" style="width:92%"></div>
+            <div class="rs-doc-line" style="width:78%"></div>
+            <div class="rs-doc-line" style="width:85%"></div>
+            <div class="rs-doc-line" style="width:64%"></div>
+            <div class="rs-doc-line" style="width:73%"></div>
+          </div>
+          <!-- Pantallazo azul (BSOD) -->
+          <div class="rs-layer rs-bsod" id="rs-bsod">
+            <div class="bsod-face">:(</div>
+            <div class="bsod-title">Tu PC encontró un problema y necesita reiniciarse.</div>
+            <div class="bsod-sub">Solo recopilamos información del error y luego reiniciaremos.</div>
+            <div class="bsod-code">Código: CRITICAL_PROCESS_DIED · DISK_HARDWARE_FAILURE</div>
+            <div class="bsod-foot"><div class="bsod-qr"></div><div>GERENCIA-01 · fallo físico del disco duro<br>el equipo no puede iniciar el sistema</div></div>
+          </div>
+          <!-- Restaurando -->
+          <div class="rs-layer rs-restoring" id="rs-restoring">
+            <div class="rs-spin"></div>
+            <div class="msg">Restaurando sistema…</div>
+            <div class="sub">Aplicando el backup al equipo</div>
+          </div>
+          <!-- Cambio de disco -->
+          <div class="rs-layer rs-disk" id="rs-disk">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#1c6c87" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="8" cy="12" r="2.4"/><path d="M14 10h4M14 14h4"/></svg>
+            <div class="msg">Cambio de disco</div>
+            <div class="sub">El equipo de TI reemplaza el disco dañado por uno nuevo</div>
+          </div>
+          <!-- Operativo -->
+          <div class="rs-layer rs-restored" id="rs-restored">
+            <div class="big">&#10003;</div>
+            <div class="msg">Equipo 100% operativo</div>
+            <div class="sub">Disco nuevo · sistema y archivos restaurados intactos</div>
+          </div>
+        </div>
+        <div class="rs-mac-foot">
+          <span class="rs-user" id="rs-user">Usuario trabajando…</span>
+          <span class="rs-meeting" id="rs-meeting"><span>&#128197;</span> Reunión importante en 3 h</span>
+        </div>
+      </div>
+
+      <!-- Software de restauración (wizard) -->
+      <div class="rs-wizard" id="rs-wizard">
+        <div class="rs-wiz-head">
+          <span class="rs-wiz-dots"><i></i><i></i><i></i></span>
+          Software de Restauración — TecnoLTS Backup
+          <span class="rs-wiz-admin" id="rs-admin">&#128104;&#8205;&#128187; Administrador TI</span>
+        </div>
+        <div class="rs-stepper">
+          <div class="rs-step" id="rs-step1"><span class="rs-step-n">1</span> Seleccionar backup</div>
+          <div class="rs-step" id="rs-step2"><span class="rs-step-n">2</span> Tipo de restauración</div>
+          <div class="rs-step" id="rs-step3"><span class="rs-step-n">3</span> Origen y destino</div>
+          <div class="rs-step" id="rs-step4"><span class="rs-step-n">4</span> Iniciar</div>
+        </div>
+        <div class="rs-wiz-body">
+
+          <!-- Paso 1: seleccionar backup -->
+          <div class="rs-panel" id="rs-p1">
+            <div class="rs-panel-title">Selecciona el backup a restaurar &mdash; GERENCIA-01</div>
+            <div class="rs-p-list">
+              <div class="rs-p-bak sel"><span class="rs-bak-dot"></span><span class="w">hoy 02:00</span><span class="tag">más reciente</span><span class="sz">12 GB</span></div>
+              <div class="rs-p-bak"><span class="rs-bak-dot"></span><span class="w">ayer 02:00</span><span class="sz">12 GB</span></div>
+              <div class="rs-p-bak"><span class="rs-bak-dot"></span><span class="w">hace 2 días</span><span class="sz">11 GB</span></div>
+              <div class="rs-p-bak"><span class="rs-bak-dot"></span><span class="w">hace 3 días</span><span class="sz">11 GB</span></div>
+            </div>
+            <div class="rs-p-note">5 copias disponibles · retención 7 días</div>
+          </div>
+
+          <!-- Paso 2: tipo de restauración -->
+          <div class="rs-panel" id="rs-p2">
+            <div class="rs-panel-title">Tipo de restauración</div>
+            <div class="rs-opt sel"><span class="radio"></span><div><div class="ot">Restauración completa</div><div class="od">Recupera el sistema y todos los archivos tal como estaban.</div></div></div>
+            <div class="rs-opt"><span class="radio"></span><div><div class="ot">Archivos específicos</div><div class="od">Recupera solo carpetas o documentos seleccionados.</div></div></div>
+            <div class="rs-opt"><span class="radio"></span><div><div class="ot">Bare-metal (disco completo)</div><div class="od">Clona el equipo entero sobre un disco nuevo.</div></div></div>
+          </div>
+
+          <!-- Paso 3: origen y destino -->
+          <div class="rs-panel" id="rs-p3">
+            <div class="rs-panel-title">Origen y destino de los datos</div>
+            <div class="rs-io">
+              <div class="rs-io-box">
+                <div class="rs-io-label">Origen</div>
+                <div class="rs-io-ic">&#128451;</div>
+                <div class="rs-io-name" id="rs-io-origin">Backup hoy 02:00</div>
+                <div class="rs-io-sub">Servidor de respaldos</div>
+              </div>
+              <div class="rs-io-arrow">&#8594;</div>
+              <div class="rs-io-box dest">
+                <div class="rs-io-label">Destino</div>
+                <div class="rs-io-ic">&#128187;</div>
+                <div class="rs-io-name">GERENCIA-01</div>
+                <div class="rs-io-sub">disco nuevo</div>
+              </div>
+            </div>
+            <div class="rs-p-note" style="margin-top:10px;">Verificación de integridad del backup: <b style="color:var(--green);">correcta &#10003;</b></div>
+          </div>
+
+          <!-- Paso 4: confirmar e iniciar -->
+          <div class="rs-panel" id="rs-p4">
+            <div class="rs-panel-title" id="rs-p4-title">Confirmar e iniciar</div>
+            <div class="rs-summary" id="rs-summary">
+              <div class="rs-sum-row"><span>Backup</span><b id="rs-sum-bak">hoy 02:00 · 12 GB</b></div>
+              <div class="rs-sum-row"><span>Tipo de restauración</span><b id="rs-sum-type">Restauración completa</b></div>
+              <div class="rs-sum-row"><span>Destino</span><b>GERENCIA-01 · disco nuevo</b></div>
+              <div class="rs-sum-row"><span>Integridad del backup</span><b style="color:var(--green);">verificada &#10003;</b></div>
+            </div>
+            <div class="rs-go-prog" id="rs-go-prog" style="opacity:0;">
+              <div class="rs-go-top"><span id="rs-go-label">Restaurando…</span><span class="rs-go-pct" id="rs-go-pct">0%</span></div>
+              <div class="rs-go-bar"><div class="rs-go-fill" id="rs-go-fill"></div></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Pie de navegación del sistema -->
+        <div class="rs-wiz-foot">
+          <button class="rs-nav-btn ghost" id="rs-back" disabled>&#8592; Atrás</button>
+          <div class="rs-hint" id="rs-hint">Elige el backup a restaurar</div>
+          <div class="rs-poke-tip" id="rs-poke-tip">&#128072; Haz clic aquí para continuar</div>
+          <button class="rs-nav-btn primary poke" id="rs-next">Continuar &#8594;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Cierre -->
+  <div class="slide slide-cierre">
+    <div class="cierre-logo"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+    <h2>Tu información, siempre a salvo</h2>
+    <div class="accent-rule"></div>
+    <div class="cierre-sub">Respaldos <b>automáticos</b>, <b>en caliente</b> y <b>verificados</b> — protegemos el activo más valioso de tu empresa sin frenar tu operación.</div>
+    <a class="cierre-back" href="Portafolio TecnoLTS.html#servicios">&#8592; Volver a Nuestros servicios</a>
+  </div>
+
+
+
+<div class="ui-label" id="slide-label">01 — Portada</div>
+<div class="ui-logo"><img src="/portafolio-docs/assets/image-0.png" alt="TecnoLTS" /></div>
+
+<div class="nav-buttons">
+  <a class="back-link" href="Portafolio TecnoLTS.html#servicios">&#8962; Servicios</a>
+  <button id="btn-prev">← Anterior</button>
+  <button id="btn-next">Siguiente →</button>
+</div>
+
+</div>
+
+<script>
+let currentSlide = 0;
+let playhead = 0;
+let lastTime = Date.now();
+
+const slides = [
+  { name: 'Portada', duration: 3 },
+  { name: 'Respaldos', duration: 18 },
+  { name: 'Notificaciones', duration: 14 },
+  { name: 'Restauración', duration: 32 },
+  { name: 'Cierre', duration: 5 }
+];
+
+function goToSlide(n) {
+  if (n < 0 || n >= slides.length) return;
+  document.querySelectorAll('.slide').forEach((s, i) => s.classList.toggle('active', i === n));
+  currentSlide = n;
+  playhead = 0;
+  document.getElementById('slide-label').textContent = String(n + 1).padStart(2, '0') + ' — ' + slides[n].name;
+  document.getElementById('btn-prev').disabled = currentSlide === 0;
+  document.getElementById('btn-next').disabled = currentSlide === slides.length - 1;
+  if (n === 3) rsReset();
+}
+document.getElementById('btn-prev').addEventListener('click', () => goToSlide(currentSlide - 1));
+document.getElementById('btn-next').addEventListener('click', () => goToSlide(currentSlide + 1));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+  if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+});
+
+function animate() {
+  const now = Date.now();
+  const dt = (now - lastTime) / 1000;
+  lastTime = now;
+  playhead += dt;
+  if (playhead > slides[currentSlide].duration) playhead = slides[currentSlide].duration;
+  const t = Math.min(1, playhead / slides[currentSlide].duration);
+
+  // Slide 2: mini-mapa de respaldos en caliente (index 1)
+  if (currentSlide === 1) {
+    // Reloj: 01:58 → 02:50 (52 min mapeados a t 0..1)
+    const curMin = 118 + t * 52;
+    const hh = Math.floor(curMin / 60);
+    const mm = Math.floor(curMin % 60);
+    const clk = document.getElementById('bkm-clock');
+    if (clk) clk.textContent = String(hh).padStart(2,'0') + ':' + String(mm).padStart(2,'0');
+
+    // Flujo de trabajo del usuario: SIEMPRE activo (jamás se interrumpe)
+    window.__bkmOff = (window.__bkmOff || 0) - 0.5;
+    document.querySelectorAll('.map-flow').forEach(f => f.setAttribute('stroke-dashoffset', window.__bkmOff));
+
+    // Contador de acciones del usuario: sube de forma continua todo el tiempo
+    const actEl = document.getElementById('bkm-actions');
+    if (actEl) actEl.textContent = Math.round(t * 384);
+
+    // Backups escalonados cada 20 min: PC 02:00 · Servidor 02:20 · BD 02:40 (duran ~8 min)
+    const DUR = 8;
+    const jobs = [
+      { startMin:120, time:'02:00', node:'bkm-pc',  badge:'bkm-pc-badge',  state:'bkm-pc-state',  row:'bkm-b1', st:'bkm-b1-st', idle:'en uso' },
+      { startMin:140, time:'02:20', node:'bkm-srv', badge:'bkm-srv-badge', state:'bkm-srv-state', row:'bkm-b2', st:'bkm-b2-st', idle:'sistema activo' },
+      { startMin:160, time:'02:40', node:'bkm-db',  badge:'bkm-db-badge',  state:'bkm-db-state',  row:'bkm-b3', st:'bkm-b3-st', idle:'en línea' },
+    ];
+    jobs.forEach(j => {
+      let phase;
+      if (curMin < j.startMin) phase = 'idle';
+      else if (curMin < j.startMin + DUR) phase = 'baking';
+      else phase = 'done';
+      const suffix = (phase === 'baking') ? ' baking' : (phase === 'done') ? ' done' : '';
+
+      const node = document.getElementById(j.node);
+      const badge = document.getElementById(j.badge);
+      const state = document.getElementById(j.state);
+      const row = document.getElementById(j.row);
+      const stTxt = document.getElementById(j.st);
+
+      if (node) node.className = 'map-node' + suffix;
+      if (row) row.className = 'mb-row' + suffix;
+      if (badge) {
+        badge.className = 'map-badge' + suffix;
+        badge.textContent = (phase === 'baking') ? '● respaldando' : (phase === 'done') ? '✓ ' + j.time : 'backup ' + j.time;
+      }
+      if (state) {
+        state.className = 'map-state' + suffix;
+        state.textContent = (phase === 'baking') ? 'respaldando · en caliente' : (phase === 'done') ? '✓ respaldado' : j.idle;
+      }
+      if (stTxt) {
+        stTxt.className = 'mb-st' + suffix;
+        stTxt.textContent = (phase === 'baking') ? 'respaldando…' : (phase === 'done') ? '✓ completado' : 'programado';
+      }
+    });
+
+    // Estado global: el respaldo corre sin downtime; el usuario nunca se detiene
+    const anyBaking = jobs.some(j => curMin >= j.startMin && curMin < j.startMin + DUR);
+    const nowEl = document.getElementById('bkm-now');
+    if (nowEl) nowEl.textContent = anyBaking ? 'respaldo en curso · sin downtime' : 'sistema en uso';
+
+    // Chips de los 3 subítems
+    const f1 = document.getElementById('bk-f1');
+    const f2 = document.getElementById('bk-f2');
+    const f3 = document.getElementById('bk-f3');
+    if (f1) f1.classList.toggle('on', t >= 0.02);
+    if (f2) f2.classList.toggle('on', curMin >= 120);
+    if (f3) f3.classList.toggle('on', curMin >= 140);
+  }
+
+  // Slide notificaciones por correo (index 2)
+  if (currentSlide === 2) {
+    const clamp = (x) => Math.max(0, Math.min(1, x));
+
+    // ---- Máquina 1 (servidor): backup EXITOSO 0→100% ----
+    const p1 = clamp((t - 0.08) / 0.30);
+    const pct1 = Math.round(p1 * 100);
+    const fill1 = document.getElementById('bn-fill1');
+    const st1 = document.getElementById('bn-st1');
+    const m1 = document.getElementById('bn-m1');
+    const done1 = t >= 0.40;
+    if (fill1) { fill1.style.width = pct1 + '%'; fill1.style.background = done1 ? 'var(--green)' : 'var(--teal)'; }
+    document.getElementById('bn-pct1').textContent = pct1 + '%';
+    if (done1) { st1.textContent = '✓ Exitoso'; st1.className = 'bn-mac-state ok'; m1.className = 'bn-machine ok'; }
+    else if (t >= 0.08) { st1.textContent = 'respaldando…'; st1.className = 'bn-mac-state'; m1.className = 'bn-machine'; }
+    else { st1.textContent = 'iniciando…'; }
+
+    // ---- Máquina 2 (PC): backup FALLA al llegar a ~55% ----
+    const failed = t >= 0.30;
+    const pct2 = Math.round(clamp((t - 0.08) / 0.22) * 55);
+    const fill2 = document.getElementById('bn-fill2');
+    const st2 = document.getElementById('bn-st2');
+    const m2 = document.getElementById('bn-m2');
+    if (fill2) { fill2.style.width = pct2 + '%'; fill2.style.background = failed ? 'var(--red)' : 'var(--teal)'; }
+    document.getElementById('bn-pct2').textContent = pct2 + '%';
+    if (failed) { st2.textContent = '✗ Error'; st2.className = 'bn-mac-state err'; m2.className = 'bn-machine err'; }
+    else if (t >= 0.08) { st2.textContent = 'respaldando…'; st2.className = 'bn-mac-state'; m2.className = 'bn-machine'; }
+    else { st2.textContent = 'iniciando…'; }
+
+    // ---- Sobres volando hacia la bandeja ----
+    const env1 = document.getElementById('bn-env1');
+    const env2 = document.getElementById('bn-env2');
+    if (env1) {
+      const fp = clamp((t - 0.44) / 0.12);
+      env1.style.opacity = (t > 0.44 && t < 0.60) ? Math.min(1, clamp(fp / 0.2), clamp((1 - fp) / 0.2)) : '0';
+      env1.style.left = (560 + fp * 110) + 'px';
+    }
+    if (env2) {
+      const fp = clamp((t - 0.60) / 0.12);
+      env2.style.opacity = (t > 0.60 && t < 0.76) ? Math.min(1, clamp(fp / 0.2), clamp((1 - fp) / 0.2)) : '0';
+      env2.style.left = (560 + fp * 110) + 'px';
+    }
+
+    // ---- Llegada de los 2 correos ----
+    const mail1 = document.getElementById('bn-mail1');
+    const mail2 = document.getElementById('bn-mail2');
+    const show1 = t >= 0.56;
+    const show2 = t >= 0.74;
+    if (mail1) mail1.classList.toggle('show', show1);
+    if (mail2) mail2.classList.toggle('show', show2);
+    const count = document.getElementById('bn-count');
+    if (count) count.textContent = (show1 ? (show2 ? 2 : 1) : 0) + ' nuevos';
+  }
+
+  // Slide restauración garantizada (index 3) — interactivo
+  if (currentSlide === 3) rsTick();
+
+  requestAnimationFrame(animate);
+}
+
+// ===== Slide 4: restauración interactiva (el usuario maneja el "sistema") =====
+const RS_BAKS = [
+  { w: 'hoy 02:00', sz: '12 GB' },
+  { w: 'ayer 02:00', sz: '12 GB' },
+  { w: 'hace 2 días', sz: '11 GB' },
+  { w: 'hace 3 días', sz: '11 GB' }
+];
+const RS_TYPES = ['Restauración completa', 'Archivos específicos', 'Bare-metal (disco completo)'];
+let rs = { step: 1, backup: 0, type: 0, started: false, startT: 0, enterT: 0, phase: '' };
+
+function rsMachine(phase) {
+  if (rs.phase === phase) return;
+  rs.phase = phase;
+  ['work', 'bsod', 'restoring', 'disk', 'restored'].forEach(k => {
+    const el = document.getElementById('rs-' + k);
+    if (el) el.classList.toggle('on', k === phase);
+  });
+  const machine = document.getElementById('rs-machine');
+  const status = document.getElementById('rs-status');
+  const user = document.getElementById('rs-user');
+  const meeting = document.getElementById('rs-meeting');
+  if (machine) machine.className = 'rs-machine' + (phase === 'bsod' ? ' crash' : phase === 'restored' ? ' ok' : '');
+  if (status) {
+    if (phase === 'work') { status.textContent = '● Operativo'; status.className = 'rs-status'; }
+    else if (phase === 'bsod') { status.textContent = '✗ Disco dañado'; status.className = 'rs-status crash'; }
+    else if (phase === 'restoring') { status.textContent = '⟳ Restaurando…'; status.className = 'rs-status warn'; }
+    else if (phase === 'disk') { status.textContent = '⟳ Cambio de disco'; status.className = 'rs-status warn'; }
+    else { status.textContent = '✓ 100% operativo'; status.className = 'rs-status'; }
+  }
+  if (user) {
+    if (phase === 'bsod') { user.textContent = '✗ Sin acceso a su equipo'; user.className = 'rs-user bad'; }
+    else if (phase === 'restoring' || phase === 'disk') { user.textContent = 'Recuperación en proceso…'; user.className = 'rs-user'; }
+    else if (phase === 'restored') { user.textContent = '✓ Trabajando de nuevo'; user.className = 'rs-user'; }
+    else { user.textContent = 'Usuario trabajando…'; user.className = 'rs-user'; }
+  }
+  if (meeting) {
+    if (phase === 'restored') { meeting.innerHTML = '<span>&#9989;</span> Reunión asegurada · a tiempo'; meeting.className = 'rs-meeting safe'; }
+    else if (phase === 'bsod' || phase === 'restoring' || phase === 'disk') { meeting.innerHTML = '<span>&#9888;</span> Reunión en 3 h · en riesgo'; meeting.className = 'rs-meeting risk'; }
+    else { meeting.innerHTML = '<span>&#128197;</span> Reunión importante en 3 h'; meeting.className = 'rs-meeting'; }
+  }
+}
+
+function rsRenderWizard() {
+  const admin = document.getElementById('rs-admin');
+  if (admin) admin.classList.add('on');
+  // pasos (stepper)
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('rs-step' + i);
+    if (!el) continue;
+    let cls = 'rs-step';
+    if (i < rs.step) cls += ' done';
+    else if (i === rs.step) cls += (rs.started ? ' done' : ' active');
+    el.className = cls;
+  }
+  // panel visible
+  for (let i = 1; i <= 4; i++) {
+    const p = document.getElementById('rs-p' + i);
+    if (p) p.classList.toggle('on', i === rs.step);
+  }
+  // selección de backup y tipo
+  document.querySelectorAll('#rs-p1 .rs-p-bak').forEach((el, idx) => el.classList.toggle('sel', idx === rs.backup));
+  document.querySelectorAll('#rs-p2 .rs-opt').forEach((el, idx) => el.classList.toggle('sel', idx === rs.type));
+  // origen (paso 3) y resumen (paso 4)
+  const orig = document.getElementById('rs-io-origin'); if (orig) orig.textContent = 'Backup ' + RS_BAKS[rs.backup].w;
+  const sb = document.getElementById('rs-sum-bak'); if (sb) sb.textContent = RS_BAKS[rs.backup].w + ' · ' + RS_BAKS[rs.backup].sz;
+  const stp = document.getElementById('rs-sum-type'); if (stp) stp.textContent = RS_TYPES[rs.type];
+  // pie de navegación
+  const back = document.getElementById('rs-back');
+  const next = document.getElementById('rs-next');
+  const hint = document.getElementById('rs-hint');
+  const tip = document.getElementById('rs-poke-tip');
+  const prog = document.getElementById('rs-go-prog');
+  if (prog) prog.style.opacity = rs.started ? '1' : '0';
+  const sum = document.getElementById('rs-summary');
+  if (sum) sum.style.display = rs.started ? 'none' : 'flex';
+  if (rs.started) {
+    if (back) back.disabled = true;
+    if (next) { next.disabled = true; next.innerHTML = 'Restaurando…'; next.className = 'rs-nav-btn primary'; }
+    if (hint) hint.textContent = 'Restauración en curso — sin intervención del usuario';
+    if (tip) tip.hidden = true;
+  } else {
+    if (back) back.disabled = (rs.step === 1);
+    if (next) {
+      next.disabled = false;
+      if (rs.step < 4) { next.innerHTML = 'Continuar &#8594;'; next.className = 'rs-nav-btn primary poke'; }
+      else { next.innerHTML = '&#9658; Iniciar restauración'; next.className = 'rs-nav-btn go poke'; }
+    }
+    if (tip) {
+      tip.hidden = false;
+      tip.classList.toggle('go', rs.step === 4);
+      tip.innerHTML = (rs.step < 4 ? '&#128072; Haz clic aquí para continuar' : '&#128072; Haz clic aquí para iniciar');
+    }
+    if (hint) {
+      const hints = ['Elige el backup a restaurar', 'Elige el tipo de restauración', 'Confirma el origen y el destino', 'Todo listo — pulsa «Iniciar restauración»'];
+      hint.textContent = hints[rs.step - 1];
+    }
+  }
+}
+
+function rsReset() {
+  rs = { step: 1, backup: 0, type: 0, started: false, startT: 0, enterT: performance.now(), phase: '' };
+  rsMachine('work');
+  rsRenderWizard();
+  const fill = document.getElementById('rs-go-fill'); if (fill) { fill.style.width = '0%'; fill.style.background = 'var(--teal)'; }
+  const pct = document.getElementById('rs-go-pct'); if (pct) pct.textContent = '0%';
+  const p4t = document.getElementById('rs-p4-title'); if (p4t) p4t.textContent = 'Confirmar e iniciar';
+}
+
+function rsStart() {
+  if (rs.started) return;
+  rs.started = true; rs.startT = performance.now();
+  rsRenderWizard();
+}
+
+function rsTick() {
+  const now = performance.now();
+  if (!rs.started) {
+    // Intro: el equipo trabajaba y, al entrar, falla el disco (BSOD)
+    if (rs.phase === 'work' && now - rs.enterT > 1200) rsMachine('bsod');
+    return;
+  }
+  // Secuencia automática tras pulsar Iniciar: cambio de disco → restaurando → operativo
+  const e = (now - rs.startT) / 1000;
+  let phase, prog, label;
+  if (e < 1.3) { phase = 'disk'; prog = 0; label = 'Cambio de disco · preparando el equipo…'; }
+  else if (e < 5.6) { phase = 'restoring'; prog = (e - 1.3) / 4.3; label = 'Restaurando desde backup ' + RS_BAKS[rs.backup].w + '…'; }
+  else { phase = 'restored'; prog = 1; label = '✓ Restauración completada'; }
+  rsMachine(phase);
+  const fill = document.getElementById('rs-go-fill'); if (fill) { fill.style.width = Math.round(prog * 100) + '%'; fill.style.background = (prog >= 1 ? 'var(--green)' : 'var(--teal)'); }
+  const pct = document.getElementById('rs-go-pct'); if (pct) pct.textContent = Math.round(prog * 100) + '%';
+  const gl = document.getElementById('rs-go-label'); if (gl) gl.textContent = label;
+  const p4t = document.getElementById('rs-p4-title'); if (p4t) p4t.textContent = (phase === 'restored' ? 'Restauración finalizada' : 'Restaurando…');
+  if (phase === 'restored' && !rs._fin) {
+    rs._fin = true;
+    const next = document.getElementById('rs-next'); if (next) { next.disabled = true; next.innerHTML = '&#10003; Finalizado'; next.className = 'rs-nav-btn'; }
+    const hint = document.getElementById('rs-hint'); if (hint) hint.textContent = 'Equipo 100% operativo · reunión asegurada';
+  }
+}
+
+// Manejadores de clic del wizard (la "interacción" del usuario)
+document.querySelectorAll('#rs-p1 .rs-p-bak').forEach((el, idx) => el.addEventListener('click', () => { if (rs.started) return; rs.backup = idx; rsRenderWizard(); }));
+document.querySelectorAll('#rs-p2 .rs-opt').forEach((el, idx) => el.addEventListener('click', () => { if (rs.started) return; rs.type = idx; rsRenderWizard(); }));
+document.getElementById('rs-back').addEventListener('click', () => { if (rs.started || rs.step <= 1) return; rs.step--; rsRenderWizard(); });
+document.getElementById('rs-next').addEventListener('click', () => { if (rs.started) return; if (rs.step < 4) { rs.step++; rsRenderWizard(); } else { rsStart(); } });
+
+goToSlide(0);
+requestAnimationFrame(animate);
+
+function fitStage() {
+  const stage = document.querySelector('.slides-container');
+  const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  stage.style.transform = 'scale(' + scale + ')';
+}
+window.addEventListener('resize', fitStage);
+fitStage();
+</script>
+
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var n = e.target;
+    while (n && n.nodeName !== 'A') { n = n.parentNode; }
+    if (!n || !n.getAttribute) return;
+    var href = n.getAttribute('href');
+    if (!href) return;
+    if (href.charAt(0) === '#') return;
+    if (/^(https?:|mailto:|tel:|data:)/i.test(href)) return;
+    e.preventDefault();
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ tlNav: href }, '*');
+    }
+  }, true);
+})();
+</script>
+</body>
+</html>

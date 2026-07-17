@@ -3,6 +3,17 @@ import type { NextRequest } from 'next/server';
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const normalizedPathname =
+    pathname !== '/' ? pathname.replace(/\/+$/, '') || '/' : pathname;
+
+  // Consolidar variantes antiguas con /es al alias canonico sin extension.
+  if (
+    normalizedPathname === '/es/portafolio' ||
+    normalizedPathname === '/es/portafolio.html'
+  ) {
+    const destination = `/portafolio${request.nextUrl.search}`;
+    return NextResponse.redirect(new URL(destination, request.url), 308);
+  }
 
   // Portafolio routes: skip i18n rewrite, let the page/API handle auth
   if (pathname === '/portafolio' || pathname.startsWith('/api/portafolio/')) {
@@ -33,9 +44,6 @@ export function proxy(request: NextRequest) {
   }
 
   // 2. Normalizar barras finales (Trailing Slashes)
-  const normalizedPathname =
-    pathname !== '/' ? pathname.replace(/\/+$/, '') || '/' : pathname;
-
   if (normalizedPathname !== pathname) {
     const destination = `${normalizedPathname}${request.nextUrl.search}`;
     return NextResponse.redirect(new URL(destination, request.url), 308);
