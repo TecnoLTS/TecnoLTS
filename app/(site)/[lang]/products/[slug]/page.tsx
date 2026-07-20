@@ -15,12 +15,6 @@ type ProductPageParams = {
 };
 
 const productConfig = {
-  'loyalty-rewards': {
-    translationKey: 'loyaltyRewards',
-    iconId: 'product-icon-loyalty',
-    bgColor: 'bg-amber-100 dark:bg-amber-900/50',
-    iconColor: 'text-amber-600 dark:text-amber-400',
-  },
   invoicing: {
     translationKey: 'invoicing',
     iconId: 'product-icon-invoicing',

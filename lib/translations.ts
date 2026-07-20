@@ -121,6 +121,8 @@ export const translations = {
       subtitle: "Ready-to-use platforms that solve specific business needs, built and supported by our team.",
       comingSoon: "We're building this page. Check back soon, or reach out and we'll walk you through it.",
       backToProducts: "Back to products",
+      ctaLabel: "View product",
+      available: "Available",
       loyaltyRewards: {
         title: "LoyaltyRewards",
         description: "Points-based loyalty and rewards system for your customers."
@@ -141,6 +143,143 @@ export const translations = {
         title: "Mailing System",
         description: "Automated transactional email delivery."
       }
+    },
+    loyaltyRewardsPage: {
+      eyebrow: "TecnoLTS Product",
+      heroTitle: "Build loyalty with points, tiers, and a card your customers carry in their pocket",
+      heroDescription: "LoyaltyRewards is TecnoLTS's loyalty engine: customers earn points on every purchase, level up automatically, and redeem rewards — all from a digital card in Google Wallet, no app required.",
+      ctaPrimary: "Request a demo",
+      ctaSecondary: "See how it works",
+      card: {
+        program: "Aroma Café",
+        memberLabel: "Member",
+        member: "Ana Torres",
+        tierLabel: "Tier",
+        tier: "Silver",
+        pointsLabel: "Points",
+        points: "5,420"
+      },
+      pillarsTitle: "Not just a points counter",
+      pillarsSubtitle: "Everything you need to launch a real loyalty program, without building it from scratch.",
+      pillars: [
+        {
+          title: "Tiers that level up on their own",
+          description: "Bronze, Silver, and Gold are calculated automatically from each customer's accumulated points, and every tier applies its own earning multiplier."
+        },
+        {
+          title: "Rewards, your way",
+          description: "Define your reward catalog and choose how each one is delivered: redeem at checkout, an in-store validation code, or a managed pickup/delivery."
+        },
+        {
+          title: "A digital card in their pocket",
+          description: "Customers save their points card to Google Wallet and get notifications right there — no printing, no app to download."
+        }
+      ],
+      featuresTitle: "Built for the day-to-day of your business",
+      featuresSubtitle: "The operational details that make a loyalty program actually work.",
+      features: [
+        {
+          title: "Verified purchases",
+          description: "Every purchase is cross-checked against your billing or ecommerce system before points are awarded, preventing duplicate or fabricated entries."
+        },
+        {
+          title: "Manual adjustments, fully logged",
+          description: "Need to add or remove points by hand? Who did it, when, and why is always on record."
+        },
+        {
+          title: "Self-service portal",
+          description: "Customers check their balance and request redemptions themselves with a one-time code sent by email or phone — you don't have to handle every request."
+        },
+        {
+          title: "Fraud alerts",
+          description: "Duplicate references, negative balances, or daily limits being exceeded raise an alert your team can review and resolve."
+        },
+        {
+          title: "An API for what you already use",
+          description: "Your POS, online store, or any system of your own can award points with its own credentials, usage limits, and scoped permissions."
+        },
+        {
+          title: "9 reports ready to export",
+          description: "Point activity, tiers, digital card adoption, redemptions, fraud, audit trail, and more — as CSV or Excel whenever you need them."
+        }
+      ],
+      featureCardsTitle: "The advantage is in the details",
+      featureCardsSubtitle: "Three key workflows that separate LoyaltyRewards from a points counter.",
+      featureCards: [
+        {
+          headline: "Import your entire base in minutes",
+          description: "No need for your customers to sign up. Load a CSV or Excel file with their data (name, email, phone), and they're already in the system, ready to earn and spend. Bulk import is the fastest path to launch."
+        },
+        {
+          headline: "Send campaigns directly to their wallet",
+          description: "Every notification lands in Google Wallet where your customers check their card balance. No app downloads, no emails lost in spam folders — just direct, native push alerts to a place they visit daily."
+        },
+        {
+          headline: "Watch the numbers that matter",
+          description: "Dashboard shows you active members, total points issued, redemptions, adoption rate, and a real-time activity chart. See which campaigns work, which tiers are growing, and where your business is headed."
+        }
+      ],
+      howItWorksTitle: "How it works",
+      howItWorksSubtitle: "From purchase to reward, in four steps.",
+      steps: [
+        {
+          title: "Your customer buys something",
+          description: "At the counter, your online store, or wherever you bill from."
+        },
+        {
+          title: "Points are awarded automatically",
+          description: "The system verifies the purchase and credits points based on your earning rule."
+        },
+        {
+          title: "Tiers level up on their own",
+          description: "Cross the points threshold and they move from Bronze to Silver to Gold — earning faster along the way."
+        },
+        {
+          title: "Redeem whenever they want",
+          description: "From the self-service portal or right at your store, through the delivery flow you defined."
+        }
+      ],
+      securityTitle: "Built to actually hold up",
+      securityItems: [
+        {
+          title: "Multi-business",
+          description: "Each business has its own brand, color, and configuration — no data mixing between tenants."
+        },
+        {
+          title: "Full traceability",
+          description: "Every point movement is logged in an auditable trail: who, when, and why."
+        },
+        {
+          title: "Controlled API access",
+          description: "Credentials with scoped permissions and per-minute rate limits for every external integration."
+        },
+        {
+          title: "Reversals without headaches",
+          description: "If a purchase is voided, the point reversal is reflected accurately in the customer's balance."
+        }
+      ],
+      faqTitle: "Frequently asked questions",
+      faq: [
+        {
+          question: "Do my customers need to install an app?",
+          answer: "No. The points card saves directly to Google Wallet, and the self-service portal works from any browser."
+        },
+        {
+          question: "Can I run more than one business on LoyaltyRewards?",
+          answer: "Yes — it's multi-tenant: each business gets its own program, branding, and configuration."
+        },
+        {
+          question: "How does it stop someone from earning points on a fake purchase?",
+          answer: "Every purchase is checked against your billing or ecommerce system before points are credited, and anomalies raise a fraud alert."
+        },
+        {
+          question: "Does it work with iPhone?",
+          answer: "The digital card is available on Google Wallet today. Apple Wallet support is on our roadmap."
+        }
+      ],
+      finalCtaTitle: "Ready to launch your loyalty program?",
+      finalCtaDescription: "Tell us about your business and we'll build your points, tiers, and rewards program together.",
+      finalCtaButton: "Let's talk"
     },
     labels: {
       coreCapabilities: "CORE CAPABILITIES"
@@ -823,6 +962,8 @@ export const translations = {
       subtitle: "Plataformas listas para usar que resuelven necesidades puntuales del negocio, construidas y soportadas por nuestro equipo.",
       comingSoon: "Estamos construyendo esta página. Vuelve pronto, o escríbenos y te la mostramos en una demo.",
       backToProducts: "Volver a productos",
+      ctaLabel: "Ver producto",
+      available: "Disponible",
       loyaltyRewards: {
         title: "LoyaltyRewards",
         description: "Sistema de puntos y fidelización para tus clientes."
@@ -843,6 +984,143 @@ export const translations = {
         title: "Sistema de Mails",
         description: "Automatización y envío de correos transaccionales."
       }
+    },
+    loyaltyRewardsPage: {
+      eyebrow: "Producto TecnoLTS",
+      heroTitle: "Fidelizá clientes con puntos, niveles y una tarjeta que llevan en el celular",
+      heroDescription: "LoyaltyRewards es el motor de fidelización de TecnoLTS: tus clientes acumulan puntos con cada compra, suben de nivel automáticamente y canjean premios — todo desde una tarjeta digital en Google Wallet, sin apps que instalar.",
+      ctaPrimary: "Solicitar demo",
+      ctaSecondary: "Ver cómo funciona",
+      card: {
+        program: "Café Aroma",
+        memberLabel: "Miembro",
+        member: "Ana Torres",
+        tierLabel: "Nivel",
+        tier: "Plata",
+        pointsLabel: "Puntos",
+        points: "5.420"
+      },
+      pillarsTitle: "No es solo un contador de puntos",
+      pillarsSubtitle: "Todo lo que necesitás para lanzar un programa de lealtad real, sin armarlo desde cero.",
+      pillars: [
+        {
+          title: "Niveles que suben solos",
+          description: "Bronce, Plata y Oro se calculan automáticamente según los puntos acumulados de cada cliente, y cada nivel aplica su propio multiplicador de ganancia."
+        },
+        {
+          title: "Recompensas, a tu manera",
+          description: "Definí tu catálogo de premios y elegí cómo se entregan: canje directo en caja, código de validación para retiro en tienda, o gestión de entrega."
+        },
+        {
+          title: "Tarjeta digital en el celular",
+          description: "Tus clientes guardan su tarjeta de puntos en Google Wallet y reciben notificaciones ahí mismo — sin imprimir nada ni pedirles que bajen una app."
+        }
+      ],
+      featuresTitle: "Pensado para el día a día de tu negocio",
+      featuresSubtitle: "Los detalles operativos que hacen que un programa de lealtad funcione de verdad.",
+      features: [
+        {
+          title: "Compras verificadas",
+          description: "Cada compra registrada se cruza contra tu sistema de facturación o ecommerce antes de sumar puntos, para evitar cargas duplicadas o inventadas."
+        },
+        {
+          title: "Ajustes manuales, con historial",
+          description: "¿Necesitás sumar o restar puntos a mano? Queda registrado quién lo hizo, cuándo y por qué — nada se pierde."
+        },
+        {
+          title: "Portal de autoservicio",
+          description: "Tus clientes consultan su saldo y piden sus canjes ellos mismos, con un código de un solo uso enviado por email o teléfono."
+        },
+        {
+          title: "Alertas de fraude",
+          description: "Referencias duplicadas, saldos negativos o límites diarios superados generan una alerta que tu equipo revisa y resuelve."
+        },
+        {
+          title: "API para integrarlo con lo que ya usás",
+          description: "Tu punto de venta, tu tienda online o cualquier sistema propio puede sumar puntos con credenciales propias, límites de uso y permisos por alcance."
+        },
+        {
+          title: "9 reportes listos para exportar",
+          description: "Actividad de puntos, niveles, adopción de tarjeta digital, canjes, fraude, auditoría y más — en CSV o Excel cuando los necesites."
+        }
+      ],
+      featureCardsTitle: "La ventaja está en los detalles",
+      featureCardsSubtitle: "Tres flujos clave que diferencian a LoyaltyRewards de un simple contador de puntos.",
+      featureCards: [
+        {
+          headline: "Importá tu base entera en minutos",
+          description: "Sin que tus clientes tengan que registrarse. Cargá un archivo CSV o Excel con sus datos (nombre, email, teléfono) y ya están en el sistema, listos para ganar y canjear. La importación masiva es el camino más rápido para arrancar."
+        },
+        {
+          headline: "Mandá campañas directo a su tarjeta digital",
+          description: "Cada notificación llega a Google Wallet, donde tus clientes ven el saldo de su tarjeta. Sin apps que bajar, sin emails perdidos en spam — solo alertas nativas directas en un lugar que visitan a diario."
+        },
+        {
+          headline: "Mirá los números que importan",
+          description: "El dashboard te muestra miembros activos, puntos totales emitidos, canjes, tasa de adopción y un gráfico de actividad en tiempo real. Ves cuáles campañas funcionan, qué niveles crecen y hacia dónde va tu negocio."
+        }
+      ],
+      howItWorksTitle: "Cómo funciona",
+      howItWorksSubtitle: "De la compra a la recompensa, en cuatro pasos.",
+      steps: [
+        {
+          title: "Tu cliente compra",
+          description: "En el mostrador, tu tienda online o donde sea que factures."
+        },
+        {
+          title: "Gana puntos automáticamente",
+          description: "El sistema verifica la compra y acredita los puntos según tu regla de ganancia."
+        },
+        {
+          title: "Sube de nivel sin hacer nada",
+          description: "Al superar el umbral de puntos acumulados, pasa de Bronce a Plata a Oro — y gana más rápido."
+        },
+        {
+          title: "Canjea cuando quiera",
+          description: "Desde el portal de autoservicio o directo en tu local, con el flujo de entrega que vos definiste."
+        }
+      ],
+      securityTitle: "Construido para funcionar en serio",
+      securityItems: [
+        {
+          title: "Multi-negocio",
+          description: "Cada negocio tiene su propia marca, color y configuración — sin mezclar datos entre cuentas."
+        },
+        {
+          title: "Trazabilidad total",
+          description: "Cada movimiento de puntos queda en un registro auditable: quién, cuándo y con qué motivo."
+        },
+        {
+          title: "Acceso por API controlado",
+          description: "Credenciales con permisos por alcance y límite de solicitudes por minuto para cada integración externa."
+        },
+        {
+          title: "Reversas sin dolores de cabeza",
+          description: "Si una compra se anula, la reversa de puntos queda reflejada correctamente en el saldo del cliente."
+        }
+      ],
+      faqTitle: "Preguntas frecuentes",
+      faq: [
+        {
+          question: "¿Mis clientes necesitan instalar una app?",
+          answer: "No. La tarjeta de puntos se guarda directo en Google Wallet, y el portal de autoservicio funciona desde cualquier navegador."
+        },
+        {
+          question: "¿Puedo tener más de un negocio con LoyaltyRewards?",
+          answer: "Sí, es multi-negocio: cada uno tiene su propio programa, marca y configuración."
+        },
+        {
+          question: "¿Cómo evita que alguien sume puntos por una compra falsa?",
+          answer: "Cada compra se verifica contra tu sistema de facturación o ecommerce antes de acreditar puntos, y las anomalías generan una alerta de fraude."
+        },
+        {
+          question: "¿Funciona con iPhone?",
+          answer: "Hoy la tarjeta digital está disponible en Google Wallet. El soporte para Apple Wallet está en nuestro roadmap."
+        }
+      ],
+      finalCtaTitle: "¿Listo para lanzar tu programa de lealtad?",
+      finalCtaDescription: "Contanos sobre tu negocio y armamos juntos tu programa de puntos, niveles y recompensas.",
+      finalCtaButton: "Hablemos"
     },
     labels: {
       coreCapabilities: "CAPACIDADES CLAVE"

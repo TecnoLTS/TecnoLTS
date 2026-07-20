@@ -108,19 +108,31 @@ export default async function ProductsIndexPage({
           {PRODUCT_SLUGS.map((slug) => {
             const key = productTranslationKeys[slug];
             const product = t.products[key];
+            const isAvailable = slug === 'loyalty-rewards';
             return (
               <Link
                 key={slug}
                 href={localePath(lang, `/products/${slug}`)}
                 className="group relative rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-blue-800/80"
               >
-                <span className="absolute right-5 top-5 rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:bg-slate-800 dark:text-slate-400">
-                  {comingSoonLabel}
+                <span
+                  className={`absolute right-5 top-5 rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide ${
+                    isAvailable
+                      ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400'
+                      : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
+                  }`}
+                >
+                  {isAvailable ? t.products.available : comingSoonLabel}
                 </span>
                 <h2 className="pr-20 text-xl font-bold text-slate-900 dark:text-white">{product.title}</h2>
                 <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
                   {product.description}
                 </p>
+                {isAvailable && (
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-blue-600 transition-colors group-hover:text-blue-500 dark:text-cyan-400">
+                    {t.products.ctaLabel} <span aria-hidden="true">→</span>
+                  </span>
+                )}
               </Link>
             );
           })}
