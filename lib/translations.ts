@@ -3,6 +3,7 @@ export const translations = {
     nav: {
       home: "Home",
       services: "Services",
+      products: "Products",
       about: "About",
       contact: "Contact"
     },
@@ -113,6 +114,32 @@ export const translations = {
           "Rack and power optimization",
           "Structured cabling standards"
         ]
+      }
+    },
+    products: {
+      title: "Our products",
+      subtitle: "Ready-to-use platforms that solve specific business needs, built and supported by our team.",
+      comingSoon: "We're building this page. Check back soon, or reach out and we'll walk you through it.",
+      backToProducts: "Back to products",
+      loyaltyRewards: {
+        title: "LoyaltyRewards",
+        description: "Points-based loyalty and rewards system for your customers."
+      },
+      invoicing: {
+        title: "Electronic Invoicing",
+        description: "Issue and manage electronic tax receipts."
+      },
+      monitoringSoftware: {
+        title: "Monitoring Software",
+        description: "Real-time visibility into your infrastructure and services."
+      },
+      ecommerce: {
+        title: "Ecommerce",
+        description: "Online store ready to sell."
+      },
+      mailing: {
+        title: "Mailing System",
+        description: "Automated transactional email delivery."
       }
     },
     labels: {
@@ -670,6 +697,7 @@ export const translations = {
     nav: {
       home: "Inicio",
       services: "Servicios",
+      products: "Productos",
       about: "Nosotros",
       contact: "Contacto"
     },
@@ -788,6 +816,32 @@ export const translations = {
           "Optimización de energía y racks",
           "Estándares de cableado estructurado"
         ]
+      }
+    },
+    products: {
+      title: "Nuestros productos",
+      subtitle: "Plataformas listas para usar que resuelven necesidades puntuales del negocio, construidas y soportadas por nuestro equipo.",
+      comingSoon: "Estamos construyendo esta página. Vuelve pronto, o escríbenos y te la mostramos en una demo.",
+      backToProducts: "Volver a productos",
+      loyaltyRewards: {
+        title: "LoyaltyRewards",
+        description: "Sistema de puntos y fidelización para tus clientes."
+      },
+      invoicing: {
+        title: "Facturación Electrónica",
+        description: "Emisión y gestión de comprobantes electrónicos."
+      },
+      monitoringSoftware: {
+        title: "Software de Monitoreo",
+        description: "Supervisión de infraestructura y servicios en tiempo real."
+      },
+      ecommerce: {
+        title: "Ecommerce",
+        description: "Tienda en línea lista para vender."
+      },
+      mailing: {
+        title: "Sistema de Mails",
+        description: "Automatización y envío de correos transaccionales."
       }
     },
     labels: {
