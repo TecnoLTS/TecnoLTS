@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 interface NavigationDropdownItem {
   href: string;
@@ -27,11 +28,25 @@ export default function NavigationDesktopDropdown({
   columns = 2,
 }: NavigationDesktopDropdownProps) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Only portal after mount (document.body isn't available during SSR).
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
   }, []);
+
+  // Close on Escape while the menu is open.
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [open]);
 
   const cancelClose = () => {
     if (closeTimer.current) {
@@ -47,14 +62,14 @@ export default function NavigationDesktopDropdown({
 
   const gridColsClass =
     columns === 3
-      ? 'grid-cols-[repeat(3,minmax(210px,max-content))]'
-      : 'grid-cols-[repeat(2,minmax(210px,max-content))]';
+      ? 'grid-cols-[repeat(3,minmax(260px,max-content))]'
+      : 'grid-cols-[repeat(2,minmax(260px,max-content))]';
 
   return (
     <div className="relative">
       <a
         href={href}
-        className="flex items-center gap-1.5 text-[15px] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors font-medium py-2"
+        className="flex items-center gap-1.5 text-[17px] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors font-medium py-2"
         aria-haspopup="menu"
         aria-expanded={open}
         onMouseEnter={() => {
@@ -84,15 +99,21 @@ export default function NavigationDesktopDropdown({
         </svg>
       </a>
 
-      {/* Dims the page behind the panel, like the reference design. Stops at the navbar so it stays visible on top. */}
-      <div
-        className={`fixed inset-x-0 top-16 bottom-0 z-40 bg-slate-900/40 transition-opacity duration-200 ${
-          open ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
-        }`}
-        aria-hidden="true"
-        onMouseEnter={cancelClose}
-        onMouseLeave={scheduleClose}
-      />
+      {/* Dims the page behind the panel, like the reference design. Stops at the navbar so it stays visible on top.
+          Portaled to document.body so it escapes transformed ancestors (the nav's persisted animate-slide-in-left
+          transform, and the -translate-x-1/2 nav-links wrapper), which would otherwise act as the containing block
+          for this fixed element and misplace/clip it. Rendered at the viewport, it covers the full page. */}
+      {mounted &&
+        createPortal(
+          <div
+            className={`fixed inset-x-0 top-16 bottom-0 z-40 bg-slate-900/40 transition-opacity duration-200 ${
+              open ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+            }`}
+            aria-hidden="true"
+            onMouseEnter={scheduleClose}
+          />,
+          document.body,
+        )}
 
       <div
         className={`fixed left-1/2 top-16 z-50 max-w-[92vw] -translate-x-1/2 pt-3 transition-all duration-200 ${
@@ -112,10 +133,10 @@ export default function NavigationDesktopDropdown({
               {items.map((item) => (
                 <a key={item.href} href={item.href} className="group/item flex items-start gap-3">
                   <div
-                    className={`mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg ${item.bgColor}`}
+                    className={`mt-0.5 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg ${item.bgColor}`}
                   >
                     <svg
-                      className={`h-4 w-4 ${item.iconColor}`}
+                      className={`h-5 w-5 ${item.iconColor}`}
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -129,10 +150,10 @@ export default function NavigationDesktopDropdown({
                     </svg>
                   </div>
                   <div className="min-w-0">
-                    <div className="text-sm font-semibold text-slate-800 dark:text-slate-100 transition-colors group-hover/item:text-blue-600 dark:group-hover/item:text-blue-400">
+                    <div className="text-[17px] font-semibold text-slate-800 dark:text-slate-100 transition-colors group-hover/item:text-blue-600 dark:group-hover/item:text-blue-400">
                       {item.title}
                     </div>
-                    <p className="mt-0.5 line-clamp-2 text-xs leading-snug text-slate-500 dark:text-slate-400">
+                    <p className="mt-0.5 line-clamp-2 text-[13px] leading-snug text-slate-500 dark:text-slate-400">
                       {item.description}
                     </p>
                   </div>

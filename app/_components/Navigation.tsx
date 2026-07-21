@@ -33,7 +33,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       href: localePath(language, '/services/software'),
       iconId: 'service-icon-software',
       title: t.services.software.title,
-      description: t.services.software.description,
+      description: t.services.software.menuDescription,
       bgColor: 'bg-blue-100 dark:bg-blue-900/50',
       iconColor: 'text-blue-600 dark:text-blue-400',
     },
@@ -41,7 +41,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       href: localePath(language, '/services/monitoring'),
       iconId: 'service-icon-monitoring',
       title: t.services.monitoring.title,
-      description: t.services.monitoring.description,
+      description: t.services.monitoring.menuDescription,
       bgColor: 'bg-indigo-100 dark:bg-indigo-900/50',
       iconColor: 'text-indigo-600 dark:text-indigo-400',
     },
@@ -49,7 +49,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       href: localePath(language, '/services/cybersecurity'),
       iconId: 'service-icon-cybersecurity',
       title: t.services.cybersecurity.title,
-      description: t.services.cybersecurity.description,
+      description: t.services.cybersecurity.menuDescription,
       bgColor: 'bg-emerald-100 dark:bg-emerald-900/50',
       iconColor: 'text-emerald-600 dark:text-emerald-400',
     },
@@ -57,7 +57,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       href: localePath(language, '/services/network'),
       iconId: 'service-icon-network',
       title: t.services.network.title,
-      description: t.services.network.description,
+      description: t.services.network.menuDescription,
       bgColor: 'bg-cyan-100 dark:bg-cyan-900/50',
       iconColor: 'text-cyan-600 dark:text-cyan-400',
     },
@@ -65,7 +65,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       href: localePath(language, '/services/iso-27001'),
       iconId: 'service-icon-iso',
       title: t.services.iso.title,
-      description: t.services.iso.description,
+      description: t.services.iso.menuDescription,
       bgColor: 'bg-purple-100 dark:bg-purple-900/50',
       iconColor: 'text-purple-600 dark:text-purple-400',
     },
@@ -73,7 +73,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       href: localePath(language, '/services/backups'),
       iconId: 'service-icon-backups',
       title: t.services.backups.title,
-      description: t.services.backups.description,
+      description: t.services.backups.menuDescription,
       bgColor: 'bg-orange-100 dark:bg-orange-900/50',
       iconColor: 'text-orange-600 dark:text-orange-400',
     },
@@ -81,7 +81,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       href: localePath(language, '/services/licensing'),
       iconId: 'service-icon-filecheck',
       title: t.services.licensing.title,
-      description: t.services.licensing.description,
+      description: t.services.licensing.menuDescription,
       bgColor: 'bg-indigo-100 dark:bg-indigo-900/50',
       iconColor: 'text-indigo-600 dark:text-indigo-400',
     },
@@ -89,7 +89,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       href: localePath(language, '/services/disaster-recovery'),
       iconId: 'service-icon-disaster-recovery',
       title: t.services.disasterRecovery.title,
-      description: t.services.disasterRecovery.description,
+      description: t.services.disasterRecovery.menuDescription,
       bgColor: 'bg-rose-100 dark:bg-rose-900/50',
       iconColor: 'text-rose-600 dark:text-rose-400',
     },
@@ -97,7 +97,7 @@ export default function Navigation({ t, language }: NavigationProps) {
       href: localePath(language, '/services/datacenter'),
       iconId: 'service-icon-datacenter',
       title: t.services.dataCenter.title,
-      description: t.services.dataCenter.description,
+      description: t.services.dataCenter.menuDescription,
       bgColor: 'bg-teal-100 dark:bg-teal-900/50',
       iconColor: 'text-teal-600 dark:text-teal-400',
     },
@@ -165,7 +165,7 @@ export default function Navigation({ t, language }: NavigationProps) {
             </a>
 
             <div className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
-              <a href={homeHref} className="text-[15px] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors font-medium">
+              <a href={homeHref} className="text-[17px] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors font-medium">
                 {t.nav.home}
               </a>
               <NavigationDesktopDropdown
@@ -180,7 +180,7 @@ export default function Navigation({ t, language }: NavigationProps) {
                 items={products}
                 columns={2}
               />
-              <a href={contactHref} className="text-[15px] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors font-medium">
+              <a href={contactHref} className="text-[17px] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors font-medium">
                 {t.nav.contact}
               </a>
             </div>

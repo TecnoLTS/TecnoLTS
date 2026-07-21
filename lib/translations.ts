@@ -36,18 +36,21 @@ export const translations = {
       software: {
         title: "Software development",
         description: "Bespoke digital tools built to solve your unique business logic.",
+        menuDescription: "Custom web systems and apps built for your business.",
         cta: "Learn more",
         items: ["Enterprise web apps", "Cloud architecture", "Custom APIs"]
       },
       monitoring: {
         title: "Monitoring and observability",
         description: "Full-stack visibility to ensure your operations never stop.",
+        menuDescription: "24/7 visibility with alerts before issues hit users.",
         cta: "Learn more",
         items: ["Distributed tracing", "Metrics integration", "Real-time dashboards"]
       },
       network: {
         title: "Network solutions",
         description: "We design and manage professional networks that are fast, stable, and secure. We ensure your team stays connected without interruptions or speed issues.",
+        menuDescription: "Fast, stable, and secure networks with no downtime.",
         cta: "More information",
         items: [
           "SD-WAN and intelligent network design",
@@ -58,6 +61,7 @@ export const translations = {
       iso: {
         title: "ISO 27001 Security audits",
         description: "We evaluate your information security to meet international standards. We help you obtain certifications that build trust with your clients and partners.",
+        menuDescription: "Security audits to help you certify to ISO 27001.",
         cta: "More information",
         items: [
           "Security gap and risk analysis",
@@ -68,6 +72,7 @@ export const translations = {
       cybersecurity: {
         title: "Cybersecurity and protection",
         description: "We protect your data and digital assets against hackers and threats. We implement multiple layers of defense to keep your company's reputation safe.",
+        menuDescription: "Layered defense for your data and digital assets.",
         cta: "More information",
         items: [
           "Advanced threat detection",
@@ -78,6 +83,7 @@ export const translations = {
       backups: {
         title: "Backup and data management",
         description: "Your data is your most valuable asset. We set up automatic backups that are immune to attacks, ensuring you can recover your information at any time.",
+        menuDescription: "Automatic, ransomware-proof backups you can restore.",
         cta: "More information",
         items: [
           "Immutable and ransomware-proof backups",
@@ -88,6 +94,7 @@ export const translations = {
       licensing: {
         title: "Software licensing and compliance",
         description: "We help you manage your software legal requirements efficiently. We optimize your costs and ensure you are only paying for the licenses you actually need.",
+        menuDescription: "Manage licenses and pay only for what you use.",
         cta: "More information",
         items: [
           "Audit and license compliance",
@@ -98,6 +105,7 @@ export const translations = {
       disasterRecovery: {
         title: "Disaster recovery planning",
         description: "We create a fail-safe plan so your business can recover in minutes after a major technical failure. We ensure you never lose data or time.",
+        menuDescription: "A fail-safe plan to recover in minutes, not days.",
         cta: "More information",
         items: [
           "Automated failover systems",
@@ -108,6 +116,7 @@ export const translations = {
       dataCenter: {
         title: "Data center design and organization",
         description: "We organize your server rooms and physical infrastructure. We improve cooling, power distribution, and cable management for a professional environment.",
+        menuDescription: "Server rooms organized to run cool and efficient.",
         cta: "More information",
         items: [
           "Physical layout and engineering",
@@ -147,7 +156,7 @@ export const translations = {
     loyaltyRewardsPage: {
       eyebrow: "TecnoLTS Product",
       heroTitle: "Build loyalty with points, tiers, and a card your customers carry in their pocket",
-      heroDescription: "LoyaltyRewards is TecnoLTS's loyalty engine: customers earn points on every purchase, level up automatically, and redeem rewards — all from a digital card in Google Wallet, no app required.",
+      heroDescription: "LoyaltyRewards is TecnoLTS's loyalty engine: customers earn points on every purchase, level up automatically, and redeem rewards — all from a digital card in Google Wallet and Apple Wallet, no app to install.",
       ctaPrimary: "Request a demo",
       ctaSecondary: "See how it works",
       card: {
@@ -232,11 +241,11 @@ export const translations = {
         },
         {
           title: "Tiers level up on their own",
-          description: "Cross the points threshold and they move from Bronze to Silver to Gold — earning faster along the way."
+          description: "Cross the accumulated-points threshold and they climb through the tiers."
         },
         {
           title: "Redeem whenever they want",
-          description: "From the self-service portal or right at your store, through the delivery flow you defined."
+          description: "From the self-service portal or right at your store, through the delivery flow defined."
         }
       ],
       securityTitle: "Built to actually hold up",
@@ -262,7 +271,7 @@ export const translations = {
       faq: [
         {
           question: "Do my customers need to install an app?",
-          answer: "No. The points card saves directly to Google Wallet, and the self-service portal works from any browser."
+          answer: "No. The points card saves directly to Google Wallet or Apple Wallet, and the self-service portal works from any browser."
         },
         {
           question: "Can I run more than one business on LoyaltyRewards?",
@@ -274,7 +283,7 @@ export const translations = {
         },
         {
           question: "Does it work with iPhone?",
-          answer: "The digital card is available on Google Wallet today. Apple Wallet support is on our roadmap."
+          answer: "Yes. The digital card is available on both Apple Wallet and Google Wallet, so your customers can save it on iPhone and Android with no app to install."
         }
       ],
       finalCtaTitle: "Ready to launch your loyalty program?",
@@ -869,6 +878,7 @@ export const translations = {
       software: {
         title: "Desarrollo de software a medida",
         description: "Creamos herramientas digitales adaptadas a sus necesidades específicas. Desde sistemas web hasta aplicaciones móviles, desarrollamos software fácil de usar que resuelve sus problemas de negocio.",
+        menuDescription: "Sistemas web y apps a la medida de tu negocio.",
         cta: "Más información",
         items: [
           "Aplicaciones web y móviles empresariales",
@@ -879,6 +889,7 @@ export const translations = {
       monitoring: {
         title: "Monitoreo y observabilidad",
         description: "Mantenemos una vigilancia constante de sus sistemas con herramientas como Prometheus y Zabbix. Detectamos problemas antes de que afecten a sus clientes, asegurando que su negocio siempre esté en línea.",
+        menuDescription: "Vigilancia 24/7 con alertas antes de que falle.",
         cta: "Más información",
         items: [
           "Trazado distribuido y OpenTelemetry",
@@ -889,6 +900,7 @@ export const translations = {
       network: {
         title: "Soluciones de redes",
         description: "Diseñamos y gestionamos redes profesionales que son rápidas, estables y seguras. Aseguramos que su equipo se mantenga conectado sin interrupciones ni problemas de velocidad.",
+        menuDescription: "Redes rápidas, estables y seguras, sin cortes.",
         cta: "Más información",
         items: [
           "Diseño de redes SD-WAN inteligente",
@@ -899,6 +911,7 @@ export const translations = {
       iso: {
         title: "Auditorías de seguridad ISO 27001",
         description: "Evaluamos la seguridad de su información para cumplir con estándares globales. Le ayudamos a obtener certificaciones que generan confianza ante sus clientes y socios comerciales.",
+        menuDescription: "Auditamos tu seguridad para certificar ISO 27001.",
         cta: "Más información",
         items: [
           "Análisis de brechas y riesgos de seguridad",
@@ -909,6 +922,7 @@ export const translations = {
       cybersecurity: {
         title: "Ciberseguridad y protección",
         description: "Protegemos sus datos y activos digitales contra hackers y amenazas. Implementamos múltiples capas de defensa para mantener a salvo la reputación de su empresa.",
+        menuDescription: "Defensa en capas para tus datos y activos digitales.",
         cta: "Más información",
         items: [
           "Detección avanzada de amenazas",
@@ -919,6 +933,7 @@ export const translations = {
       backups: {
         title: "Gestión de respaldos y datos",
         description: "Sus datos son su activo más valioso. Configuramos copias de seguridad automáticas e inmunes a ataques, asegurando que pueda recuperar su información en cualquier momento.",
+        menuDescription: "Respaldos automáticos y a prueba de ransomware.",
         cta: "Más información",
         items: [
           "Respaldos inmutables a prueba de ransomware",
@@ -929,6 +944,7 @@ export const translations = {
       licensing: {
         title: "Licenciamiento de software y cumplimiento",
         description: "Le ayudamos a gestionar los requisitos legales de su software de forma eficiente. Optimizamos sus costos y aseguramos que solo pague por lo que realmente necesita.",
+        menuDescription: "Gestiona licencias y paga solo por lo que usas.",
         cta: "Más información",
         items: [
           "Auditoría y cumplimiento de licencias",
@@ -939,6 +955,7 @@ export const translations = {
       disasterRecovery: {
         title: "Planes de recuperación ante desastres",
         description: "Creamos un plan a prueba de fallos para que su negocio se recupere en minutos tras una falla técnica grave. Nos aseguramos de que nunca pierda datos ni tiempo de operación.",
+        menuDescription: "Plan a prueba de fallos para recuperarte en minutos.",
         cta: "Más información",
         items: [
           "Sistemas de conmutación automática",
@@ -949,6 +966,7 @@ export const translations = {
       dataCenter: {
         title: "Diseño y organización de data center",
         description: "Organizamos sus salas de servidores e infraestructura física. Mejoramos el enfriamiento, la energía y el cableado para lograr un entorno profesional y eficiente.",
+        menuDescription: "Salas de servidores ordenadas, frías y eficientes.",
         cta: "Más información",
         items: [
           "Ingeniería y distribución física",
@@ -988,7 +1006,7 @@ export const translations = {
     loyaltyRewardsPage: {
       eyebrow: "Producto TecnoLTS",
       heroTitle: "Fidelizá clientes con puntos, niveles y una tarjeta que llevan en el celular",
-      heroDescription: "LoyaltyRewards es el motor de fidelización de TecnoLTS: tus clientes acumulan puntos con cada compra, suben de nivel automáticamente y canjean premios — todo desde una tarjeta digital en Google Wallet, sin apps que instalar.",
+      heroDescription: "LoyaltyRewards es el motor de fidelización de TecnoLTS: tus clientes acumulan puntos en cada compra, suben de nivel automáticamente y canjean premios — todo desde una tarjeta digital en Google Wallet y Apple Wallet, sin instalar ninguna app.",
       ctaPrimary: "Solicitar demo",
       ctaSecondary: "Ver cómo funciona",
       card: {
@@ -1009,11 +1027,11 @@ export const translations = {
         },
         {
           title: "Recompensas, a tu manera",
-          description: "Definí tu catálogo de premios y elegí cómo se entregan: canje directo en caja, código de validación para retiro en tienda, o gestión de entrega."
+          description: "Define tu catálogo de premios y elige cómo se entregan: canje directo en caja, código de validación para retiro en tienda, o gestión de entrega."
         },
         {
           title: "Tarjeta digital en el celular",
-          description: "Tus clientes guardan su tarjeta de puntos en Google Wallet y reciben notificaciones ahí mismo — sin imprimir nada ni pedirles que bajen una app."
+          description: "Tus clientes guardan su tarjeta de puntos en Google Wallet o Apple Wallety reciben notificaciones en su billetera — sin usar otra app"
         }
       ],
       featuresTitle: "Pensado para el día a día de tu negocio",
@@ -1021,7 +1039,7 @@ export const translations = {
       features: [
         {
           title: "Compras verificadas",
-          description: "Cada compra registrada se cruza contra tu sistema de facturación o ecommerce antes de sumar puntos, para evitar cargas duplicadas o inventadas."
+          description: "Cada compra registrada se cruza contra tu sistema de facturación o ecommerce antes de sumar puntos, para evitar cargas duplicadas o forzadas."
         },
         {
           title: "Ajustes manuales, con historial",
@@ -1073,11 +1091,11 @@ export const translations = {
         },
         {
           title: "Sube de nivel sin hacer nada",
-          description: "Al superar el umbral de puntos acumulados, pasa de Bronce a Plata a Oro — y gana más rápido."
+          description: "Al superar el umbral de puntos acumulados, va escalando entre categorías."
         },
         {
           title: "Canjea cuando quiera",
-          description: "Desde el portal de autoservicio o directo en tu local, con el flujo de entrega que vos definiste."
+          description: "Desde el portal de autoservicio o directo en tu local, con el flujo de entrega definido."
         }
       ],
       securityTitle: "Construido para funcionar en serio",
@@ -1103,7 +1121,7 @@ export const translations = {
       faq: [
         {
           question: "¿Mis clientes necesitan instalar una app?",
-          answer: "No. La tarjeta de puntos se guarda directo en Google Wallet, y el portal de autoservicio funciona desde cualquier navegador."
+          answer: "No. La tarjeta de puntos se guarda directo en Google Wallet o Apple Wallet, y el portal de autoservicio funciona desde cualquier navegador."
         },
         {
           question: "¿Puedo tener más de un negocio con LoyaltyRewards?",
@@ -1115,7 +1133,7 @@ export const translations = {
         },
         {
           question: "¿Funciona con iPhone?",
-          answer: "Hoy la tarjeta digital está disponible en Google Wallet. El soporte para Apple Wallet está en nuestro roadmap."
+          answer: "Sí. La tarjeta digital está disponible tanto en Apple Wallet como en Google Wallet, así que tus clientes pueden guardarla en iPhone y en Android sin instalar ninguna app."
         }
       ],
       finalCtaTitle: "¿Listo para lanzar tu programa de lealtad?",

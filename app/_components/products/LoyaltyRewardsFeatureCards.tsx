@@ -204,91 +204,201 @@ function CampaignMockup() {
 
 /* ---------- 3. Dashboard ---------- */
 
-function DashboardMockup() {
-  const kpis = [
-    { label: 'Active members', value: '8.2K', delta: '+12%', tone: 'text-blue-600 dark:text-cyan-400' },
-    { label: 'Points issued', value: '156K', delta: '+8%', tone: 'text-amber-600 dark:text-amber-400' },
-    { label: 'Redemptions', value: '1.2K', delta: '+5%', tone: 'text-violet-600 dark:text-violet-400' },
-  ];
+// Brand categorical hues (validated for CVD; contrast relieved by direct labels).
+const C_BLUE = '#2563eb';
+const C_CYAN = '#06b6d4';
+const C_AMBER = '#f59e0b';
+
+function Panel({
+  title,
+  right,
+  children,
+  className = '',
+}: {
+  title: string;
+  right?: ReactNode;
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <Stage className="pb-16 sm:pb-8">
-      {/* Main analytics card */}
-      <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-xl ring-1 ring-slate-200/70 dark:ring-slate-800 p-5 sm:p-6 sm:mr-16">
-        <div className="flex items-center justify-between mb-4">
-          <div className="text-sm font-bold text-slate-900 dark:text-white">Overview</div>
-          <span className="text-[11px] text-slate-400">Last 7 days</span>
+    <div
+      className={`rounded-xl bg-slate-50 dark:bg-slate-800/50 ring-1 ring-slate-200/70 dark:ring-slate-700/50 p-3 ${className}`}
+    >
+      <div className="mb-2 flex items-center justify-between">
+        <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300">{title}</span>
+        {right}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function LegendDot({ color, label }: { color: string; label: string }) {
+  return (
+    <span className="flex items-center gap-1 text-[9px] font-medium text-slate-500 dark:text-slate-400">
+      <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: color }} />
+      {label}
+    </span>
+  );
+}
+
+function DashboardMockup() {
+  // Grouped bars: points earned vs redeemed, 5 recent weeks.
+  const earned = [40, 52, 34, 46, 50];
+  const redeemed = [22, 30, 18, 26, 28];
+  const groupX = [20, 60, 100, 140, 180];
+
+  // Members by tier (real tier distribution: most customers start at Bronce).
+  const tiers = [
+    { label: 'Bronce', pct: 65, offset: 0, color: C_BLUE },
+    { label: 'Plata', pct: 22, offset: -65, color: C_CYAN },
+    { label: 'Oro', pct: 13, offset: -87, color: C_AMBER },
+  ];
+
+  return (
+    <Stage className="pb-12 sm:pb-8">
+      <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-xl ring-1 ring-slate-200/70 dark:ring-slate-800 p-4 sm:p-5">
+        {/* Header */}
+        <div className="mb-4 flex items-center justify-between">
+          <div className="text-sm font-bold text-slate-900 dark:text-white">Loyalty analytics</div>
+          <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2.5 py-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+            Last 30 days
+          </span>
         </div>
 
-        {/* KPI row */}
-        <div className="grid grid-cols-3 gap-2.5 mb-5">
-          {kpis.map((k) => (
-            <div
-              key={k.label}
-              className="rounded-xl bg-slate-50 dark:bg-slate-800/60 ring-1 ring-slate-200/60 dark:ring-slate-700/50 px-3 py-2.5"
-            >
-              <div className="text-[10px] font-medium text-slate-500 dark:text-slate-400 leading-tight">
-                {k.label}
+        <div className="grid grid-cols-2 gap-3">
+          {/* Line — points activity */}
+          <Panel
+            title="Points activity"
+            right={<span className="text-[10px] font-bold text-blue-600 dark:text-cyan-400">+18%</span>}
+          >
+            <svg viewBox="0 0 200 66" className="w-full">
+              <defs>
+                <linearGradient id="lr-area" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={C_BLUE} stopOpacity="0.25" />
+                  <stop offset="100%" stopColor={C_BLUE} stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M0 48 C 20 44, 30 30, 50 34 S 80 20, 100 30 S 140 12, 160 20 S 185 8, 200 12"
+                fill="none"
+                stroke={C_BLUE}
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M0 48 C 20 44, 30 30, 50 34 S 80 20, 100 30 S 140 12, 160 20 S 185 8, 200 12 L200 66 L0 66 Z"
+                fill="url(#lr-area)"
+              />
+              <circle cx="200" cy="12" r="3.5" fill={C_BLUE} stroke="white" strokeWidth="1.5" />
+            </svg>
+            <div className="mt-1 flex justify-between text-[8px] font-medium text-slate-400">
+              <span>Jan</span>
+              <span>Mar</span>
+              <span>May</span>
+              <span>Jul</span>
+            </div>
+          </Panel>
+
+          {/* Bars — earned vs redeemed */}
+          <Panel
+            title="Earned vs redeemed"
+            right={
+              <span className="flex gap-2">
+                <LegendDot color={C_BLUE} label="Earned" />
+                <LegendDot color={C_CYAN} label="Redeemed" />
+              </span>
+            }
+          >
+            <svg viewBox="0 0 200 66" className="w-full">
+              <line x1="0" y1="58" x2="200" y2="58" stroke="currentColor" strokeWidth="1" className="text-slate-200 dark:text-slate-700" />
+              {groupX.map((cx, i) => (
+                <g key={cx}>
+                  <rect x={cx - 13} y={58 - earned[i]} width="12" height={earned[i]} rx="2" fill={C_BLUE} />
+                  <rect x={cx + 1} y={58 - redeemed[i]} width="12" height={redeemed[i]} rx="2" fill={C_CYAN} />
+                </g>
+              ))}
+            </svg>
+          </Panel>
+
+          {/* Donut — members by tier */}
+          <Panel title="Members by tier">
+            <div className="flex items-center gap-3">
+              <div className="relative h-[4.5rem] w-[4.5rem] flex-shrink-0">
+                <svg viewBox="0 0 40 40" className="h-full w-full -rotate-90">
+                  {tiers.map((t) => (
+                    <circle
+                      key={t.label}
+                      cx="20"
+                      cy="20"
+                      r="15.915"
+                      fill="none"
+                      stroke={t.color}
+                      strokeWidth="5"
+                      pathLength={100}
+                      strokeDasharray={`${t.pct} ${100 - t.pct}`}
+                      strokeDashoffset={t.offset}
+                    />
+                  ))}
+                </svg>
+                <span className="absolute inset-0 flex flex-col items-center justify-center leading-none">
+                  <span className="text-sm font-extrabold text-slate-900 dark:text-white">12.4K</span>
+                  <span className="text-[7px] font-medium text-slate-400">members</span>
+                </span>
               </div>
-              <div className={`text-lg font-extrabold ${k.tone}`}>{k.value}</div>
-              <div className="text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
-                {k.delta}
+              <div className="space-y-1.5">
+                {tiers.map((t) => (
+                  <div key={t.label} className="flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-full" style={{ backgroundColor: t.color }} />
+                    <span className="text-[10px] font-medium text-slate-600 dark:text-slate-300">{t.label}</span>
+                    <span className="text-[10px] font-bold text-slate-900 dark:text-white tabular-nums">{t.pct}%</span>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
+          </Panel>
 
-        {/* Area chart */}
-        <div className="rounded-xl bg-slate-50 dark:bg-slate-800/40 ring-1 ring-slate-200/60 dark:ring-slate-700/50 p-3">
-          <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
-            Points activity
-          </div>
-          <svg viewBox="0 0 320 90" className="w-full h-20" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="lr-area" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="rgb(59 130 246)" stopOpacity="0.28" />
-                <stop offset="100%" stopColor="rgb(59 130 246)" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M0 70 L40 62 L80 66 L120 44 L160 50 L200 28 L240 34 L280 16 L320 22"
-              fill="none"
-              stroke="rgb(59 130 246)"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M0 70 L40 62 L80 66 L120 44 L160 50 L200 28 L240 34 L280 16 L320 22 L320 90 L0 90 Z"
-              fill="url(#lr-area)"
-            />
-            <circle cx="280" cy="16" r="3.5" fill="rgb(59 130 246)" stroke="white" strokeWidth="1.5" />
-          </svg>
+          {/* Ring — digital card adoption */}
+          <Panel title="Digital card adoption">
+            <div className="flex items-center gap-3">
+              <div className="relative h-[4.5rem] w-[4.5rem] flex-shrink-0">
+                <svg viewBox="0 0 40 40" className="h-full w-full -rotate-90">
+                  <circle cx="20" cy="20" r="15.915" fill="none" strokeWidth="5" stroke="currentColor" className="text-slate-200 dark:text-slate-700" />
+                  <circle
+                    cx="20"
+                    cy="20"
+                    r="15.915"
+                    fill="none"
+                    strokeWidth="5"
+                    stroke={C_BLUE}
+                    strokeLinecap="round"
+                    pathLength={100}
+                    strokeDasharray="92 8"
+                  />
+                </svg>
+                <span className="absolute inset-0 flex items-center justify-center text-sm font-extrabold text-blue-600 dark:text-cyan-400">
+                  92%
+                </span>
+              </div>
+              <div className="text-[10px] leading-snug text-slate-500 dark:text-slate-400">
+                <span className="font-semibold text-slate-700 dark:text-slate-200">Google &amp; Apple Wallet</span>
+                <br />
+                saved by 11.4K of 12.4K members
+              </div>
+            </div>
+          </Panel>
         </div>
       </div>
 
-      {/* Floating adoption donut */}
-      <div className="absolute right-2 -bottom-6 sm:right-4 sm:-bottom-3 rounded-2xl bg-white dark:bg-slate-800 shadow-xl ring-1 ring-slate-200/70 dark:ring-slate-700 px-4 py-3 flex items-center gap-3">
-        <div className="relative h-12 w-12">
-          <svg viewBox="0 0 36 36" className="h-12 w-12 -rotate-90">
-            <circle cx="18" cy="18" r="15.5" fill="none" stroke="currentColor" strokeWidth="3.5" className="text-slate-200 dark:text-slate-700" />
-            <circle
-              cx="18"
-              cy="18"
-              r="15.5"
-              fill="none"
-              stroke="rgb(16 185 129)"
-              strokeWidth="3.5"
-              strokeLinecap="round"
-              strokeDasharray="97.4 97.4"
-            />
-          </svg>
-          <span className="absolute inset-0 flex items-center justify-center text-[10px] font-extrabold text-emerald-600 dark:text-emerald-400">
-            100%
-          </span>
+      {/* Floating insight, echoing the reference's soft-shadow callouts */}
+      <div className="absolute -top-3 -right-2 sm:-right-4 flex items-center gap-2 rounded-xl bg-white dark:bg-slate-800 px-3 py-2 shadow-xl ring-1 ring-slate-200/70 dark:ring-slate-700">
+        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500 text-white">
+          <BarChart3 className="h-3.5 w-3.5" />
         </div>
-        <div className="text-[11px] font-semibold text-slate-700 dark:text-slate-200 leading-tight">
-          Digital card
-          <div className="font-normal text-slate-400">adoption</div>
+        <div className="text-[11px] font-bold text-slate-800 dark:text-slate-100 leading-tight">
+          9 reports
+          <div className="font-normal text-slate-400">CSV · Excel export</div>
         </div>
       </div>
     </Stage>
