@@ -161,6 +161,26 @@
     }
   }
 
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes float-sm {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
   @keyframes cube-rotate {
     0% {
       transform: rotateX(0deg) rotateY(0deg);
@@ -327,7 +347,13 @@
 
     .animate-fade-in,
     .animate-fade-in-up,
-    .animate-slide-in-left {
+    .animate-slide-in-left,
+    .animate-float,
+    .animate-float-delay-1,
+    .animate-float-delay-2,
+    .animate-float-delay-3,
+    .animate-float-delay-4,
+    .animate-float-delay-5 {
       animation: none !important;
       opacity: 1 !important;
       transform: none !important;
@@ -356,6 +382,31 @@
 
   .animate-slide-in-left {
     animation: slide-in-left 0.8s ease-out forwards;
+  }
+
+  /* Floating hero-visual elements (phone + badges) */
+  .animate-float {
+    animation: float 5s ease-in-out infinite;
+  }
+
+  .animate-float-delay-1 {
+    animation: float-sm 4.5s ease-in-out 0.3s infinite;
+  }
+
+  .animate-float-delay-2 {
+    animation: float-sm 5.5s ease-in-out 0.8s infinite;
+  }
+
+  .animate-float-delay-3 {
+    animation: float-sm 4s ease-in-out 1.2s infinite;
+  }
+
+  .animate-float-delay-4 {
+    animation: float-sm 5s ease-in-out 0.5s infinite;
+  }
+
+  .animate-float-delay-5 {
+    animation: float-sm 4.8s ease-in-out 1.5s infinite;
   }
 
   /* Particle System */

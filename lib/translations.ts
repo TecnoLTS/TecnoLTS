@@ -168,6 +168,21 @@ export const translations = {
         pointsLabel: "Points",
         points: "5,420"
       },
+      heroVisual: {
+        programLabel: "Program",
+        recentActivity: "Recent activity",
+        activity: [
+          { label: "In-store purchase", pts: "+120" },
+          { label: "Redeemed — Free coffee", pts: "-200" },
+          { label: "Points adjustment", pts: "+50" }
+        ],
+        catalogCta: "View rewards catalog",
+        availableOn: "Available on",
+        scanToJoin: "Scan to join",
+        levelUpTitle: "You leveled up!",
+        levelUpSub: "You're now a Silver member",
+        scanPoints: "+50 pts"
+      },
       pillarsTitle: "Not just a points counter",
       pillarsSubtitle: "Everything you need to launch a real loyalty program, without building it from scratch.",
       pillars: [
@@ -1017,6 +1032,21 @@ export const translations = {
         tier: "Plata",
         pointsLabel: "Puntos",
         points: "5.420"
+      },
+      heroVisual: {
+        programLabel: "Programa",
+        recentActivity: "Actividad reciente",
+        activity: [
+          { label: "Compra en tienda", pts: "+120" },
+          { label: "Canje — Café gratis", pts: "-200" },
+          { label: "Ajuste de puntos", pts: "+50" }
+        ],
+        catalogCta: "Ver catálogo de premios",
+        availableOn: "Disponible en",
+        scanToJoin: "Escanear para unirse",
+        levelUpTitle: "¡Subiste de nivel!",
+        levelUpSub: "Ahora eres miembro Plata",
+        scanPoints: "+50 pts"
       },
       pillarsTitle: "No es solo un contador de puntos",
       pillarsSubtitle: "Todo lo que necesitás para lanzar un programa de lealtad real, sin armarlo desde cero.",

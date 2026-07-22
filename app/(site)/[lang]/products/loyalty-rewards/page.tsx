@@ -22,7 +22,7 @@ import Footer from '@/app/_components/Footer';
 import WhatsAppButton from '@/app/_components/WhatsAppButton';
 import ScrollToTopButton from '@/app/_components/ScrollToTopButton';
 import ContactModalButton from '@/app/_components/ContactModalButton';
-import LoyaltyRewardsWalletCard from '@/app/_components/products/LoyaltyRewardsWalletCard';
+import LoyaltyRewardsHeroVisual from '@/app/_components/products/LoyaltyRewardsHeroVisual';
 import LoyaltyRewardsFeatureCards from '@/app/_components/products/LoyaltyRewardsFeatureCards';
 import { isLocale, localePath, locales } from '@/lib/i18n';
 import { BRAND_NAME, getAbsoluteUrl } from '@/lib/seo';
@@ -102,7 +102,7 @@ export default async function LoyaltyRewardsPage({
       <Navigation t={t} language={lang} />
 
       {/* Hero */}
-      <section className="pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8">
+      <section className="pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
@@ -138,15 +138,25 @@ export default async function LoyaltyRewardsPage({
               </div>
             </div>
 
-            <LoyaltyRewardsWalletCard
-              programLabel={page.card.program}
-              memberLabel={page.card.memberLabel}
-              member={page.card.member}
-              tierLabel={page.card.tierLabel}
-              tier={page.card.tier}
-              pointsLabel={page.card.pointsLabel}
-              points={page.card.points}
-            />
+            <div className="relative h-[560px] sm:h-[640px] flex items-center justify-center">
+              <LoyaltyRewardsHeroVisual
+                programLabel={page.heroVisual.programLabel}
+                program={page.card.program}
+                memberLabel={page.card.memberLabel}
+                member={page.card.member}
+                pointsLabel={page.card.pointsLabel}
+                points={page.card.points}
+                tier={page.card.tier}
+                recentActivity={page.heroVisual.recentActivity}
+                activity={page.heroVisual.activity}
+                catalogCta={page.heroVisual.catalogCta}
+                availableOn={page.heroVisual.availableOn}
+                scanToJoin={page.heroVisual.scanToJoin}
+                levelUpTitle={page.heroVisual.levelUpTitle}
+                levelUpSub={page.heroVisual.levelUpSub}
+                scanPoints={page.heroVisual.scanPoints}
+              />
+            </div>
           </div>
         </div>
       </section>
