@@ -133,7 +133,7 @@ export const translations = {
       ctaLabel: "View product",
       available: "Available",
       loyaltyRewards: {
-        title: "LoyaltyRewards",
+        title: "Fidepuntos",
         description: "Points-based loyalty and rewards system for your customers."
       },
       invoicing: {
@@ -156,7 +156,7 @@ export const translations = {
     loyaltyRewardsPage: {
       eyebrow: "TecnoLTS Product",
       heroTitle: "Build loyalty with points, tiers, and a card your customers carry in their pocket",
-      heroDescription: "LoyaltyRewards is TecnoLTS's loyalty engine: customers earn points on every purchase, level up automatically, and redeem rewards — all from a digital card in Google Wallet and Apple Wallet, no app to install.",
+      heroDescription: "Fidepuntos is TecnoLTS's loyalty engine: customers earn points on every purchase, level up automatically, and redeem rewards — all from a digital card in Google Wallet and Apple Wallet, no app to install.",
       ctaPrimary: "Request a demo",
       ctaSecondary: "See how it works",
       card: {
@@ -195,10 +195,19 @@ export const translations = {
           description: "Define your reward catalog and choose how each one is delivered: redeem at checkout, an in-store validation code, or a managed pickup/delivery."
         },
         {
-          title: "A digital card in their pocket",
-          description: "Customers save their points card to Google Wallet and get notifications right there — no printing, no app to download."
+          title: "The card lives in their wallet",
+          description: "Customers add their loyalty card to Google Wallet or Apple Wallet and, right from there, get notifications, open the catalog, and redeem points — no app to install."
         }
       ],
+      pillarVisual: {
+        tiers: ["Bronze", "Silver", "Gold"],
+        rewards: [
+          { name: "Free coffee", pts: "200 pts" },
+          { name: "10% off", pts: "500 pts" }
+        ],
+        deliveryTags: ["Checkout", "In-store code", "Delivery"],
+        walletNote: "New notification in your wallet"
+      },
       featuresTitle: "Built for the day-to-day of your business",
       featuresSubtitle: "The operational details that make a loyalty program actually work.",
       features: [
@@ -228,7 +237,7 @@ export const translations = {
         }
       ],
       featureCardsTitle: "The advantage is in the details",
-      featureCardsSubtitle: "Three key workflows that separate LoyaltyRewards from a points counter.",
+      featureCardsSubtitle: "Three key workflows that separate Fidepuntos from a points counter.",
       featureCards: [
         {
           headline: "Import your entire base in minutes",
@@ -236,7 +245,7 @@ export const translations = {
         },
         {
           headline: "Send campaigns directly to their wallet",
-          description: "Every notification lands in Google Wallet where your customers check their card balance. No app downloads, no emails lost in spam folders — just direct, native push alerts to a place they visit daily."
+          description: "Every notification lands in Google Wallet or Apple Wallet, where your customers check their card balance. No app downloads, no emails lost in spam folders — just direct, native push alerts to a place they visit daily."
         },
         {
           headline: "Watch the numbers that matter",
@@ -260,7 +269,7 @@ export const translations = {
         },
         {
           title: "Redeem whenever they want",
-          description: "From the self-service portal or right at your store, through the delivery flow defined."
+          description: "From the catalog in their wallet or right at your store, through the delivery flow defined."
         }
       ],
       securityTitle: "Built to actually hold up",
@@ -289,7 +298,7 @@ export const translations = {
           answer: "No. The points card saves directly to Google Wallet or Apple Wallet, and the self-service portal works from any browser."
         },
         {
-          question: "Can I run more than one business on LoyaltyRewards?",
+          question: "Can I run more than one business on Fidepuntos?",
           answer: "Yes — it's multi-tenant: each business gets its own program, branding, and configuration."
         },
         {
@@ -998,7 +1007,7 @@ export const translations = {
       ctaLabel: "Ver producto",
       available: "Disponible",
       loyaltyRewards: {
-        title: "LoyaltyRewards",
+        title: "Fidepuntos",
         description: "Sistema de puntos y fidelización para tus clientes."
       },
       invoicing: {
@@ -1021,7 +1030,7 @@ export const translations = {
     loyaltyRewardsPage: {
       eyebrow: "Producto TecnoLTS",
       heroTitle: "Fidelizá clientes con puntos, niveles y una tarjeta que llevan en el celular",
-      heroDescription: "LoyaltyRewards es el motor de fidelización de TecnoLTS: tus clientes acumulan puntos en cada compra, suben de nivel automáticamente y canjean premios — todo desde una tarjeta digital en Google Wallet y Apple Wallet, sin instalar ninguna app.",
+      heroDescription: "Fidepuntos es el motor de fidelización de TecnoLTS: tus clientes acumulan puntos en cada compra, suben de nivel automáticamente y canjean premios, todo desde una tarjeta digital en Google Wallet y Apple Wallet, sin instalar ninguna app.",
       ctaPrimary: "Solicitar demo",
       ctaSecondary: "Ver cómo funciona",
       card: {
@@ -1060,10 +1069,19 @@ export const translations = {
           description: "Define tu catálogo de premios y elige cómo se entregan: canje directo en caja, código de validación para retiro en tienda, o gestión de entrega."
         },
         {
-          title: "Tarjeta digital en el celular",
-          description: "Tus clientes guardan su tarjeta de puntos en Google Wallet o Apple Wallety reciben notificaciones en su billetera — sin usar otra app"
+          title: "La tarjeta vive en su billetera",
+          description: "Tus clientes suman su tarjeta de fidelidad a Google Wallet o Apple Wallet y, desde ahí mismo, reciben notificaciones, abren el catálogo y canjean sus puntos — sin instalar ninguna app."
         }
       ],
+      pillarVisual: {
+        tiers: ["Bronce", "Plata", "Oro"],
+        rewards: [
+          { name: "Café gratis", pts: "200 pts" },
+          { name: "10% de descuento", pts: "500 pts" }
+        ],
+        deliveryTags: ["En caja", "Código en tienda", "Entrega"],
+        walletNote: "Nueva notificación en tu billetera"
+      },
       featuresTitle: "Pensado para el día a día de tu negocio",
       featuresSubtitle: "Los detalles operativos que hacen que un programa de lealtad funcione de verdad.",
       features: [
@@ -1093,7 +1111,7 @@ export const translations = {
         }
       ],
       featureCardsTitle: "La ventaja está en los detalles",
-      featureCardsSubtitle: "Tres flujos clave que diferencian a LoyaltyRewards de un simple contador de puntos.",
+      featureCardsSubtitle: "Tres flujos clave que diferencian a Fidepuntos de un simple contador de puntos.",
       featureCards: [
         {
           headline: "Importá tu base entera en minutos",
@@ -1101,7 +1119,7 @@ export const translations = {
         },
         {
           headline: "Mandá campañas directo a su tarjeta digital",
-          description: "Cada notificación llega a Google Wallet, donde tus clientes ven el saldo de su tarjeta. Sin apps que bajar, sin emails perdidos en spam — solo alertas nativas directas en un lugar que visitan a diario."
+          description: "Cada notificación llega a Google Wallet o Apple Wallet, donde tus clientes ven el saldo de su tarjeta. Sin apps que bajar, sin emails perdidos en spam — solo alertas nativas directas en un lugar que visitan a diario."
         },
         {
           headline: "Mirá los números que importan",
@@ -1125,7 +1143,7 @@ export const translations = {
         },
         {
           title: "Canjea cuando quiera",
-          description: "Desde el portal de autoservicio o directo en tu local, con el flujo de entrega definido."
+          description: "Desde el catálogo en su billetera o directo en tu local, con el flujo de entrega definido."
         }
       ],
       securityTitle: "Construido para funcionar en serio",
@@ -1154,7 +1172,7 @@ export const translations = {
           answer: "No. La tarjeta de puntos se guarda directo en Google Wallet o Apple Wallet, y el portal de autoservicio funciona desde cualquier navegador."
         },
         {
-          question: "¿Puedo tener más de un negocio con LoyaltyRewards?",
+          question: "¿Puedo tener más de un negocio con Fidepuntos?",
           answer: "Sí, es multi-negocio: cada uno tiene su propio programa, marca y configuración."
         },
         {

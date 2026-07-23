@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import {
-  Award,
   BarChart3,
   Building2,
-  Gift,
   KeyRound,
   Lock,
   Plug,
@@ -12,7 +10,6 @@ import {
   ShieldAlert,
   ShoppingBag,
   SlidersHorizontal,
-  Smartphone,
   Sparkles,
   UserCheck,
   type LucideIcon,
@@ -24,6 +21,7 @@ import ScrollToTopButton from '@/app/_components/ScrollToTopButton';
 import ContactModalButton from '@/app/_components/ContactModalButton';
 import LoyaltyRewardsHeroVisual from '@/app/_components/products/LoyaltyRewardsHeroVisual';
 import LoyaltyRewardsFeatureCards from '@/app/_components/products/LoyaltyRewardsFeatureCards';
+import LoyaltyRewardsPillars from '@/app/_components/products/LoyaltyRewardsPillars';
 import { isLocale, localePath, locales } from '@/lib/i18n';
 import { BRAND_NAME, getAbsoluteUrl } from '@/lib/seo';
 import { translations } from '@/lib/translations';
@@ -32,7 +30,6 @@ type PageParams = {
   lang: string;
 };
 
-const pillarIcons: LucideIcon[] = [Award, Gift, Smartphone];
 const featureIcons: LucideIcon[] = [
   ShoppingBag,
   SlidersHorizontal,
@@ -138,7 +135,7 @@ export default async function LoyaltyRewardsPage({
               </div>
             </div>
 
-            <div className="relative h-[560px] sm:h-[640px] flex items-center justify-center">
+            <div className="relative mx-auto w-full max-w-[24rem] lg:max-w-none h-[500px] sm:h-[600px] lg:h-[640px] flex items-center justify-center">
               <LoyaltyRewardsHeroVisual
                 programLabel={page.heroVisual.programLabel}
                 program={page.card.program}
@@ -162,40 +159,19 @@ export default async function LoyaltyRewardsPage({
       </section>
 
       {/* Pillars */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/40">
-        <div className="max-w-7xl mx-auto">
-          <div className="max-w-2xl mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3">
-              {page.pillarsTitle}
-            </h2>
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300">
-              {page.pillarsSubtitle}
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-5 sm:gap-6">
-            {page.pillars.map((pillar, i) => {
-              const Icon = pillarIcons[i];
-              return (
-                <div
-                  key={pillar.title}
-                  className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-7 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900"
-                >
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 mb-5">
-                    <Icon className="h-5 w-5 text-white" />
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                    {pillar.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                    {pillar.description}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <LoyaltyRewardsPillars
+        title={page.pillarsTitle}
+        subtitle={page.pillarsSubtitle}
+        pillars={page.pillars}
+        tiers={page.pillarVisual.tiers}
+        rewards={page.pillarVisual.rewards}
+        deliveryTags={page.pillarVisual.deliveryTags}
+        walletNote={page.pillarVisual.walletNote}
+        programLabel={page.heroVisual.programLabel}
+        program={page.card.program}
+        pointsLabel={page.card.pointsLabel}
+        points={page.card.points}
+      />
 
       {/* Feature grid */}
       <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
